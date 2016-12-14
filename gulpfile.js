@@ -3,13 +3,17 @@ const ts = require('gulp-typescript');
 const server = require('gulp-server-livereload');
 
 gulp.task('typescript', function () {
-    return gulp.src(['*.ts', './public/**/*.ts'])
+    return gulp.src(['*.ts', './app/**/*.ts'])
       .pipe(ts({
-        noImplicitAny: false,
+        noImplicitAny: true,
         removeComments: false,
         preserveConstEnums: true,
         target: 'ES5',
         sourceMap: false,
+        moduleResolution: 'node',
+        experimentalDecorators: true,
+        emitDecoratorMetadata: true,
+        suppressImplicitAnyIndexErrors: true,
         listFiles: false
       }))
       .pipe(gulp.dest((file) => {
@@ -22,7 +26,7 @@ gulp.task('webserver', function() {
     .pipe(server({
       livereload: true,
       open: true,
-      defaultFile: '/public/index.html'
+      defaultFile: './app/index.html'
     }));
 });
 
