@@ -1,6 +1,5 @@
 .git
 node_modules/
-public/
 typings/
 .DS_Store
 app/.DS_Store

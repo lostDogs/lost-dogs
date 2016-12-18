@@ -26,6 +26,7 @@ gulp.task('serve', function() {
     .pipe(server({
       livereload: true,
       open: true,
+      defaultFile: './public/index.html'
     }));
 });
 
