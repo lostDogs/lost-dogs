@@ -4,7 +4,9 @@
   "description": "web-app",
   "main": "gulpfile.js",
   "scripts": {
-   
+    "build": "webpack --progress",
+    "build:prod": "webpack -p --progress",
+    "start": "node server.js"
   },
   "dependencies": {
     "@angular/common": "^2.3.0",
@@ -24,6 +26,7 @@
     "zone.js": "^0.7.2"
   },
   "devDependencies": {
+    "express": "^4.14.0",
     "gulp": "^3.9.1",
     "gulp-server-livereload": "^1.9.2",
     "gulp-typescript": "^3.1.3",
