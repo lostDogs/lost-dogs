@@ -5,4 +5,4 @@ import {homeComponent} from './home.component';
   declarations: [homeComponent],
   bootstrap:    [homeComponent]
 })
-export class homeModule { }
+export class homeModule {}

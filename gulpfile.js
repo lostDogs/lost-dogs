@@ -21,14 +21,13 @@ gulp.task('typescript', function () {
       }));
 });
 
-gulp.task('webserver', function() {
+gulp.task('serve', function() {
   gulp.src('.')
     .pipe(server({
       livereload: true,
       open: true,
-      defaultFile: './app/index.html'
     }));
 });
 
-gulp.task('default',['typescript', 'webserver']);
+gulp.task('default',['typescript', 'serve']);
 

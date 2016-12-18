@@ -7,7 +7,7 @@
     "build": "webpack --progress",
     "build:prod": "webpack -p --progress",
     "postinstall": "typings install",
-    "serve": "webpack-dev-server --inline --progress"
+    "serve": "webpack-dev-server --inline --hot --content-base ./public  --progress"
   },
   "dependencies": {
     "@angular/common": "^2.3.0",
@@ -37,7 +37,8 @@
     "typescript": "^2.1.4",
     "typings": "^2.0.0",
     "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.2"
+    "webpack-dev-server": "^1.16.2",
+    "yargs": "^6.5.0"
   },
   "repository": {
     "type": "git",

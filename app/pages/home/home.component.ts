@@ -8,6 +8,5 @@ export class homeComponent {
   public homepage: string;
   constructor () {
     this.homepage = 'Welcome! This is Home Page :)';
-  
   }
 };

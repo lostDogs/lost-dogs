@@ -2,7 +2,7 @@ import { Component} from '@angular/core';
 
 @Component({
   selector: 'my-app',
-  template: '<div>{{header}}</div><div>{{footer}}</div>'
+  template: '<div>{{header}}</div><a routerLink="board">About</a><router-outlet></router-outlet><div>{{footer}}</div>'
 })
 export class appComponent {
   public header: string;
