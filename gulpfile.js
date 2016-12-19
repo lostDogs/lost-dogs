@@ -21,14 +21,5 @@ gulp.task('typescript', function () {
       }));
 });
 
-gulp.task('serve', function() {
-  gulp.src('.')
-    .pipe(server({
-      livereload: true,
-      open: true,
-      defaultFile: './public/index.html'
-    }));
-});
-
-gulp.task('default',['typescript', 'serve']);
+gulp.task('default',['typescript']);
 
