@@ -1,4 +1,5 @@
 Project structure
 
-
-    "postinstall": "typings install"
+  run:
+  npm install typings -g --save-dev
+  typings install dt~node --save --global
