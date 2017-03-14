@@ -1,4 +1,22 @@
 module.exports = (model) => {
+  const retrieve = (id, callback) => {
+    model.findById(id, (err, item) => {
+      if (err) {
+        return callback({
+          statusCode: 500,
+          code: 'Error while retrieving object.',
+        });
+      } else if (!item) {
+        return callback({
+          statusCode: 404,
+          code: 'Not found.',
+        });
+      }
+
+      return callback(null, item.getInfo());
+    });
+  };
+
   const create = (body, callback) => {
     model.create(model.createMap(body), (err, item) => {
       if (err) {
@@ -26,56 +44,14 @@ module.exports = (model) => {
         });
       }
 
-      model.findById(id, (findErr, findItem) => {
-        if (findErr) {
-          return callback({
-            statusCode: 500,
-            code: 'Error while retrieving object.',
-          });
-        } else if (!findItem) {
-          return callback({
-            statusCode: 404,
-            code: 'Not found.',
-          });
-        }
-
-        return callback(null, findItem.getInfo());
-      });
-    });
-  };
-
-  const retrieve = (id, callback) => {
-    model.findById(id, (err, item) => {
-      if (err) {
-        return callback({
-          statusCode: 500,
-          code: 'Error while retrieving object.',
-        });
-      } else if (!item) {
-        return callback({
-          statusCode: 404,
-          code: 'Not found.',
-        });
-      }
-
-      return callback(null, item.getInfo());
+      return retrieve(item.id, callback);
     });
   };
 
   const deleteItem = (id, callback) => {
-    model.findById(id, (findErr, found) => {
-      console.log(found);
-
+    retrieve(id, (findErr) => {
       if (findErr) {
-        return callback({
-          statusCode: 500,
-          code: 'Error while deleting object.',
-        });
-      } else if (!found) {
-        return callback({
-          statusCode: 404,
-          code: 'Not found.',
-        });
+        return callback(findErr);
       }
 
       return model.remove({ _id: id }, (err, result) => {
