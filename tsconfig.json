@@ -3,7 +3,7 @@
         "experimentalDecorators": true,
         "moduleResolution": "node",
         "target": "es5",
-        "sourceMap": false,
+        "sourceMap": true,
         "noImplicitAny": true,
         "removeComments": false,
         "preserveConstEnums": true,
@@ -11,6 +11,8 @@
         "suppressImplicitAnyIndexErrors": true,
         "listFiles": false
     },
+    "compileOnSave": false,
+    "buildOnSave": false,
     "exclude": [
         "node_modules"
     ]

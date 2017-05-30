@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 // It will take the html and insert the respective js
 var HtmlwebpackPlugin = require('html-webpack-plugin');
+var path = require('path');
 
 module.exports = {
   entry: {
@@ -20,7 +21,21 @@ module.exports = {
     //Fonts and images will be loaded with the URL-loader only if  the size of the file  is under 700
     { test: /\.(jpg|fig|png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=7000' },
     //in chain loader for sass  ssas to css to style
-      {test: /\.scss$/, loader: 'to-string!style!css!sass'}
+      {test: /\.scss$/, use: [
+        {
+          loader: "style"
+        }, {
+          loader: "css"
+        }, {
+          loader: "sass", options: {
+            sourceMap: true,
+            data: '@import "variables";',
+            includePaths: [
+              path.join(__dirname, 'src')
+            ]
+          }
+        }],
+        include: path.join(__dirname, 'src')}
     ]
   },
 
