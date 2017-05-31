@@ -5,7 +5,7 @@ import {ViewEncapsulation} from '@angular/core';
   selector: 'my-app',
   encapsulation: ViewEncapsulation.None,
   template: '<general-header></general-header><router-outlet></router-outlet><div>{{footer}}</div>',
-  styleUrls: ['./main.scss']
+  styles: [require('./main.scss')]
 })
 export class appComponent {
   public header: string;
