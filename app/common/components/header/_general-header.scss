@@ -1,13 +1,17 @@
-@import '../../styles/typo.scss';
 @import '../../styles/variables.scss';
 
 header{
   background: $lightBlue;
+  padding: 20px 0;
   a{
     font-family: $primaryFont, sans-serif;
     font-size: 15px;
     color: white;
     text-decoration: none;
     font-weight: bold;
+    box-sizing: content-box;
+  }
+  .menu-options {
+    display: inline-block;
   }
 }
