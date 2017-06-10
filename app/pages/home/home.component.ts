@@ -13,6 +13,6 @@ export class homeComponent {
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
     let number = this.document.body.scrollTop;
-    console.log('Scrolling', number);
+    //console.log('Scrolling', number);
   }  
 };
