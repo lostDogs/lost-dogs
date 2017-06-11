@@ -63,6 +63,7 @@
           .btn {
             margin-top: 10px;
             background-color: $buttonInfo;
+            z-index: 1;
           }
     }
     #sad-dogo {
@@ -88,7 +89,7 @@
       margin: 0 ;
     }
     h4 {
-      margin: 45px 0 10px 0;
+      margin: 45px 0 20px 0;
     }
     p {
       text-align: center;

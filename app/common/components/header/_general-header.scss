@@ -7,6 +7,7 @@ header{
   flex-direction: row;
   height: 100px;  
   border-bottom: 6px solid white;
+  z-index: 1000;
   &#nav-header {
     margin:0;
     padding:0;
