@@ -1,8 +1,8 @@
 import { Component} from '@angular/core';
 import {ViewEncapsulation} from '@angular/core';
-import 'materialize-css/bin/materialize.js';
+import 'jquery';
+import 'materialize-css/dist/js/materialize.js';
 import 'materialize-css/bin/materialize.css';
-
 // <div><a routerLink="home">home</a>  <a routerLink="board">board</a>  <a routerLink="account">account</a>  <a routerLink="lostfound">lostfound</a>  <a routerLink="profile">profile</a>  <a routerLink="selection">selection</a></div>
 @Component({
   selector: 'my-app',

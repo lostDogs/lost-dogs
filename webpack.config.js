@@ -13,6 +13,26 @@ module.exports = {
   },
   // Configure the ts-load module that helps compile ts
   module: {
+     rules: [
+    // jQuery & plugins
+    {
+        test: require.resolve('jquery'),
+        use: [
+            {
+                loader: 'expose-loader',
+                options: 'jQuery'
+            },
+            {
+                loader: 'expose-loader',
+                options: '$'
+            },
+            {
+                loader: 'expose-loader',
+                options: 'window.jQuery'
+            }
+        ]
+    }
+  ],
     loaders: [
       // Any files that end with ts should be loadd with the ts loader
       {test: /.*\.ts$/, loader: 'ts-loader', exclude: /node_modules/},
@@ -34,6 +54,13 @@ module.exports = {
   plugins: [
     new HtmlwebpackPlugin({
       template: './app/index.html'
+    }),
+    new webpack.ProvidePlugin({
+        jQuery: 'jquery',
+        $: 'jquery',
+        jquery: 'jquery' ,
+        'window.jQuery' : 'jquery',
+         Hammer: 'hammerjs/hammer'
     })
   ]
 

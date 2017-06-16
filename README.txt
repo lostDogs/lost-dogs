@@ -8,3 +8,6 @@ Project structure
 run: heroku local web, to see the local app
 run: node webpack --progress, to build the app
 run: node serve, to enter in dev mode
+run: npm run serve to run locally
+
+remove file: materialize-css/node-modules/jquery
