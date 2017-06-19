@@ -1,6 +1,6 @@
 @import '../../styles/variables.scss';
 
-header{
+header {
   position: fixed;
   background: $lightBlue;
   display: flex;
@@ -12,7 +12,7 @@ header{
     margin:0;
     padding:0;
   }
-  a{
+  a {
     font-family: $primaryFont, sans-serif;
     font-size: 24px;
     color: white;
@@ -29,5 +29,28 @@ header{
   .menu-options {
       margin: auto;
     display: inline-block;
+    .home-mobile {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-device-width: $screen-mobile-max) {
+  header {
+    height: 120px;
+    .menu-options  {
+      .profile {
+        display: none;
+      }
+      .actions { 
+        display: none;
+      }
+      .home-mobile {
+        display: inline-block;
+        img {
+          width: 80px;
+        }
+      }    
+    }
   }
 }

@@ -11,6 +11,10 @@ export class generalHeaderComponent implements OnInit  {
   }
 
   ngOnInit() {
-      $('.home-mobile').sideNav();
+      $('.home-mobile').sideNav({
+        menuWidth: 400,
+        closeOnClick: true,
+        draggable: true
+      });
   }
 };
