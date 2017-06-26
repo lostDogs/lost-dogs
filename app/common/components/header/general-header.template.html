@@ -3,22 +3,30 @@
     <a routerLink="board" class="actions">catalogo</a>
     <a routerLink="lostfound" class="actions">perdi</a>
     <a routerLink="lostfound" class="actions">encontre</a>  
-    <a routerLink="" title="" class="home-mobile" data-activates="slide-out"><img src="static/side-menu.png" alt="side menu"></a>
+    <a routerLink="" class="home-mobile" data-activates="slide-out"><img src="static/side-menu.png" alt="side menu"></a>
   </div>
   <div class="menu-options col l4 m2"> 
       <a routerLink="home"  class="logo">
-        <img id="home-logo" src="static/logo-med.png" alt="lost dog logo">
-      </a>
-  </div>
-  <div class="menu-options col l3 m2">
-     <div class="profile">
+        <img id="home-logo" src="static/logo-med.png" alt="lost dog logo"> </a> </div> <div class="menu-options col l3 m2"> <div class="profile">
       <a routerLink="profile-link">Chris Zepeda
       <img  id="profile-arrow" src="static/dropdown.png" alt="dropdown arrow">
       </a>
      </div> 
   </div>
   <ul id="slide-out" class="side-nav">
-      <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-      <li><a href="#!">Second Link</a></li>
-  </ul>
+      <li><div class="user-profile">
+        <div class="user-background">
+          <a routerLink="" ><img src="static/me2.png" alt="profile picture" class="circle profile-mobile"></a>
+          <a routerLink="">Chris Zepeda</a>
+          <a routerLink="">chris.zep@gmail.com</a>
+        </div>
+      </div></li>
+      <li><a routerLink="" class="waves-effect">mis perros perdidos</a></li>
+      <li><a routerLink="" class="waves-effect">mis perros encontrados</a></li>
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">mas acciones</a></li>
+      <li><a routerLink="" class="waves-effect">Perdi un perro</a></li>
+      <li><a routerLink="" class="waves-effect">Encontre un perro</a></li>
+      <li><div class="divider"></div></li>
+   </ul>
 </header>

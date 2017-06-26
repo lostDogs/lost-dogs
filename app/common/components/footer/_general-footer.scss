@@ -37,4 +37,17 @@ footer {
       padding-right:10px; 
     }
   }
+  @media screen and (max-device-width: $screen-mobile-max) { 
+    text-align: center;
+    h5 {
+      font-size: 3.5rem;
+    }
+    a  {
+      font-size: 2.4rem;
+      line-height: 60px;
+    }
+    #social {
+      padding-top: 45px;
+    }
+  }
 }

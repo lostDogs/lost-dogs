@@ -1,5 +1,4 @@
 @import '../../styles/variables.scss';
-
 header {
   position: fixed;
   background: $lightBlue;
@@ -35,8 +34,33 @@ header {
   }
 }
 
+#slide-out {
+  a:hover {
+    background-color: rgba(0,0,0,0.05);
+  }
+  .user-background {
+    background: $pink;
+    padding: 30px;
+  }
+  .profile-mobile { 
+    border: 5px solid white;
+    width: 250px;
+    display: block;
+    margin-bottom: 25px;
+  }
+}
+
 @media screen and (max-device-width: $screen-mobile-max) {
   header {
+    #slide-out {
+      a {
+        font-size: 2.8rem;
+      }
+      li > a {
+          height: 100px;
+          line-height: 100px;
+      }
+    }
     height: 120px;
     .menu-options  {
       .profile {
