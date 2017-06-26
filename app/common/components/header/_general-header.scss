@@ -40,7 +40,11 @@ header {
   }
   .user-background {
     background: $pink;
-    padding: 30px;
+    padding: 50px;
+    .profile-link {
+      font-size: 0;
+      padding: 0;
+    }
   }
   .profile-mobile { 
     border: 5px solid white;

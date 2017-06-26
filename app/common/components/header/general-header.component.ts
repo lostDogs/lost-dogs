@@ -12,7 +12,7 @@ export class generalHeaderComponent implements OnInit  {
 
   ngOnInit() {
       $('.home-mobile').sideNav({
-        menuWidth: 600,
+        menuWidth: 700,
         closeOnClick: true,
         draggable: true
       });
