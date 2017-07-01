@@ -120,6 +120,12 @@
     }
   }
   @media screen and (max-device-width: $screen-mobile-max) {
+    .btn  {
+      height: 120px;
+      line-height: 120px;
+      width: 300px;
+      font-size: 3.4rem;
+    }
     h5 {
       font-size: 4.28rem;
     }
