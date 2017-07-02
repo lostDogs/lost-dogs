@@ -24,6 +24,13 @@ header {
     #profile-arrow {
       width: 15px;
     }
+    .profile-arrow-UpDown {
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -o-transform: rotate(180deg); 
+      -ms-transform: rotate(180deg);
+      transform: rotate(180deg);       
+    }
   }
   .menu-options {
       margin: auto;
@@ -52,6 +59,77 @@ header {
     display: block;
     margin-bottom: 25px;
   }
+}
+
+#popover-login {
+  position: fixed;
+  top: 80px;
+  right: 80px;
+  width: 250px;
+  background: $lightBlue;
+  border: 6px solid white;
+  border-radius: 10px;
+  z-index: 1010;
+  form {
+    padding: 10px 25px;
+    button {
+      margin-top: 15px;
+    }
+  }
+  input:-webkit-autofill {
+    background: transparent;
+  }
+  .account-link {
+    margin-top: 20px;
+    text-align: center;
+    a {
+      font-family: $primaryFont, sans-serif;
+      color: white;
+      text-decoration: none;
+      box-sizing: border-box;
+      i.right {
+        margin-left: 35px;
+      }
+    }
+  }
+    .account-link:hover {
+      border-bottom: 1px solid white;
+      border-radius: 5px;
+    }
+}
+
+.input-field {
+  label {
+    color: Gainsboro;
+  }
+}
+input[type=text] {
+  border-bottom: 1px solid Gainsboro;
+  border-radius: 5px;
+  color: white;
+}
+
+.btn {
+z-index: 1;
+&.action {
+  background: $buttonAction;
+
+}
+}
+
+.btn:hover {
+  &.action{
+    background: $buttonActionHover;
+  }
+}
+
+input[type=text]:focus:not([readonly]) {
+    border-bottom: 1px solid  white;
+    box-shadow: 0 1px 0 0 white;
+}
+
+input[type=text]:focus:not([readonly]) + label {
+  color: white;
 }
 
 @media screen and (max-device-width: $screen-mobile-max) {

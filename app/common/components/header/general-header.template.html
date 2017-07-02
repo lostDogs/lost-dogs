@@ -8,8 +8,8 @@
   <div class="menu-options col l4 m2"> 
       <a routerLink="home"  class="logo">
         <img id="home-logo" src="static/logo-med.png" alt="lost dog logo"> </a> </div> <div class="menu-options col l3 m2"> <div class="profile">
-      <a routerLink="profile-link">Chris Zepeda
-      <img  id="profile-arrow" src="static/dropdown.png" alt="dropdown arrow">
+      <a routerLink="" (click)="toggleLoginFrom($event)">Chris Zepeda
+      <img  id="profile-arrow" src="static/dropdown.png" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">
       </a>
      </div> 
   </div>
@@ -30,3 +30,24 @@
       <li><div class="divider"></div></li>
    </ul>
 </header>
+<!-- [ngStyle]="{'top': offsetY}" -->
+<article id="popover-login" *ngIf="showLoginFrom" class="hoverable">
+  <form class="row" title="form-login" novalidate>
+      <div class="input-field col l12 s12">
+        <input type="text" name="" id="user-name" required>
+        <label for="user-name">nombre usuario</label>
+      </div>
+      <div class="input-field col l12 s12">
+          <input type="text" name="" id="user-password" required>
+          <label for="user-password">contrasenia</label>
+      </div>
+      <button class="btn waves-effect col l12 action" type="submit">login
+        <i class="material-icons right">send</i>
+      </button>
+      <div class="col l12 account-link">
+        <a routerLink="" title="" class="waves-effect"> Crea tu cuenta
+         <i class="material-icons right">person_pin</i>
+        </a>        
+      </div>
+    </form>
+</article>
