@@ -8,11 +8,13 @@ import { DOCUMENT } from '@angular/platform-browser';
 })
 
 export class homeComponent {
-  public dir: string;
+  public scrollnormalize: number
   constructor (@Inject(DOCUMENT) private document:  Document) { }
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
-    let number = this.document.body.scrollTop;
-    //console.log('Scrolling', number);
+    const scrollMax: number = 300;
+    const scrollTop = this.document.body.scrollTop;
+    this.scrollnormalize = (scrollMax - scrollTop) / scrollMax;
+    console.log('Scrolling', this.scrollnormalize);
   }  
 };
