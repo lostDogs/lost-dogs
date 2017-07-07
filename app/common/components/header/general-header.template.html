@@ -7,7 +7,7 @@
   </div>
   <div class="menu-options col l4 m2"> 
       <a routerLink="home"  class="logo">
-        <img id="home-logo" src="static/logo-med.png" alt="lost dog logo"> </a> </div> <div class="menu-options col l3 m2"> <div class="profile">
+        <img id="home-logo" src="static/logo-med.png" alt="lost dog logo" [ngStyle]="{'opacity': ScrollService.scrollOpacity}"> </a> </div> <div class="menu-options col l3 m2"> <div class="profile">
       <a routerLink="" (click)="toggleLoginFrom($event)">Chris Zepeda
       <img  id="profile-arrow" src="static/dropdown.png" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">
       </a>
