@@ -1,0 +1,55 @@
+@import '../../common/styles/variables.scss';
+.create-account {
+  .main-title {
+    margin-top: 99px;
+    margin-bottom: 0;
+    padding: 20px 0 20px 0;
+    background: $pink;
+    text-align: center;
+    color: white;
+    border-bottom: 6px solid white;
+  }
+  .main-create-account {
+    margin-bottom: 0;
+    background: $lightGrey;
+    input[type=text] {
+      color: black;
+      border-bottom: 1px solid grey;
+    }
+    .input-field {
+      label {
+        color: grey;
+      }
+    }
+    input[type=text]:focus:not([readonly]) {
+        border-bottom: 1px solid  white;
+        box-shadow: 0 1px 0 0 white;
+        color: black;
+    }
+
+    input[type=text]:focus:not([readonly]) + label {
+      color: white;
+    }
+  }
+  .profile-pic {
+    display: flex;
+    position: relative;
+    .width-center {
+      margin: auto;
+      width: 100px;
+      height: 100px;
+    }
+    img {
+      border: 3px solid white;
+    }
+    span {
+      cursor: pointer;
+      position: absolute;
+      left: 42%;
+      width: 100px;
+      top: 25%;
+      color: white;
+      text-align: center;
+    }
+  }
+}

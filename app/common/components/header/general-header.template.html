@@ -7,9 +7,14 @@
   </div>
   <div class="menu-options col l4 m2"> 
       <a routerLink="home"  class="logo">
-        <img id="home-logo" src="static/logo-med.png" alt="lost dog logo" [ngStyle]="{'opacity': ScrollService.scrollOpacity}"> </a> </div> <div class="menu-options col l3 m2"> <div class="profile">
-      <a routerLink="" (click)="toggleLoginFrom($event)">Chris Zepeda
-      <img  id="profile-arrow" src="static/dropdown.png" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">
+        <img id="home-logo" src="static/logo-med.png" alt="lost dog logo" [ngStyle]="{'opacity': ScrollService.scrollOpacity}">
+      </a> 
+    </div> 
+    <div class="menu-options col l3 m2">
+      <div class="profile">
+        <a href="javascript:void(0)" (click)="toggleLoginFrom($event)">
+          log-in
+          <img  id="profile-arrow" src="static/dropdown.png" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">
       </a>
      </div> 
   </div>
@@ -45,7 +50,7 @@
         <i class="material-icons right">send</i>
       </button>
       <div class="col l12 account-link">
-        <a routerLink="" title="" class="waves-effect"> Crea tu cuenta
+        <a routerLink="account" title="" class="waves-effect"> Crea tu cuenta
          <i class="material-icons right">person_pin</i>
         </a>        
       </div>

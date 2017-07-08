@@ -2,7 +2,8 @@ import { Component} from '@angular/core';
 
 @Component({
   selector: 'account',
-  template: require('./create-account.template.html')
+  template: require('./create-account.template.html'),
+  styles: [ require('./account-style.scss')]
 })
 export class accountComponent {
   public accountpage: string;
