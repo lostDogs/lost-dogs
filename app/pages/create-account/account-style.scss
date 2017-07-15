@@ -1,5 +1,16 @@
 @import '../../common/styles/variables.scss';
 .create-account {
+ .centered {
+  display: flex;
+   * {
+    margin: auto;  
+  }
+ }
+   .privacy-policy {
+      font-size: 0.7rem;
+      padding-bottom: 50px;
+      padding-top: 20px;    
+   }
   .main-title {
     margin-top: 99px;
     margin-bottom: 0;
@@ -24,7 +35,7 @@
     input[type=text]:focus:not([readonly]) {
         border-bottom: 1px solid  white;
         box-shadow: 0 1px 0 0 white;
-        color: black;
+        color: white;
     }
 
     input[type=text]:focus:not([readonly]) + label {
