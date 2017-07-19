@@ -23,8 +23,8 @@
   .main-create-account {
     margin-bottom: 0;
     background: $lightGrey;
-    input[type=text] {
-      color: black;
+    input[type], input[type=password] {
+      color: grey;
       border-bottom: 1px solid grey;
     }
     .input-field {
@@ -32,13 +32,13 @@
         color: grey;
       }
     }
-    input[type=text]:focus:not([readonly]) {
+    input[type]:focus:not([readonly])  {
         border-bottom: 1px solid  white;
         box-shadow: 0 1px 0 0 white;
-        color: white;
+        color: black;
     }
 
-    input[type=text]:focus:not([readonly]) + label {
+    input[type]:focus:not([readonly]) + label{
       color: white;
     }
   }

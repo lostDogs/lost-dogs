@@ -4,62 +4,81 @@
   </div>
   <div class="main-create-account row">
 
-    <form name="createaccount" class="col l6 s12 offset-l3 form-create-account">
+    <form name="createaccount"  #createAccount="ngForm" (ngSubmit)="createUser()" class="col l6 s12 offset-l3 form-create-account">
       <div class="file-field input-field">
         <div class="profile-pic">
           <span>agrega una image</span>
-          <img src="./static/profile-undef.png" alt="image de perfil" class="circle width-center">
-          <input type="file" class="circle width-center">
+          <img [src]="user.pic" alt="image de perfil" class="circle width-center" id="prof-pic">
+          <input type="file" class="circle width-center" name="userPic" (change)="filePicChange($event)" >
         </div>
       </div>
       <div class="row">
         <div class="input-field col l12 s12">
-              <input type="text" name="" id="name" required>
+              <input type="text" name="firstame" id="name"  [(ngModel)]="user.name.first" required>
               <label for="name">Nombre(s)</label>
         </div>
       </div>
       <div class="row">
+        <h2>USER PIC: {{user.pic}}</h2>
+      </div>
+      <div class="row">
         <div class="input-field col l6 s12">
-              <input type="text" name="" id="last-name-1" required>
+              <input type="text" name="lastName1" id="last-name-1" [(ngModel)]="user.name.last1" required>
               <label for="last-name-1">Apellido paterno</label>
         </div>
         <div class="input-field  col l6 s12">
-              <input type="text" name="" id="last-name-2" required>
+              <input type="text" name="lastName2" id="last-name-2"  [(ngModel)]="user.name.last2" required>
               <label for="last-name-2">Apellido materno</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col l12 s12">
-            <input type="text" name="" id="adresss" required>
+            <input type="text" name="adresss" id="adresss" [(ngModel)]="user.adress.adressName" required>
             <label for="adresss">Domicilio</label>
         </div>
     </div>
       <div class="row">
         <div class="input-field col l6 s12">
-              <input type="text" name="" id="postal-code" required>
+              <input type="text" name="postalCode" id="postal-code" [(ngModel)]="user.adress.postalCode" required>
               <label for="postal-code">Codigo postal</label>
         </div>
         <div class="input-field  col l6 s12">
-              <input type="text" name="" id="city" required>
+              <input type="text" name="city" id="city" [(ngModel)]="user.adress.city" required>
               <label for="city">ciudad</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col l12 s12">
-              <input type="text" name="" id="email" required>
+              <input type="text" name="email" id="email" [(ngModel)]="user.contact.email" required>
               <label for="email">Correo electronico</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col l2 s4">
-              <input type="text" name="" id="lada" required>
+              <input type="text" name="lada" id="lada"  [(ngModel)]="user.contact.lada" required>
               <label for="postal-code">Lada</label>
         </div>
         <div class="input-field  col l10 s7">
-              <input type="text" name="" id="phone" required>
+              <input type="text" name="phone" id="phone" [(ngModel)]="user.contact.phone" required>
               <label for="phone">          Telefono celular</label>
         </div>
       </div>
+      <div class="row">
+        <div class="input-field col l12 s12">
+              <input type="text" name="userName" id="userName" [(ngModel)]="user.access.userName" required>
+              <label for="userName">Nombre de usuario</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col l6 s12">
+              <input type="password" name="password" id="password"  [(ngModel)]="user.access.password" required>
+              <label for="password">Contrasenia</label>
+        </div>
+        <div class="input-field  col l6 s12">
+              <input type="password" name="password2" id="password2" [(ngModel)]="user.access.password2" required>
+              <label for="password2">Vuelve a introducir tu contrasenia</label>
+        </div>
+      </div>      
       <div class="row centered">
         <button class="btn waves-effect col l4 s10 action" type="submit">Crear cuenta
           <i class="material-icons right">perm_identity</i>
@@ -67,7 +86,7 @@
       </div>
       <div class="row centered">
         <div class="privacy-policy">
-          <p>Te prometemos que no vamos a <b>compartir</b> tu informacion. Ve nuetras <a href="javascript:void(0)" title="privacy policy"> politicas de privacidad</a>.</p>
+          <p>Te prometemos que no vamos a <b>compartir</b> tu informacion con nadie mas.Ve nuetras <a href="javascript:void(0)" title="privacy policy"> politicas de privacidad</a>.</p>
         </div>
       </div>
     </form>

@@ -13,6 +13,7 @@
     "@angular/common": "^2.3.0",
     "@angular/compiler": "^2.3.0",
     "@angular/core": "^2.3.0",
+    "@angular/forms": "^2.3.0",
     "@angular/http": "^2.3.0",
     "@angular/platform-browser": "^2.3.0",
     "@angular/platform-browser-dynamic": "^2.3.0",
@@ -21,10 +22,10 @@
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
     "es6-shim": "^0.35.2",
+    "express": "^4.14.0",
     "reflect-metadata": "^0.1.8",
     "rxjs": "^5.0.0-rc.4",
     "systemjs": "^0.19.41",
-    "express": "^4.14.0",
     "zone.js": "^0.7.2"
   },
   "devDependencies": {
