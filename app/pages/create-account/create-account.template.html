@@ -12,43 +12,56 @@
           <input type="file" class="circle width-center" name="userPic" (change)="filePicChange($event)" >
         </div>
       </div>
-      <div class="row">
-        <div class="input-field col l12 s12">
+      <div class="row row-extraspace">
+        <div class="input-field col l4 s12">
               <input type="text" name="firstame" id="name"  [(ngModel)]="user.name.first" required>
               <label for="name">Nombre(s)</label>
         </div>
-      </div>
-      <div class="row">
-        <h2>USER PIC: {{user.pic}}</h2>
-      </div>
-      <div class="row">
-        <div class="input-field col l6 s12">
+        <div class="input-field col l4 s12">
               <input type="text" name="lastName1" id="last-name-1" [(ngModel)]="user.name.last1" required>
               <label for="last-name-1">Apellido paterno</label>
         </div>
-        <div class="input-field  col l6 s12">
+        <div class="input-field  col l4 s12">
               <input type="text" name="lastName2" id="last-name-2"  [(ngModel)]="user.name.last2" required>
               <label for="last-name-2">Apellido materno</label>
-        </div>
+        </div>        
       </div>
       <div class="row">
-        <div class="input-field col l12 s12">
+        <h5>Domicilio</h5>
+      </div>
+      <div class="row">
+        <div class="input-field col l3 s12">
+            <input type="text" name="number-ext" id="number-ext" [(ngModel)]="user.adress.numberExt" required>
+            <label for="number-ext">Numero Exterior</label>
+        </div>
+        <div class="input-field col l3 s12">
+            <input type="text" name="adresss" id="adresss" [(ngModel)]="user.adress.numberInt" required>
+            <label for="adresss">Numero Interor</label>
+        </div>        
+        <div class="input-field col l6 s12">
             <input type="text" name="adresss" id="adresss" [(ngModel)]="user.adress.adressName" required>
-            <label for="adresss">Domicilio</label>
+            <label for="adresss">Colonia</label>
         </div>
     </div>
-      <div class="row">
-        <div class="input-field col l6 s12">
+    <div class="row">
+        <div class="input-field col l3 push-l3 s12">
               <input type="text" name="postalCode" id="postal-code" [(ngModel)]="user.adress.postalCode" required>
               <label for="postal-code">Codigo postal</label>
-        </div>
-        <div class="input-field  col l6 s12">
+        </div>    
+        <div class="input-field  col l3 push-l3 s12">
               <input type="text" name="city" id="city" [(ngModel)]="user.adress.city" required>
               <label for="city">ciudad</label>
         </div>
-      </div>
+        <div class="input-field col l3 push-l3 s12">
+              <input type="text" name="country" id="country" [(ngModel)]="user.adress.country" required>
+              <label for="country">Pais</label>
+        </div>              
+    </div>
       <div class="row">
-        <div class="input-field col l12 s12">
+        <h5>Contato</h5>
+      </div>    
+      <div class="row">
+        <div class="input-field col l12  s12">
               <input type="text" name="email" id="email" [(ngModel)]="user.contact.email" required>
               <label for="email">Correo electronico</label>
         </div>
@@ -58,11 +71,14 @@
               <input type="text" name="lada" id="lada"  [(ngModel)]="user.contact.lada" required>
               <label for="postal-code">Lada</label>
         </div>
-        <div class="input-field  col l10 s7">
+        <div class="input-field  col l5 s8">
               <input type="text" name="phone" id="phone" [(ngModel)]="user.contact.phone" required>
               <label for="phone">          Telefono celular</label>
         </div>
       </div>
+      <div class="row">
+        <h5>Usuario</h5>
+      </div>         
       <div class="row">
         <div class="input-field col l12 s12">
               <input type="text" name="userName" id="userName" [(ngModel)]="user.access.userName" required>
@@ -70,16 +86,16 @@
         </div>
       </div>
       <div class="row">
-        <div class="input-field col l6 s12">
+        <div class="input-field col l4  push-l4 s12">
               <input type="password" name="password" id="password"  [(ngModel)]="user.access.password" required>
               <label for="password">Contrasenia</label>
         </div>
-        <div class="input-field  col l6 s12">
+        <div class="input-field  col l4 push-l4 s12">
               <input type="password" name="password2" id="password2" [(ngModel)]="user.access.password2" required>
-              <label for="password2">Vuelve a introducir tu contrasenia</label>
+              <label for="password2">repite tu contrasenia</label>
         </div>
       </div>      
-      <div class="row centered">
+      <div class="row centered row-extraspace">
         <button class="btn waves-effect col l4 s10 action" type="submit">Crear cuenta
           <i class="material-icons right">perm_identity</i>
         </button>

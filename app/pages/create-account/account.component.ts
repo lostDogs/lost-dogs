@@ -27,16 +27,22 @@ export class accountComponent {
   public createUser (): void {
     console.log('this', this);
   }
+
   public filePicChange(ev: any): void {
     const file: File = ev.target.files[0];
-    console.log('event',ev.target.files);
-    let path: any
       if (file.type.match('image.*')) {
-        const reader = new FileReader();
-        reader.onload = (event: any) => {
-           this.user.pic = event.target.result;
-        };
-      reader.readAsDataURL(file);
+        try {
+          const reader = new FileReader();
+          reader.onload = (event: any) => {
+             this.user.pic = event.target.result;
+          };
+          reader.readAsDataURL(file);
+        }catch (error){
+          // do nothing
+        }
+      } else {
+        console.error('not an image');
       }
   }
+
 };
