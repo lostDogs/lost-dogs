@@ -1,5 +1,6 @@
 import { Component, HostListener, Inject} from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
+import {ScrollService} from '../../common/components/services/scroll.service';
 
 @Component({
   selector: 'home',
@@ -9,12 +10,12 @@ import { DOCUMENT } from '@angular/platform-browser';
 
 export class homeComponent {
   public scrollnormalize: number
-  constructor (@Inject(DOCUMENT) private document:  Document) { }
+  constructor (@Inject(DOCUMENT) private document:  Document, public scrollService : ScrollService) { }
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
     const scrollMax: number = 300;
     const scrollTop = this.document.body.scrollTop;
     this.scrollnormalize = (scrollMax - scrollTop) / scrollMax;
-    console.log('Scrolling', this.scrollnormalize);
+    this.scrollService.scrollOpacity = 1.2 - this.scrollnormalize;
   }  
 };

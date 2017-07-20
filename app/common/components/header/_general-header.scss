@@ -103,7 +103,7 @@ header {
     color: Gainsboro;
   }
 }
-input[type=text] {
+input[type] {
   border-bottom: 1px solid Gainsboro;
   border-radius: 5px;
   color: white;
@@ -123,12 +123,12 @@ z-index: 1;
   }
 }
 
-input[type=text]:focus:not([readonly]) {
+input[type]:focus:not([readonly]) {
     border-bottom: 1px solid  white;
     box-shadow: 0 1px 0 0 white;
 }
 
-input[type=text]:focus:not([readonly]) + label {
+input[type]:focus:not([readonly]) + label{
   color: white;
 }
 
