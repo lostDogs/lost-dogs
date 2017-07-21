@@ -11,7 +11,7 @@ module.exports = new mongoose.Schema({
 
   search: Array,
 
-  // reporter_id: mongoose.Schema.Types.ObjectId,
+  reporter_id: mongoose.Schema.Types.ObjectId,
 
   // doc managment
   created_at: {

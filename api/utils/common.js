@@ -1,17 +1,12 @@
 'use strict';
 
-function clone(object) {
-  const string = JSON.stringify(object);
-  if (typeof string !== 'undefined') {
-    return (JSON.parse(string));
-  }
-
-  return null;
-}
+const bcrypt = require('bcrypt-nodejs');
 
 function select(object, selector) {
+  if (object[selector]) return object[selector];
+
   const path = selector.split('.');
-  let obj = clone(object);
+  let obj = Object.assign({}, object);
 
   for (let i = 0; i < path.length; i += 1) {
     if (obj[path[i]]) {
@@ -32,4 +27,27 @@ module.exports.generateArrayFromObject = (object, fields) => {
   });
 
   return result;
+};
+
+module.exports.encryptString = string => (
+  new Promise((resolve, reject) => (
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(string, salt, null, (hashErr, hash) => (
+        hashErr ? reject(hashErr) : resolve(hash)
+      ));
+    })
+  ))
+);
+
+module.exports.validateRequiredFields = (object, requiredFieldsList) => {
+  const missingFields = requiredFieldsList.filter(requiredField => (!select(object, requiredField)));
+
+  if (missingFields.length > 0) {
+    return Promise.reject({
+      statusCode: 400,
+      code: `Missing fields in create request: ${missingFields.join(', ')}`,
+    });
+  }
+
+  return Promise.resolve(object);
 };

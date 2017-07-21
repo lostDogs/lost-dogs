@@ -18,11 +18,12 @@ app.use(bodyParser.json());
 
 // routers
 const dogs = require('./routes/dogRoute');
+const users = require('./routes/userRoute');
 
 /**
  * Connect to MongoDB.
  */
-mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI);
+mongoose.connect(`${process.env.MONGODB_PORT_27017_TCP_ADDR}/lostdogs` || process.env.MONGOLAB_URI);
 mongoose.connection.on('error', () => {
   console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
@@ -38,7 +39,8 @@ mongoose.connection.on('connected', () => {
 
   app.use(cors());
 
-  app.use('/dogs', dogs);
+  app.use('/api/dogs', dogs);
+  app.use('/api/users', users);
 
   /**
    * Start Express server.

@@ -18,34 +18,45 @@ module.exports = (model) => {
   };
 
   const create = (body, callback) => {
-    model.create(model.createMap(body), (err, item) => {
-      if (err) {
-        return callback({
-          statusCode: 500,
-          code: 'Error while saving object.',
-        });
-      }
+    model.createMap(body)
+      .then(createBody => (
+        model.create(createBody, (err, item) => {
+          if (err) {
+            return callback({
+              statusCode: 500,
+              code: 'Error while saving object.',
+            });
+          }
 
-      return callback(null, item.getInfo());
-    });
+          return callback(null, item.getInfo());
+        })
+      ), err => (
+        callback(err)
+      ));
   };
 
-  const update = (updateBody, id, callback) => {
-    model.findOneAndUpdate({ _id: id }, model.updateMap(updateBody), (err, item) => {
-      if (err) {
-        return callback({
-          statusCode: 500,
-          code: 'Error while updating object.',
-        });
-      } else if (!item) {
-        return callback({
-          statusCode: 404,
-          code: 'Not found.',
-        });
-      }
+  const update = (body, id, callback) => {
+    model.updateMap(body)
 
-      return retrieve(item.id, callback);
-    });
+      .then(updateBody => (
+        model.findOneAndUpdate({ _id: id }, updateBody, (err, item) => {
+          if (err) {
+            return callback({
+              statusCode: 500,
+              code: 'Error while updating object.',
+            });
+          } else if (!item) {
+            return callback({
+              statusCode: 404,
+              code: 'Not found.',
+            });
+          }
+
+          return retrieve(item.id, callback);
+        })
+      ), err => (
+        callback(err)
+      ));
   };
 
   const deleteItem = (id, callback) => {

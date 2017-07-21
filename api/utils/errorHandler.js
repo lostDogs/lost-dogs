@@ -2,7 +2,9 @@
 
 function ErrorHandler(options) {
   this.send = (res) => {
-    res.status(options.statusCode).send(options.code);
+    res.status(options.statusCode).json({
+      code: options.code,
+    });
   };
 }
 
