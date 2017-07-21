@@ -1,0 +1,53 @@
+@import '../../styles/variables.scss';
+footer {
+  padding-top:  20px;
+  background: $lightBlue;
+  color: white;
+  border-top: 6px solid white;
+  padding-bottom: 20px;
+  &.row {
+    margin-bottom: 0;
+  }
+  a {
+    color: white;
+    font-size: 16px;
+   font-style: italic;
+   line-height: 37px;
+  }
+  .title {
+    color: gainsboro;
+    text-transform: uppercase;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-links {
+
+  }
+  #social {
+    float: right;
+    padding-top: 35px;
+  }
+  .social-icon {
+    display: inline-block;
+    img {
+      cursor: pointer;
+      width: 75px;
+      padding-right:10px; 
+    }
+  }
+  @media screen and (max-device-width: $screen-mobile-max) { 
+    text-align: center;
+    h5 {
+      font-size: 3.5rem;
+    }
+    a  {
+      font-size: 2.4rem;
+      line-height: 60px;
+    }
+    #social {
+      padding-top: 45px;
+    }
+  }
+}

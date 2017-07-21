@@ -1,0 +1,162 @@
+@import '../../styles/variables.scss';
+header {
+  position: fixed;
+  background: $lightBlue;
+  display: flex;
+  flex-direction: row;
+  height: 100px;  
+  border-bottom: 6px solid white;
+  z-index: 1000;
+  &#nav-header {
+    margin:0;
+    padding:0;
+  }
+  a {
+    font-family: $primaryFont, sans-serif;
+    font-size: 24px;
+    color: white;
+    text-decoration: none;
+    box-sizing: border-box;
+    padding: 0 10px;
+    #home-logo {
+      width:200px;
+    }
+    #profile-arrow {
+      width: 15px;
+    }
+    .profile-arrow-UpDown {
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -o-transform: rotate(180deg); 
+      -ms-transform: rotate(180deg);
+      transform: rotate(180deg);       
+    }
+  }
+  .menu-options {
+      margin: auto;
+    display: inline-block;
+    .home-mobile {
+      display: none;
+    }
+  }
+}
+
+#slide-out {
+  a:hover {
+    background-color: rgba(0,0,0,0.05);
+  }
+  .user-background {
+    background: $pink;
+    padding: 50px;
+    .profile-link {
+      font-size: 0;
+      padding: 0;
+    }
+  }
+  .profile-mobile { 
+    border: 5px solid white;
+    width: 250px;
+    display: block;
+    margin-bottom: 25px;
+  }
+}
+
+#popover-login {
+  position: fixed;
+  top: 80px;
+  right: 80px;
+  width: 250px;
+  background: $lightBlue;
+  border: 6px solid white;
+  border-radius: 10px;
+  z-index: 1010;
+  form {
+    padding: 10px 25px;
+    button {
+      margin-top: 15px;
+    }
+  }
+  input:-webkit-autofill {
+    background: transparent;
+  }
+  .account-link {
+    margin-top: 20px;
+    text-align: center;
+    a {
+      font-family: $primaryFont, sans-serif;
+      color: white;
+      text-decoration: none;
+      box-sizing: border-box;
+      i.right {
+        margin-left: 35px;
+      }
+    }
+  }
+    .account-link:hover {
+      border-bottom: 1px solid white;
+      border-radius: 5px;
+    }
+}
+
+.input-field {
+  label {
+    color: Gainsboro;
+  }
+}
+input[type] {
+  border-bottom: 1px solid Gainsboro;
+  border-radius: 5px;
+  color: white;
+}
+
+.btn {
+z-index: 1;
+&.action {
+  background: $buttonAction;
+
+}
+}
+
+.btn:hover {
+  &.action{
+    background: $buttonActionHover;
+  }
+}
+
+input[type]:focus:not([readonly]) {
+    border-bottom: 1px solid  white;
+    box-shadow: 0 1px 0 0 white;
+}
+
+input[type]:focus:not([readonly]) + label{
+  color: white;
+}
+
+@media screen and (max-device-width: $screen-mobile-max) {
+  header {
+    #slide-out {
+      a {
+        font-size: 2.8rem;
+      }
+      li > a {
+          height: 100px;
+          line-height: 100px;
+      }
+    }
+    height: 120px;
+    .menu-options  {
+      .profile {
+        display: none;
+      }
+      .actions { 
+        display: none;
+      }
+      .home-mobile {
+        display: inline-block;
+        img {
+          width: 80px;
+        }
+      }    
+    }
+  }
+}

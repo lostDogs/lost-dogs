@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import {ModuleWithProviders} from '@angular/core';
 import {Routes, RouterModule,} from '@angular/router';
-
 import {homeComponent} from './pages/home/home.component';
 import {boardComponent} from './pages/board/board.component';
-import {accountComponent} from './pages/account/account.component';
+import {accountComponent} from './pages/create-account/account.component';
 import {lostformComponent} from './pages/lostfoundform/lostfound.component';
 import {profileComponent} from './pages/profile/profile.component';
 import {selectionComponent} from './pages/selection/selection.component';

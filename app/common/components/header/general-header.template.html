@@ -1,0 +1,58 @@
+<header class="col l12 m12" id="nav-header">
+  <div class="menu-options col l5 m1 s3">
+    <a routerLink="board" class="actions">catalogo</a>
+    <a routerLink="lostfound" class="actions">perdi</a>
+    <a routerLink="lostfound" class="actions">encontre</a>  
+    <a routerLink="" class="home-mobile" data-activates="slide-out"><img src="static/side-menu.png" alt="side menu"></a>
+  </div>
+  <div class="menu-options col l4 m2"> 
+      <a routerLink="home"  class="logo">
+        <img id="home-logo" src="static/logo-med.png" alt="lost dog logo" [ngStyle]="{'opacity': ScrollService.scrollOpacity}">
+      </a> 
+    </div> 
+    <div class="menu-options col l3 m2">
+      <div class="profile">
+        <a href="javascript:void(0)" (click)="toggleLoginFrom($event)">
+          log-in
+          <img  id="profile-arrow" src="static/dropdown.png" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">
+      </a>
+     </div> 
+  </div>
+  <ul id="slide-out" class="side-nav">
+      <li><div class="user-profile">
+        <div class="user-background">
+          <a routerLink="" class="profile-link"><img src="static/me2.png" alt="profile picture" class="circle profile-mobile"></a>
+          <a routerLink="">Chris Zepeda</a>
+          <a routerLink="">chris.zep@gmail.com</a>
+        </div>
+      </div></li>
+      <li><a routerLink="" class="waves-effect">mis perros perdidos</a></li>
+      <li><a routerLink="" class="waves-effect">mis perros encontrados</a></li>
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">mas acciones</a></li>
+      <li><a routerLink="" class="waves-effect">Perdi un perro</a></li>
+      <li><a routerLink="" class="waves-effect">Encontre un perro</a></li>
+      <li><div class="divider"></div></li>
+   </ul>
+</header>
+<!-- [ngStyle]="{'top': offsetY}" -->
+<article id="popover-login" *ngIf="showLoginFrom" class="hoverable">
+  <form class="row" title="form-login" novalidate>
+      <div class="input-field col l12 s12">
+        <input type="text" name="" id="user-name" required>
+        <label for="user-name">nombre usuario</label>
+      </div>
+      <div class="input-field col l12 s12">
+          <input type="text" name="" id="user-password" required>
+          <label for="user-password">contrasenia</label>
+      </div>
+      <button class="btn waves-effect col l12 action" type="submit">login
+        <i class="material-icons right">send</i>
+      </button>
+      <div class="col l12 account-link">
+        <a routerLink="account" title="" class="waves-effect"> Crea tu cuenta
+         <i class="material-icons right">person_pin</i>
+        </a>        
+      </div>
+    </form>
+</article>

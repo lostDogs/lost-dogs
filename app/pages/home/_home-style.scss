@@ -1,0 +1,169 @@
+@import '../../common/styles/variables.scss';
+#home-dogs{
+  background: url(/static/dogsBlur1.png) repeat fixed center;
+  background-position: 0px 97px;
+  color: white;
+  .logo-huge {
+    display: flex;
+    height: 700px;
+    img {
+      width: 500px;
+      margin: auto;
+    }
+  }
+  .home-description {
+    background-color: $pink;
+    border-bottom: 6px solid white;
+    border-top: 6px solid white;
+    article {
+      margin-right: 40px;
+    }
+    h4 {
+      margin: 45px 0 25px 0;
+      text-align: center;
+    }
+    p {
+      font-size: 16px;
+      padding-left: 40px;
+      text-align: justify;
+    }
+    figure {
+      img {
+        float: right;
+        padding-right: 20px;
+        width: 200px;
+      }
+    }
+  }
+  .home-second-title {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+    text-shadow: 5px 2px 13px black;
+  }
+  .options {
+    //margin: 0 20px 0 20px;
+    .option {
+          border-top: 6px solid white;
+          border-bottom: 6px solid white;
+          margin-bottom: 50px;
+          height: 300px;
+          padding: 0;
+          display: flex;
+          text-align: center;
+          .info {
+            margin: auto;
+            padding: 0 30px 0 30px;
+            line-height: 140%;
+          }
+          .waves-effect {
+
+          }
+          .btn {
+            margin-top: 10px;
+            background-color: $buttonInfo;
+            z-index: 1;
+          }
+    }
+    #sad-dogo {
+      background: url(/static/sadDogo.png) no-repeat center;
+      background-size: cover;
+      border-left: 6px solid white;
+    }
+    #muchos-dogos {
+      background: url(/static/muchosDogos.png) no-repeat center;
+      background-size: cover;
+      border-left: 6px solid white;
+      border-right: 6px solid white;
+    }
+    #happy-dogos {
+      background: url(/static/happyDogo.png) no-repeat center;
+      background-size: cover;
+      border-right: 6px solid white;
+    }
+  }
+
+  .home-payment {
+    article {
+      margin: 0 ;
+    }
+    h4 {
+      margin: 45px 0 20px 0;
+    }
+    p {
+      text-align: center;
+    }
+  }
+  .circular {
+    border: 5px solid white;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    .earn-money {
+      margin: auto;
+      width: 150px;
+    }
+    .motivation-icon {
+      width: 150px;
+      height: 150px;
+      margin: auto;
+    }
+    .no-money-icon {
+      width: 145px;
+      height: 145px;
+      margin: auto;
+    }
+  }
+  @media screen and (max-device-width: $screen-mobile-max) {
+    .btn  {
+      height: 120px;
+      line-height: 120px;
+      width: 300px;
+      font-size: 3.4rem;
+    }
+    h5 {
+      font-size: 4.28rem;
+    }
+    h4 {
+      font-size: 5.28rem;
+    }
+    h3 {
+      font-size: 6.28rem;
+    }
+    p {
+      font-size: 3rem;
+    }
+   .home-description {
+     p {
+       font-size: 3rem;
+       padding: 0 40px 0 40px;
+     }
+     figure {
+      padding-right: 25px;
+      padding-bottom: 25px;
+      img {
+        width: 300px;
+      }
+     }
+   }
+   .logo-huge {
+    height: 1000px;
+    img {
+      width: 700px;
+    }
+   }
+   .options {
+      .option {
+         height: 500px;
+      }
+   }
+    a  {
+      font-size: 2.4rem;
+    }
+  }
+}
