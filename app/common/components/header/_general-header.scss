@@ -1,4 +1,5 @@
 @import '../../styles/variables.scss';
+//@import '../../styles/inputs.scss';
 header {
   position: fixed;
   background: $lightBlue;
@@ -98,17 +99,6 @@ header {
     }
 }
 
-.input-field {
-  label {
-    color: Gainsboro;
-  }
-}
-input[type] {
-  border-bottom: 1px solid Gainsboro;
-  border-radius: 5px;
-  color: white;
-}
-
 .btn {
 z-index: 1;
 &.action {
@@ -121,15 +111,6 @@ z-index: 1;
   &.action{
     background: $buttonActionHover;
   }
-}
-
-input[type]:focus:not([readonly]) {
-    border-bottom: 1px solid  white;
-    box-shadow: 0 1px 0 0 white;
-}
-
-input[type]:focus:not([readonly]) + label{
-  color: white;
 }
 
 @media screen and (max-device-width: $screen-mobile-max) {

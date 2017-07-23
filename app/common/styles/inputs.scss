@@ -1,0 +1,60 @@
+@import './variables.scss';
+.input-field {
+  label {
+    color: Gainsboro;
+  }
+  input[type] {
+    border-bottom: 1px solid Gainsboro;
+    border-radius: 5px;
+    color: white;
+  }
+  input[type]:focus:not([readonly]) {
+      border-bottom: 1px solid  white;
+      box-shadow: 0 1px 0 0 white;
+  }
+  input[type]:focus:not([readonly]) + label{
+    color: white;
+  }
+}
+
+.input-field.alt-black {
+  label {
+    color: grey;
+  }
+  input[type] {
+    color: grey;
+    border-bottom: 1px solid grey;
+  }
+  input[type]:focus:not([readonly])  {
+      border-bottom: 1px solid  white;
+      box-shadow: 0 1px 0 0 white;
+      color: black;
+  }
+
+  input[type]:focus:not([readonly]) + label{
+    color: white;
+  }
+}
+
+.input-field.wrong-red {
+  label {
+    color: $redAccent;
+  }
+  input[type] {
+    color: $redAccent;
+    border-bottom: 1px solid $redAccent;
+  }
+  input[type]:focus:not([readonly])  {
+      border-bottom: 1px solid  $redAccent;
+      box-shadow: 0 1px 0 0 $redAccent;
+      color: black;
+  }
+
+  input[type]:focus:not([readonly]) + label{
+    color: $redAccent;
+  }
+}
+
+
+
+

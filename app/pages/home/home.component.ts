@@ -1,6 +1,6 @@
 import { Component, HostListener, Inject} from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
-import {ScrollService} from '../../common/components/services/scroll.service';
+import {ScrollService} from '../../common/services/scroll.service';
 
 @Component({
   selector: 'home',

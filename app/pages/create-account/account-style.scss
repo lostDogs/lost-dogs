@@ -23,24 +23,6 @@
   .main-create-account {
     margin-bottom: 0;
     background: $lightGrey;
-    input[type], input[type=password] {
-      color: grey;
-      border-bottom: 1px solid grey;
-    }
-    .input-field {
-      label {
-        color: grey;
-      }
-    }
-    input[type]:focus:not([readonly])  {
-        border-bottom: 1px solid  white;
-        box-shadow: 0 1px 0 0 white;
-        color: black;
-    }
-
-    input[type]:focus:not([readonly]) + label{
-      color: white;
-    }
   }
   .profile-pic {
     display: flex;
