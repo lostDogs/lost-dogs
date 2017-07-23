@@ -27,24 +27,39 @@ export class accountComponent {
       access: {userName: undefined, password: undefined}
     };
     this.formValid = {
-     fname: true,
-     lname1: true,
-     lname2: true,
+     first: true,
+     last1: true,
+     last2: true,
      adressName: true,
      postalCode: true,
      city: true,
+     country: true,
      numberExt: true,
      numberInt: true,
      lada: true,
      phone: true,
      email: true,
      userName: true,
-     password: true
+     password: true,
+     password2: true
     };
   }
   public createUser (): void {
-    console.log('this', this);
-
+    // Check for undefined and set formvalue to false
+    const userFirts: any[] = Object.keys(this.user);
+    userFirts.forEach((userKey: any, elementIndex: number) => {
+      const element: any = this.user[userKey];
+      if (element instanceof Object) {
+        const propKey: any = Object.keys(element);
+        for (let i = 0; i < propKey.length; i++) {
+          const content: string = element[propKey[i]];
+          if (!content) {
+            this.formValid[propKey[i]] = false;
+          }
+        }
+      }
+    });
+    // End of checking for undefined
   }
 
   public filePicChange(ev: any): void {

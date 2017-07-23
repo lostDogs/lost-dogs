@@ -36,4 +36,52 @@ export class ValidationService {
     }
     return true;
   }
+
+  public onlyNumbers(field: string, min: number = undefined, max: number = undefined): boolean {
+    if (!min || !max) {
+      min = 0;
+      max = 100;
+    }
+    const regexVar: string = '^[0-9]{min,max}$';
+    const numRegex: RegExp = new RegExp(regexVar.replace('min', String(min)).replace('max', String(max)));
+    if (!numRegex.test(field)) {
+      return false;
+    }
+    return true;
+  }
+
+  public stringHipens(field: string): boolean {
+    const nameRegex: RegExp = /^(?!.*\s\s)(?!.*--)[a-zA-Z- ]+$/i;
+    if (!nameRegex.test(field) || !field) {
+      return false;
+    }
+    return true;
+  }
+
+  public postalCode(field: string): boolean {
+    const postalCodeRegex: RegExp = /^[a-z0-9-\s]+$/i;
+    if (!postalCodeRegex.test(field)) {
+      return false;
+    }
+    return true;
+  }
+
+  public password(field: string): boolean {
+    const passwordRegex: RegExp = /^[\S]+$/i;
+    if (!field || !passwordRegex.test(field) || field.length < 7 || field.length > 15) {
+      return false;
+    }
+    return true;
+  }
+
+  public passMatch(field1: string, field2: string): boolean {
+    if (!field2) {
+      return false;
+    } else if (field2 !== field1) {
+      return false;
+    }
+    return true;
+  }
+
+
 }
