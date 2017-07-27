@@ -1,0 +1,95 @@
+{
+	"id": "2bcda034-0cfe-f544-b258-53fcb6638e0e",
+	"name": "lostdogs",
+	"description": "",
+	"order": [
+		"f1f55872-0109-9b2d-8e30-31c9cd990ed3",
+		"8b9bc065-aa91-943c-4843-e84ccd3a35e8",
+		"607c749a-c86d-e0ac-fc07-b67409e1f919"
+	],
+	"folders": [],
+	"timestamp": 1500605384133,
+	"owner": "326743",
+	"public": false,
+	"requests": [
+		{
+			"id": "607c749a-c86d-e0ac-fc07-b67409e1f919",
+			"headers": "",
+			"headerData": [],
+			"url": "52.42.250.238/api/dogs",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1500611460257,
+			"name": "52.42.250.238/api/dogs",
+			"description": "",
+			"collectionId": "2bcda034-0cfe-f544-b258-53fcb6638e0e",
+			"responses": []
+		},
+		{
+			"id": "8b9bc065-aa91-943c-4843-e84ccd3a35e8",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "52.42.250.238/api/users/login",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1500657811961,
+			"name": "Login user",
+			"description": "",
+			"collectionId": "2bcda034-0cfe-f544-b258-53fcb6638e0e",
+			"responses": [],
+			"rawModeData": "{\n\t\"password\": \"123456\",\n\t\"username\": \"chris\"\n}"
+		},
+		{
+			"id": "f1f55872-0109-9b2d-8e30-31c9cd990ed3",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "52.42.250.238/api/users",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1500666178619,
+			"name": "Create user",
+			"description": "",
+			"collectionId": "2bcda034-0cfe-f544-b258-53fcb6638e0e",
+			"responses": [],
+			"rawModeData": "{\n\t\"name\": \"Oscar\",\n\t\"surname\": \"Reyes\",\n\t\"lastname\": \"Gaucin\",\n\t\"address\": {\n\t\t\"ext_number\": \"124\",\n\t\t\"neighborhood\": \"Fraccionamiento santa rosa\",\n\t\t\"zip_code\": \"35078\",\n\t\t\"city\": \"Gomez Palacio Durango\",\n\t\t\"country\": \"Mexico\"\n\t},\n\t\"phone_number\": {\n\t\t\"number\": 123456789,\n\t\t\"area_code\": 52\n\t},\n\t\"email\": \"oscarin@123.com\",\n\t\"username\": \"chris\",\n\t\"confirm_password\": \"123456\",\n\t\"password\": \"123456\"\n}"
+		}
+	]
+}
