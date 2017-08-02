@@ -68,7 +68,19 @@ module.exports = () => {
   };
 
   const login = (req, res) => {
-    User.login(req.body)
+    const body = req.body || {};
+
+    if (!body.username || !body.password) {
+      return token.signToken({
+        timestamp: Date.now(),
+      })
+
+      .then(userToken => (
+        res.json({ token: userToken })
+      ));
+    }
+
+    return User.login(req.body)
 
       .then(user => (
         token.signToken({

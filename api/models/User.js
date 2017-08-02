@@ -150,11 +150,11 @@ userSchema.pre('save', function preSave(next) {
       encryptString(uuid()),
     ])
 
-    .then((result) => {
-      this.token = result[1];
-      this.password = result[0];
-      next();
-    });
+      .then((result) => {
+        this.token = result[1];
+        this.password = result[0];
+        next();
+      });
   }
 
   return next();

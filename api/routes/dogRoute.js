@@ -2,9 +2,11 @@ const express = require('express');
 
 const router = express.Router();
 
-// clients controller
+// dogs controller
 const controller = require('../controllers/dogController')();
+const authMiddleware = require('../utils/token').middleware;
 
+router.all('*', authMiddleware);
 router.post('/', controller.create);
 router.get('/:id', controller.retrieve);
 router.put('/:id', controller.update);

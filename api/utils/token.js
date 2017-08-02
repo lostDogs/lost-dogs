@@ -22,7 +22,7 @@ const authUser = (jwtPayload, callback) => {
   });
 };
 
-const validateToken = (token) => {
+const validateToken = (token, username) => {
   if (!token) {
     return Promise.reject({
       statusCode: 401,
@@ -46,6 +46,17 @@ const validateToken = (token) => {
         });
       }
 
+      if (!jwtPayload.username) {
+        return resolve(jwtPayload);
+      }
+
+      if (username && jwtPayload.username !== username) {
+        return reject({
+          statusCode: 401,
+          code: 'Username doesn\'t match with token',
+        });
+      }
+
       return authUser(jwtPayload, (isAuthed, user) => {
         if (!isAuthed) {
           return reject({
@@ -54,7 +65,10 @@ const validateToken = (token) => {
           });
         }
 
-        return resolve(user);
+        return resolve({
+          user,
+          jwtPayload,
+        });
       });
     })
   ));
@@ -80,10 +94,12 @@ module.exports.signToken = jwtPayload => (
 module.exports.middleware = (req, res, next) => {
   const token = req.headers.Authorization || req.headers.authorization;
 
-  validateToken(token)
+  validateToken(token, req.params[0].replace('/', ''))
 
-    .then((user) => {
-      req.user = user;
+    .then((authInfo) => {
+      req.user = authInfo.user;
+      req.jwtPayload = authInfo.jwtPayload;
+
       next();
     }, err => (
       res.status(err.statusCode).json(err)
