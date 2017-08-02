@@ -7,24 +7,64 @@ const token = require('../utils/token');
 module.exports = () => {
   const crudManager = CrudManager(User);
 
+  const findByUsername = username => (
+    new Promise((resolve, reject) => {
+      User.findOne({ username }, (err, user) => {
+        if (err) {
+          return reject({
+            statusCode: 500,
+            code: 'Internal server error.',
+          });
+        } if (!user) {
+          return reject({
+            statusCode: 404,
+            code: 'User not found.',
+          });
+        }
+
+        return resolve(user);
+      });
+    })
+  );
+
   const create = (req, res) => {
-    crudManager.create(req.body, (err, dog) => {
-      if (err) {
-        return ErrorHander.handle(err, res);
-      }
+    User.createMap(req.body)
 
-      return res.status(201).json(dog);
-    });
-  };
+    .then((userMapping) => {
+      User.findOne({
+        $or: [{
+          username: userMapping.username,
+        }, {
+          email: userMapping.email,
+        }],
+      }, (err, user) => {
+        if (err) {
+          return ErrorHander.handle({
+            statusCode: 500,
+            code: 'Error fetching user',
+          }, res);
+        }
 
-  const update = (req, res) => {
-    crudManager.update(req.body, req.params.id, (err, dog) => {
-      if (err) {
-        return ErrorHander.handle(err, res);
-      }
+        if (user) {
+          return ErrorHander.handle({
+            statusCode: 400,
+            code: 'User already exists',
+          }, res);
+        }
 
-      return res.json(dog);
-    });
+        return crudManager.create(req.body, (createErr, dog) => {
+          if (createErr) {
+            return ErrorHander.handle(createErr, res);
+          }
+
+          return res.status(201).json(dog);
+        });
+      });
+    })
+
+    .catch(err => (
+      ErrorHander.handle(err, res)
+    ));
   };
 
   const login = (req, res) => {
@@ -48,23 +88,63 @@ module.exports = () => {
   };
 
   const retrieve = (req, res) => {
-    crudManager.retrieve(req.params.id, (err, dog) => {
+    User.findOne({
+      username: req.params.username,
+    }, (err, user) => {
       if (err) {
         return ErrorHander.handle(err, res);
+      } if (!user) {
+        return ErrorHander.handle({
+          statusCode: 404,
+          code: 'User not found.',
+        }, res);
       }
 
-      return res.json(dog);
+      return res.json(user.getInfo());
     });
   };
 
-  const deleteItem = (req, res) => {
-    crudManager.deleteItem(req.params.id, (err) => {
-      if (err) {
-        return ErrorHander.handle(err, res);
-      }
+  const update = (req, res) => {
+    User.updateMap(req.body)
 
-      return res.sendStatus(202);
-    });
+    .then(updateBody => (
+      User.findOneAndUpdate({ username: req.params.username }, updateBody, (err, item) => {
+        if (err) {
+          return ErrorHander.handle({
+            statusCode: 500,
+            code: 'Error while updating object.',
+          }, res);
+        } else if (!item) {
+          return ErrorHander.handle({
+            statusCode: 404,
+            code: 'Not found.',
+          }, res);
+        }
+
+        return retrieve(req, res);
+      })
+    ), err => (
+      ErrorHander.handle(err, res)
+    ));
+  };
+
+  const deleteItem = (req, res) => {
+    findByUsername(req.params.username)
+
+    .then((user) => {
+      User.remove({ username: user.username }, (deleteError, result) => {
+        if (deleteError || !result) {
+          return ErrorHander.handle({
+            statusCode: 500,
+            code: 'Error while deleting object.',
+          });
+        }
+
+        return res.sendStatus(202);
+      });
+    }, err => (
+      ErrorHander.handle(err, res)
+    ));
   };
 
   return {

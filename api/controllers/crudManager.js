@@ -1,3 +1,25 @@
+// dependencies
+const objectMapper = require('object-mapper');
+
+// libs
+const validatePagination = require('../utils/common').validatePagination;
+
+// static
+const searchMapping = {
+  searchTerms: {
+    key: 'searchTerms',
+    default: ' ',
+  },
+  page: {
+    key: 'page',
+    default: '0',
+  },
+  pageSize: {
+    key: 'pageSize',
+    default: '12',
+  },
+};
+
 module.exports = (model) => {
   const retrieve = (id, callback) => {
     model.findById(id, (err, item) => {
@@ -59,6 +81,67 @@ module.exports = (model) => {
       ));
   };
 
+  const search = (query, callback) => {
+    const mappedQuery = objectMapper(query, searchMapping);
+
+    // get pagination
+    const pagination = validatePagination(mappedQuery.page, mappedQuery.pageSize);
+    if (!pagination) {
+      return callback({
+        statusCode: 400,
+        code: 'Invalid pagination.',
+      });
+    }
+
+    const searchRequest = type => (
+      new Promise((resolve, reject) => {
+        model[type]({
+          $and: mappedQuery.searchTerms.trim().split(' ').map(term => ({
+            search: {
+              $regex: term,
+              $options: 'i',
+            },
+          })),
+        }).limit(pagination.limit).skip(pagination.skip)
+
+        .sort({
+          created: -1,
+        })
+        .exec((err, result) => (
+          err ? reject(err) : resolve(result)
+        ));
+      })
+    );
+
+    return Promise.all([
+      searchRequest('find'),
+      searchRequest('count'),
+    ])
+
+    .then((result) => {
+      const hits = result[1];
+      const items = result[0];
+
+      Promise.all(items.map(item => (
+        Promise.resolve(item.getInfo())
+      )))
+
+      .then(results => (
+        callback(null, {
+          results,
+          hits,
+        })
+      ));
+    })
+
+    .catch(() => (
+      callback({
+        statusCode: 500,
+        code: 'Internal server error.',
+      })
+    ));
+  };
+
   const deleteItem = (id, callback) => {
     retrieve(id, (findErr) => {
       if (findErr) {
@@ -83,5 +166,6 @@ module.exports = (model) => {
     retrieve,
     update,
     deleteItem,
+    search,
   };
 };

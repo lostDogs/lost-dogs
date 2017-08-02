@@ -49,7 +49,7 @@ dogSchema.methods.getInfo = function getInfo() {
   return objTmp;
 };
 
-dogSchema.pre('save', (next) => {
+dogSchema.pre('save', function preSave(next) {
   this.search = generateArrayFromObject(this, 'kind name'.split(' '));
   this.updated_at = Date.now();
 

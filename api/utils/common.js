@@ -1,6 +1,7 @@
 'use strict';
 
 const bcrypt = require('bcrypt-nodejs');
+const validator = require('validator');
 
 function select(object, selector) {
   if (object[selector]) return object[selector];
@@ -20,13 +21,43 @@ function select(object, selector) {
 module.exports.generateArrayFromObject = (object, fields) => {
   const result = [];
 
+  console.log('saving', fields);
+
   fields.forEach((field) => {
+    console.log('saving', object[field], JSON.stringify(object), select(object, field));
     if (select(object, field)) {
       result.push(String(select(object, field)).toLowerCase());
     }
   });
 
   return result;
+};
+
+/**
+ * Validates the page and pagesize and returns the skip and limit
+ * @param  {Number} page, page number.
+ * @param  {Number} pageSize, size of the page.
+ * @return {Object || Boolean}
+ */
+module.exports.validatePagination = (page, pageSize) => {
+  const pageOkay = validator.isInt(page, {
+    min: 0,
+    max: 99,
+  });
+
+  const pageSizeOkay = validator.isInt(pageSize, {
+    min: 0,
+    max: 48,
+  });
+
+  if (!(pageOkay && pageSizeOkay)) {
+    return false;
+  }
+
+  return {
+    limit: parseInt(pageSize, 10),
+    skip: parseInt(pageSize, 10) * parseInt(page, 10),
+  };
 };
 
 module.exports.encryptString = string => (
