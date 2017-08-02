@@ -13,16 +13,17 @@
         </div>
       </div>
       <div class="row row-extraspace">
-        <div class="input-field alt-black col l4 s12" [ngClass]="{'wrong-red': !formValid.first}">
-              <input type="text" name="firstame" id="name"  [(ngModel)]="user.name.first" (keyup)="formValid.first = validate.name(user.name.first);"  (change)="formValid.first = validate.name(user.name.first);">
-              <label for="name">Nombre(s)</label>
+        <div class="input-field alt-black col l4 s12" [ngClass]="{'wrong-red': !user.name.first.valid}">
+              <input type="text" name="firstame" id="name"  [(ngModel)]="user.name.first.value" (keyup)="user.name.first.valid = validate.name(user.name.first.value);"  (change)="user.name.first.valid = validate.name(user.name.first.value);">
+              <label for="name" [hidden]="!user.name.first.valid">Nombre(s)</label>
+              <label for="name" [hidden]="user.name.first.valid && user.name.first.value">{{validate.errors.name}}</label>
         </div>
-        <div class="input-field alt-black col l4 s12"  [ngClass]="{'wrong-red': !formValid.last1}">
-              <input type="text" name="lastName1" id="last-name-1" [(ngModel)]="user.name.last1" (keyup)="formValid.last1 = validate.name(user.name.last1);"  (change)="formValid.last1 = validate.name(user.name.last1);" >
+        <div class="input-field alt-black col l4 s12"  [ngClass]="{'wrong-red': !user.name.last1.valid}">
+              <input type="text" name="lastName1" id="last-name-1" [(ngModel)]="user.name.last1.value" (keyup)="user.name.last1.valid = validate.name(user.name.last1.value);"  (change)="user.name.last1.valid = validate.name(user.name.last1.value);" >
               <label for="last-name-1">Apellido paterno</label>
         </div>
-        <div class="input-field alt-black  col l4 s12"  [ngClass]="{'wrong-red': !formValid.last2}">
-              <input type="text" name="lastName2" id="last-name-2"  [(ngModel)]="user.name.last2" (keyup)="formValid.last2 = validate.name(user.name.last2);"  (change)="formValid.last2 = validate.name(user.name.last2);">
+        <div class="input-field alt-black  col l4 s12"  [ngClass]="{'wrong-red': !user.name.last2.valid}">
+              <input type="text" name="lastName2" id="last-name-2"  [(ngModel)]="user.name.last2.value" (keyup)="user.name.last2.valid = validate.name(user.name.last2.value);"  (change)="user.name.last2.valid = validate.name(user.name.last2.value);">
               <label for="last-name-2">Apellido materno</label>
         </div>        
       </div>
@@ -33,30 +34,30 @@
         </h5>
       </div>
       <div class="row">
-        <div class="input-field alt-black col l3 s12" [ngClass]="{'wrong-red': !formValid.numberExt}">
-            <input type="text" name="number-ext" id="number-ext" [(ngModel)]="user.adress.numberExt" (keyup)="formValid.numberExt = validate.onlyNumbers(user.adress.numberExt, 2, 10);"  (change)="formValid.numberExt = validate.onlyNumbers(user.adress.numberExt, 2, 10);">
+        <div class="input-field alt-black col l3 s12" [ngClass]="{'wrong-red': !user.adress.numberExt.valid}">
+            <input type="text" name="number-ext" id="number-ext" [(ngModel)]="user.adress.numberExt.value" (keyup)="user.adress.numberExt.valid = validate.onlyNumbers(user.adress.numberExt.value, 2, 10);"  (change)="user.adress.numberExt.valid = validate.onlyNumbers(user.adress.numberExt.value, 2, 10);">
             <label for="number-ext">Numero Exterior</label>
         </div>
-        <div class="input-field alt-black col l3 s12" [ngClass]="{'wrong-red': !formValid.numberInt}">
-            <input type="text" name="adresss" id="adresss" [(ngModel)]="user.adress.numberInt" (keyup)="formValid.numberInt = validate.onlyNumbers(user.adress.numberInt);"  (change)="formValid.numberInt = validate.onlyNumbers(user.adress.numberInt);">
+        <div class="input-field alt-black col l3 s12" [ngClass]="{'wrong-red': !user.adress.numberInt.valid}">
+            <input type="text" name="adresss" id="adresss" [(ngModel)]="user.adress.numberInt.value" (keyup)="user.adress.numberInt.valid = validate.onlyNumbers(user.adress.numberInt.value);"  (change)="user.adress.numberInt.valid = validate.onlyNumbers(user.adress.numberInt.value);">
             <label for="adresss">Numero Interor</label>
         </div>        
-        <div class="input-field alt-black col l6 s12" [ngClass]="{'wrong-red': !formValid.adressName}">
-            <input type="text" name="adresss" id="adresss" [(ngModel)]="user.adress.adressName" (keyup)="formValid.adressName = validate.stringHipens(user.adress.adressName);"  (change)="formValid.adressName = validate.stringHipens(user.adress.adressName);">
+        <div class="input-field alt-black col l6 s12" [ngClass]="{'wrong-red': !user.adress.adressName.valid}">
+            <input type="text" name="adresss" id="adresss" [(ngModel)]="user.adress.adressName.value" (keyup)="user.adress.adressName.valid = validate.stringHipens(user.adress.adressName.value);"  (change)="user.adress.adressName.valid = validate.stringHipens(user.adress.adressName.value);">
             <label for="adresss">Colonia</label>
         </div>
     </div>
     <div class="row">
-        <div class="input-field alt-black col l3 push-l3 s12" [ngClass]="{'wrong-red': !formValid.postalCode}">
-              <input type="text" name="postalCode" id="postal-code" [(ngModel)]="user.adress.postalCode" (keyup)="formValid.postalCode = validate.postalCode(user.adress.postalCode);"  (change)="formValid.postalCode = validate.postalCode(user.adress.postalCode);">
+        <div class="input-field alt-black col l3 push-l3 s12" [ngClass]="{'wrong-red': !user.adress.postalCode.valid}">
+              <input type="text" name="postalCode" id="postal-code" [(ngModel)]="user.adress.postalCode.value" (keyup)="user.adress.postalCode.valid = validate.postalCode(user.adress.postalCode.value);"  (change)="user.adress.postalCode.valid = validate.postalCode(user.adress.postalCode.value);">
               <label for="postal-code">Codigo postal</label>
         </div>    
-        <div class="input-field alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': !formValid.city}">
-              <input type="text" name="city" id="city" [(ngModel)]="user.adress.city" (keyup)="formValid.city = validate.name(user.adress.city);"  (change)="formValid.city = validate.name(user.adress.city);">
+        <div class="input-field alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': !user.adress.city.valid}">
+              <input type="text" name="city" id="city" [(ngModel)]="user.adress.city.value" (keyup)="user.adress.city.valid = validate.name(user.adress.city.value);"  (change)="user.adress.city.valid = validate.name(user.adress.city.value);">
               <label for="city">ciudad</label>
         </div>
-        <div class="input-field alt-black col l3 push-l3 s12" [ngClass]="{'wrong-red': !formValid.country}">
-              <input type="text" name="country" id="country" [(ngModel)]="user.adress.country" (keyup)="formValid.country = validate.name(user.adress.country);"  (change)="formValid.country = validate.name(user.adress.country);">
+        <div class="input-field alt-black col l3 push-l3 s12" [ngClass]="{'wrong-red': !user.adress.country.valid}">
+              <input type="text" name="country" id="country" [(ngModel)]="user.adress.country.value" (keyup)="user.adress.country.valid = validate.name(user.adress.country.value);"  (change)="user.adress.country.valid = validate.name(user.adress.country.value);">
               <label for="country">Pais</label>
         </div>              
     </div>
@@ -67,18 +68,18 @@
         </h5>
       </div>    
       <div class="row">
-        <div class="input-field alt-black col l12  s12" [ngClass]="{'wrong-red': !formValid.email}">
-              <input type="text" name="email" id="email" [(ngModel)]="user.contact.email" (keyup)="formValid.email = validate.email(user.contact.email);"  (change)="formValid.email = validate.email(user.contact.email);">
+        <div class="input-field alt-black col l12  s12" [ngClass]="{'wrong-red': !user.contact.email.valid}">
+              <input type="text" name="email" id="email" [(ngModel)]="user.contact.email.value" (keyup)="user.contact.email.valid = validate.email(user.contact.email.value);"  (change)="user.contact.email.valid = validate.email(user.contact.email.value);">
               <label for="email">Correo electronico</label>
         </div>
       </div>
       <div class="row">
-        <div class="input-field alt-black col l2 s4" [ngClass]="{'wrong-red': !formValid.lada}">
-              <input type="text" name="lada" id="lada"  [(ngModel)]="user.contact.lada" (keyup)="formValid.lada = validate.onlyNumbers(user.contact.lada, 2, 5);"  (change)="formValid.lada = validate.onlyNumbers(user.contact.lada, 2, 5);">
+        <div class="input-field alt-black col l2 s4" [ngClass]="{'wrong-red': !user.contact.areaCode.valid}">
+              <input type="text" name="areaCode" id="areaCode"  [(ngModel)]="user.contact.areaCode.value" (keyup)="user.contact.areaCode.valid = validate.onlyNumbers(user.contact.areaCode.value, 2, 5);"  (change)="user.contact.areaCode.valid = validate.onlyNumbers(user.contact.areaCode.value, 2, 5);">
               <label for="postal-code">Lada</label>
         </div>
-        <div class="input-field alt-black  col l5 s8" [ngClass]="{'wrong-red': !formValid.phone}">
-              <input type="text" name="phone" id="phone" [(ngModel)]="user.contact.phone" (keyup)="formValid.phone = validate.onlyNumbers(user.contact.phone, 10, 20);"  (change)="formValid.phone = validate.onlyNumbers(user.contact.phone, 10, 20);">
+        <div class="input-field alt-black  col l5 s8" [ngClass]="{'wrong-red': !user.contact.phone.valid}">
+              <input type="text" name="phone" id="phone" [(ngModel)]="user.contact.phone.value" (keyup)="user.contact.phone.valid = validate.onlyNumbers(user.contact.phone.value, 10, 20);"  (change)="user.contact.phone.valid = validate.onlyNumbers(user.contact.phone.value, 10, 20);">
               <label for="phone">Telefono celular</label>
         </div>
       </div>
@@ -89,18 +90,18 @@
         </h5>
       </div>         
       <div class="row">
-        <div class="input-field alt-black col l12 s12" [ngClass]="{'wrong-red': !formValid.userName}">
-              <input type="text" name="userName" id="userName" [(ngModel)]="user.access.userName" (keyup)="formValid.userName = validate.userName(user.access.userName);"  (change)="formValid.userName = validate.userName(user.access.userName);">
+        <div class="input-field alt-black col l12 s12" [ngClass]="{'wrong-red': !user.access.userName.valid}">
+              <input type="text" name="userName" id="userName" [(ngModel)]="user.access.userName.value" (keyup)="user.access.userName.valid = validate.userName(user.access.userName.value);"  (change)="user.access.userName.valid = validate.userName(user.access.userName.value);">
               <label for="userName">Nombre de usuario</label>
         </div>
       </div>
       <div class="row">
-        <div class="input-field alt-black col l4  push-l4 s12" [ngClass]="{'wrong-red': !formValid.password}">
-              <input type="password" name="password" id="password"  [(ngModel)]="user.access.password" (keyup)="formValid.password = validate.password(user.access.password);"  (change)="formValid.password = validate.password(user.access.password);">
+        <div class="input-field alt-black col l4  push-l4 s12" [ngClass]="{'wrong-red': !user.access.password.valid}">
+              <input type="password" name="password" id="password"  [(ngModel)]="user.access.password.value" (keyup)="user.access.password.valid = validate.password(user.access.password.value);"  (change)="user.access.password.valid = validate.password(user.access.password.value);">
               <label for="password">Contrasenia</label>
         </div>
-        <div class="input-field alt-black  col l4 push-l4 s12" [ngClass]="{'wrong-red': !formValid.password2}">
-              <input type="password" name="password2" id="password2" [(ngModel)]="user.access.password2" (keyup)="formValid.password2 = validate.passMatch(user.access.password2,user.access.password);"  (change)="formValid.password2 = validate.passMatch(user.access.password2,user.access.password);">
+        <div class="input-field alt-black  col l4 push-l4 s12" [ngClass]="{'wrong-red': !user.access.password2.valid}">
+              <input type="password" name="password2" id="password2" [(ngModel)]="user.access.password2.value" (keyup)="user.access.password2.valid = validate.passMatch(user.access.password2.value,user.access.password.value);"  (change)="user.access.password2.valid = validate.passMatch(user.access.password2.value,user.access.password.value);">
               <label for="password2">repite tu contrasenia</label>
         </div>
       </div>      

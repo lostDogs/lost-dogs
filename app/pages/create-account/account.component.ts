@@ -1,12 +1,18 @@
 import { Component} from '@angular/core';
 import {ValidationService} from  '../../common/services/validation.service';
+import {ApiService} from '../../common/services/api.service';
+export interface formObj {
+  valid: boolean;
+  value: any;
+  required: boolean;
+}
 
 export interface user {
   pic: string;
-  name: {first: string, last1: string, last2: string};
-  adress: {adressName: string, postalCode: string, city: string, numberExt: string, numberInt: string};
-  contact: {lada: number, phone: number, email: string};
-  access: {userName: string, password: string};
+  name: {first: formObj, last1: formObj, last2: formObj};
+  adress: {adressName: formObj, postalCode: formObj, city: formObj, numberExt: formObj, numberInt: formObj, country: formObj};
+  contact: {areaCode: formObj, phone: formObj, email: formObj};
+  access: {userName: formObj, password: formObj, password2: formObj};
 }
 
 @Component({
@@ -16,34 +22,36 @@ export interface user {
 })
 export class accountComponent {
   public user: user;
-  public formValid: any;
 
-  constructor (public validate: ValidationService) {
+  constructor (public validate: ValidationService, public api: ApiService) {
     this.user = {
-      pic: './static/profile-undef.png' ,
-      name: {first: undefined, last1: undefined, last2: undefined},
-      adress: {adressName: undefined, postalCode: undefined, city: undefined, numberExt: undefined, numberInt: undefined},
-      contact: {lada: undefined, phone: undefined, email: undefined},
-      access: {userName: undefined, password: undefined}
-    };
-    this.formValid = {
-     first: true,
-     last1: true,
-     last2: true,
-     adressName: true,
-     postalCode: true,
-     city: true,
-     country: true,
-     numberExt: true,
-     numberInt: true,
-     lada: true,
-     phone: true,
-     email: true,
-     userName: true,
-     password: true,
-     password2: true
+      pic: './static/profile-undef.png',
+      name: {
+        first: {valid: true, value: undefined, required: true},
+        last1: {valid: true, value: undefined, required: true},
+        last2: {valid: true, value: undefined, required: true}
+      },
+      adress: {
+        adressName: {valid: true, value: undefined, required: true},
+        postalCode: {valid: true, value: undefined, required: true},
+        city: {valid: true, value: undefined, required: true},
+        numberExt: {valid: true, value: undefined, required: true},
+        numberInt: {valid: true, value: undefined, required: false},
+        country: {valid: true, value: undefined, required: true}
+      },
+      contact: {
+        areaCode: {valid: true, value: undefined, required: true},
+        phone: {valid: true, value: undefined, required: true},
+        email: {valid: true, value: undefined, required: true}
+      },
+      access: {
+        userName: {valid: true, value: undefined, required: true},
+        password: {valid: true, value: undefined, required: true},
+        password2: {valid: true, value: undefined, required: true}
+      }
     };
   }
+
   public createUser (): void {
     // Check for undefined and set formvalue to false
     const userFirts: any[] = Object.keys(this.user);
@@ -52,14 +60,35 @@ export class accountComponent {
       if (element instanceof Object) {
         const propKey: any = Object.keys(element);
         for (let i = 0; i < propKey.length; i++) {
-          const content: string = element[propKey[i]];
-          if (!content) {
-            this.formValid[propKey[i]] = false;
+          const content: string = element[propKey[i]].value;
+          if (element[propKey[i]].required && !content) {
+            element[propKey[i]].valid = false;
           }
         }
       }
     });
-    // End of checking for undefined
+    let userPost: any = {
+      "name": this.user.name.first,
+      "surname":  this.user.name.last1,
+      "lastname":  this.user.name.last2,
+      "address": {
+        "ext_number": this.user.adress.numberExt,
+        "neighborhood": this.user.adress.adressName,
+        "zip_code": this.user.adress.postalCode,
+        "city": this.user.adress.city,
+        "country": this.user.adress.country
+      },
+      "phone_number": {
+        "number": this.user.contact.phone,
+        "area_code": this.user.contact.areaCode
+      },
+      "email": this.user.contact.email,
+      "username": this.user.access.userName,
+      "confirm_password": this.user.access.password,
+      "password": this.user.access.password2
+    }
+    this.api.post('http://52.42.250.238/api/users', userPost).subscribe((data: any) => {console.log('data', data)});
+    //this.api.get('http://52.42.250.238/api/users').subscribe((data: any) => {console.log('data', data)});
   }
 
   public filePicChange(ev: any): void {

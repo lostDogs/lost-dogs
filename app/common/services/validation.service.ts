@@ -2,12 +2,14 @@ import {Injectable} from '@angular/core';
 
 @Injectable ()
 export class ValidationService {
-  
+  public errors: any = {};
+
   constructor(){};
 
   public name(field: string):boolean {
     const nameRegex: RegExp = /^(?!.*\s\s)(?!.*-)[a-zA-Z- ]+$/i;
     if (!nameRegex.test(field) || !field) {
+      this.errors.name = 'unicamente letras';
       return false;
     }
     return true;
@@ -16,14 +18,16 @@ export class ValidationService {
   public phone(field: string): boolean {
     const phoneRegex: RegExp = /^[0-9-\.\+\(\)]+$/i;
     if (!phoneRegex.test(field)) {
+      this.errors.phone = 'unicamente numeros';
       return false;
     }
-    return true;    
+    return true;
   }
 
   public email(field: string): boolean {
     const emailRegex: RegExp = /^[\w\-\.\+]+@[\w\-\.\+]+\.[A-Za-z]{2,}$/;
     if (!emailRegex.test(field)) {
+      this.errors.email = 'debe terminar en @XXX.com';
       return false;
     }
     return true;
@@ -32,6 +36,7 @@ export class ValidationService {
   public userName(field: string): boolean {
     const userNameRegex: RegExp = /^([a-zA-Z0-9]{5,30})$/i;
     if (!field || !userNameRegex.test(field)) {
+      this.errors.userName = 'unicamente letras y numeros entre 5 y 30';
       return false;
     }
     return true;
@@ -45,6 +50,7 @@ export class ValidationService {
     const regexVar: string = '^[0-9]{min,max}$';
     const numRegex: RegExp = new RegExp(regexVar.replace('min', String(min)).replace('max', String(max)));
     if (!numRegex.test(field)) {
+      this.errors.onlyNumbers = 'unicamete numeros entre ' + min 'y ' + max;
       return false;
     }
     return true;
@@ -53,6 +59,7 @@ export class ValidationService {
   public stringHipens(field: string): boolean {
     const nameRegex: RegExp = /^(?!.*\s\s)(?!.*--)[a-zA-Z- ]+$/i;
     if (!nameRegex.test(field) || !field) {
+      this.errors.stringHipens = 'letras y guiones';
       return false;
     }
     return true;
@@ -61,6 +68,7 @@ export class ValidationService {
   public postalCode(field: string): boolean {
     const postalCodeRegex: RegExp = /^[a-z0-9-\s]+$/i;
     if (!postalCodeRegex.test(field)) {
+      this.errors.postalCode = 'numeros y letras';
       return false;
     }
     return true;
@@ -69,6 +77,7 @@ export class ValidationService {
   public password(field: string): boolean {
     const passwordRegex: RegExp = /^[\S]+$/i;
     if (!field || !passwordRegex.test(field) || field.length < 7 || field.length > 15) {
+      this.errors.password = 'sin espacion y entre 7 y 15 caracters';
       return false;
     }
     return true;
@@ -78,6 +87,7 @@ export class ValidationService {
     if (!field2) {
       return false;
     } else if (field2 !== field1) {
+      this.errors.passMatch = 'las contrasenias no coinciden';
       return false;
     }
     return true;
