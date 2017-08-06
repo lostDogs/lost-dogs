@@ -53,8 +53,8 @@ export class accountComponent {
   }
 
   public createUser (form: any): void {
-    console.log('form', form);
     // Check for undefined and set formvalue to false
+    let validForm: boolean = true;
     const userFirts: any[] = Object.keys(this.user);
     userFirts.forEach((userKey: any, elementIndex: number) => {
       const element: any = this.user[userKey];
@@ -64,32 +64,17 @@ export class accountComponent {
           const content: string = element[propKey[i]].value;
           if (element[propKey[i]].required && !content) {
             element[propKey[i]].valid = false;
+            validForm = false;
+          }else if (!element[propKey[i]].valid) {
+            validForm = false;
+            break;
           }
         }
       }
     });
-    let userPost: any = {
-      "name": this.user.name.first,
-      "surname":  this.user.name.last1,
-      "lastname":  this.user.name.last2,
-      "address": {
-        "ext_number": this.user.adress.numberExt,
-        "neighborhood": this.user.adress.adressName,
-        "zip_code": this.user.adress.postalCode,
-        "city": this.user.adress.city,
-        "country": this.user.adress.country
-      },
-      "phone_number": {
-        "number": this.user.contact.phone,
-        "area_code": this.user.contact.areaCode
-      },
-      "email": this.user.contact.email,
-      "username": this.user.access.userName,
-      "confirm_password": this.user.access.password,
-      "password": this.user.access.password2
+    if (validForm) {
+      this.postUser();
     }
-    this.api.post('http://52.42.250.238/api/users', userPost).subscribe((data: any) => {console.log('data', data)});
-    //this.api.get('http://52.42.250.238/api/users').subscribe((data: any) => {console.log('data', data)});
   }
 
   public filePicChange(ev: any): void {
@@ -107,5 +92,29 @@ export class accountComponent {
       } else {
         console.error('not an image');
       }
+  }
+
+  public postUser(): void {
+    const userPost: any = {
+      'name': this.user.name.first.value,
+      'surname':  this.user.name.last1.value,
+      'lastname':  this.user.name.last2.value,
+      'address': {
+        'ext_number': this.user.adress.numberExt.value,
+        'neighborhood': this.user.adress.adressName.value,
+        'zip_code': this.user.adress.postalCode.value,
+        'city': this.user.adress.city.value,
+        'country': this.user.adress.country.value
+      },
+      'phone_number': {
+        'number': this.user.contact.phone.value,
+        'area_code': this.user.contact.areaCode.value
+      },
+      'email': this.user.contact.email.value,
+      'username': this.user.access.userName.value,
+      'confirm_password': this.user.access.password.value,
+      'password': this.user.access.password2.value
+    }
+    this.api.post('http://52.42.250.238/api/users', userPost).subscribe((data: any) => {console.log('creating user post ', data)});
   }
 };
