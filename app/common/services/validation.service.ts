@@ -4,7 +4,9 @@ import {Injectable} from '@angular/core';
 export class ValidationService {
   public errors: any = {};
 
-  constructor(){};
+  constructor(){
+    this.errors.onlyNumbers = {};
+  };
 
   public name(field: string):boolean {
     const nameRegex: RegExp = /^(?!.*\s\s)(?!.*-)[a-zA-Z- ]+$/i;
@@ -42,7 +44,7 @@ export class ValidationService {
     return true;
   }
 
-  public onlyNumbers(field: string, min: number = undefined, max: number = undefined): boolean {
+  public onlyNumbers(field: string, min: number = undefined, max: number = undefined, fieldName: string): boolean {
     if (!min || !max) {
       min = 0;
       max = 100;
@@ -50,7 +52,12 @@ export class ValidationService {
     const regexVar: string = '^[0-9]{min,max}$';
     const numRegex: RegExp = new RegExp(regexVar.replace('min', String(min)).replace('max', String(max)));
     if (!numRegex.test(field)) {
-      this.errors.onlyNumbers = 'numeros entre ' + min + ' y ' + max;
+      const errorMessage = 'numeros entre ' + min + ' y ' + max;
+      if(fieldName) {
+        this.errors.onlyNumbers[fieldName] = errorMessage;
+      } else  {
+        this.errors.onlyNumbers.default = errorMessage;
+      }
       return false;
     }
     return true;
