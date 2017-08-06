@@ -49,6 +49,7 @@ export class ValidationService {
       min = 0;
       max = 100;
     }
+    field = field ? field :  '1';
     const regexVar: string = '^[0-9]{min,max}$';
     const numRegex: RegExp = new RegExp(regexVar.replace('min', String(min)).replace('max', String(max)));
     if (!numRegex.test(field)) {
@@ -74,7 +75,9 @@ export class ValidationService {
 
   public postalCode(field: string): boolean {
     const postalCodeRegex: RegExp = /^[a-z0-9-\s]+$/i;
-    if (!postalCodeRegex.test(field)) {
+    if (!field) {
+      return false;
+    } else if (!postalCodeRegex.test(field)) {
       this.errors.postalCode = 'numeros y letras';
       return false;
     }

@@ -62,7 +62,7 @@
               <input type="text" name="postalCode" id="postal-code" [(ngModel)]="user.adress.postalCode.value" (keyup)="user.adress.postalCode.valid = validate.postalCode(user.adress.postalCode.value);"  (change)="user.adress.postalCode.valid = validate.postalCode(user.adress.postalCode.value);">
               <label for="postal-code" [ngClass]="{'fadeInDown': user.adress.postalCode.valid && createAccount.controls.postalCode && createAccount.controls.postalCode.dirty}" [hidden]="!user.adress.postalCode.valid">codigo postal</label>
               <label for="postal-code" [ngClass]="{'fadeInDown': (!user.adress.postalCode.valid && user.adress.postalCode.value)}" [hidden]="!(!user.adress.postalCode.valid && user.adress.postalCode.value)">{{validate.errors.postalCode}}</label>
-              <label for="postal-code" [ngClass]="{'fadeInDown': !user.adress.postalCode.valid && !user.adress.postalCode.value}" [hidden]="!(!user.adress.postalCode.valid && !user.adress.postalCode.value)">codigo postal</label>
+              <label for="postal-code" [ngClass]="{'fadeInDown': !user.adress.postalCode.valid && !user.adress.postalCode.value}" [hidden]="!(!user.adress.postalCode.valid && !user.adress.postalCode.value)">codigo postal es requerido</label>
         </div>
         <div class="input-field alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': !user.adress.city.valid}">
               <input type="text" name="city" id="city" [(ngModel)]="user.adress.city.value" (keyup)="user.adress.city.valid = validate.name(user.adress.city.value);"  (change)="user.adress.city.valid = validate.name(user.adress.city.value);">
@@ -128,7 +128,7 @@
         </div>
         <div class="input-field alt-black  col l4 push-l4 s12" [ngClass]="{'wrong-red': !user.access.password2.valid}">
               <input type="password" name="password2" id="password2" [(ngModel)]="user.access.password2.value" (keyup)="user.access.password2.valid = validate.passMatch(user.access.password2.value,user.access.password.value);"  (change)="user.access.password2.valid = validate.passMatch(user.access.password2.value,user.access.password.value);">
-              <label for="password2" [ngClass]="{'fadeInDown': user.access.password2.valid && createAccount.controls.password2 && createAccount.controls.password2.dirty}" [hidden]="!user.access.password2.valid">Contrasenia</label>
+              <label for="password2" [ngClass]="{'fadeInDown': user.access.password2.valid && createAccount.controls.password2 && createAccount.controls.password2.dirty}" [hidden]="!user.access.password2.valid">Repite tu contrasenia</label>
               <label for="password2" [ngClass]="{'fadeInDown': (!user.access.password2.valid && user.access.password2.value)}" [hidden]="!(!user.access.password2.valid && user.access.password2.value)">{{validate.errors.passMatch}}</label>
               <label for="password2" [ngClass]="{'fadeInDown': !user.access.password2.valid && !user.access.password2.value}" [hidden]="!(!user.access.password2.valid && !user.access.password2.value)">repetirla es requerido</label>              
         </div>
