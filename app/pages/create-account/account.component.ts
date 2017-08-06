@@ -52,7 +52,8 @@ export class accountComponent {
     };
   }
 
-  public createUser (): void {
+  public createUser (form: any): void {
+    console.log('form', form);
     // Check for undefined and set formvalue to false
     const userFirts: any[] = Object.keys(this.user);
     userFirts.forEach((userKey: any, elementIndex: number) => {

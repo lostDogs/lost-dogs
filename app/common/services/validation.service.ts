@@ -50,7 +50,7 @@ export class ValidationService {
     const regexVar: string = '^[0-9]{min,max}$';
     const numRegex: RegExp = new RegExp(regexVar.replace('min', String(min)).replace('max', String(max)));
     if (!numRegex.test(field)) {
-      this.errors.onlyNumbers = 'unicamete numeros entre ' + min 'y ' + max;
+      this.errors.onlyNumbers = 'numeros entre ' + min + ' y ' + max;
       return false;
     }
     return true;
