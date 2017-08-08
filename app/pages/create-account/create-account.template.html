@@ -7,8 +7,9 @@
     <form name="createaccount"  #createAccount="ngForm" (ngSubmit)="createUser(createAccount)" class="col l6 s12 offset-l3 form-create-account">
       <div class="file-field input-field alt-black">
         <div class="profile-pic">
-          <span>agrega una image</span>
-          <img [src]="user.pic" alt="image de perfil" class="circle width-center" id="prof-pic">
+          <span *ngIf="user.pic.valid && user.pic.value ==='./static/profile-undef.png' ">agrega una image</span>
+          <span *ngIf="!user.pic.valid" class="wrong-red"><strong>No</strong> es una imagen</span>
+          <img [src]="user.pic.value" alt="image de perfil" class="circle width-center" id="prof-pic" [ngClass]="{'wrong-red': !user.pic.valid}">
           <input type="file" class="circle width-center" name="userPic" (change)="filePicChange($event)" >
         </div>
       </div>

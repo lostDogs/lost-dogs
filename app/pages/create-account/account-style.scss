@@ -27,6 +27,9 @@
   .profile-pic {
     display: flex;
     position: relative;
+    img.wrong-red {
+            border: 3px solid $redAccent;
+    }
     .width-center {
       margin: auto;
       width: 100px;

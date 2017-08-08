@@ -8,7 +8,7 @@ export interface formObj {
 }
 
 export interface user {
-  pic: string;
+  pic: formObj;
   name: {first: formObj, last1: formObj, last2: formObj};
   adress: {adressName: formObj, postalCode: formObj, city: formObj, numberExt: formObj, numberInt: formObj, country: formObj};
   contact: {areaCode: formObj, phone: formObj, email: formObj};
@@ -25,7 +25,7 @@ export class accountComponent {
 
   constructor (public validate: ValidationService, public api: ApiService) {
     this.user = {
-      pic: './static/profile-undef.png',
+      pic: {value:'./static/profile-undef.png', valid: true, required: true},
       name: {
         first: {valid: true, value: undefined, required: true},
         last1: {valid: true, value: undefined, required: true},
@@ -83,13 +83,15 @@ export class accountComponent {
         try {
           const reader = new FileReader();
           reader.onload = (event: any) => {
-             this.user.pic = event.target.result;
+             this.user.pic.value = event.target.result;
           };
           reader.readAsDataURL(file);
         }catch (error){
           // do nothing
         }
       } else {
+        this.user.pic.valid = false;
+        this.user.pic.value = './static/profile-undef.png';
         console.error('not an image');
       }
   }
