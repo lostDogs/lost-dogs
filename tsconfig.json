@@ -1,19 +1,21 @@
 {
-    "compilerOptions": {
-        "experimentalDecorators": true,
-        "moduleResolution": "node",
-        "target": "es5",
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "removeComments": false,
-        "preserveConstEnums": true,
-        "emitDecoratorMetadata": true,
-        "suppressImplicitAnyIndexErrors": true,
-        "listFiles": false
-    },
-    "compileOnSave": false,
-    "buildOnSave": false,
-    "exclude": [
-        "node_modules"
-    ]
+
+  "compilerOptions":
+  {
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "target": "es5",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "emitDecoratorMetadata": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "listFiles": false
+  },
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "exclude": [
+    "node_modules"
+  ]
 }

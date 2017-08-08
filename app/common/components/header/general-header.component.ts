@@ -1,5 +1,5 @@
 import {ElementRef, Renderer, Component,Directive, OnInit} from '@angular/core';
-import {ScrollService} from '../services/scroll.service';
+import {ScrollService} from '../../services/scroll.service';
 
 @Component({
   selector: 'general-header',

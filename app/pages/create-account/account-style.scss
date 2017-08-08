@@ -23,28 +23,13 @@
   .main-create-account {
     margin-bottom: 0;
     background: $lightGrey;
-    input[type], input[type=password] {
-      color: grey;
-      border-bottom: 1px solid grey;
-    }
-    .input-field {
-      label {
-        color: grey;
-      }
-    }
-    input[type]:focus:not([readonly])  {
-        border-bottom: 1px solid  white;
-        box-shadow: 0 1px 0 0 white;
-        color: black;
-    }
-
-    input[type]:focus:not([readonly]) + label{
-      color: white;
-    }
   }
   .profile-pic {
     display: flex;
     position: relative;
+    img.wrong-red {
+            border: 3px solid $redAccent;
+    }
     .width-center {
       margin: auto;
       width: 100px;
@@ -63,6 +48,22 @@
       text-align: center;
     }
   }
+  @keyframes fadeInDown {
+    from {
+      opacity: 0.5;
+      transform: translate3d(0, -180%, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, -145%, 0);
+    }
+  }
+
+  .fadeInDown {
+    animation-duration: 1s;
+    animation-name: fadeInDown;
+  }
+
 }
 .row-extraspace {
   padding-top: 35px;

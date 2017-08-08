@@ -14,7 +14,7 @@ export const router: Routes = [
 {path: 'board', component: boardComponent},
 {path: 'account', component: accountComponent},
 {path: 'lostfound', component: lostformComponent},
-{path: 'profile', component: profileComponent },
+{path: 'profile', component: profileComponent},
 {path: 'selection', component: selectionComponent}
 ];
 // TODO: check why routing is not working without the hash.
