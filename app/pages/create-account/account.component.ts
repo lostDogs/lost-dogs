@@ -79,14 +79,14 @@ export class accountComponent {
 
   public filePicChange(ev: any): void {
     const file: File = ev.target.files[0];
-      if (file.type.match('image.*')) {
+      if (ev.target && ev.target.files && file && file.type.match('image.*')) {
         try {
           const reader = new FileReader();
           reader.onload = (event: any) => {
-             this.user.pic.value = event.target.result;
+            this.user.pic.value = event.target.result;
           };
           reader.readAsDataURL(file);
-        }catch (error){
+        }catch (error) {
           // do nothing
         }
       } else {
