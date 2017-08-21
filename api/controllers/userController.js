@@ -1,12 +1,11 @@
-const CrudManager = require('./crudManager');
+// Model
 const User = require('../models/User');
 
+// libs
 const ErrorHander = require('../utils/errorHandler');
 const token = require('../utils/token');
 
 module.exports = () => {
-  const crudManager = CrudManager(User);
-
   const findByUsername = username => (
     new Promise((resolve, reject) => {
       User.findOne({ username }, (err, user) => {
@@ -30,12 +29,12 @@ module.exports = () => {
   const create = (req, res) => {
     User.createMap(req.body)
 
-    .then((userMapping) => {
+    .then(({ avatar, createBody }) => {
       User.findOne({
         $or: [{
-          username: userMapping.username,
+          username: createBody.username,
         }, {
-          email: userMapping.email,
+          email: createBody.email,
         }],
       }, (err, user) => {
         if (err) {
@@ -52,12 +51,15 @@ module.exports = () => {
           }, res);
         }
 
-        return crudManager.create(req.body, (createErr, dog) => {
+        return User.create(createBody, (createErr, newUser) => {
           if (createErr) {
-            return ErrorHander.handle(createErr, res);
+            return ErrorHander.handle({
+              statusCode: 500,
+              code: 'Error when creating user',
+            }, res);
           }
 
-          return res.status(201).json(dog);
+          return res.status(201).json(Object.assign(newUser.getInfo(), { avatar }));
         });
       });
     })

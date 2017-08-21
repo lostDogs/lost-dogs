@@ -24,3 +24,25 @@ module.exports = new mongoose.Schema({
     default: Date.now,
   },
 });
+
+module.exports.dogMappings = {
+  createMap: {
+    name: 'name',
+    kind: 'kind',
+    description: 'description',
+    found_date: 'found_date',
+    reporter_id: 'reporter_id',
+  },
+
+  infoMap: {
+    name: 'name',
+    kind: 'kind',
+    description: 'description',
+    found_date: 'found_date',
+    reporter_id: 'reporter_id',
+    created_at: 'created_at',
+    _id: '_id',
+  },
+
+  createRequiredFieldsList: 'name kind found_date reporter_id'.split(' '),
+};

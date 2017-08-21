@@ -2,33 +2,15 @@ const objectMapper = require('object-mapper');
 const mongoose = require('mongoose');
 const moment = require('moment');
 
+// schema
 const dogSchema = require('../schemas/dogSchema');
+const dogMappings = require('../schemas/dogSchema').dogMappings;
 
 const generateArrayFromObject = require('../utils/common').generateArrayFromObject;
 const validateRequiredFields = require('../utils/common').validateRequiredFields;
 
-const createMap = {
-  name: 'name',
-  kind: 'kind',
-  description: 'description',
-  found_date: 'found_date',
-  reporter_id: 'reporter_id',
-};
-
-const infoMap = {
-  name: 'name',
-  kind: 'kind',
-  description: 'description',
-  found_date: 'found_date',
-  reporter_id: 'reporter_id',
-  created_at: 'created_at',
-  _id: '_id',
-};
-
-const createRequiredFieldsList = 'name kind found_date reporter_id'.split(' ');
-
 dogSchema.statics.createMap = body => (
-  validateRequiredFields(objectMapper(body, createMap), createRequiredFieldsList)
+  validateRequiredFields(objectMapper(body, dogMappings.createMap), dogMappings.createRequiredFieldsList)
 
   .then(createBody => (
     Promise.resolve(Object.assign(createBody, {
@@ -38,14 +20,14 @@ dogSchema.statics.createMap = body => (
 );
 
 dogSchema.statics.updateMap = (body) => {
-  const updateBody = objectMapper(body, createMap);
+  const updateBody = objectMapper(body, dogMappings.createMap);
   return Promise.resolve(Object.assign(updateBody, {
     found_date: updateBody.found_date ? moment(updateBody.found_date, 'YYYY-MM-DD HH:mm').toDate() : null,
   }));
 };
 
 dogSchema.methods.getInfo = function getInfo() {
-  const objTmp = objectMapper(this, infoMap);
+  const objTmp = objectMapper(this, dogMappings.infoMap);
   return objTmp;
 };
 

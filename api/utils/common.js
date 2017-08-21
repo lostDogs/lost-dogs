@@ -21,10 +21,7 @@ function select(object, selector) {
 module.exports.generateArrayFromObject = (object, fields) => {
   const result = [];
 
-  console.log('saving', fields);
-
   fields.forEach((field) => {
-    console.log('saving', object[field], JSON.stringify(object), select(object, field));
     if (select(object, field)) {
       result.push(String(select(object, field)).toLowerCase());
     }
@@ -67,6 +64,14 @@ module.exports.encryptString = string => (
         hashErr ? reject(hashErr) : resolve(hash)
       ));
     })
+  ))
+);
+
+module.exports.compareToEncryptedString = (enctypted, rawString) => (
+  new Promise((resolve, reject) => (
+    bcrypt.compare(rawString, enctypted, (err, isMatch) => (
+      err ? reject(err) : resolve(isMatch)
+    ))
   ))
 );
 

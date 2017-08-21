@@ -4,24 +4,6 @@ const jwt = require('jsonwebtoken');
 // models
 const User = require('../models/User');
 
-const authUser = (jwtPayload, callback) => {
-  User.findOne({
-    username: jwtPayload.username,
-  }, (err, user) => {
-    if (err || !user) {
-      return callback(false);
-    }
-
-    return user.compareToken(jwtPayload.token, (compareErr, isMatch) => {
-      if (compareErr || !isMatch) {
-        return callback(false);
-      }
-
-      return callback(true, user);
-    });
-  });
-};
-
 const validateToken = (token, username) => {
   if (!token) {
     return Promise.reject({
@@ -38,43 +20,40 @@ const validateToken = (token, username) => {
   }
 
   return new Promise((resolve, reject) => (
-    jwt.verify(token.split(' ')[1], process.env.SESSION_SECRET, { algorithms: ['HS384'] }, (verifyError, jwtPayload) => {
-      if (verifyError) {
-        return reject({
-          statusCode: 401,
-          code: 'Not a valid token.',
-        });
-      }
-
-      if (!jwtPayload.username) {
-        return resolve(jwtPayload);
-      }
-
-      if (username && jwtPayload.username !== username) {
-        return reject({
-          statusCode: 401,
-          code: 'Username doesn\'t match with token',
-        });
-      }
-
-      return authUser(jwtPayload, (isAuthed, user) => {
-        if (!isAuthed) {
+      jwt.verify(token.split(' ')[1], process.env.SESSION_SECRET, { algorithms: ['HS384'] }, (verifyError, jwtPayload) => {
+        if (verifyError) {
           return reject({
             statusCode: 401,
             code: 'Not a valid token.',
           });
         }
 
-        return resolve({
+        if (!jwtPayload.username) {
+          return resolve(jwtPayload);
+        }
+
+        if (username && jwtPayload.username !== username) {
+          return reject({
+            statusCode: 401,
+            code: 'Username doesn\'t match with token',
+          });
+        }
+
+        return resolve(jwtPayload);
+      })
+    ))
+
+    .then(jwtPayload => (
+      User.validateToken(jwtPayload)
+
+      .then(user => (
+        Promise.resolve({
           user,
           jwtPayload,
-        });
-      });
-    })
-  ));
+        })
+      ))
+    ));
 };
-
-module.exports.validateToken = validateToken;
 
 module.exports.signToken = jwtPayload => (
   new Promise((resolve, reject) => {

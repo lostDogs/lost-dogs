@@ -4,7 +4,8 @@
   "description": "API services for lost-dogs app",
   "main": "index.js",
   "scripts": {
-    "start": "sh tools/application/start.sh"
+    "start": "sh tools/application/start.sh",
+    "aws": "sh tools/aws/run.sh"
   },
   "keywords": [
     "API",
@@ -13,6 +14,7 @@
   "author": "Oscar Reyes <oscar-rreyes1@hotmail.com>",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.100.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.1",
     "cors": "^2.8.1",

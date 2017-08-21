@@ -1,72 +1,29 @@
+// dependencies
 const objectMapper = require('object-mapper');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt-nodejs');
 const uuid = require('uuid-v4');
 
+// schema
 const userSchema = require('../schemas/userSchema');
+const userMappings = require('../schemas/userSchema').userMappings;
 
+// libs
 const generateArrayFromObject = require('../utils/common').generateArrayFromObject;
 const validateRequiredFields = require('../utils/common').validateRequiredFields;
 const encryptString = require('../utils/common').encryptString;
+const compareToEncryptedString = require('../utils/common').compareToEncryptedString;
 
-const createMap = {
-  name: 'name',
-  surname: 'surname',
-  lastname: 'lastname',
-  'address.int_number': 'contact_info.address.int_number',
-  'address.ext_number': 'contact_info.address.ext_number',
-  'address.neighborhood': 'contact_info.address.neighborhood',
-  'address.zip_code': 'contact_info.address.zip_code',
-  'address.city': 'contact_info.address.city',
-  'address.country': 'contact_info.address.country',
-  'phone_number.area_code': 'contact_info.phone_number.area_code',
-  'phone_number.number': 'contact_info.phone_number.number',
-  email: 'email',
-  username: 'username',
-  password: 'password',
-  confirm_password: 'confirm_password',
-  avatar: 'avatar',
-};
-
-const updateMap = {
-  name: 'name',
-  surname: 'surname',
-  lastname: 'lastname',
-  'address.int_number': 'contact_info.address.int_number',
-  'address.ext_number': 'contact_info.address.ext_number',
-  'address.neighborhood': 'contact_info.address.neighborhood',
-  'address.zip_code': 'contact_info.address.zip_code',
-  'address.city': 'contact_info.address.city',
-  'address.country': 'contact_info.address.country',
-  'phone_number.area_code': 'contact_info.phone_number.area_code',
-  'phone_number.number': 'contact_info.phone_number.number',
-
-  email: 'email',
-  avatar: 'avatar',
-};
-
-const infoMap = {
-  name: 'name',
-  surname: 'surname',
-  lastname: 'lastname',
-  'contact_info.address.int_number': 'address.int_number',
-  'contact_info.address.ext_number': 'address.ext_number',
-  'contact_info.address.neighborhood': 'address.neighborhood',
-  'contact_info.address.zip_code': 'address.zip_code',
-  'contact_info.address.city': 'address.city',
-  'contact_info.address.country': 'address.country',
-  'contact_info.phone_number.area_code': 'phone_number.area_code',
-  'contact_info.phone_number.number': 'phone_number.number',
-
-  email: 'email',
-  username: 'username',
-  avatar: 'avatar',
-};
-
-const createRequiredFieldsList = 'name surname lastname contact_info.address.ext_number contact_info.address.neighborhood contact_info.address.zip_code contact_info.address.city contact_info.address.country contact_info.phone_number.area_code contact_info.phone_number.number email username password confirm_password'.split(' ');
+// AWS
+const s3 = require('../aws/s3')({
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+  },
+  bucketName: process.env.S3_BUCKET,
+});
 
 userSchema.statics.createMap = body => (
-  validateRequiredFields(objectMapper(body, createMap), createRequiredFieldsList)
+  validateRequiredFields(objectMapper(body, userMappings.createMap), userMappings.createRequiredFieldsList)
 
   // validate password matching
   .then(createBody => (
@@ -76,39 +33,59 @@ userSchema.statics.createMap = body => (
     })
   ))
 
-  // send back result from validations
+  // get sign object from s3
   .then(createBody => (
-    Promise.resolve(createBody)
+    // encript filename
+    encryptString(`${createBody.username}-${uuid()}-${Date.now()}`)
+
+    .then(fileName => (
+      s3.signObject({
+        fileName,
+
+        // mimetype
+        fileType: createBody.fileType,
+      })
+    ))
+
+    // send back result from validations
+    .then(avatar => (
+      Promise.resolve({
+        uploadAvatarUrl: avatar.signedRequest,
+        createBody: Object.assign(createBody, {
+          avatar_url: avatar.url,
+        }),
+      })
+    ))
   ))
 );
 
 userSchema.statics.updateMap = body => (
-  Promise.resolve(objectMapper(body, updateMap))
+  Promise.resolve(objectMapper(body, userMappings.updateMap))
 );
 
 userSchema.methods.getInfo = function getInfo() {
-  const objTmp = objectMapper(this, infoMap);
-  return objTmp;
+  return objectMapper(this, userMappings.infoMap);
 };
 
-userSchema.methods.comparePassword = function comparePassword(candidatePassword, callback) {
-  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-    if (err) {
-      return callback(err);
-    }
+userSchema.statics.validateToken = function validateToken(jwtPayload) {
+  return new Promise((resolve, reject) => {
+    this.findOne({
+      username: jwtPayload.username,
+    }, (err, user) => {
+      if (err || !user) {
+        return reject({
+          statusCode: 401,
+          code: 'User not found',
+        });
+      }
 
-    return callback(null, isMatch);
+      return compareToEncryptedString(user.token, jwtPayload.token)
+
+        .then(() => (
+          resolve(user)
+        ));
+    });
   });
-};
-
-userSchema.methods.compareToken = function compareToken(candidateToken, callback) {
-  if (this.token === candidateToken) {
-    return callback(null, true);
-  }
-
-  return bcrypt.compare(candidateToken, this.token, (err, isMatch) => (
-    callback(err, isMatch)
-  ));
 };
 
 userSchema.statics.login = function login(query) {
@@ -123,18 +100,11 @@ userSchema.statics.login = function login(query) {
         });
       }
 
-      console.log(query, user);
+      return compareToEncryptedString(query.password, this.password)
 
-      return user.comparePassword(query.password, (compareErr, isMatch) => {
-        if (compareErr || !isMatch) {
-          return reject({
-            statusCode: 401,
-            code: 'User and Password missmatch.',
-          });
-        }
-
-        return resolve(user);
-      });
+        .then(() => (
+          resolve(user)
+        ));
     });
   });
 };
@@ -142,17 +112,18 @@ userSchema.statics.login = function login(query) {
 userSchema.pre('save', function preSave(next) {
   this.search = generateArrayFromObject(this, 'email username'.split(' '));
   this.updated_at = Date.now();
-  console.log(generateArrayFromObject(this, 'email username'.split(' ')), this.email, this.username);
 
   if (this.isNew) {
-    return Promise.all([
-      encryptString(this.password),
-      encryptString(uuid()),
-    ])
+    return Promise
 
-      .then((result) => {
-        this.token = result[1];
-        this.password = result[0];
+      .all([
+        encryptString(this.password),
+        encryptString(uuid()),
+      ])
+
+      .then(([password, token]) => {
+        this.token = token;
+        this.password = password;
         next();
       });
   }
