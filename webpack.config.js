@@ -42,7 +42,8 @@ module.exports = {
       { test: /\.(jpg|fig|png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=7000' },
       //in chain loader for sass  ssas to css to style
       {test: /\.scss$/, loaders: ['to-string', 'style-loader', 'css-loader', 'sass-loader']},
-      {test: /\.css$/, loaders: [ 'style-loader', 'css-loader']}
+      {test: /\.css$/, loaders: [ 'style-loader', 'css-loader']},
+      {test: /\.json$/, loader: 'json-loader', exclude: /node_modules/}
     ]
   }, 
   resolve: {

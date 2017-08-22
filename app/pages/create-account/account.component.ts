@@ -1,6 +1,7 @@
 import { Component} from '@angular/core';
 import {ValidationService} from  '../../common/services/validation.service';
 import {ApiService} from '../../common/services/api.service';
+import * as countryData from '../../common/services/countries.json';
 export interface formObj {
   valid: boolean;
   value: any;
@@ -22,8 +23,11 @@ export interface user {
 })
 export class accountComponent {
   public user: user;
+  public countries: any;
 
   constructor (public validate: ValidationService, public api: ApiService) {
+    console.log('contry data',  this.countries);
+    this.countries = countryData;
     this.user = {
       pic: {value:'./static/profile-undef.png', valid: true, required: true},
       name: {
@@ -50,6 +54,18 @@ export class accountComponent {
         password2: {valid: true, value: undefined, required: true}
       }
     };
+  }
+
+
+  public ngAfterViewInit(): void {
+   $('select').material_select();
+  }
+
+  public ngOnInit() {
+    $('select').change(() => {
+      const input = $('select');
+      this.user.adress.country.value = input.val();
+    });
   }
 
   public createUser (form: any): void {

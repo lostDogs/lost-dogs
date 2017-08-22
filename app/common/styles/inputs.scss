@@ -16,6 +16,14 @@
   input[type]:focus:not([readonly]) + label{
     color: white;
   }
+  ul {
+    &.dropdown-content.select-dropdown {
+      border-radius: 7px;
+      li:first-of-type > span {
+        padding-left: 50px;
+      }
+    }
+  }
 }
 
 .input-field.alt-black {

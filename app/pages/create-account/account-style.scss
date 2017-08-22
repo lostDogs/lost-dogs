@@ -71,6 +71,12 @@
   }
 
   @media screen and (max-device-width: $screen-mobile-max) {
+    .input-field.alt-black input[type='text'].select-dropdown {
+      font-size: 2.2rem;
+    }
+    .dropdown-content li > span {
+      font-size: 3rem;
+    }
     .privacy-policy {
       font-size: 2.2rem;
       margin: 55px;
@@ -101,6 +107,14 @@
    }
    .input-field {
     margin-top: 55px;
+    ul {
+      &.dropdown-content.select-dropdown {
+        border-radius: 20px;
+      }
+    }
+    span.caret {
+      font-size: 25px;
+    }
     input {
       font-size: 3rem;
       padding-bottom: 20px;
