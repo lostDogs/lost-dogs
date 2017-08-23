@@ -1,6 +1,8 @@
 import { Component, HostListener, Inject} from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import {ScrollService} from '../../common/services/scroll.service';
+import {ActivatedRoute} from '@angular/router';
+import { Location} from '@angular/common';
 
 @Component({
   selector: 'home',
@@ -9,13 +11,27 @@ import {ScrollService} from '../../common/services/scroll.service';
 })
 
 export class homeComponent {
-  public scrollnormalize: number
-  constructor (@Inject(DOCUMENT) private document:  Document, public scrollService : ScrollService) { }
+  public scrollnormalize: number;
+  public newUser: boolean;
+  constructor (@Inject(DOCUMENT) private document:  Document, public scrollService : ScrollService, public activatedRoute: ActivatedRoute, public location: Location) {}
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
     const scrollMax: number = 300;
     const scrollTop = this.document.body.scrollTop;
     this.scrollnormalize = (scrollMax - scrollTop) / scrollMax;
     this.scrollService.scrollOpacity = 1.2 - this.scrollnormalize;
-  }  
+  }
+
+  public ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe(
+      data => this.newUser = data.nU ? true : false
+    );
+    if (this.newUser) {
+      setTimeout(() => {
+        this.newUser = false;
+        this.location.replaceState('/home');
+      }, 6000);
+    }
+  }
+
 };

@@ -2,6 +2,8 @@ import { Component} from '@angular/core';
 import {ValidationService} from  '../../common/services/validation.service';
 import {ApiService} from '../../common/services/api.service';
 import * as countryData from '../../common/services/countries.json';
+import {Router} from '@angular/router';
+
 export interface formObj {
   valid: boolean;
   value: any;
@@ -25,8 +27,7 @@ export class accountComponent {
   public user: user;
   public countries: any;
 
-  constructor (public validate: ValidationService, public api: ApiService) {
-    console.log('contry data',  this.countries);
+  constructor (public validate: ValidationService, public api: ApiService, public router: Router) {
     this.countries = countryData;
     this.user = {
       pic: {value:'./static/profile-undef.png', valid: true, required: true},
@@ -61,9 +62,9 @@ export class accountComponent {
    $('select').material_select();
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     $('select').change(() => {
-      const input = $('select');
+      const input = $('#country');
       this.user.adress.country.value = input.val();
     });
   }
@@ -112,6 +113,11 @@ export class accountComponent {
       }
   }
 
+  public toHomePage(): void {
+    this.router.navigate(['/home'], {queryParams:{nU:true}});
+    window.scroll(0,0);
+  }
+
   public postUser(): void {
     const userPost: any = {
       'name': this.user.name.first.value,
@@ -133,6 +139,10 @@ export class accountComponent {
       'confirm_password': this.user.access.password.value,
       'password': this.user.access.password2.value
     }
-    this.api.post('http://52.42.250.238/api/users', userPost).subscribe((data: any) => {console.log('creating user post ', data)});
+    this.api.post('http://52.42.250.238/api/users', userPost).subscribe(
+      data => console.log('creating user post ', data),
+      e => console.error('on post user', e),
+       () => this.toHomePage(),
+      );
   }
 };
