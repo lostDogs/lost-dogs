@@ -66,6 +66,7 @@ export class accountComponent {
     $('select').change(() => {
       const input = $('#country');
       this.user.adress.country.value = input.val();
+      this.user.adress.country.valid = true;
     });
   }
 
@@ -75,8 +76,8 @@ export class accountComponent {
     const userFirts: any[] = Object.keys(this.user);
     userFirts.forEach((userKey: any, elementIndex: number) => {
       const element: any = this.user[userKey];
-      if (element instanceof Object) {
-        const propKey: any = Object.keys(element);
+      const propKey: any = Object.keys(element);
+      if (element instanceof Object && element[propKey[0]] instanceof Object) {
         for (let i = 0; i < propKey.length; i++) {
           const content: string = element[propKey[i]].value;
           if (element[propKey[i]].required && !content) {
@@ -87,6 +88,13 @@ export class accountComponent {
             break;
           }
         }
+      } else {
+        // if (element.required && !element.content) {
+        //   element.valid = false;
+        //   validForm = false;
+        // } else if (!element.valid) {
+        //   validForm = false;
+        // }
       }
     });
     if (validForm) {
@@ -139,10 +147,11 @@ export class accountComponent {
       'confirm_password': this.user.access.password.value,
       'password': this.user.access.password2.value
     }
-    this.api.post('http://52.42.250.238/api/users', userPost).subscribe(
+    console.log('userPost', userPost);
+    this.api.post('https://fierce-falls-25549.herokuapp.com/api/users', userPost).subscribe(
       data => console.log('creating user post ', data),
-      e => console.error('on post user', e),
-       () => this.toHomePage(),
+      e => console.error('creating user post', e),
+      () => this.toHomePage()
       );
   }
 };
