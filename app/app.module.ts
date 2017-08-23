@@ -10,7 +10,6 @@ import {ValidationService} from './common/services/validation.service';
 import { FormsModule }  from '@angular/forms';
 import {ApiService} from './common/services/api.service';
 
-
 @NgModule({
   imports: [BrowserModule, AppRouterModule, FormsModule, HttpModule],
   declarations: [appComponent, routerComponents, generalHeaderComponent, generalFooterComponent],

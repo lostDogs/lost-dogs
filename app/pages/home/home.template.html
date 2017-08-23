@@ -1,6 +1,6 @@
-<main id="home-dogs" >
+<main id="home-dogs" [ngClass]="{'blur-new-user': newUser}" >
   <div class="row logo-huge">
-    <img src="static/logo-huge.png" alt="Lost Dog Logo" [ngStyle]="{'opacity': scrollnormalize}">
+    <img src="static/logo-huge.png" alt="Lost Dog Logo" [ngStyle]="{'opacity': scrollnormalize}" *ngIf="!newUser" class="blur-appear">
   </div>
   <div  class="row home-description">
     <article class="col l5 m12 s12">
@@ -67,4 +67,8 @@
     <h3 class="col l12 m12 s12 home-second-title" ></h3>
   </article>
 </main>
+
+<article id="welcome-user" *ngIf="newUser">
+  <h1 class="typing-animation">Bienvenido Chris</h1>
+</article>
   

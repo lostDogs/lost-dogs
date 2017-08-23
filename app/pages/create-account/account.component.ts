@@ -1,6 +1,9 @@
 import { Component} from '@angular/core';
 import {ValidationService} from  '../../common/services/validation.service';
 import {ApiService} from '../../common/services/api.service';
+import * as countryData from '../../common/services/countries.json';
+import {Router} from '@angular/router';
+
 export interface formObj {
   valid: boolean;
   value: any;
@@ -22,8 +25,10 @@ export interface user {
 })
 export class accountComponent {
   public user: user;
+  public countries: any;
 
-  constructor (public validate: ValidationService, public api: ApiService) {
+  constructor (public validate: ValidationService, public api: ApiService, public router: Router) {
+    this.countries = countryData;
     this.user = {
       pic: {value:'./static/profile-undef.png', valid: true, required: true},
       name: {
@@ -52,14 +57,27 @@ export class accountComponent {
     };
   }
 
+
+  public ngAfterViewInit(): void {
+   $('select').material_select();
+  }
+
+  public ngOnInit(): void {
+    $('select').change(() => {
+      const input = $('#country');
+      this.user.adress.country.value = input.val();
+      this.user.adress.country.valid = true;
+    });
+  }
+
   public createUser (form: any): void {
     // Check for undefined and set formvalue to false
     let validForm: boolean = true;
     const userFirts: any[] = Object.keys(this.user);
     userFirts.forEach((userKey: any, elementIndex: number) => {
       const element: any = this.user[userKey];
-      if (element instanceof Object) {
-        const propKey: any = Object.keys(element);
+      const propKey: any = Object.keys(element);
+      if (element instanceof Object && element[propKey[0]] instanceof Object) {
         for (let i = 0; i < propKey.length; i++) {
           const content: string = element[propKey[i]].value;
           if (element[propKey[i]].required && !content) {
@@ -70,6 +88,13 @@ export class accountComponent {
             break;
           }
         }
+      } else {
+        // if (element.required && !element.content) {
+        //   element.valid = false;
+        //   validForm = false;
+        // } else if (!element.valid) {
+        //   validForm = false;
+        // }
       }
     });
     if (validForm) {
@@ -96,6 +121,11 @@ export class accountComponent {
       }
   }
 
+  public toHomePage(): void {
+    this.router.navigate(['/home'], {queryParams:{nU:true}});
+    window.scroll(0,0);
+  }
+
   public postUser(): void {
     const userPost: any = {
       'name': this.user.name.first.value,
@@ -117,6 +147,11 @@ export class accountComponent {
       'confirm_password': this.user.access.password.value,
       'password': this.user.access.password2.value
     }
-    this.api.post('http://52.42.250.238/api/users', userPost).subscribe((data: any) => {console.log('creating user post ', data)});
+    console.log('userPost', userPost);
+    this.api.post('https://fierce-falls-25549.herokuapp.com/api/users', userPost).subscribe(
+      data => console.log('creating user post ', data),
+      e => console.error('creating user post', e),
+      () => this.toHomePage()
+      );
   }
 };

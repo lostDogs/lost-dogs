@@ -1,8 +1,41 @@
 @import '../../common/styles/variables.scss';
+
+.blur-new-user {
+  animation: bluranim 8s ease;
+  }
+
+  .typing-animation {
+    animation: type 4s steps(60, end), blurInvert 3s ease 4s; 
+  }
+
+  .blur-anim-invert {
+   animation: blurInvert 7s ease 4s; 
+  }
+  .blur-appear {
+   animation: blurAppear 3s ease;  
+  }
+
+#welcome-user {
+  top: 45%;
+  position: fixed;
+  width: 100%;  
+  h1 {
+    color: white;
+    text-shadow: 5px 2px 13px black;
+    font-size: 8rem;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
 #home-dogs{
   background: url(/static/dogsBlur1.png) repeat fixed center;
   background-position: 0px 97px;
   color: white;
+
   .logo-huge {
     display: flex;
     height: 700px;
@@ -167,3 +200,44 @@
     }
   }
 }
+
+@keyframes type{ 
+  from { width: 0; }
+  to {width: 100%;}
+} 
+
+@keyframes bluranim {
+  from {
+    filter: blur(10px);
+  }
+  to {
+    filter: blur(0);
+  }  
+}
+
+@keyframes blurInvert {
+  from {
+    filter: blur(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    filter: blur(20px);
+    opacity: 0;
+    visibility: hidden;
+  }  
+}
+
+@keyframes blurAppear {
+  from {
+    filter: blur(20px);
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+    visibility: visible;    
+  }  
+}
+

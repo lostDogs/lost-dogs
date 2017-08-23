@@ -1,6 +1,6 @@
 <content  class="create-account">
   <div class="main-title row">
-    <h4>Creat tu cuenta</h4>
+    <h4>Crea tu cuenta</h4>
   </div>
   <div class="main-create-account row">
 
@@ -77,11 +77,14 @@
                 <label for="city" [ngClass]="{'fadeInDown': (!user.adress.city.valid && user.adress.city.value)}" [hidden]="!(!user.adress.city.valid && user.adress.city.value)">{{validate.errors.name}}</label>
                 <label for="city" [ngClass]="{'fadeInDown': !user.adress.city.valid && !user.adress.city.value}" [hidden]="!(!user.adress.city.valid && !user.adress.city.value)">ciudad es requerido</label>
           </div>
-          <div class="input-field alt-black col l3 push-l3 s12" [ngClass]="{'wrong-red': !user.adress.country.valid}">
-              <input type="text" name="country" id="country" [(ngModel)]="user.adress.country.value" (keyup)="user.adress.country.valid = validate.name(user.adress.country.value);"  (change)="user.adress.country.valid = validate.name(user.adress.country.value);">
-                <label for="country" [ngClass]="{'fadeInDown': user.adress.country.valid && createAccount.controls.country && createAccount.controls.country.dirty}" [hidden]="!user.adress.country.valid">Pais</label>
+          <div class="input-field alt-black col l3 push-l3 s12 countries" [ngClass]="{'wrong-red': !user.adress.country.valid}">
+            <select name="country"  id="country" [(ngModel)]="user.adress.country.value" (keyup)="user.adress.country.valid = validate.name(user.adress.country.value);">
+              <option value="" disabled selected>Pais</option>
+              <option *ngFor="let co of countries"[value]="co.id"><div class="bfh-flag-{{co.id}}"></div>{{co.name}}</option>
+            </select>
+               <!--  <label for="country" [ngClass]="{'fadeInDown': user.adress.country.valid && createAccount.controls.country && createAccount.controls.country.dirty}" [hidden]="!user.adress.country.valid">Pais</label>
                 <label for="country" [ngClass]="{'fadeInDown': (!user.adress.country.valid && user.adress.country.value)}" [hidden]="!(!user.adress.country.valid && user.adress.country.value)">{{validate.errors.name}}</label>
-                <label for="country" [ngClass]="{'fadeInDown': !user.adress.country.valid && !user.adress.country.value}" [hidden]="!(!user.adress.country.valid && !user.adress.country.value)">Pais es requerido</label>              
+                <label for="country" [ngClass]="{'fadeInDown': !user.adress.country.valid && !user.adress.country.value}" [hidden]="!(!user.adress.country.valid && !user.adress.country.value)">Pais es requerido</label>               -->
           </div>              
         </div>        
       </div>
@@ -147,7 +150,7 @@
         
       </div>
       <div class="row centered row-extraspace">
-        <button class="btn waves-effect col l4 s10 action" type="submit">Crear cuenta
+        <button class="btn waves-effect col l4 s8 action" type="submit">Crear cuenta
           <i class="material-icons right">perm_identity</i>
         </button>
       </div>
