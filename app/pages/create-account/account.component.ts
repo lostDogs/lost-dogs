@@ -3,6 +3,7 @@ import {ValidationService} from  '../../common/services/validation.service';
 import {ApiService} from '../../common/services/api.service';
 import * as countryData from '../../common/services/countries.json';
 import {Router} from '@angular/router';
+import {UserService} from '../../common/services/user.service';
 
 export interface formObj {
   valid: boolean;
@@ -26,7 +27,8 @@ export interface user {
 export class accountComponent {
   public user: user;
   public countries: any;
-  constructor (public validate: ValidationService, public api: ApiService, public router: Router) {
+
+  constructor (public validate: ValidationService, public api: ApiService, public router: Router, public userService: UserService) {
     this.countries = countryData;
     // define the user object before
     this.user = {
@@ -121,9 +123,24 @@ export class accountComponent {
       }
   }
 
+  public setImgToBucket(url: string): void {
+    console.log('url', url);
+    console.log('user pic', this.user.pic.value);
+    this.api.put(url, new Buffer(this.user.pic.value, 'binary'), {'Content-Type': 'image/jpeg'}).subscribe(
+      data => console.log('img set successfully'),
+      e => console.error('error setting img', e),
+      () => console.log('img set successfully')
+    );
+  }
+
   public toHomePage(): void {
-    this.router.navigate(['/home'], {queryParams:{nU:true}});
+    this.router.navigate(['/home'], {queryParams:{nU: true}});
     window.scroll(0,0);
+  }
+
+  public afterCreateData(data: any): void {
+    this.setImgToBucket(data.uploadAvatarUrl);
+    //this.userService.setUser(data);
   }
 
   public postUser(): void {
@@ -145,11 +162,12 @@ export class accountComponent {
       'email': this.user.contact.email.value,
       'username': this.user.access.userName.value,
       'confirm_password': this.user.access.password.value,
-      'password': this.user.access.password2.value
+      'password': this.user.access.password2.value,
+      'avatarFileType': 'image/jpeg'
     }
     console.log('userPost', userPost);
     this.api.post('https://fierce-falls-25549.herokuapp.com/api/users', userPost).subscribe(
-      data => console.log('creating user post ', data),
+      data => this.afterCreateData(data),
       e => console.error('creating user post', e),
       () => this.toHomePage()
       );

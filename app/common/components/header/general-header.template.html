@@ -16,14 +16,35 @@
           log-in
           <img  id="profile-arrow" src="static/dropdown.png" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">
       </a>
+      <!-- <a href="javascript:void(0)" *ngIf="userService.isAuth">{{userService.user.name}}</a> -->
      </div> 
   </div>
   <ul id="slide-out" class="side-nav">
       <li><div class="user-profile">
-        <div class="user-background">
+        <div class="user-background" *ngIf="!userService.isAuth">
           <a routerLink="" class="profile-link"><img src="static/me2.png" alt="profile picture" class="circle profile-mobile"></a>
           <a routerLink="">Chris Zepeda</a>
           <a routerLink="">chris.zep@gmail.com</a>
+        </div>
+        <div class="no-user-background" *ngIf="userService.isAuth">
+          <form class="row" title="form-login" novalidate>
+              <div class="input-field main-white col l12 s12">
+                <input type="text" name="" id="user-name" required>
+                <label for="user-name">nombre usuario</label>
+              </div>
+              <div class="input-field main-white col l12 s12">
+                  <input type="text" name="" id="user-password" required>
+                  <label for="user-password">contrasenia</label>
+              </div>
+              <button class="btn waves-effect col l12 action" type="submit">login
+                <i class="material-icons right">send</i>
+              </button>
+              <div class="col l12 account-link">
+                <a routerLink="account" title="" class="waves-effect"> Crea tu cuenta
+                 <i class="material-icons right">person_pin</i>
+                </a>        
+              </div>
+            </form> 
         </div>
       </div></li>
       <li><a routerLink="" class="waves-effect">mis perros perdidos</a></li>

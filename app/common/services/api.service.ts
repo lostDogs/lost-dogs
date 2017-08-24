@@ -31,6 +31,22 @@ export class ApiService {
     return this.http.post(url, bodyObj, options)
       .map((res: Response) =>  res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  public put(url: string, bodyObj: any, header?: any): Observable<Response> {
+    console.log('calling PUT! >');
+    let headersObj: any;
+    if ( !header) {
+      headersObj = {'Content-Type': 'application/json'};
+    } else {
+      headersObj = header;
+    }
+    let headers: Headers = new Headers(headersObj);
+    let options: RequestOptions = new RequestOptions({ headers: headers });
+    let queryParams: URLSearchParams =  new URLSearchParams();
+    return this.http.put(url, bodyObj, options)
+      .map((res: Response) =>  res)
+      .catch((error: any) => Observable.throw(error || 'Server error'));
   }  
   
 }

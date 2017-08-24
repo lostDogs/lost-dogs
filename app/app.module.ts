@@ -9,11 +9,17 @@ import {ScrollService} from './common/services/scroll.service';
 import {ValidationService} from './common/services/validation.service';
 import { FormsModule }  from '@angular/forms';
 import {ApiService} from './common/services/api.service';
+import {UserService} from './common/services/user.service';
 
 @NgModule({
   imports: [BrowserModule, AppRouterModule, FormsModule, HttpModule],
   declarations: [appComponent, routerComponents, generalHeaderComponent, generalFooterComponent],
-  providers: [{ provide: ScrollService, useClass: ScrollService }, { provide: ValidationService, useClass: ValidationService }, {provide: ApiService,useClass: ApiService}],
+  providers: [
+    {provide: ScrollService, useClass: ScrollService},
+    {provide: ValidationService, useClass: ValidationService},
+    {provide: ApiService, useClass: ApiService},
+    {provide: UserService, useClass: UserService}
+  ],
   bootstrap: [appComponent, ]
 })
 export class AppModule {}

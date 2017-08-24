@@ -1,6 +1,7 @@
 import {ElementRef, Renderer, Component, OnInit} from '@angular/core';
 import {ScrollService} from '../../services/scroll.service';
 import {ActivatedRoute} from '@angular/router';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'general-header',
@@ -13,7 +14,7 @@ export class generalHeaderComponent implements OnInit  {
   public offsetY: string;
   public newUser: boolean;
 
-  constructor (public renderer: Renderer, public elRef: ElementRef, public ScrollService: ScrollService, public activatedRoute: ActivatedRoute) {
+  constructor (public renderer: Renderer, public elRef: ElementRef, public ScrollService: ScrollService, public activatedRoute: ActivatedRoute, public userService: UserService) {
     this.renderer.listenGlobal('document', 'click', (event: any) => {
       const loginDom: any = this.elRef.nativeElement.childNodes[0].childNodes[5].childNodes[1].childNodes[1];
       if (this.showLoginFrom && !(this.elRef.nativeElement.lastChild.contains(event.target) || loginDom.contains(event.target))) {
