@@ -26,9 +26,9 @@ export interface user {
 export class accountComponent {
   public user: user;
   public countries: any;
-
   constructor (public validate: ValidationService, public api: ApiService, public router: Router) {
     this.countries = countryData;
+    // define the user object before
     this.user = {
       pic: {value:'./static/profile-undef.png', valid: true, required: true},
       name: {
