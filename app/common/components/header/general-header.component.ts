@@ -16,7 +16,7 @@ export class generalHeaderComponent implements OnInit  {
 
   constructor (public renderer: Renderer, public elRef: ElementRef, public ScrollService: ScrollService, public activatedRoute: ActivatedRoute, public userService: UserService) {
     this.renderer.listenGlobal('document', 'click', (event: any) => {
-      const loginDom: any = this.elRef.nativeElement.childNodes[0].childNodes[5].childNodes[1].childNodes[1];
+      const loginDom: any = this.elRef.nativeElement.childNodes[0].childNodes[5].childNodes[1].childNodes[2];
       if (this.showLoginFrom && !(this.elRef.nativeElement.lastChild.contains(event.target) || loginDom.contains(event.target))) {
         this.showLoginFrom = false;
       }

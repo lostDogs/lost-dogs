@@ -12,9 +12,13 @@
     </div> 
     <div class="menu-options col l3 m2">
       <div class="profile">
-        <a href="javascript:void(0)" (click)="toggleLoginFrom($event)">
+        <a href="javascript:void(0)" (click)="toggleLoginFrom($event)"  *ngIf="!userService.isAuth">
           log-in
           <img  id="profile-arrow" src="static/dropdown.png" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">
+      </a>
+      <a href="javascript:void(0)"  *ngIf="userService.isAuth">
+        <img src="{{userService.user.avatar}}" class="avatar">
+        <p>{{userService.user.name}}</p>
       </a>
       <!-- <a href="javascript:void(0)" *ngIf="userService.isAuth">{{userService.user.name}}</a> -->
      </div> 
@@ -56,7 +60,7 @@
       <li><div class="divider"></div></li>
    </ul>
 </header>
-<!-- [ngStyle]="{'top': offsetY}" -->
+
 <article id="popover-login" *ngIf="showLoginFrom" class="hoverable">
   <form class="row" title="form-login" novalidate>
       <div class="input-field main-white col l12 s12">

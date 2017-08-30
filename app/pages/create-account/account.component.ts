@@ -27,6 +27,7 @@ export interface user {
 export class accountComponent {
   public user: user;
   public countries: any;
+  public binaryImg: any;
 
   constructor (public validate: ValidationService, public api: ApiService, public router: Router, public userService: UserService) {
     this.countries = countryData;
@@ -91,12 +92,12 @@ export class accountComponent {
           }
         }
       } else {
-        // if (element.required && !element.content) {
-        //   element.valid = false;
-        //   validForm = false;
-        // } else if (!element.valid) {
-        //   validForm = false;
-        // }
+        if (element.required && (!element.value || element.value === './static/profile-undef.png' ) ) {
+          element.valid = false;
+          validForm = false;
+        } else if (!element.valid) {
+          validForm = false;
+        }
       }
     });
     if (validForm) {
@@ -106,11 +107,13 @@ export class accountComponent {
 
   public filePicChange(ev: any): void {
     const file: File = ev.target.files[0];
+      this.binaryImg = file;
       if (ev.target && ev.target.files && file && file.type.match('image.*')) {
         try {
           const reader = new FileReader();
           reader.onload = (event: any) => {
             this.user.pic.value = event.target.result;
+            this.user.pic.valid = true;
           };
           reader.readAsDataURL(file);
         }catch (error) {
@@ -124,10 +127,7 @@ export class accountComponent {
   }
 
   public setImgToBucket(url: string): void {
-    console.log('url', url);
-    console.log('user pic', this.user.pic.value);
-    this.api.put(url, new Buffer(this.user.pic.value, 'binary'), {'Content-Type': 'image/jpeg'}).subscribe(
-      data => console.log('img set successfully'),
+    this.api.put(url, this.binaryImg, {'Content-Type': 'image/jpeg', 'Content-encoding': 'base64'}).subscribe(
       e => console.error('error setting img', e),
       () => console.log('img set successfully')
     );
@@ -140,7 +140,7 @@ export class accountComponent {
 
   public afterCreateData(data: any): void {
     this.setImgToBucket(data.uploadAvatarUrl);
-    //this.userService.setUser(data);
+    this.userService.setUser(data);
   }
 
   public postUser(): void {

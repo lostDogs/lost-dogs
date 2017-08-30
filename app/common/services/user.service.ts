@@ -6,10 +6,11 @@ export class UserService {
   public user: any;
 
   constructor (public api: ApiService) {
+    this.user = {};
   }
 
   public setUser(response: any) {
-    console.log('login', response);
+    console.log('login >>>>', response);
     this.user.name = response.name;
     this.user.lastName = response.surname;
     this.user.avatar = response.avatar_url;
