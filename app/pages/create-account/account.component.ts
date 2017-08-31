@@ -28,6 +28,7 @@ export class accountComponent {
   public user: user;
   public countries: any;
   public binaryImg: any;
+  public loading: boolean;
 
   constructor (public validate: ValidationService, public api: ApiService, public router: Router, public userService: UserService) {
     this.countries = countryData;
@@ -137,6 +138,7 @@ export class accountComponent {
     this.userService.isAvatarSet = true
   }
   public toHomePage(): void {
+    this.loading = false;
     this.router.navigate(['/home'], {queryParams:{nU: true}});
     window.scroll(0,0);
   }
@@ -144,6 +146,12 @@ export class accountComponent {
   public afterCreateData(data: any): void {
     this.setImgToBucket(data.uploadAvatarUrl);
     this.userService.setUser(data);
+    this.loading = false;
+  }
+
+  public afterCreateError(e: any): void {
+    this.loading = false;
+    console.error('creating user post', e);
   }
 
   public postUser(): void {
@@ -168,10 +176,10 @@ export class accountComponent {
       'password': this.user.access.password2.value,
       'avatarFileType': 'image/jpeg'
     }
-    console.log('userPost', userPost);
+    this.loading = true;
     this.api.post('https://fierce-falls-25549.herokuapp.com/api/users', userPost).subscribe(
       data => this.afterCreateData(data),
-      e => console.error('creating user post', e),
+      e => this.afterCreateError(e),
       () => this.toHomePage()
       );
   }

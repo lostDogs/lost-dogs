@@ -150,8 +150,9 @@
         
       </div>
       <div class="row centered row-extraspace">
-        <button class="btn waves-effect col l4 s8 action" type="submit">Crear cuenta
-          <i class="material-icons right">perm_identity</i>
+        <button class="btn waves-effect col l4 s8 action" type="submit" [disabled]="loading">
+        <div *ngIf="!loading">Crear cuenta <i class="material-icons right">perm_identity</i></div>
+        <div *ngIf="loading">Cargando ...</div>
         </button>
       </div>
       <div class="row centered">
