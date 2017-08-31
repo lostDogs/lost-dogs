@@ -13,18 +13,23 @@ export class generalHeaderComponent implements OnInit  {
   public showLoginFrom : boolean;
   public offsetY: string;
   public newUser: boolean;
+  public userName: string;
+  public password: string;
 
   constructor (public renderer: Renderer, public elRef: ElementRef, public ScrollService: ScrollService, public activatedRoute: ActivatedRoute, public userService: UserService) {
     this.renderer.listenGlobal('document', 'click', (event: any) => {
       const loginDom: any = this.elRef.nativeElement.childNodes[0].childNodes[5].childNodes[1].childNodes[2];
-      if (this.showLoginFrom && !(this.elRef.nativeElement.lastChild.contains(event.target) || loginDom.contains(event.target))) {
+      const UserDom: any = this.elRef.nativeElement.childNodes[0].childNodes[5].childNodes[1].childNodes[4];
+      if (this.showLoginFrom && !(this.elRef.nativeElement.lastChild.contains(event.target) || loginDom.contains(event.target) || UserDom.contains(event.target) )) {
         this.showLoginFrom = false;
       }
     });
 
   }
   public toggleLoginFrom(event: any) {
-    this.showLoginFrom = !this.showLoginFrom;    
+    this.showLoginFrom = !this.showLoginFrom;
+    this.userName = undefined;
+    this.password = undefined;
   }
 
   public ngOnInit(): void {

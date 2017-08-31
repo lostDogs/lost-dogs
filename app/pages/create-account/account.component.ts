@@ -128,11 +128,14 @@ export class accountComponent {
 
   public setImgToBucket(url: string): void {
     this.api.put(url, this.binaryImg, {'Content-Type': 'image/jpeg', 'Content-encoding': 'base64'}).subscribe(
-      e => console.error('error setting img', e),
-      () => console.log('img set successfully')
+      data => this.sucessImgToBucket(data),
+      e => console.error('error setting img', e)
     );
   }
-
+  public sucessImgToBucket(data: any): void {
+    console.log('sucessfully created', data);
+    this.userService.isAvatarSet = true
+  }
   public toHomePage(): void {
     this.router.navigate(['/home'], {queryParams:{nU: true}});
     window.scroll(0,0);

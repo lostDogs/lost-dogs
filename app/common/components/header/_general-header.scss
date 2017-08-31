@@ -16,11 +16,17 @@ header {
     width: 50px;
     height: 50px;
     margin-right: 7px;
-    p {
-      line-height: 50px;
-      font-size: 20px;
-    }
+    font-size: 5px;
+    margin-top: 20px;
+    position: absolute;
+    top: 0;
   }
+  .profile-name {
+    padding-left: 60px;
+    display: -webkit-inline-box;
+    margin: 0;
+  }
+
   &#nav-header {
     margin:0;
     padding:0;
@@ -84,6 +90,25 @@ header {
   border: 6px solid white;
   border-radius: 10px;
   z-index: 1010;
+
+  a {
+    font-family: $primaryFont, sans-serif;
+    color: white;
+    text-decoration: none;
+    box-sizing: border-box;
+  }
+  ul {
+    &.logged-opts {
+      li {
+        padding: 10px 0 10px 20px;
+        width:100%;
+      }
+      a {
+        font-size: 20px;
+      }
+    }
+  }
+
   form {
     padding: 10px 25px;
     button {
@@ -97,10 +122,6 @@ header {
     margin-top: 20px;
     text-align: center;
     a {
-      font-family: $primaryFont, sans-serif;
-      color: white;
-      text-decoration: none;
-      box-sizing: border-box;
       i.right {
         margin-left: 35px;
       }

@@ -1,8 +1,8 @@
 <header class="col l12 m12" id="nav-header"  [ngClass]="{'blur-new-user': newUser}">
   <div class="menu-options col l5 m1 s3">
-    <a routerLink="board" class="actions">catalogo</a>
-    <a routerLink="lostfound" class="actions">perdi</a>
-    <a routerLink="lostfound" class="actions">encontre</a>  
+    <a routerLink="board" class="actions">Catalogo</a>
+    <a routerLink="lostfound" class="actions" *ngIf="userService.isAuth">Perdi</a>
+    <a routerLink="lostfound" class="actions" *ngIf="userService.isAuth">Encontre</a>  
     <a routerLink="" class="home-mobile" data-activates="slide-out"><img src="static/side-menu.png" alt="side menu"></a>
   </div>
   <div class="menu-options col l4 m2"> 
@@ -16,9 +16,10 @@
           log-in
           <img  id="profile-arrow" src="static/dropdown.png" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">
       </a>
-      <a href="javascript:void(0)"  *ngIf="userService.isAuth">
-        <img src="{{userService.user.avatar}}" class="avatar">
-        <p>{{userService.user.name}}</p>
+      <a href="javascript:void(0)"  *ngIf="userService.isAuth" (click)="toggleLoginFrom($event)">
+        <img *ngIf="userService.isAvatarSet" src="{{userService.user.avatar}}" class="avatar" alt="user avatar">
+        <p class="profile-name">{{userService.user.name}}</p>
+        <img  id="profile-arrow" src="static/dropdown.png" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">
       </a>
       <!-- <a href="javascript:void(0)" *ngIf="userService.isAuth">{{userService.user.name}}</a> -->
      </div> 
@@ -62,13 +63,13 @@
 </header>
 
 <article id="popover-login" *ngIf="showLoginFrom" class="hoverable">
-  <form class="row" title="form-login" novalidate>
+  <form class="row" title="form-login" #loginForm="ngForm" (ngSubmit)="userService.login(userName, password)"   *ngIf="!userService.isAuth" novalidate>
       <div class="input-field main-white col l12 s12">
-        <input type="text" name="" id="user-name" required>
+        <input type="text" name="userName" id="user-name" [(ngModel)]="userName">
         <label for="user-name">nombre usuario</label>
       </div>
       <div class="input-field main-white col l12 s12">
-          <input type="text" name="" id="user-password" required>
+          <input type="password" name="password" id="user-password"  [(ngModel)]="password">
           <label for="user-password">contrasenia</label>
       </div>
       <button class="btn waves-effect col l12 action" type="submit">login
@@ -80,4 +81,14 @@
         </a>        
       </div>
     </form>
+    <div  *ngIf="userService.isAuth">
+      <ul class="logged-opts">
+        <li class="waves-effect">
+          <a routerLink="" ><i class="material-icons left">perm_identity</i>Mi cuenta</a>
+        </li>
+        <li class="waves-effect">
+          <a routerLink=""  (click)="userService.logout()"><i class="material-icons left">reply</i>Log-out</a>
+        </li>
+      </ul>
+    </div>
 </article>

@@ -17,10 +17,9 @@ export class ApiService {
       }
       url = url + queryParams;
     }
-      console.log('url', url);
     return this.http.get(url, options)
       .map((res: Response) =>  res.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+      .catch((error: any) => Observable.throw(error || 'Server error'));
   }
 
   public post(url: string, bodyObj: any): Observable<Response> {
@@ -30,7 +29,7 @@ export class ApiService {
     let queryParams: URLSearchParams =  new URLSearchParams();
     return this.http.post(url, bodyObj, options)
       .map((res: Response) =>  res.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+      .catch((error: any) => Observable.throw(error || 'Server error'));
   }
 
   public put(url: string, bodyObj: any, header?: any): Observable<Response> {
