@@ -26,38 +26,24 @@
   </div>
   <ul id="slide-out" class="side-nav">
       <li><div class="user-profile">
-        <div class="user-background" *ngIf="!userService.isAuth">
+        <div class="user-background" *ngIf="userService.isAuth">
           <a routerLink="" class="profile-link"><img src="static/me2.png" alt="profile picture" class="circle profile-mobile"></a>
           <a routerLink="">Chris Zepeda</a>
           <a routerLink="">chris.zep@gmail.com</a>
         </div>
-        <div class="no-user-background" *ngIf="userService.isAuth">
-          <form class="row" title="form-login" novalidate>
-              <div class="input-field main-white col l12 s12">
-                <input type="text" name="" id="user-name" required>
-                <label for="user-name">nombre usuario</label>
-              </div>
-              <div class="input-field main-white col l12 s12">
-                  <input type="text" name="" id="user-password" required>
-                  <label for="user-password">contrasenia</label>
-              </div>
-              <button class="btn waves-effect col l12 action" type="submit">login
-                <i class="material-icons right">send</i>
-              </button>
-              <div class="col l12 account-link">
-                <a routerLink="account" title="" class="waves-effect"> Crea tu cuenta
-                 <i class="material-icons right">person_pin</i>
-                </a>        
-              </div>
-            </form> 
+        <div class="no-user-background centered" *ngIf="!userService.isAuth">
+          <img src="static/logo-med-invert.png">
         </div>
       </div></li>
-      <li><a routerLink="" class="waves-effect">mis perros perdidos</a></li>
-      <li><a routerLink="" class="waves-effect">mis perros encontrados</a></li>
       <li><div class="divider"></div></li>
-      <li><a class="subheader">mas acciones</a></li>
-      <li><a routerLink="" class="waves-effect">Perdi un perro</a></li>
-      <li><a routerLink="" class="waves-effect">Encontre un perro</a></li>
+      <li><a routerLink="" class="waves-effect" *ngIf="userService.isAuth">mis perros perdidos</a></li>
+      <li><a routerLink="" class="waves-effect" *ngIf="userService.isAuth">mis perros encontrados</a></li>
+      <li><a routerLink="" class="waves-effect"><i class="material-icons left">vpn_key</i>login</a></li>
+      <li><div class="divider"></div></li>
+      <li><a class="subheader" *ngIf="userService.isAuth">mas acciones</a></li>
+      <li><a routerLink="" class="waves-effect" *ngIf="userService.isAuth">Perdi un perro</a></li>
+      <li><a routerLink="" class="waves-effect" *ngIf="userService.isAuth">Encontre un perro</a></li>
+      <li><a routerLink="" class="waves-effect"><i class="material-icons left">style</i>Catalogo</a></li>
       <li><div class="divider"></div></li>
    </ul>
 </header>

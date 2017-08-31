@@ -35,7 +35,7 @@ export class generalHeaderComponent implements OnInit  {
   public ngOnInit(): void {
     $('.home-mobile').sideNav({
       menuWidth: 700,
-      closeOnClick: true,
+      closeOnClick: false,
       draggable: true
     });
     this.activatedRoute.queryParams.subscribe(
