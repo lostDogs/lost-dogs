@@ -1,0 +1,24 @@
+@import '../../common/styles/variables.scss';
+.login-page {
+  form {
+    margin-bottom: 0;
+    padding: 100px 0;
+    background: $lightGrey;
+    .login-link {
+      padding: 20px 0;
+      width: 100%;
+    }
+    .login-fields {
+      padding: 0 60px;
+    }
+    @media screen and (max-device-width: $screen-mobile-max) {
+      .login-link {
+        padding-top: 50px;
+      }
+      a {
+        font-size: 2.2rem;
+        line-height: 5rem;
+      }
+    }
+  }
+}
