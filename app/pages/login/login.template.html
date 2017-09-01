@@ -1,0 +1,35 @@
+<content class="login-page">
+  <div class="main-title row">
+    <h4>Inicia sesion</h4>
+  </div>
+  <form class="create-account" name="page-login" #loginPage="ngForm" (ngSubmit)="userService.login(userName, password)" novalidate>
+    <div class="row login-fields">
+      <div class="input-field  alt-black  col l6 s12" [ngClass]="{'wrong-red': userService.errors.userReq || userService.errors.invalidUser}">
+        <input type="text" name="userName" id="user-name" [(ngModel)]="userName" (keyup)="userService.errors.userReq = false;userService.errors.invalidUser = false;">
+        <label for="user-name">Nombre usuario <b *ngIf="userService.errors.invalidUser"> incorrecto ó</b></label>
+      </div>
+      <div class="input-field  alt-black  col l6 s12" [ngClass]="{'wrong-red': userService.errors.passwordReq || userService.errors.invalidUser}">
+          <input type="password" name="password" id="user-password"  [(ngModel)]="password" (keyup)="userService.errors.passwordReq = false;userService.errors.invalidUser = false;">
+          <label for="user-password">Contraseña <b *ngIf="userService.errors.invalidUser"> incorrecta</b></label>
+      </div>
+    </div>
+    <div class="row centered row-extraspace">
+      <button class="btn waves-effect col l4 s8 action" type="submit"  [disabled]="userService.loading">
+        <div *ngIf="!userService.loading">login <i class="material-icons right">send</i></div>
+        <div *ngIf="userService.loading">Cargando ...</div>
+      </button>
+    </div>
+    <div class="row row-extraspace">
+      <div class="col l4 s8 login-link centered push-s2 push-l2">
+        <a routerLink="" title="lost password"> Olvide mi contraseña
+         <i class="material-icons right">lock_outline</i>
+        </a>
+      </div>
+      <div class="col l4 s8 login-link centered push-s2 push-l2">
+        <a routerLink="account" title=""> Crea tu cuenta
+         <i class="material-icons right">person_pin</i>
+        </a>
+      </div>
+    </div>
+  </form>
+</content>

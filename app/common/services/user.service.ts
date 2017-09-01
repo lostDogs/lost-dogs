@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from './api.service';
+import {Router} from '@angular/router';
+
 @Injectable()
 export class UserService {
   public isAuth: boolean;
   public isAvatarSet: boolean;
   public user: any;
   public userCookieName: string = 'user';
+  public loading: boolean;
+  public errors: {passwordReq: boolean, userReq: boolean, invalidUser: boolean};
 
-  constructor (public api: ApiService) {
+  constructor (public api: ApiService, public router: Router) {
     this.user = {};
+    this.errors = {passwordReq: false, userReq: false, invalidUser: false};
     const userCookie: any = this.getCookie(this.userCookieName);
     if (userCookie) {
       this.user = userCookie;
@@ -22,6 +27,7 @@ export class UserService {
     this.user.name = response.name || response.username;
     this.user.lastName = response.surname;
     this.user.avatar = response.avatar_url;
+    this.user.email = response.email;
     this.isAuth = true;
     this.setCookie(this.userCookieName, this.user);
   }
@@ -53,16 +59,32 @@ export class UserService {
   }
   public loginSucess(data: any): void {
     console.log('loggin sucess');
-    this.setUser(data);
-    this.isAvatarSet = true;
+    this.loading = false;
+      this.setUser(data);
+      this.isAvatarSet = true;
+      this.errors.invalidUser = false;
+      this.router.navigate(['/home']);
+      window.scroll(0,0);
   }
 
-  public login(password: string, username: string): void {
-    const user:any = {password: password, username: username};
-    this.api.post('https://fierce-falls-25549.herokuapp.com/api/users/login', user).subscribe(
-      data => this.loginSucess(data),
-      e => console.error('error in login', e),
-    );
+  public loginNotSuccess(e: any): void {
+    console.error('error in login', e);
+    this.loading = false;
+    this.errors.invalidUser = true;
+  }
+
+  public login(username: string, password: string): void {
+    if( password && username) {
+      const user:any = {password: password, username: username};
+      this.loading = true;
+      this.api.post('https://fierce-falls-25549.herokuapp.com/api/users/login', user).subscribe(
+        data => this.loginSucess(data),
+        e => this.loginNotSuccess(e),
+      );
+    } else {
+      this.errors.userReq = !username ? true : false;
+      this.errors.passwordReq = !password ? true : false;
+    }
   }
 
   public logout(): void {

@@ -7,6 +7,23 @@
     }
    }
 
+  div.main-title {
+    margin-top: 99px;
+    margin-bottom: 0;
+    padding: 20px 0 20px 0;
+    background: $pink;
+    text-align: center;
+    color: white;
+    border-bottom: 6px solid white;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      h4 {
+        margin-top: 2.14rem;
+        font-size: 4.5rem;
+        padding: 20px 0;
+      }
+    }
+  }
+
 .create-account {
    .account-block {
      padding: 2px 10px 0px 10px;
@@ -17,15 +34,6 @@
      padding-bottom: 50px;
      padding-top: 20px;    
    }
-  .main-title {
-    margin-top: 99px;
-    margin-bottom: 0;
-    padding: 20px 0 20px 0;
-    background: $pink;
-    text-align: center;
-    color: white;
-    border-bottom: 6px solid white;
-  }
   .main-create-account {
     margin-bottom: 0;
     background: $lightGrey;
@@ -84,8 +92,8 @@
       margin: 55px;
     }
     .btn.action {
-      height: 70px;
-      font-size: 2rem;
+      height: 80px;
+      font-size: 2.5rem;
       .material-icons {
         font-size: 3rem;
       }
@@ -134,13 +142,6 @@
       font-size: 2.2rem;
     }
    }
-
-    .main-title {
-      h4 {
-        font-size: 4.5rem;
-        padding: 20px 0;
-      }
-    }
     .profile-pic {
       .width-center {
         width: 300px;

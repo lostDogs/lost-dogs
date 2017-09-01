@@ -82,6 +82,7 @@ header {
   .profile-mobile { 
     border: 5px solid white;
     width: 250px;
+    height: 250px;
     display: block;
     margin-bottom: 25px;
   }
@@ -156,6 +157,17 @@ z-index: 1;
 @media screen and (max-device-width: $screen-mobile-max) {
   header {
     #slide-out {
+      .user-profile {
+        .user-background {
+          a {
+            color: white;
+            display: block;
+          }
+        }
+      }
+      .subheader {
+        color: rgba(0, 0, 0, 0.54);
+      }
       a {
         font-size: 2.8rem;
         color: black;
