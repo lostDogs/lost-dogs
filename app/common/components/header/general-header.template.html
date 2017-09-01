@@ -37,7 +37,9 @@
       </div></li>
       <li><div class="divider"></div></li>
       <li><a routerLink="" class="waves-effect" *ngIf="userService.isAuth"> <i class="material-icons left">perm_identity</i>Mi cuenta</a></li>
-      <li><a routerLink="login" class="waves-effect" *ngIf="!userService.isAuth"><i class="material-icons left">vpn_key</i>login</a></li>
+      <li><a routerLink="/login" class="waves-effect" *ngIf="!userService.isAuth"><i class="material-icons left">vpn_key</i>Login</a></li>
+      <li><div class="divider" *ngIf="!userService.isAuth"></div></li>
+      <li><a routerLink="/account" class="waves-effect" *ngIf="!userService.isAuth"><i class="material-icons left">person_pin</i>Crear cuenta</a></li>
       <li><a href="javascript:void(0)" class="waves-effect" *ngIf="userService.isAuth" (click)="userService.logout()"><i class="material-icons left">reply</i>Logout</a></li>
       <li><div class="divider"></div></li>
       <li><a class="subheader" *ngIf="userService.isAuth">mas acciones</a></li>
