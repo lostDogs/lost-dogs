@@ -13,10 +13,11 @@ import {UserService} from '../../common/services/user.service';
 export class homeComponent {
   public scrollnormalize: number;
   public newUser: boolean;
+
   constructor (@Inject(DOCUMENT) private document:  Document, public scrollService : ScrollService, public activatedRoute: ActivatedRoute, public location: Location, public userService: UserService) {}
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
-    const scrollMax: number = 300;
+    const scrollMax: number = (window.innerHeight - (window.innerHeight / 8)) / 2;
     const scrollTop = this.document.body.scrollTop;
     this.scrollnormalize = (scrollMax - scrollTop) / scrollMax;
     this.scrollService.scrollOpacity = 1.2 - this.scrollnormalize;
@@ -33,5 +34,7 @@ export class homeComponent {
       }, 6000);
     }
   }
-
+  public getWindowHeight(): string {
+    return window.innerHeight +'px';
+  }
 };

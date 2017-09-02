@@ -72,6 +72,7 @@ export class accountComponent {
       this.user.adress.country.value = input.val();
       this.user.adress.country.valid = true;
     });
+    this.user.adress.country.value = undefined;
   }
 
   public createUser (form: any): void {
