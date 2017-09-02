@@ -7,7 +7,7 @@
   </div>
   <div class="menu-options col l4 m2"> 
       <a routerLink="home"  class="logo">
-        <img id="home-logo" src="static/logo-med.png" alt="lost dog logo" [ngStyle]="{'opacity': ScrollService.scrollOpacity}">
+        <img id="home-logo" src="static/logo-med.png" alt="lost dog logo" [ngStyle]="{'opacity': router.url==='/home' ? ScrollService.scrollOpacity : 1}">
       </a> 
     </div> 
     <div class="menu-options col l3 m2">
@@ -32,7 +32,9 @@
           <a routerLink="">{{userService.user.email}}</a>
         </div>
         <div class="no-user-background centered" *ngIf="!userService.isAuth">
-          <img src="static/logo-med-invert.png">
+          <a routerLink="/home">
+            <img src="static/logo-med-invert.png">
+          </a>
         </div>
       </div></li>
       <li><div class="divider"></div></li>
