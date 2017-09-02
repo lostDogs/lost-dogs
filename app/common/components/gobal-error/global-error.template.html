@@ -1,0 +1,9 @@
+<div class="fixed-action-btn">
+        <a id="menu" class="btn btn-floating btn-large"><i class="material-icons">close</i></a>
+</div>
+<div class="tap-target" data-activates="menu">
+  <div class="tap-target-content">
+    <h4 *ngFor="let errorMessage of globalService.errorMessages">{{errorMessage}}</h4>
+    <p *ngFor="let subErrorMessage of globalService.subErrorMessage">{{subErrorMessage}}</p>
+  </div>
+</div>

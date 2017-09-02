@@ -1,0 +1,38 @@
+@import '../../styles/variables.scss';
+global-error {
+  div.fixed-action-btn {
+    top: 0;
+    right: 24px;
+  }
+  div.tap-target-wrapper{
+    &.open {
+      div.tap-target {
+        transform: scale(0.7);
+        @media screen and (max-device-width: $screen-mobile-max) {
+          transform: scale(1.5);
+        }
+        div.tap-target-content {
+          left: 56px !important;
+          top: 415px !important;
+          color: white;
+        }
+      }
+    }
+    .tap-target-wave {
+      @media screen and (max-device-width: $screen-mobile-max) {
+        transform: scale(1.5);
+        top: 364px !important;
+        left: 309px !important;
+      }
+      &::before {
+        background: transparent;
+      }
+      .btn.btn-floating.tap-target-origin {
+        background-color: #ee6e73;
+        i.material-icons {
+          color: white;
+        }
+      }
+    }
+  }  
+}

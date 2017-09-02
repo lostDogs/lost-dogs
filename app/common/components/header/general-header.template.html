@@ -7,7 +7,7 @@
   </div>
   <div class="menu-options col l4 m2"> 
       <a routerLink="home"  class="logo">
-        <img id="home-logo" src="static/logo-med.png" alt="lost dog logo" [ngStyle]="{'opacity': router.url==='/home' ? ScrollService.scrollOpacity : 1}">
+        <img id="home-logo" src="static/logo-med.png" alt="lost dog logo" [ngStyle]="{'opacity': router.url==='/home' ? globalService.scrollOpacity : 1}">
       </a> 
     </div> 
     <div class="menu-options col l3 m2">
