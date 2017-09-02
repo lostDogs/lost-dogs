@@ -1,6 +1,6 @@
 import {ElementRef, Renderer, Component, OnInit} from '@angular/core';
 import {ScrollService} from '../../services/scroll.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../services/user.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class generalHeaderComponent implements OnInit  {
   public userName: string;
   public password: string;
 
-  constructor (public renderer: Renderer, public elRef: ElementRef, public ScrollService: ScrollService, public activatedRoute: ActivatedRoute, public userService: UserService) {
+  constructor (public renderer: Renderer, public elRef: ElementRef, public ScrollService: ScrollService, public activatedRoute: ActivatedRoute, public userService: UserService, public router: Router) {
     this.renderer.listenGlobal('document', 'click', (event: any) => {
       const loginDom: any = this.elRef.nativeElement.childNodes[0].childNodes[5].childNodes[1].childNodes[2];
       const UserDom: any = this.elRef.nativeElement.childNodes[0].childNodes[5].childNodes[1].childNodes[4];
@@ -33,6 +33,7 @@ export class generalHeaderComponent implements OnInit  {
   }
 
   public ngOnInit(): void {
+    console.log('this.router.url', this.router.url);
     $('.home-mobile').sideNav({
       menuWidth: 700,
       closeOnClick: true,

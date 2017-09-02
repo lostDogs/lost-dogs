@@ -33,12 +33,12 @@
 
 #home-dogs{
   background: url(/static/dogsBlur1.png) repeat fixed center;
-  background-position: 0px 97px;
+  background-position: 0px 98px;
   color: white;
 
   .logo-huge {
     display: flex;
-    height: 700px;
+    //height: 700px;
     img {
       width: 500px;
       margin: auto;
@@ -125,6 +125,7 @@
     }
     p {
       text-align: center;
+      padding: 0 100px;
     }
   }
   .circular {
@@ -153,6 +154,22 @@
     }
   }
   @media screen and (max-device-width: $screen-mobile-max) {
+    background: url(/static/mobileFullHome1.jpg) repeat fixed;
+    background-position: 0px 111px;
+    background-size: contain;
+    .circular {
+      width: 350px;
+      height: 350px;
+      border: 10px solid white;
+      .motivation-icon {
+        width: 270px;
+        height: 270px;
+      }
+      .earn-money {
+        width: 280px;
+        height: 280px;
+      }
+    }
     .btn  {
       height: 120px;
       line-height: 120px;
@@ -167,14 +184,20 @@
     }
     h3 {
       font-size: 6.28rem;
+      font-weight: 500;
     }
     p {
       font-size: 3rem;
     }
    .home-description {
+     border-bottom: 15px solid white;
+     border-top: 15px solid white;
+     h4 {
+        margin: 65px 0;
+     }
      p {
        font-size: 3rem;
-       padding: 0 40px 0 40px;
+       padding: 0 80px;
      }
      figure {
       padding-right: 25px;
@@ -187,11 +210,13 @@
    .logo-huge {
     height: 1000px;
     img {
-      width: 700px;
+      width: 800px;
+      height: 235px;      
     }
    }
    .options {
       .option {
+        border: 15px solid white;
          height: 500px;
       }
    }
