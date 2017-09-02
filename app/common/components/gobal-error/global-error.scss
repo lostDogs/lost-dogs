@@ -1,0 +1,30 @@
+@import '../../styles/variables.scss';
+global-error {
+  div.fixed-action-btn {
+    top: 0;
+    right: 24px;
+  }
+  div.tap-target-wrapper{
+    &.open {
+      div.tap-target {
+        transform: scale(0.7);
+        div.tap-target-content {
+          left: 56px !important;
+          top: 415px !important;
+          color: white;
+        }
+      }
+    }
+    .tap-target-wave {
+      &::before {
+        background: transparent;
+      }
+      .btn.btn-floating.tap-target-origin {
+        background-color: #ee6e73;
+        i.material-icons {
+          color: white;
+        }
+      }
+    }
+  }  
+}

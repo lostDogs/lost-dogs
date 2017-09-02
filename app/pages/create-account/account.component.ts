@@ -4,11 +4,13 @@ import {ApiService} from '../../common/services/api.service';
 import * as countryData from '../../common/services/countries.json';
 import {Router} from '@angular/router';
 import {UserService} from '../../common/services/user.service';
+import {GlobalFunctionService} from '../../common/services/global-function.service';
 
 export interface formObj {
   valid: boolean;
   value: any;
   required: boolean;
+  label?: string;
 }
 
 export interface user {
@@ -30,11 +32,11 @@ export class accountComponent {
   public binaryImg: any;
   public loading: boolean;
 
-  constructor (public validate: ValidationService, public api: ApiService, public router: Router, public userService: UserService) {
+  constructor (public validate: ValidationService, public api: ApiService, public router: Router, public userService: UserService, public globalService: GlobalFunctionService) {
     this.countries = countryData;
     // define the user object before
     this.user = {
-      pic: {value:'./static/profile-undef.png', valid: true, required: true},
+      pic: {value:'./static/profile-undef.png', valid: true, required: true, label: 'imagen de perfil'},
       name: {
         first: {valid: true, value: undefined, required: true},
         last1: {valid: true, value: undefined, required: true},
@@ -79,6 +81,7 @@ export class accountComponent {
     // Check for undefined and set formvalue to false
     let validForm: boolean = true;
     const userFirts: any[] = Object.keys(this.user);
+    this.globalService.clearErroMessages();
     userFirts.forEach((userKey: any, elementIndex: number) => {
       const element: any = this.user[userKey];
       const propKey: any = Object.keys(element);
@@ -90,20 +93,26 @@ export class accountComponent {
             validForm = false;
           }else if (!element[propKey[i]].valid) {
             validForm = false;
+            this.globalService.setErrorMEssage(propKey[i] +' invalido');
             break;
           }
         }
       } else {
+        const fieldName = element.label ? element.label : userKey;
         if (element.required && (!element.value || element.value === './static/profile-undef.png' ) ) {
           element.valid = false;
           validForm = false;
+          this.globalService.setErrorMEssage(fieldName +' requerido');
         } else if (!element.valid) {
           validForm = false;
+          this.globalService.setErrorMEssage(fieldName +' invalido');
         }
       }
     });
     if (validForm) {
       this.postUser();
+    } else {
+      this.globalService.openErrorModal();
     }
   }
 
@@ -128,10 +137,18 @@ export class accountComponent {
       }
   }
 
+ public errorImgToBucket (e: any): void {
+   this.globalService.clearErroMessages();
+   this.globalService.setErrorMEssage('No pudimos agregar tu image de perfil');
+   this.globalService.setSubErrorMessage('intenta mas tarde en mi perfil');
+   this.globalService.openErrorModal();
+   console.error('error setting img', e);
+ }
+
   public setImgToBucket(url: string): void {
     this.api.put(url, this.binaryImg, {'Content-Type': 'image/jpeg', 'Content-encoding': 'base64'}).subscribe(
       data => this.sucessImgToBucket(data),
-      e => console.error('error setting img', e)
+      e => this.errorImgToBucket(e)
     );
   }
   public sucessImgToBucket(data: any): void {
@@ -152,7 +169,9 @@ export class accountComponent {
 
   public afterCreateError(e: any): void {
     this.loading = false;
-    console.error('creating user post', e);
+    let errorMessage: string = this.globalService.parseJsonError(e);
+    this.globalService.setErrorMEssage(errorMessage);
+    this.globalService.openErrorModal();
   }
 
   public postUser(): void {
