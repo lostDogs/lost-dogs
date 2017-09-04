@@ -1,8 +1,12 @@
 @import '../../styles/variables.scss';
 global-error {
+  display: fixed;
   div.fixed-action-btn {
     top: 0;
     right: 24px;
+    a {
+      visibility: hidden;
+    }
   }
   div.tap-target-wrapper{
     &.open {
