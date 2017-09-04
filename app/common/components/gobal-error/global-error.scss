@@ -1,6 +1,7 @@
 @import '../../styles/variables.scss';
 global-error {
-  display: fixed;
+  position: fixed;
+  z-index: 1001;
   div.fixed-action-btn {
     top: 0;
     right: 24px;
