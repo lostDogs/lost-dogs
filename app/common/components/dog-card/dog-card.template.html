@@ -1,10 +1,10 @@
-<article class="hoverable"[ngClass]="{'expanded': viewMore, 'blur-filter': dogCardService.open && (userAt !== cardIndex)}">
+<article class="hoverable"[ngClass]="{'expanded': viewMore, 'blur-filter': dogCardService.open && (userAt !== cardIndex)}" (click)="toogleviewMoreMobile()">
 <h5>Nombre</h5>
   <h6  *ngIf="viewMore">Pug, Pitbull, RottWiller</h6>
   <h6 class="reward" *ngIf="viewMore">$ 3,500.00 MXN</h6>
   <figure>
     <div class="main-image" [ngStyle]="{'background-image': 'url(/static/temp-profile-dog.jpg)' }">
-      <div class="dog-properties">
+      <div class="dog-properties" *ngIf="!mobile || viewMore">
         <!-- <div class="dog-gender-female property centered"><img src="/static/male.png"></div> -->
         <div class="dog-gender-male property centered tooltipped" data-position="right" data-tooltip="macho"><img src="/static/male.png"></div>
         <div class="dog-color property bg-img tooltipped" [ngStyle]="{'background-image': 'url(/static/propertyColor.png)' }"  data-position="right" data-tooltip="cafe claro con blanco"></div>
@@ -16,9 +16,22 @@
       </div>
     </div>
   </figure>
+  <figure>
+    <div class="dog-properties-mobile" *ngIf="!(!mobile || viewMore)">
+      <!-- <div class="dog-gender-female property centered"><img src="/static/male.png"></div> -->
+      <div class="dog-gender-male property centered tooltipped" data-position="right" data-tooltip="macho"><img src="/static/male.png"></div>
+      <div class="dog-color property bg-img tooltipped" [ngStyle]="{'background-image': 'url(/static/propertyColor.png)' }"  data-position="right" data-tooltip="cafe claro con blanco"></div>
+      <div class="dog-date property tooltipped " data-position="right" data-tooltip="Febrero del 2017">
+        <p class="truncate">2017 </p>
+        <p class="truncate">Feb</p>
+      </div>
+      <div class="dog-size small property bg-img tooltipped" data-position="right" data-tooltip="pequenio"></div>
+    </div>  
+  </figure>  
   <div class="location">
     <i class="material-icons left location">location_on</i>
-    <p>Av. de los blancos, 557, san jemoromio, Monterrey</p>
+    <p *ngIf="!mobile || viewMore">Av. de los blancos, 557, Ciudad del Sol, Zapopan, Jal</p>
+    <p class="mobile truncate" *ngIf="!(!mobile || viewMore)">Ciudad del sol, Zapopan </p>
   </div>
   <div class="accessories row" [hidden]="!viewMore">
     <div class="accessory colar tooltipped" data-tooltip="collar"></div>

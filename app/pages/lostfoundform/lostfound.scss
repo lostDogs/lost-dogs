@@ -1,4 +1,5 @@
 @import '../../common/styles/variables.scss';
+@import '../../common/styles/fonts.scss';
 lostfound-form {
   .blur-filter {
     filter: blur(5px);
@@ -17,12 +18,14 @@ lostfound-form {
     background: $lightGrey;
     .title-question  {
       color: white;
+      text-align: center;
       background-color: $pink;
-      padding-top: 99px;
-      margin: 0;
+      margin-top: 99px;
+      padding: 20px 0 20px 0;
+      margin-bottom: 0;
       border-bottom: 6px solid white;
-      .input-field  {
-        padding-right: 250px;
+      h5 {
+        padding-top: 15px;
       }
     }
     .component-container {

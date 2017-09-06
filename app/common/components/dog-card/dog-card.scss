@@ -10,6 +10,32 @@ dog-card {
     padding: 5px;
     border-radius: 10px;
     margin: 15px 5px;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      width: 450px;
+      h5 {
+        padding: 25px;
+      } 
+       &.hoverable.expanded {
+        width: 900px;
+        top: 20%;
+        a.btn {
+          font-size: 2.5rem;
+          height: 80px;
+          line-height: 80px;
+          width: 63%;          
+        }
+        a.close {
+          font-size: 2.5rem;
+          line-height: 80px;
+        }
+        figure {
+          div.main-image {
+            height: 400px;
+            margin: 25px 0;
+          }
+        }
+       }
+    }
     &:hover {
       color: black;
     }
@@ -64,10 +90,103 @@ dog-card {
         color: $redAccent;
       }
     }
-    .location {}
+    .dog-properties-mobile {
+      @media screen and (max-device-width: $screen-mobile-max) {
+        float: none;
+        display: flex;
+        .property {
+          margin: auto;
+          width: 25%;
+          height: 100px;
+          opacity: 1;
+           &:first-child {
+            border-bottom-left-radius: 10px;
+            border-top-right-radius: 0;
+            margin-right: 2px;
+           }
+           &:nth-child(2), &:nth-child(3) {
+             margin: 0 2px;
+           }
+           &:nth-child(4) {
+            margin-left: 2px;
+           }
+           &.dog-date {
+             p {
+               &:nth-child(2) {
+                 font-size: 28px;
+                }            
+             }
+           }
+        }        
+      }
+    }
+
     figure {
       display: block;
-      margin: 0 auto;    
+      margin: 0 auto;
+      .dog-properties {
+        float: right;
+      }
+      .property {
+        width: 40px;
+        height: 40px;
+      @media screen and (max-device-width: $screen-mobile-max) { 
+        width: 100px;
+        height: 100px;
+      }        
+        background: white;
+        padding: 2px 0;
+        opacity: 0.7;
+        &:hover {
+          opacity: 1;
+        }
+        &:first-child {
+          border-top-right-radius: 10px;
+        }
+        &:nth-child(2), &:nth-child(3) {
+          margin: 2px 0;
+        }
+        &:nth-child(4) {
+          border-bottom-right-radius: 10px;
+        }
+        &.dog-date {
+          font-size: 11px;
+          font-weight: 600;
+          p {
+            margin: 0;
+            text-align: center;
+            padding: 0;
+            &:nth-child(2) {
+              font-size: 15px;
+              @media screen and (max-device-width: $screen-mobile-max) { 
+                font-size: 2rem;
+              }
+            }
+          }
+        }
+        &.dog-gender-female {
+          background-color: $pinkFemale;
+          img {
+            width: 20px;
+            height: 27px;
+          }
+        }
+        &.dog-gender-male {
+          background-color: $lightBlue;
+          img {
+          width: 50%;
+          height: 56%;
+          }
+        }
+        &.bg-img {
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
+        }
+        &.dog-size.small {
+          background-image: url(/static/propertySize.png);
+        }
+      }      
       .main-image {
         width: 100%;
         height: 165px;
@@ -75,61 +194,11 @@ dog-card {
         background-position: center;
         background-size: cover;
         border-radius: 10px;
-        .dog-properties {
-          float: right;
-        }
-        .property {
-          width: 40px;
-          height: 40px;
-          background: white;
-          padding: 2px 0;
-          opacity: 0.7;
-          &:hover {
-            opacity: 1;
-          }
-          &:first-child {
-            border-top-right-radius: 10px;
-          }
-          &:nth-child(2), &:nth-child(3) {
-            margin: 2px 0;
-          }
-          &:nth-child(4) {
-            border-bottom-right-radius: 10px;
-          }
-          &.dog-date {
-            font-size: 11px;
-            font-weight: 600;
-            p {
-              margin: 0;
-              text-align: center;
-              padding: 0;
-              &:nth-child(2) {
-                font-size: 15px;
-              }
-            }
-          }
-          &.dog-gender-female {
-            background-color: $pinkFemale;
-            img {
-              width: 20px;
-              height: 27px;
-            }
-          }
-          &.dog-gender-male {
-            background-color: $lightBlue;
-            img {
-            width: 25px;
-            height: 25px;
-            }
-          }
-          &.bg-img {
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: contain;
-          }
-          &.dog-size.small {
-            background-image: url(/static/propertySize.png);
-          }
+        @media screen and (max-device-width: $screen-mobile-max) {
+        height: 250px;
+        border-radius: 0;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
         }
       }    
     }
@@ -144,6 +213,10 @@ dog-card {
         width: 60px;
         height: 50px;
         display: inline-block;
+        @media screen and (max-device-width: $screen-mobile-max) {
+          width: 120px;
+          height: 120px;          
+        }
         &.colar {
           background-image: url(/static/collar.png);
         }
@@ -165,7 +238,15 @@ dog-card {
       p {
         font-size: 12px;
         color: grey;
+        @media screen and (max-device-width: $screen-mobile-max) { 
+          font-size: 2.2rem;
+        }        
       }
     }
   }
+@media screen and (max-device-width: $screen-mobile-max) {
+  a.btn.info {
+    display: none;
+  }
+}
 }

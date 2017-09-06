@@ -7,11 +7,15 @@ import {DogCardService} from '../../services/dog-card.service';
 })
 export class DogCardComponent {
   public viewMore: boolean;
+  public mobile: boolean;
   @Input()
   public cardIndex: number;
   @Input()
   public userAt: number;
+
   constructor(public dogCardService: DogCardService, public renderer: Renderer, public elRef: ElementRef)  {
+   
+    this.mobile = window.screen.width <= 767;
     this.renderer.listenGlobal('document', 'click', (event: any) => {
       if (this.viewMore && !this.elRef.nativeElement.contains(event.target)) {
         this.viewMore = false;
@@ -24,6 +28,12 @@ export class DogCardComponent {
       this.viewMore = !this.viewMore;
       this.dogCardService.open = this.viewMore;      
     }, 20);
+  }
+
+  public toogleviewMoreMobile(): void {
+    if (!this.viewMore && this.mobile) {
+      this.toogleViewMore();
+    }
   }
 
   public ngAfterViewInit(): void {
