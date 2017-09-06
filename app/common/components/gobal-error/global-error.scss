@@ -5,6 +5,7 @@ global-error {
   div.fixed-action-btn {
     top: 0;
     right: 24px;
+    height: 5px;
     a {
       visibility: hidden;
     }
@@ -33,7 +34,7 @@ global-error {
         background: transparent;
       }
       .btn.btn-floating.tap-target-origin {
-        background-color: #ee6e73;
+        background-color: $redAccent2;
         i.material-icons {
           color: white;
         }

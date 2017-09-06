@@ -1,12 +1,17 @@
 import { Component} from '@angular/core';
+import {DogCardService} from '../../common/services/dog-card.service';
 
 @Component({
   selector: 'lostfound-form',
-  template: '<h1>{{formpage}} </h1><div>dogs name:<input type="text" name="dogname"></div>'
+  template: require('./lostfound.template.html'),
+  styles: [ require('./lostfound.scss')]
 })
 export class lostformComponent {
-  public formpage: string;
-  constructor () {
-    this.formpage = 'ohh!  have you lost/found a dog?';
+  public dogCards: number[];
+  constructor (public dogCardService: DogCardService) {
+    this.dogCards = [];
+    for (let i = 0; i < 13; ++i) {
+      this.dogCards.push(i);
+    }
   }
 };
