@@ -34,10 +34,10 @@
     <p class="mobile truncate" *ngIf="!(!mobile || viewMore)">Ciudad del sol, Zapopan </p>
   </div>
   <div class="accessories row" [hidden]="!viewMore">
-    <div class="accessory colar tooltipped" data-tooltip="collar"></div>
-    <div class="accessory tag tooltipped" data-tooltip="tag"></div>
-    <div class="accessory sueter tooltipped" data-tooltip="sueter"></div>
-    <div class="accessory sun-glasses tooltipped" data-tooltip="lentes"></div>
+    <div class="accessory colar tooltipped" data-position="top" data-tooltip="collar"></div>
+    <div class="accessory tag tooltipped" data-position="top" data-tooltip="tag"></div>
+    <div class="accessory sueter tooltipped" data-position="top" data-tooltip="sueter"></div>
+    <div class="accessory sun-glasses tooltipped" data-position="top" data-tooltip="lentes"></div>
   </div>
   <div class="row extras-comments" *ngIf="viewMore">
     <p>Algunos comentraios extras sobre el perrro que propociona informacion extra ... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
