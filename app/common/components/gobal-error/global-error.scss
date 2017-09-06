@@ -21,6 +21,11 @@ global-error {
           left: 56px !important;
           top: 415px !important;
           color: white;
+          @media screen and (max-device-width: $screen-mobile-max) {
+            h4 {
+              font-size: 2.28rem;
+            }
+          }
         }
       }
     }
