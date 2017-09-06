@@ -4,33 +4,33 @@
   <h6 class="reward" *ngIf="viewMore">$ 3,500.00 MXN</h6>
   <figure>
     <div class="main-image" [ngStyle]="{'background-image': 'url(/static/temp-profile-dog.jpg)' }">
-      <div class="dog-properties" *ngIf="!mobile || viewMore">
+      <div class="dog-properties" [hidden]="!(!mobile || viewMore)">
         <!-- <div class="dog-gender-female property centered"><img src="/static/male.png"></div> -->
-        <div class="dog-gender-male property centered tooltipped" data-position="right" data-tooltip="macho"><img src="/static/male.png"></div>
-        <div class="dog-color property bg-img tooltipped" [ngStyle]="{'background-image': 'url(/static/propertyColor.png)' }"  data-position="right" data-tooltip="cafe claro con blanco"></div>
-        <div class="dog-date property tooltipped " data-position="right" data-tooltip="Febrero del 2017">
+        <div class="dog-gender-male property centered tooltipped" data-position="left" data-tooltip="macho"><img src="/static/male.png"></div>
+        <div class="dog-color property bg-img tooltipped" [ngStyle]="{'background-image': 'url(/static/propertyColor.png)' }"  data-position="left" data-tooltip="cafe claro con blanco"></div>
+        <div class="dog-date property tooltipped " data-position="left" data-tooltip="Febrero del 2017">
           <p class="truncate">2017 </p>
           <p class="truncate">Feb</p>
         </div>
-        <div class="dog-size small property bg-img tooltipped" data-position="right" data-tooltip="pequenio"></div>
+        <div class="dog-size small property bg-img tooltipped" data-position="left" data-tooltip="pequenio"></div>
       </div>
     </div>
   </figure>
   <figure>
     <div class="dog-properties-mobile" *ngIf="!(!mobile || viewMore)">
       <!-- <div class="dog-gender-female property centered"><img src="/static/male.png"></div> -->
-      <div class="dog-gender-male property centered tooltipped" data-position="right" data-tooltip="macho"><img src="/static/male.png"></div>
-      <div class="dog-color property bg-img tooltipped" [ngStyle]="{'background-image': 'url(/static/propertyColor.png)' }"  data-position="right" data-tooltip="cafe claro con blanco"></div>
-      <div class="dog-date property tooltipped " data-position="right" data-tooltip="Febrero del 2017">
+      <div class="dog-gender-male property centered tooltipped" data-position="left" data-tooltip="macho"><img src="/static/male.png"></div>
+      <div class="dog-color property bg-img tooltipped" [ngStyle]="{'background-image': 'url(/static/propertyColor.png)' }"  data-position="left" data-tooltip="cafe claro con blanco"></div>
+      <div class="dog-date property tooltipped " data-position="left" data-tooltip="Febrero del 2017">
         <p class="truncate">2017 </p>
         <p class="truncate">Feb</p>
       </div>
-      <div class="dog-size small property bg-img tooltipped" data-position="right" data-tooltip="pequenio"></div>
+      <div class="dog-size small property bg-img tooltipped" data-position="left" data-tooltip="pequenio"></div>
     </div>  
   </figure>  
   <div class="location">
     <i class="material-icons left location">location_on</i>
-    <p *ngIf="!mobile || viewMore">Av. de los blancos, 557, Ciudad del Sol, Zapopan, Jal</p>
+    <p *ngIf="!mobile || viewMore">Av. de los blancos, 557, Ciudad del Sol, Zapopan, Jalisco</p>
     <p class="mobile truncate" *ngIf="!(!mobile || viewMore)">Ciudad del sol, Zapopan </p>
   </div>
   <div class="accessories row" [hidden]="!viewMore">
