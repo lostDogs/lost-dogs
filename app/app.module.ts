@@ -10,16 +10,19 @@ import {ValidationService} from './common/services/validation.service';
 import { FormsModule }  from '@angular/forms';
 import {ApiService} from './common/services/api.service';
 import {UserService} from './common/services/user.service';
+import {DogCardService} from './common/services/dog-card.service';
 import {GlobalError} from './common/components/gobal-error/global-error.component';
+import {DogCardComponent} from './common/components/dog-card/dog-card.component';
 
 @NgModule({
   imports: [BrowserModule, AppRouterModule, FormsModule, HttpModule],
-  declarations: [appComponent, routerComponents, generalHeaderComponent, generalFooterComponent, GlobalError],
+  declarations: [appComponent, routerComponents, generalHeaderComponent, generalFooterComponent, GlobalError, DogCardComponent],
   providers: [
     {provide: GlobalFunctionService, useClass: GlobalFunctionService},
     {provide: ValidationService, useClass: ValidationService},
     {provide: ApiService, useClass: ApiService},
-    {provide: UserService, useClass: UserService}
+    {provide: UserService, useClass: UserService},
+    {provide: DogCardService, useClass: DogCardService}
   ],
   bootstrap: [appComponent]
 })

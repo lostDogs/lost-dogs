@@ -1,0 +1,16 @@
+<section>
+  <div class="row title-question">
+    <h5 class="col l4 push-l4 s12">cuando lo perdiste?</h5>
+    <div class="input-field col l4 s12 push-l3">
+          <input type="text" name="question" id="question" >
+          <label for="question">anio/mes/dia</label>
+    </div>    
+  </div>
+  <div class="component-container centered" [ngClass]="{'blur-filter': dogCardService.open}">
+    <h3 style="color:white;">&lt; Insert component here &gt;</h3>
+  </div>
+  <div class="row results">
+    <div *ngIf="dogCardService.open" class="block-back col l12"></div>
+    <dog-card *ngFor="let card of dogCards;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt"></dog-card>
+  </div>
+</section>

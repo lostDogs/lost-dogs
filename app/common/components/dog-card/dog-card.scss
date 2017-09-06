@@ -1,0 +1,255 @@
+@import '../../styles/variables.scss';
+dog-card {
+  display: inline-block;
+  article {
+    color: grey;
+    transition: width 2s, height 4s;
+    background: $lighterGrey;
+    text-align: center;
+    width: 225px;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 15px 5px;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      width: 450px;
+      border-radius: 20px;
+      h5 {
+        padding: 25px;
+      } 
+       &.hoverable.expanded {
+        width: 900px;
+        top: 20%;
+        max-height: 1350px;
+        overflow-y: scroll;        
+        a.btn {
+          font-size: 2.5rem;
+          height: 80px;
+          line-height: 80px;
+          width: 63%;          
+        }
+        a.close {
+          font-size: 2.5rem;
+          line-height: 80px;
+        }
+        figure {
+          div.main-image {
+            height: 400px;
+            margin: 25px 0;
+          }
+        }
+       }
+    }
+    &:hover {
+      color: black;
+    }
+    &.expanded {
+      margin:  0 auto;
+      left: 0;
+      right: 0;
+      top: 25%;
+      position: fixed;
+      width: 500px;
+      color: black;
+      z-index: 20;
+      box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);      
+      a.btn {
+        width: 50%;
+        float: right;
+        margin-right: 25px;
+      }
+      a.close {
+        display: inline-block;
+        float: left;
+        margin-left: 25px;
+      }
+
+    }
+    a.close {
+      display: none;
+      line-height: 36px;
+      text-transform: uppercase;
+      font-size: 14px;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    a.btn{
+      width: 90%;
+      background-color: $buttonInfo;
+      &:hover {
+        background-color: $butttonInfoHover;
+      }
+    }
+    h6 {
+      padding: 3px 0;
+    }
+    p {
+      padding: 0 5px;
+      text-align: left;
+    }
+    i.material-icons {
+      margin-right: 5px;
+      &.location {
+        color: $redAccent;
+      }
+    }
+    .dog-properties-mobile {
+      @media screen and (max-device-width: $screen-mobile-max) {
+        float: none;
+        display: flex;
+        .property {
+          margin: auto;
+          width: 25%;
+          height: 100px;
+          opacity: 1;
+           &:first-child {
+            border-bottom-left-radius: 10px;
+            border-top-right-radius: 0;
+            margin-right: 2px;
+           }
+           &:nth-child(2), &:nth-child(3) {
+             margin: 0 2px;
+           }
+           &:nth-child(4) {
+            margin-left: 2px;
+           }
+           &.dog-date {
+             p {
+               &:nth-child(2) {
+                 font-size: 28px;
+                }            
+             }
+           }
+        }        
+      }
+    }
+
+    figure {
+      display: block;
+      margin: 0 auto;
+      .dog-properties {
+        float: right;
+      }
+      .property {
+        width: 40px;
+        height: 40px;
+      @media screen and (max-device-width: $screen-mobile-max) { 
+        width: 100px;
+        height: 100px;
+      }        
+        background: white;
+        padding: 2px 0;
+        opacity: 0.7;
+        &:hover {
+          opacity: 1;
+        }
+        &:first-child {
+          border-top-right-radius: 10px;
+        }
+        &:nth-child(2), &:nth-child(3) {
+          margin: 2px 0;
+        }
+        &:nth-child(4) {
+          border-bottom-right-radius: 10px;
+        }
+        &.dog-date {
+          font-size: 11px;
+          font-weight: 600;
+          p {
+            margin: 0;
+            text-align: center;
+            padding: 0;
+            &:nth-child(2) {
+              font-size: 15px;
+              @media screen and (max-device-width: $screen-mobile-max) { 
+                font-size: 2rem;
+              }
+            }
+          }
+        }
+        &.dog-gender-female {
+          background-color: $pinkFemale;
+          img {
+            width: 20px;
+            height: 27px;
+          }
+        }
+        &.dog-gender-male {
+          background-color: $lightBlue;
+          img {
+          width: 50%;
+          height: 56%;
+          }
+        }
+        &.bg-img {
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
+        }
+        &.dog-size.small {
+          background-image: url(/static/propertySize.png);
+        }
+      }      
+      .main-image {
+        width: 100%;
+        height: 165px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        border-radius: 10px;
+        @media screen and (max-device-width: $screen-mobile-max) {
+        height: 250px;
+        border-radius: 0;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        }
+      }    
+    }
+    .accessories {
+      margin-bottom: 15px;
+      .accessory {
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        background-color: white;
+        border-radius: 5px;
+        width: 60px;
+        height: 50px;
+        display: inline-block;
+        @media screen and (max-device-width: $screen-mobile-max) {
+          width: 120px;
+          height: 120px;          
+        }
+        &.colar {
+          background-image: url(/static/collar.png);
+        }
+        &.tag {
+         background-image: url(/static/tag.png); 
+        }
+        &.sueter {
+         background-image: url(/static/sueter.png); 
+        }
+        &.sueter {
+         background-image: url(/static/sueter.png); 
+        }
+        &.sun-glasses {
+         background-image: url(/static/lentes.png);  
+        }
+      }
+    }
+    .extras-comments {
+      p {
+        font-size: 12px;
+        color: grey;
+        @media screen and (max-device-width: $screen-mobile-max) { 
+          font-size: 2.2rem;
+        }        
+      }
+    }
+  }
+@media screen and (max-device-width: $screen-mobile-max) {
+  a.btn.info {
+    display: none;
+  }
+}
+}
