@@ -1,5 +1,5 @@
 <section>
-  <div class="row title-question">
+  <div class="row title-question"  [ngClass]="{'blur-filter': dogCardService.open}">
     <h5 class="col l4 push-l4 s12">cuando lo perdiste?</h5>
     <div class="input-field col l4 s12 push-l3">
           <input type="text" name="question" id="question" >
