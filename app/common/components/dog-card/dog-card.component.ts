@@ -26,7 +26,7 @@ export class DogCardComponent {
   public toogleViewMore (): void {
     setTimeout(() => {
       this.viewMore = !this.viewMore;
-      this.dogCardService.open = this.viewMore;      
+      this.dogCardService.open = this.viewMore;
     }, 20);
   }
 

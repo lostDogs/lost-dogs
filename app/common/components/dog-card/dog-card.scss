@@ -89,6 +89,13 @@ dog-card {
       padding: 0 5px;
       text-align: left;
     }
+    .location {
+      p {
+        overflow: hidden;
+        height: 45px;
+        text-overflow: ellipsis;        
+      }
+    }
     i.material-icons {
       margin-right: 5px;
       &.location {
