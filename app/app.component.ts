@@ -3,6 +3,9 @@ import {ViewEncapsulation} from '@angular/core';
 import 'jquery';
 import 'materialize-css/dist/js/materialize.js';
 import 'materialize-css/bin/materialize.css';
+import 'hammerjs';
+import 'hammer-timejs';
+
 @Component({
   selector: 'my-app',
   encapsulation: ViewEncapsulation.None,

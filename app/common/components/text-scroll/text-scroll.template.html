@@ -1,0 +1,13 @@
+<section class="row scroller"(click)="cancelScroll=true">
+    <div class="col l12 s12">
+    <div class="up clickable" (click)="decrease()"  [ngClass]="{'active': pressedUp}">
+      <i class="material-icons">expand_less</i>
+      <h3 class="previous unselected">{{before()}}</h3>
+    </div>
+    <h1 class="selected">{{displayedText[positionCounter]}}</h1>
+    <div class="down clickable" (click)="increse()" [ngClass]="{'active': pressedDown}">
+      <h3 class="next unselected">{{after()}}</h3>
+      <i class="material-icons" >expand_more</i>
+    </div>
+    </div>
+</section>

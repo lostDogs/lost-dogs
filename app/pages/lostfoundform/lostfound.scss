@@ -12,7 +12,7 @@ lostfound-form {
     position: absolute;
     z-index: 10;
   }
-  section {
+  section.page {
     height: 100%;
     background: $lightGrey;
     .title-question  {
@@ -28,7 +28,7 @@ lostfound-form {
       }
     }
     .component-container {
-      height: 250px;
+      padding: 20px 0;
       color: white;
       background-color: $pink;
       border-bottom: 6px solid white;

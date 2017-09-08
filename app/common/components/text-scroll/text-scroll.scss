@@ -1,0 +1,33 @@
+@import '../../styles/variables.scss';
+text-scroll {
+  section.scroller {
+    text-align: center;
+    border-radius: 10px;
+    border: 3px solid white;
+    cursor: default;
+    .col {
+      padding: 0;
+    }
+    h1.selected {
+      padding: 0 1rem;
+    }
+    i.material-icons {
+      transform: scale(2.2, 1.6);
+    }
+  }
+  .unselected {
+    color: $notSoGrey;
+    transition: 0.5s;
+    border-radius: 10px;
+  }
+
+  .clickable {
+    transition: 0.5s;
+    &.active {
+      background-color: rgba(195, 197, 201, 0.2);
+      h3.unselected {
+        color: white;
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-<section>
+<section class="page">
   <div class="row title-question"  [ngClass]="{'blur-filter': dogCardService.open}">
     <h5 class="col l4 push-l4 s12">cuando lo perdiste?</h5>
     <div class="input-field col l4 s12 push-l3">
@@ -7,7 +7,8 @@
     </div>    
   </div>
   <div class="component-container centered" [ngClass]="{'blur-filter': dogCardService.open}">
-    <h3 style="color:white;">&lt; Insert component here &gt;</h3>
+    <!-- <h3 style="color:white;">&lt; Insert component here &gt;</h3> -->
+    <text-scroll></text-scroll>
   </div>
   <div class="row results">
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
