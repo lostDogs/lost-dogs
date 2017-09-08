@@ -12,6 +12,7 @@ text-scroll {
       padding: 0 1rem;
     }
     i.material-icons {
+      transition: 0.5s;
       transform: scale(2.2, 1.6);
     }
   }
@@ -27,6 +28,9 @@ text-scroll {
       background-color: rgba(195, 197, 201, 0.2);
       h3.unselected {
         color: white;
+      }
+      i.material-icons {
+        opacity: 0.5;
       }
     }
   }
