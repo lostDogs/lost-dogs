@@ -9,11 +9,23 @@ text-scroll {
       padding: 0;
     }
     h1.selected {
-      padding: 0 1rem;
+      padding: 1rem;
+      @media screen and (max-device-width: $screen-mobile-max) {
+        font-size: 6rem;
+        padding: 2rem 0;
+      }
     }
     i.material-icons {
       transition: 0.5s;
       transform: scale(2.2, 1.6);
+    }
+    @media screen and (max-device-width: $screen-mobile-max) {
+      .clickable {
+        h3.unselected {
+          font-size: 5rem;
+          padding: 3rem 0;
+        }
+      }
     }
   }
   .unselected {
@@ -25,7 +37,7 @@ text-scroll {
   .clickable {
     transition: 0.5s;
     &.active {
-      background-color: rgba(195, 197, 201, 0.2);
+      background-color: rgba(195, 197, 201, 0.3);
       h3.unselected {
         color: white;
       }

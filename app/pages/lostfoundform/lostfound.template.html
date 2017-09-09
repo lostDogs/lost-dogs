@@ -6,9 +6,8 @@
           <label for="question">anio/mes/dia</label>
     </div>    
   </div>
-  <div class="component-container centered" [ngClass]="{'blur-filter': dogCardService.open}">
-    <!-- <h3 style="color:white;">&lt; Insert component here &gt;</h3> -->
-    <text-scroll></text-scroll>
+  <div class="component-container" [ngClass]="{'blur-filter': dogCardService.open}">
+    <date-picker></date-picker>
   </div>
   <div class="row results">
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
