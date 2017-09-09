@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+require('../../plugins/nodoubletapzoom.js');
 
 @Component({
   selector: 'date-picker',
@@ -29,6 +30,7 @@ export class DatePickerComponent {
 public ngOnInit(): void {
   this.generateYears(10);
   this.generateMonths();
+  $('text-scroll').nodoubletapzoom();
 }
   // will generate year arround +-range of todays date
   public generateYears(range: number): void{
