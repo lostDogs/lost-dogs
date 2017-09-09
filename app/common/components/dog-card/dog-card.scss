@@ -20,7 +20,7 @@ dog-card {
         width: 900px;
         top: 12%;
         max-height: 1300px;
-        overflow-y: scroll;        
+        overflow-y: scroll;
         a.btn {
           font-size: 2.5rem;
           height: 80px;
@@ -51,6 +51,8 @@ dog-card {
       width: 500px;
       color: black;
       z-index: 20;
+      max-height: 550px;
+      overflow-y: scroll;
       box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);      
       a.btn {
         width: 50%;
@@ -86,6 +88,13 @@ dog-card {
     p {
       padding: 0 5px;
       text-align: left;
+    }
+    .location {
+      p {
+        overflow: hidden;
+        height: 45px;
+        text-overflow: ellipsis;        
+      }
     }
     i.material-icons {
       margin-right: 5px;

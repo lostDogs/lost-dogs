@@ -13,10 +13,20 @@ import {UserService} from './common/services/user.service';
 import {DogCardService} from './common/services/dog-card.service';
 import {GlobalError} from './common/components/gobal-error/global-error.component';
 import {DogCardComponent} from './common/components/dog-card/dog-card.component';
+import {TextScrollComponent} from './common/components/text-scroll/text-scroll.component';
+import {DatePickerComponent} from './common/components/date-picker/date-picker.component';
 
 @NgModule({
   imports: [BrowserModule, AppRouterModule, FormsModule, HttpModule],
-  declarations: [appComponent, routerComponents, generalHeaderComponent, generalFooterComponent, GlobalError, DogCardComponent],
+  declarations: [
+  appComponent,
+  routerComponents,
+  generalHeaderComponent,
+  generalFooterComponent,
+  GlobalError, DogCardComponent,
+  TextScrollComponent,
+  DatePickerComponent
+  ],
   providers: [
     {provide: GlobalFunctionService, useClass: GlobalFunctionService},
     {provide: ValidationService, useClass: ValidationService},

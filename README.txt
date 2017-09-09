@@ -11,3 +11,11 @@ run: node serve, to enter in dev mode
 run: npm run serve to run locally
 
 remove file: materialize-css/node-modules/jquery
+$ rm -rf node_modules/@types/core-js for all
+
+add  on typings/globals/node/index.d.ts
+declare module "*.json" {
+    const value: any;
+    export default value;
+}
+
