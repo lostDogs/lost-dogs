@@ -23,6 +23,20 @@ lostfound-form {
       padding: 20px 0 20px 0;
       margin-bottom: 0;
       border-bottom: 6px solid white;
+      @media screen and (max-device-width: $screen-mobile-max) {
+        .input-field {
+          input[type] {
+            font-size: 3rem;
+            text-align: center;
+            font-weight: 400;            
+            border-bottom: 4px solid Gainsboro;
+            border-radius: 10px;
+          }
+          input[type]:focus:not([readonly]) {
+            border-bottom: 4px solid  white;
+          }
+        }
+      }
       h5 {
         padding-top: 15px;
       }

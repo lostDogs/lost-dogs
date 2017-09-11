@@ -2,5 +2,5 @@
   <!-- <div>year:{{years[selectedIndexDate.year]}}, month: {{selectedIndexDate.month+1}} day: {{selectedIndexDate.day+1}}</div> -->
   <text-scroll class="col l2 push-l2 s3" [content]="years" [init]="todaysYear" [selected]="selectedIndexDate.year" (selected)="getSeletedYearIndex($event)" ></text-scroll>
   <text-scroll  class="col l4 push-l2 s6" [content]="months" [init]="todaysMonth-1" [selected]="selectedIndexDate.month" (selected)="getSelectedMonthIndex($event)"></text-scroll>
-  <text-scroll  class="col l2 push-l2 s3" [content]="days" [init]="todaysDay"  (selected)="selectedIndexDate.day=$event"></text-scroll>
+  <text-scroll  class="col l2 push-l2 s3" [content]="days" [init]="todaysDay"   [selected]="selectedIndexDate.day" (selected)="getSelectedDayIndex($event)"></text-scroll>
 </section>

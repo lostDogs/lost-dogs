@@ -1,13 +1,13 @@
 <section class="page">
   <div class="row title-question"  [ngClass]="{'blur-filter': dogCardService.open}">
-    <h5 class="col l4 push-l4 s12">cuando lo perdiste?</h5>
-    <div class="input-field col l4 s12 push-l3">
-          <input type="text" name="question" id="question" >
-          <label for="question">anio/mes/dia</label>
-    </div>    
+    <h5 class="col l4 push-l4 s12">{{question}}</h5>
+    <div class="input-field col l2  s4 push-s4 push-l3">
+          <input type="text" name="question" id="question" [(ngModel)]="answer" (focus)="answer=undefined">
+          <!-- <label for="question">{{inputField.label}}</label> -->
+    </div>
   </div>
   <div class="component-container" [ngClass]="{'blur-filter': dogCardService.open}">
-    <date-picker></date-picker>
+    <date-picker (question)="question=$event" (inputFeildEmiter)="inputField=$event" [seletedDate]="answer" (seletedDateEmitter)="answer=$event"></date-picker>
   </div>
   <div class="row results">
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
