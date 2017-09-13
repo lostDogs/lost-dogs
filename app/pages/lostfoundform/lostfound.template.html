@@ -7,7 +7,8 @@
     </div>
   </div>
   <div class="component-container" [ngClass]="{'blur-filter': dogCardService.open}">
-    <date-picker (question)="question=$event" (inputFeildEmiter)="inputField=$event" [seletedDate]="answer" (seletedDateEmitter)="answer=$event"></date-picker>
+    <map></map>
+    <!-- <date-picker (question)="question=$event" (inputFeildEmiter)="inputField=$event" [seletedDate]="answer" (seletedDateEmitter)="answer=$event"></date-picker> -->
   </div>
   <div class="row results">
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>

@@ -15,6 +15,7 @@ import {GlobalError} from './common/components/gobal-error/global-error.componen
 import {DogCardComponent} from './common/components/dog-card/dog-card.component';
 import {TextScrollComponent} from './common/components/text-scroll/text-scroll.component';
 import {DatePickerComponent} from './common/components/date-picker/date-picker.component';
+import {MapComponent} from './common/components/map/map.component';
 
 @NgModule({
   imports: [BrowserModule, AppRouterModule, FormsModule, HttpModule],
@@ -25,7 +26,8 @@ import {DatePickerComponent} from './common/components/date-picker/date-picker.c
   generalFooterComponent,
   GlobalError, DogCardComponent,
   TextScrollComponent,
-  DatePickerComponent
+  DatePickerComponent,
+  MapComponent
   ],
   providers: [
     {provide: GlobalFunctionService, useClass: GlobalFunctionService},
