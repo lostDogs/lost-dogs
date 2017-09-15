@@ -2,9 +2,17 @@
 map {
   section.row {
     margin-bottom: 0;
-    h3 {
+    .loading {
       margin: 0;
       text-align: center;
+      padding-top: 20px;
+      padding-bottom: 55px;      
     }
+  }
+  .range {
+    border-radius: 50%;
+    position: absolute;
+    top: 500px;
+    left:500px;
   }
 }

@@ -4,7 +4,10 @@ lostfound-form {
     filter: blur(5px);
   }
   .results {
-    text-align: center; 
+    text-align: center;
+    z-index: 20;
+   position: relative; 
+   background: $lightGrey;
   }
   .block-back {
     width: 100%;
@@ -23,6 +26,8 @@ lostfound-form {
       padding: 20px 0 20px 0;
       margin-bottom: 0;
       border-bottom: 6px solid white;
+      position: relative;
+      z-index: 20;
       @media screen and (max-device-width: $screen-mobile-max) {
         .input-field {
           input[type] {
@@ -45,6 +50,16 @@ lostfound-form {
       color: white;
       background-color: $pink;
       border-bottom: 6px solid white;
+      position: relative;
+      .buttons {
+        position: absolute;
+        bottom: -16px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        a.btn {
+          width: 150px;
+        }
+      }
     }
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+
 @Injectable()
 export class GlobalFunctionService {
   public scrollOpacity: number = .1;
@@ -9,6 +10,7 @@ export class GlobalFunctionService {
   public closeErrorModal: () => void;
   public errorMessages: string[];
   public subErrorMessage: string[];
+  public mapsApi: any;
   constructor() {
     this.errorMessages = [];
     this.subErrorMessage = [];
@@ -37,5 +39,4 @@ export class GlobalFunctionService {
     }
     return errorMessage;
   }
-
 }

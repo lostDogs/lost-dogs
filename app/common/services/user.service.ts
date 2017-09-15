@@ -11,6 +11,7 @@ export class UserService {
   public userCookieName: string = 'user';
   public loading: boolean;
   public errors: {passwordReq: boolean, userReq: boolean, invalidUser: boolean};
+  public mapsApi: any;
 
   constructor (public api: ApiService, public router: Router, public globalService: GlobalFunctionService) {
     this.user = {};

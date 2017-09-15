@@ -65,3 +65,27 @@
   }
 }
 
+a.btn {
+  z-index: 1;
+  &.info {
+    background-color: $buttonInfo;
+  }
+  &.warning {
+    background-color: $buttonWarning;
+  }
+  &.action {
+    background: $buttonAction;
+  }
+  &:hover {
+    &.info {
+      background-color: $butttonInfoHover;
+    }
+    &.warning {
+      background-color: $buttonWarningHover;
+    }
+    &.action{
+      background: $buttonActionHover;
+    }    
+  }
+}
+
