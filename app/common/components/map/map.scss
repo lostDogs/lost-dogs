@@ -6,7 +6,17 @@ map {
       margin: 0;
       text-align: center;
       padding-top: 20px;
-      padding-bottom: 55px;      
+      padding-bottom: 55px;
+      img {
+        width: 250px;
+        height: 187px;
+      }
+    }
+  }
+  #map {
+    height: 400px;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      height: 800px;
     }
   }
   .range {

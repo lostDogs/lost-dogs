@@ -75,6 +75,8 @@ public custom: CustomMarker;
 
   public getFormatedAdress(location: {lat: number, lng:number} ,ctrl?: any): void {
     ctrl = ctrl ? ctrl : this;
+    ctrl.locationAdress = 'Cargando ...';
+    ctrl.locationAdressEmiter.emit(ctrl.locationAdress);
     ctrl.geocoder.geocode({location: location}, (results: any, status: any) => {
       if (status === 'OK') {
         if (results[1]) {
@@ -82,6 +84,8 @@ public custom: CustomMarker;
           ctrl.locationAdressEmiter.emit(ctrl.locationAdress);
         }
       }else {
+        ctrl.locationAdress = 'no se encontro ubicacion';
+        ctrl.locationAdressEmiter.emit(ctrl.locationAdress);        
         console.error('geocoder failed due to ', status);
       }
     });
@@ -167,7 +171,7 @@ export class CustomMarker extends google.maps.OverlayView {
     }
 
     if(pointMin && pointMax) {
-      const disTwoPoint = Math.sqrt(Math.pow(Math.abs(pointMax.x) - Math.abs(pointMin.x), 2) + Math.pow(Math.abs(pointMax.y) - Math.abs(pointMin.y), 2)) / 2 ;
+      const disTwoPoint = Math.sqrt(Math.pow(Math.abs(pointMax.x) - Math.abs(pointMin.x), 2) + Math.pow(Math.abs(pointMax.y) - Math.abs(pointMin.y), 2)) / 2;
       div.style.top = (Math.abs(point.y) - disTwoPoint / 2) * (point.y / point.y) + 'px';
       div.style.left = (Math.abs(point.x) - disTwoPoint / 2) * (point.x / point.x) + 'px';
       div.style.width = disTwoPoint + 'px';
