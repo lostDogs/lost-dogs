@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from './api.service';
 import {Router} from '@angular/router';
+import {GlobalFunctionService} from './global-function.service';
 
 @Injectable()
 export class UserService {
@@ -10,8 +11,9 @@ export class UserService {
   public userCookieName: string = 'user';
   public loading: boolean;
   public errors: {passwordReq: boolean, userReq: boolean, invalidUser: boolean};
+  public mapsApi: any;
 
-  constructor (public api: ApiService, public router: Router) {
+  constructor (public api: ApiService, public router: Router, public globalService: GlobalFunctionService) {
     this.user = {};
     this.errors = {passwordReq: false, userReq: false, invalidUser: false};
     const userCookie: any = this.getCookie(this.userCookieName);
@@ -31,6 +33,48 @@ export class UserService {
     this.isAuth = true;
     this.setCookie(this.userCookieName, this.user);
   }
+
+    public getUserLocation(): Promise<any> {
+      return new Promise((resolve, reject) => {
+          let errorMessage: string;
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(
+                (sucess) => {
+                  errorMessage = undefined;
+                  this.user.location = {lat: sucess.coords.latitude , lng: sucess.coords.longitude};
+                  resolve(this.user.location);
+              }, (error) => {
+                switch(error.code) {
+                  case error.PERMISSION_DENIED:
+                    errorMessage = 'User denied the request for Geolocation.';
+                    break;
+                  case error.POSITION_UNAVAILABLE:
+                    errorMessage = 'Location information is unavailable.';
+                    break;
+                  case error.TIMEOUT:
+                    errorMessage = 'The request to get user location timed out.';
+                    break;
+                  case error['UNKNOWN_ERROR']:
+                    errorMessage = 'An unknown error occurred.';
+                    break;
+                }
+                this.openErrorModal(errorMessage);
+                reject(undefined);
+              });
+          } else {
+              errorMessage = 'Geolocation is not supported by this browser.';
+              this.openErrorModal(errorMessage);
+              reject(undefined);
+          }        
+      })
+  }
+
+  public openErrorModal (errorMessage: string): void {
+      this.globalService.clearErroMessages();
+      this.globalService.setErrorMEssage(errorMessage);
+      this.globalService.openErrorModal();
+  }
+
 
   public setCookie(name: string, value: any): void {
     if(value instanceof Object) {

@@ -1,13 +1,24 @@
 <section class="page">
   <div class="row title-question"  [ngClass]="{'blur-filter': dogCardService.open}">
     <h5 class="col l4 push-l4 s12">{{question}}</h5>
-    <div class="input-field col l2  s4 push-s4 push-l3">
+    <div class="input-field col l2  s4 push-s4 push-l3" *ngIf="inputField && inputField.type==='date'">
           <input type="text" name="question" id="question" [(ngModel)]="answer" (focus)="answer=undefined">
           <!-- <label for="question">{{inputField.label}}</label> -->
     </div>
+    <div class="input-field col l3  s11 push-l3" *ngIf="inputField && inputField.type==='address'">
+          <input type="text" name="addresss" id="address" [(ngModel)]="address" (keyup.enter)="locationAdress=address">
+          <i class="material-icons right" (click)="locationAdress=address">search</i>
+          <!-- <label for="question">{{inputField.label}}</label> -->
+    </div>    
   </div>
   <div class="component-container" [ngClass]="{'blur-filter': dogCardService.open}">
-    <date-picker (question)="question=$event" (inputFeildEmiter)="inputField=$event" [seletedDate]="answer" (seletedDateEmitter)="answer=$event"></date-picker>
+    <map (locationAdressEmiter)="address=$event" [locationAdress]="locationAdress"  (question)="question=$event"  (inputFeildEmiter)="inputField=$event"></map>
+    <!-- <date-picker (question)="question=$event" (inputFeildEmiter)="inputField=$event" [seletedDate]="answer" (seletedDateEmitter)="answer=$event"></date-picker> -->
+    <div class="buttons row">
+      <a class="waves-effect btn warning">Atras <i class="material-icons left">chevron_left</i></a>
+      <a class="waves-effect btn info">Fijar <i class="material-icons right">adjust</i></a>
+      <a class="waves-effect btn action">Siguiente <i class="material-icons right">chevron_right</i></a>
+    </div>
   </div>
   <div class="row results">
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>

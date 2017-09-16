@@ -1,0 +1,28 @@
+@import '../../styles/variables.scss';
+map {
+  section.row {
+    margin-bottom: 0;
+    .loading {
+      margin: 0;
+      text-align: center;
+      padding-top: 20px;
+      padding-bottom: 55px;
+      img {
+        width: 250px;
+        height: 187px;
+      }
+    }
+  }
+  #map {
+    height: 400px;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      height: 800px;
+    }
+  }
+  .range {
+    border-radius: 50%;
+    position: absolute;
+    top: 500px;
+    left:500px;
+  }
+}

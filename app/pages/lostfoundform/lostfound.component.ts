@@ -12,6 +12,8 @@ export class lostformComponent {
   public question: string;
   public inputField: {type: string, label: string};
   public answer: string;
+  public locationAdress: string = '';
+  public address: string;
 
   constructor (public dogCardService: DogCardService) {
     this.dogCards = [];
@@ -20,7 +22,9 @@ export class lostformComponent {
     }
   }
   public ngOnInit(): void {
-    $('#question').mask('0000/00/00');
+    if(this.inputField && this.inputField.type === 'date') {
+      $('#question').mask('0000/00/00');
+    }
   }
 
 };

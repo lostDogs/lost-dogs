@@ -6,9 +6,15 @@ import {Observable} from 'rxjs/Rx';
 export class ApiService {
   constructor (public http: Http) { }
 
-  public get(url: string, queryObj?: any): Observable<Response> {
+  public get(url: string, queryObj?: any, header?: any): Observable<Response> {
     console.log('calling GET! >');
-    let headers: Headers = new Headers({ 'Content-Type': 'application/json' });
+    let headersObj: any;
+    if ( !header) {
+      headersObj = {'Content-Type': 'application/json'};
+    } else {
+      headersObj = header;
+    }
+    let headers: Headers = new Headers(headersObj);
     let options: RequestOptions = new RequestOptions({ headers: headers });
     let queryParams: URLSearchParams =  new URLSearchParams();
     if (queryObj) {
@@ -46,6 +52,6 @@ export class ApiService {
     return this.http.put(url, bodyObj, options)
       .map((res: Response) =>  res)
       .catch((error: any) => Observable.throw(error || 'Server error'));
-  }  
+  }
   
 }
