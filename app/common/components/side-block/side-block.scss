@@ -1,0 +1,45 @@
+@import '../../styles/variables.scss';
+side-block {
+
+  section {
+    .active {
+      background-color: rgba(195, 197, 201, 0.3);
+      .material-icons {
+        opacity: 0.5;
+      }
+    }
+    .clickable {
+      cursor: pointer;
+      display: flex;
+      position: absolute;
+      transition: 0.5s;
+      top: 0;
+      &.left {
+        left: 0;
+      }
+      &.right {
+        right: 0;
+      }
+      .material-icons {
+        cursor: pointer;
+        font-size: 5rem;
+        margin: auto;
+      }
+    }
+    .scroll-section {
+        overflow-x: scroll;
+        text-align: center;
+      .row {
+        .element {
+          margin: 0 5px;
+          display: inline-block;
+          img {
+            width: 200px;
+            height: 100%;
+            border-radius: 5px;
+          }
+        }
+      }
+    }
+  }
+}

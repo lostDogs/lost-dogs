@@ -1,0 +1,15 @@
+<section>
+  <div class="clickable left"[ngStyle]="{'height': scrolling.nativeElement.clientHeight + 'px'}" (click)="goLeft()" [ngClass]="{'active': pressedLeft}">
+    <i class="material-icons">navigate_before</i>
+  </div>
+  <div class="scroll-section" (scroll)="onScroll($event)" #scollSection>
+    <div class="row" id="rowSide" *ngFor="let rowSide of arrayOfArrays" [ngStyle]="{'width': rowWidth}">
+        <div  *ngFor="let element of rowSide" class="tooltipped element"  data-position="top" id="{{element.key}}" #block>
+        <img src="{{element.imgUrl}}">
+        </div>
+    </div>
+  </div>
+  <div class="clickable right"[ngStyle]="{'height': scrolling.nativeElement.clientHeight + 'px'}" (click)="goRight()" [ngClass]="{'active': pressedRight}">
+    <i class="material-icons">navigate_next</i>
+  </div>
+</section>

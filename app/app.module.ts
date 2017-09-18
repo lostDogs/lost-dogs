@@ -16,6 +16,7 @@ import {DogCardComponent} from './common/components/dog-card/dog-card.component'
 import {TextScrollComponent} from './common/components/text-scroll/text-scroll.component';
 import {DatePickerComponent} from './common/components/date-picker/date-picker.component';
 import {MapComponent} from './common/components/map/map.component';
+import {SideBlockComponent} from './common/components/side-block/side-block.component';
 
 @NgModule({
   imports: [BrowserModule, AppRouterModule, FormsModule, HttpModule],
@@ -27,7 +28,8 @@ import {MapComponent} from './common/components/map/map.component';
   GlobalError, DogCardComponent,
   TextScrollComponent,
   DatePickerComponent,
-  MapComponent
+  MapComponent,
+  SideBlockComponent
   ],
   providers: [
     {provide: GlobalFunctionService, useClass: GlobalFunctionService},

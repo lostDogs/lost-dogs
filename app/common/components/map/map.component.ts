@@ -9,7 +9,6 @@ import {UserService} from '../../services/user.service';
 
 export class MapComponent {
  @ViewChild('map') mapDiv: ElementRef;
- @ViewChild('range') range: ElementRef;
  public mapDef: google.maps.Map;
  public marker: google.maps.Marker;
  public geocoder: google.maps.Geocoder;
@@ -171,7 +170,7 @@ export class CustomMarker extends google.maps.OverlayView {
     }
 
     if(pointMin && pointMax) {
-      const disTwoPoint = Math.sqrt(Math.pow(Math.abs(pointMax.x) - Math.abs(pointMin.x), 2) + Math.pow(Math.abs(pointMax.y) - Math.abs(pointMin.y), 2)) / 2;
+      const disTwoPoint = Math.sqrt(Math.pow(pointMax.x - pointMin.x, 2) + Math.pow(pointMax.y - pointMin.y, 2)) / 2;
       div.style.top = (Math.abs(point.y) - disTwoPoint / 2) * (point.y / point.y) + 'px';
       div.style.left = (Math.abs(point.x) - disTwoPoint / 2) * (point.x / point.x) + 'px';
       div.style.width = disTwoPoint + 'px';
