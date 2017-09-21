@@ -11,6 +11,7 @@ import { FormsModule }  from '@angular/forms';
 import {ApiService} from './common/services/api.service';
 import {UserService} from './common/services/user.service';
 import {DogCardService} from './common/services/dog-card.service';
+import {LostFoundService} from './common/services/lost-found.service';
 import {GlobalError} from './common/components/gobal-error/global-error.component';
 import {DogCardComponent} from './common/components/dog-card/dog-card.component';
 import {TextScrollComponent} from './common/components/text-scroll/text-scroll.component';
@@ -36,7 +37,8 @@ import {SideBlockComponent} from './common/components/side-block/side-block.comp
     {provide: ValidationService, useClass: ValidationService},
     {provide: ApiService, useClass: ApiService},
     {provide: UserService, useClass: UserService},
-    {provide: DogCardService, useClass: DogCardService}
+    {provide: DogCardService, useClass: DogCardService},
+    {provide: LostFoundService, useClass: LostFoundService}
   ],
   bootstrap: [appComponent]
 })

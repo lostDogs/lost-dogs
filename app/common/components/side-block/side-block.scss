@@ -1,7 +1,7 @@
 @import '../../styles/variables.scss';
 side-block {
-
   section {
+     padding: 30px 0;
     .active {
       background-color: rgba(195, 197, 201, 0.3);
       .material-icons {
@@ -13,7 +13,8 @@ side-block {
       display: flex;
       position: absolute;
       transition: 0.5s;
-      top: 0;
+      // should match with padding on section
+      top: 30px;
       &.left {
         left: 0;
       }
@@ -24,6 +25,9 @@ side-block {
         cursor: pointer;
         font-size: 5rem;
         margin: auto;
+        @media screen and (max-device-width: $screen-mobile-max) {
+          font-size: 10rem;
+        }
       }
     }
     .scroll-section {
@@ -38,8 +42,20 @@ side-block {
             height: 100%;
             border-radius: 5px;
           }
+          @media screen and (max-device-width: $screen-mobile-max) {
+            img {
+              width: 350px;
+              border-radius: 10px;
+            }
+          }
         }
       }
     }
   }
+}
+
+.disabled-img {
+  filter: grayscale(100%) blur(1px);
+  border-right: 2px solid gainsboro;
+  border-bottom: 2px solid gainsboro;
 }

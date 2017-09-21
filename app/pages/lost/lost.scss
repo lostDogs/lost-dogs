@@ -1,7 +1,11 @@
 @import '../../common/styles/variables.scss';
-lostfound-form {
+lost, found {
   .blur-filter {
     filter: blur(5px);
+  }
+  .disappear {
+    opacity: 0;
+    cursor: default;    
   }
   .results {
     text-align: center;
@@ -18,6 +22,41 @@ lostfound-form {
   section.page {
     height: 100%;
     background: $lightGrey;
+    .img-output {
+      border-bottom: 2px solid gainsboro;
+      border-radius: 5px;
+      display: flex;
+      text-align: left;
+      .img-block {
+        width: 90px;
+        height: 100%;
+        position: relative;
+      }
+      .close-icon {
+        position: absolute;
+        top: -5px;
+        right: 6px;
+        background: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        i.material-icons {
+          font-size: 1rem;
+          color: black;
+          margin: auto;
+          padding-left: 2px;
+          padding-top: 2px;
+        }
+      }
+      img {
+        width: 80px;
+        height: 100%;
+        border-radius: 8px;
+        padding: 3px;        
+      }
+
+    }
     .title-question  {
       color: white;
       text-align: center;
@@ -35,7 +74,7 @@ lostfound-form {
         .material-icons {
           margin: 11px 0;
           position: absolute;
-          width: 3rem;
+          //width: 3rem;
           font-size: 2rem;
           cursor: pointer;
         }
@@ -73,7 +112,7 @@ lostfound-form {
         bottom: -16px;
         left: 50%;
         transform: translate(-50%, 0);
-        a.btn {
+        button.btn {
           width: 150px;
             .right {
               position: absolute;

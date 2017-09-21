@@ -1,7 +1,3 @@
-/* jshint laxbreak: true */
-/* jshint maxcomplexity:17 */
-/* global define */
-
 'use strict';
 //  https://igorescobar.github.io/jQuery-Mask-Plugin/docs.html
 // UMD (Universal Module Definition) patterns for JavaScript modules that work everywhere.

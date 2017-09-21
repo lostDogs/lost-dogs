@@ -3,9 +3,9 @@
     <i class="material-icons">navigate_before</i>
   </div>
   <div class="scroll-section" (scroll)="onScroll($event)" #scollSection>
-    <div class="row" id="rowSide" *ngFor="let rowSide of arrayOfArrays" [ngStyle]="{'width': rowWidth}">
-        <div  *ngFor="let element of rowSide" class="tooltipped element"  data-position="top" id="{{element.key}}" #block>
-        <img src="{{element.imgUrl}}">
+    <div class="row" id="rowSide" *ngFor="let rowSide of arrayOfArrays;let i= index" [ngStyle]="{'width': rowWidth}">
+        <div  *ngFor="let element of rowSide;let j= index" class="tooltipped element"  data-position="top" id="{{element.key}}" #block (click)="blockSelected(i,j)">
+        <img src="{{element.imgUrl}}" [ngClass]="{'disabled-img': element.disabled}">
         </div>
     </div>
   </div>

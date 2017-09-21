@@ -1,5 +1,4 @@
 import {Component, Output, Input, EventEmitter, SimpleChanges} from '@angular/core';
-require('../../plugins/nodoubletapzoom.js');
 
 @Component({
   selector: 'date-picker',
@@ -44,8 +43,8 @@ export class DatePickerComponent {
     this.inputField = {type: 'date', label: 'dd/mm/aaaa'};
     this.inputFeildEmiter.emit(this.inputField);
   }
-  public ngOnChanges(changes: SimpleChanges): void {
 
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes.seletedDate && changes.seletedDate.currentValue) {
       const dateFromInput: string = changes.seletedDate.currentValue;
       if (dateFromInput.length === 4) {

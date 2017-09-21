@@ -13,6 +13,8 @@ export class MapComponent {
  public marker: google.maps.Marker;
  public geocoder: google.maps.Geocoder;
  public location: {lat: number, lng: number};
+ @Output()
+ public locationEmiter: EventEmitter<any> = new EventEmitter<any>();
  @Input()
  public locationAdress: string;
  @Output()
@@ -60,6 +62,7 @@ public custom: CustomMarker;
     this.mapDef.addListener('click', (event: any) => {
       ctrl.addMarker(event.latLng, ctrl.mapDef, ctrl);
        ctrl.location = event.latLng;
+       ctrl.locationEmiter.emit(ctrl.location);
        ctrl.getFormatedAdress( ctrl.location, ctrl);
     });
     //initial location if user permits
@@ -68,6 +71,7 @@ public custom: CustomMarker;
        this.mapDef.panTo(userLocation);
        this.getFormatedAdress(userLocation, this);
        this.location = userLocation;
+       ctrl.locationEmiter.emit(ctrl.location);
        this.mapDef.setZoom(15);
     }
   }
@@ -84,7 +88,7 @@ public custom: CustomMarker;
         }
       }else {
         ctrl.locationAdress = 'no se encontro ubicacion';
-        ctrl.locationAdressEmiter.emit(ctrl.locationAdress);        
+        ctrl.locationAdressEmiter.emit(ctrl.locationAdress);
         console.error('geocoder failed due to ', status);
       }
     });
@@ -95,6 +99,7 @@ public custom: CustomMarker;
     ctrl.geocoder.geocode({address: formatedAddresss}, (results: any, status: any) => {
       if (status === 'OK') {
         ctrl.location = results[0].geometry.location;
+        ctrl.locationEmiter.emit(ctrl.location);
         ctrl.addMarker(ctrl.location, ctrl.mapDef, ctrl, {animation: google.maps.Animation.DROP});
         ctrl.mapDef.panTo(ctrl.location);
         ctrl.mapDef.setZoom(15);
