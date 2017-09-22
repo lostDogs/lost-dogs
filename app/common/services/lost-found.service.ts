@@ -13,6 +13,7 @@ export class LostFoundService {
   public sequence: [string, string, string];
   public pageAnswers: any[];
   public pagePosition: number;
+  public multipleImgAnswers: Ielement[];
 
   constructor(public router: Router) {
     this.pageAnswers = [];
@@ -57,6 +58,8 @@ export class LostFoundService {
     return {address: this.address, location: this.location};
     } else if(this.imgAnswer && this.imgAnswer.disabled===true) {
      return this.imgAnswer;
+    } else if (this.multipleImgAnswers && this.multipleImgAnswers.length) {
+      return this.multipleImgAnswers;
     }
     return undefined;
   }

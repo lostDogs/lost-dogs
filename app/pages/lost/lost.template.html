@@ -20,14 +20,23 @@
           </div>
           <img src="{{lostService.imgAnswer.imgUrl}}">
         </div>
-    </div>     
+    </div>
+    <div class="input-field col l3  s11 push-l3 img-output" *ngIf="lostService.inputField && lostService.inputField.type==='multiple'">
+      <div style="height: 61px;"></div>
+        <div *ngFor="let block of lostService.multipleImgAnswers;let i= index" title="caracteristicas selecionadas" class="img-block tooltipped" data-position="top" id="{{block.key}}">
+          <div title="cerrar" class="close-icon" (click)="multipleBlockRemove(i)">
+            <i class="tiny material-icons">close</i>
+          </div>
+          <img src="{{block.imgUrl}}">
+        </div>
+    </div>    
   </div>
   <div class="component-container" [ngClass]="{'blur-filter': dogCardService.open}">
     <router-outlet></router-outlet>
     <div class="buttons row">
       <button class="waves-effect btn warning" (click)="lostService.back('lost')" [ngClass]="{'disappear': lostService.pagePosition === 0}">Atras <i class="material-icons left">chevron_left</i></button>
       <button class="waves-effect btn info" (click)="lostService.setAnwer()"  [disabled]="!lostService.getGeneralAnswer()">responder <i class="material-icons right">send</i></button>
-      <button class="waves-effect btn action"  (click)="lostService.next('lost')"  [disabled]="!lostService.pageAnswers[lostService.pagePosition]">Siguiente <i class="material-icons right">chevron_right</i></button>
+      <button class="waves-effect btn action"  (click)="lostService.next('lost')"  [disabled]="!lostService.pageAnswers[lostService.pagePosition] && lostService.inputField && lostService.inputField.type!=='multiple'">Siguiente <i class="material-icons right">chevron_right</i></button>
     </div>
   </div>
   <div class="row results">

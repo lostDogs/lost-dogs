@@ -18,7 +18,8 @@ export interface Ielement {
 export class SideBlockComponent {
   @Input()
   public elements: Ielement[];
-  public numberOfRows: number = 2;
+  @Input()
+  public numberOfRows: number;
   public arrayOfArrays: any[];
   public blockWidth: number;
   public rowWidth: string;
@@ -30,15 +31,21 @@ export class SideBlockComponent {
   public splittedArray: number;
   public previousSelected: number = 0;
   public mobile: boolean;
+  public showArrows: boolean;
 @Output()
 public selectedEmitter: EventEmitter<any> = new EventEmitter<any>();
 @Input()
 public removedElement: Ielement;
+@Input()
+public multiple: boolean;
+public multipleElements: Ielement[];
 
-  @ViewChild('scollSection') public scrolling: ElementRef;
+  @ViewChild('ScollSection') public scrolling: ElementRef;
   constructor() {
     this.mobile = window.screen.width <= 767;
     this.arrayOfArrays = [];
+    this.multipleElements = [];
+    //TODO: blockWidth is the hardcoded with of the component. Try to get it trought the dom element 
     this.blockWidth = this.mobile ? 350 : 200;
     this.scrollleftSteeps = this.mobile ? 80 : 20;
   }
@@ -61,17 +68,20 @@ public removedElement: Ielement;
     let splitArr: number = j / this.numberOfRows;
     splitArr = splitArr % 1 === 0 ? splitArr : splitArr + 1;
     this.splittedArray = Math.trunc(splitArr);
-    this.rowWidth = splitArr*this.blockWidth + 'px';
-    for (let i = 0; i < j; i += splitArr) {
+    //TODO: 25 is hardcodded margin, try to get it from DOM elment;
+    this.rowWidth = splitArr * this.blockWidth + 25 + 'px';
+    this.showArrows = this.scrolling.nativeElement.clientWidth < +this.rowWidth.split('px')[0];
+    this.rowWidth = this.showArrows ? this.rowWidth : this.scrolling.nativeElement.clientWidth;
+    for (let i = 0; i < (j - 1); i += splitArr) {
         this.arrayOfArrays.push(this.elements.slice(i,i+splitArr));
-    }
-
+    }   
     for ( let i = 0; i < this.elements.length; ++i) {
       this.elements[i]['key'] = 'data-' + i;
     }
   }
 
   public ngAfterViewInit(): void {
+
     for ( let i = 0; i < this.elements.length; ++i) {
       $('#data-' + i).attr('data-tooltip', this.elements[i].name);
     } 
@@ -99,17 +109,35 @@ public removedElement: Ielement;
   }
   public blockSelected (row: number, column: number) {
     const indexed: number = row *this.splittedArray  + column;
-    // removing previous elemet, index saved in a varaible 'previousSelected' to avoid using a loop. 
-    this.elements[ this.previousSelected].disabled = false;
+    console.log('block selected', indexed);
     // saving the original index into the object so we can emit it and latter deleted if selected.
     this.elements[indexed].orginalIndex = indexed;
+    if (!this.multiple) {
+      // removing previous elemet, index saved in a varaible 'previousSelected' to avoid using a loop. 
+      this.elements[ this.previousSelected].disabled = false;
+    }
+    
     // this variable adds the class of disable in an img.
     this.elements[indexed].disabled = !this.elements[indexed].disabled;
-    this.previousSelected = indexed;
+    console.log('block selected', this.elements[indexed]);
+    if (!this.multiple) {
     this.selectedEmitter.emit(this.elements[indexed]);
+    this.previousSelected = indexed;
+    } else {
+      this.multipleElements.push(this.elements[indexed]);
+      this.selectedEmitter.emit(this.multipleElements);
+    }
   }
 
+  // public ngDoCheck(): void {
+  //   if(!(this.scrolling.nativeElement.children[0] && this.scrolling.nativeElement.children[0].children[0].children[0].clientHeight)) {
+  //     console.log('container empty');
+  //   }
+  // }
+
   public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.elements && changes.elements.currentValue) {
+    }
   }
   
 }

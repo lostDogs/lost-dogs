@@ -35,17 +35,28 @@ side-block {
         text-align: center;
       .row {
         .element {
+          transition: 1s;
           margin: 0 5px;
           display: inline-block;
-          img {
+          border-radius: 5px;
+         box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+         &.disabled-img {
+            box-shadow: none;
+         }
+          .img-bg {
             width: 200px;
-            height: 100%;
+            height: 150px;
             border-radius: 5px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
           }
           @media screen and (max-device-width: $screen-mobile-max) {
-            img {
-              width: 350px;
+            border-radius: 10px;
+            .img-bg {
               border-radius: 10px;
+              width: 350px;
+              height: 350px;
             }
           }
         }
@@ -56,6 +67,4 @@ side-block {
 
 .disabled-img {
   filter: grayscale(100%) blur(1px);
-  border-right: 2px solid gainsboro;
-  border-bottom: 2px solid gainsboro;
 }

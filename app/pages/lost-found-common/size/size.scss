@@ -1,0 +1,9 @@
+@import '../../../common/styles/variables.scss';
+size {
+  side-block section .scroll-section .row .element {
+    background-color: white;
+    .img-bg {
+        background-size: contain;
+    }
+  }
+}

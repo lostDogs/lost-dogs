@@ -29,7 +29,7 @@ export class BreedComponent {
   public ngOnInit(): void {
     this.LostService.question = 'Que raza es?';
     this.LostService.inputField = {type: 'image', label: 'raza'};
-
+    this.LostService.imgAnswer = undefined;
   }
 
   public changeElement(event: any): void {

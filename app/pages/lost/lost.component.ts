@@ -15,7 +15,6 @@ require('../../common/plugins/nodoubletapzoom.js');
 export class lostComponent {
   public dogCards: number[];
   public generalAnswer: any;
-  public originalHeigh: string;
 
   constructor (public dogCardService: DogCardService, public lostService: LostFoundService, public router: Router, public userService: UserService, public domEl: ElementRef) {
     this.dogCards = [];
@@ -29,7 +28,6 @@ export class lostComponent {
         const Indexlocation = this.lostService.sequence.indexOf(urlChildLoction);
         this.lostService.pagePosition = Indexlocation !== -1 ? Indexlocation : 0;
         console.log('page position', this.lostService.pagePosition);
-        console.log('original heigh', this.originalHeigh);
 
         setTimeout(() => {
           this.lostService.maskInit();
@@ -42,7 +40,7 @@ export class lostComponent {
 /*    if (!this.userService.isAuth) {
       this.router.navigate(['/home']);
     }*/
-    this.lostService.sequence = ['date', 'location', 'breed'];
+    this.lostService.sequence = ['date', 'location', 'breed', 'gender', 'size', 'color', 'extras'];
     this.lostService.sequence.forEach((value: any, index: number) => {
       this.lostService.pageAnswers.push(undefined);
     });
@@ -58,6 +56,13 @@ export class lostComponent {
 
   public imgBlockRemove(): void {
     $('.tooltipped').tooltip('remove');
-    this.lostService.imgAnswer.disabled=false;
+    this.lostService.imgAnswer.disabled = false;
   }
+
+   public multipleBlockRemove(index: number): void {
+    $('.tooltipped').tooltip('remove');
+    this.lostService.multipleImgAnswers[index].disabled = false;
+    this.lostService.multipleImgAnswers.splice(index, 1);
+  } 
+  
 }

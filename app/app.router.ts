@@ -11,6 +11,10 @@ import {LoginComponent} from './pages/login/login.component';
 import {DateComponent} from './pages/lost-found-common/date/date.component';
 import {LocationComponent} from './pages/lost-found-common/location/location.component';
 import {BreedComponent} from './pages/lost-found-common/breed/breed.component';
+import {GenderComponent} from './pages/lost-found-common/gender/gender.component';
+import {SizeComponent} from './pages/lost-found-common/size/size.component';
+import {ColorComponent} from './pages/lost-found-common/color/color.component';
+import {ExtrasComponent} from './pages/lost-found-common/extras/extras.component';
 
 export const router: Routes = [
 { path:'home', component: homeComponent},
@@ -18,11 +22,15 @@ export const router: Routes = [
 {path: 'account', component: accountComponent},
 {path: 'lost', component: lostComponent, 
   children: [
-   { path:'date', component: DateComponent},
-   {path: 'location', component: LocationComponent},
-   {path: 'breed', component: BreedComponent},
-   { path: '', redirectTo: 'date' , pathMatch: 'full'},
-   {path: '**', redirectTo: 'date'}
+    { path:'date', component: DateComponent},
+    {path: 'location', component: LocationComponent},
+    {path: 'breed', component: BreedComponent},
+    {path: 'gender', component: GenderComponent},
+    {path: 'size', component: SizeComponent},
+    {path: 'color', component: ColorComponent},
+    {path: 'extras', component: ExtrasComponent},
+    { path: '', redirectTo: 'date' , pathMatch: 'full'},
+    {path: '**', redirectTo: 'date'}
 ]},
 {path: 'profile', component: profileComponent},
 {path: 'selection', component: selectionComponent},
@@ -48,5 +56,9 @@ export const routerComponents = [
   LoginComponent,
   DateComponent,
   LocationComponent,
-  BreedComponent
+  BreedComponent,
+  GenderComponent,
+  SizeComponent,
+  ColorComponent,
+  ExtrasComponent
 ];
