@@ -46,7 +46,7 @@ public multipleElements: Ielement[];
     this.arrayOfArrays = [];
     this.multipleElements = [];
     //TODO: blockWidth is the hardcoded with of the component. Try to get it trought the dom element 
-    this.blockWidth = this.mobile ? 350 : 200;
+    this.blockWidth = this.mobile ? 355 : 200;
     this.scrollleftSteeps = this.mobile ? 80 : 20;
   }
 
@@ -109,22 +109,30 @@ public multipleElements: Ielement[];
   }
   public blockSelected (row: number, column: number) {
     const indexed: number = row *this.splittedArray  + column;
-    console.log('block selected', indexed);
     // saving the original index into the object so we can emit it and latter deleted if selected.
     this.elements[indexed].orginalIndex = indexed;
     if (!this.multiple) {
       // removing previous elemet, index saved in a varaible 'previousSelected' to avoid using a loop. 
       this.elements[ this.previousSelected].disabled = false;
     }
-    
     // this variable adds the class of disable in an img.
     this.elements[indexed].disabled = !this.elements[indexed].disabled;
-    console.log('block selected', this.elements[indexed]);
     if (!this.multiple) {
     this.selectedEmitter.emit(this.elements[indexed]);
     this.previousSelected = indexed;
     } else {
-      this.multipleElements.push(this.elements[indexed]);
+      if (this.elements[indexed].disabled) {
+        this.multipleElements.push(this.elements[indexed]);
+      } else {
+        let removeIndex: number;
+        this.multipleElements.some((el: Ielement, index: number) => {
+          if (el.key === this.elements[indexed].key) {
+            removeIndex = index;
+            return true;
+          }
+        });
+        this.multipleElements.splice(removeIndex, 1)
+      }
       this.selectedEmitter.emit(this.multipleElements);
     }
   }

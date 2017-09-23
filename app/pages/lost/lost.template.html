@@ -6,28 +6,28 @@
           <!-- <label for="question">{{inputField.label}}</label> -->
     </div>
     <form #addressSearch="ngForm" (ngSubmit)="lostService.locationAdressInput=lostService.address" [hidden]="!(lostService.inputField && lostService.inputField.type==='address')">
-      <div class="input-field col l3  s11 push-l3">
+      <div class="input-field col l3  s10 push-s1 push-l3">
             <input type="text" name="addresss" id="address" [(ngModel)]="lostService.address" (focus)="onFocusAddres()">
             <i class="material-icons right" (click)="lostService.locationAdressInput=lostService.address">search</i>
             <!-- <label for="question">{{inputField.label}}</label> -->
       </div> 
     </form>
-    <div class="input-field col l3  s11 push-l3 img-output" *ngIf="lostService.inputField && lostService.inputField.type==='image'">
-      <div style="height: 61px;"></div>
-        <div title="caracteristicas selecionada" class="img-block tooltipped" data-position="top" id="{{lostService.imgAnswer.key}}" *ngIf="lostService.imgAnswer && lostService.imgAnswer.disabled===true">
+    <div class="input-field col l2  s10 push-l3 push-s1 img-output" *ngIf="lostService.inputField && lostService.inputField.type==='image'">
+      <div style="height: 45px;"></div>
+        <div title="caracteristicas selecionada" class="img-block tooltipped left-centered" data-position="top" id="{{lostService.imgAnswer.key}}" *ngIf="lostService.imgAnswer && lostService.imgAnswer.disabled===true">
           <div title="cerrar" class="close-icon" (click)="imgBlockRemove()">
             <i class="tiny material-icons">close</i>
           </div>
-          <img src="{{lostService.imgAnswer.imgUrl}}">
+          <p>{{lostService.imgAnswer.name}}</p>
         </div>
     </div>
-    <div class="input-field col l3  s11 push-l3 img-output" *ngIf="lostService.inputField && lostService.inputField.type==='multiple'">
-      <div style="height: 61px;"></div>
+    <div class="input-field col l3  s10 push-s1 push-l3 img-output" *ngIf="lostService.inputField && lostService.inputField.type==='multiple'">
+      <div style="height: 45px;"></div>
         <div *ngFor="let block of lostService.multipleImgAnswers;let i= index" title="caracteristicas selecionadas" class="img-block tooltipped" data-position="top" id="{{block.key}}">
           <div title="cerrar" class="close-icon" (click)="multipleBlockRemove(i)">
             <i class="tiny material-icons">close</i>
           </div>
-          <img src="{{block.imgUrl}}">
+          <p>{{block.name}}</p>
         </div>
     </div>    
   </div>

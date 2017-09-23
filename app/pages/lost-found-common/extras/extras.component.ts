@@ -30,7 +30,7 @@ export class ExtrasComponent {
 
   public changeElement(event: any): void {
     this.LostService.multipleImgAnswers = event;
-    //tooltip initialization in the main page. (lost/found)
-    setTimeout(()=>{this.LostService.tooltipInit();}, 20)
+    const lastIndex: number = this.LostService.multipleImgAnswers.length - 1;
+    this.LostService.openNameInput = this.LostService.multipleImgAnswers.length && this.LostService.multipleImgAnswers[lastIndex].name === 'Placa Id';
   }
 }

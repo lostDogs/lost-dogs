@@ -1,5 +1,9 @@
 @import '../../common/styles/variables.scss';
 lost, found {
+  .left-centered {
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
   .blur-filter {
     filter: blur(5px);
   }
@@ -28,27 +32,49 @@ lost, found {
       display: flex;
       text-align: left;
       .img-block {
-        width: 90px;
+        //width: 90px;
         height: 100%;
         position: relative;
+        margin-right: 20px;
+        p {
+          text-align: center;
+          background: white;
+          color: black;
+          padding: 0 22px;
+          border-radius: 12px;
+          margin-bottom: 0px;
+        }
       }
       .close-icon {
         position: absolute;
-        top: -5px;
-        right: 6px;
-        background: white;
+        top: 3px;
+        right: -10px;
+        background: black;
         border-radius: 50%;
         width: 20px;
         height: 20px;
         display: flex;
         i.material-icons {
           font-size: 1rem;
-          color: black;
+          color: white;
           margin: auto;
           padding-left: 2px;
           padding-top: 2px;
         }
       }
+        @media screen and (max-device-width: $screen-mobile-max) { 
+          div.close-icon {
+            width: 40px;
+            height: 40px;
+            top: 15px;
+            right: -20px;
+            i.material-icons {
+              font-size: 3rem; 
+              padding: 0;
+              margin: 0;
+            }
+          }
+        }      
       img {
         width: 80px;
         height: 100%;
@@ -112,8 +138,22 @@ lost, found {
         bottom: -16px;
         left: 50%;
         transform: translate(-50%, 0);
+        @media screen and (max-device-width: $screen-mobile-max) {
+          left: 0;
+          transform: none;
+          text-align: center;
+          width: 100%;
+          button.btn:nth-child(2) {
+            padding-left: 0;
+          }
+        }
         button.btn {
           width: 150px;
+          @media screen and (max-device-width: $screen-mobile-max) {
+            width: 286px;
+            font-size: 2rem;
+            height: 90px;
+          }
             .right {
               position: absolute;
               right: 15px;

@@ -2,5 +2,9 @@
 date-picker {
   section.row.date {
     padding: 30px 0;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      padding: 50px 0;
+      padding-bottom: 120px;
+    }    
   }
 }

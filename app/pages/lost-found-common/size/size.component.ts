@@ -30,6 +30,5 @@ export class SizeComponent {
 
   public changeElement(event: any): void {
     this.LostService.imgAnswer = event;
-    setTimeout(()=>{this.LostService.tooltipInit();}, 20)
   }
 }

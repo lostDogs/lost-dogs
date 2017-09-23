@@ -1,6 +1,33 @@
 @import '../../../common/styles/variables.scss';
 extras {
-  side-block section .scroll-section .row .element {
-    background-color: white;
+  .extras {
+    padding-bottom: 50px;
   }
+  .row {
+    margin: 0;
+  }
+  .input-field.row {
+    padding-top: 20px;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      padding-bottom: 120px;
+    }
+    input {
+      font-size: 3rem;
+      margin-top: 15px;
+      margin-left: 10px;
+      border-bottom: 4px solid white;
+    }
+    h4 {
+      margin: 0;
+      padding: 0;
+      text-align: end;
+    }
+  }
+  side-block section {
+    padding-top: 30px;
+    padding-bottom: 10;
+    .scroll-section .row .element {
+        background-color: white;
+      }
+    }
 }

@@ -47,7 +47,5 @@ export class ColorComponent {
 
   public changeElement(event: any): void {
     this.LostService.imgAnswer = event;
-    console.log('event', event);
-    setTimeout(()=>{this.LostService.tooltipInit();}, 20)
   }
 }

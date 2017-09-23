@@ -15,6 +15,9 @@ export class LostFoundService {
   public pagePosition: number;
   public multipleImgAnswers: Ielement[];
 
+  public openNameInput: boolean;
+  public dogName: string;
+  
   constructor(public router: Router) {
     this.pageAnswers = [];
   }

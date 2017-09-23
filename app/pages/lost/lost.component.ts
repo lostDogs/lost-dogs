@@ -55,13 +55,16 @@ export class lostComponent {
   }
 
   public imgBlockRemove(): void {
-    $('.tooltipped').tooltip('remove');
+    //$('.tooltipped').tooltip('remove');
     this.lostService.imgAnswer.disabled = false;
   }
 
    public multipleBlockRemove(index: number): void {
-    $('.tooltipped').tooltip('remove');
+    //$('.tooltipped').tooltip('remove');
     this.lostService.multipleImgAnswers[index].disabled = false;
+    if (this.lostService.multipleImgAnswers[index].name === 'Placa Id') {
+      this.lostService.openNameInput = false; 
+    }
     this.lostService.multipleImgAnswers.splice(index, 1);
   } 
   
