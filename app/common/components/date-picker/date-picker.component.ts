@@ -23,6 +23,8 @@ export class DatePickerComponent {
   public inputField: {type: string, label: string};
   @Output()
   public seletedDateEmitter: EventEmitter<string> = new EventEmitter<string>();
+  @Input()
+  public rechangeDate: string;
 
   constructor()  {
     const currentTime = new Date();
@@ -45,7 +47,18 @@ export class DatePickerComponent {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.seletedDate && changes.seletedDate.currentValue) {
+    console.log('current value', changes.rechangeDate);
+    console.log('seleted date', changes.seletedDate);
+    if (changes.rechangeDate && changes.rechangeDate.currentValue) {
+     const dateFromEdit: string = changes.rechangeDate.currentValue;
+     const day: number = +dateFromEdit.split('/')[2];
+     const month: number = +dateFromEdit.split('/')[1];
+     const year: number = +dateFromEdit.split('/')[0];
+     const indexedYear: number = this.years.indexOf(+year);
+     this.selectedIndexDate.year = indexedYear !== -1 ? indexedYear: this.todaysYear;
+     this.selectedIndexDate.month = month >= 1 && month <= 12 ? +month - 1 : this.todaysMonth;  
+     this.selectedIndexDate.day = day >= 1 && day <= this.getMaxDay(year, month) ? day - 1 : this.todaysDay;
+    } else if (changes.seletedDate && changes.seletedDate.currentValue) {
       const dateFromInput: string = changes.seletedDate.currentValue;
       if (dateFromInput.length === 4) {
         const indexedYear: number = this.years.indexOf(+dateFromInput);
@@ -59,6 +72,8 @@ export class DatePickerComponent {
         const day: number = +dateFromInput.split('/')[2];
        const month: number = +dateFromInput.split('/')[1];
        const year: number = +dateFromInput.split('/')[0];
+       //this.selectedIndexDate.year = year;
+       //this.selectedIndexDate.month = month >= 1 && month <= 12 ? month : this.todaysMonth;
         if (day >= 1 && day <= this.getMaxDay(year, month)) {
           this.selectedIndexDate.day = day - 1;
         }

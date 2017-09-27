@@ -18,6 +18,7 @@ import {TextScrollComponent} from './common/components/text-scroll/text-scroll.c
 import {DatePickerComponent} from './common/components/date-picker/date-picker.component';
 import {MapComponent} from './common/components/map/map.component';
 import {SideBlockComponent} from './common/components/side-block/side-block.component';
+import {CookieManagerService} from './common/services/cookie-manager.service';
 
 @NgModule({
   imports: [BrowserModule, AppRouterModule, FormsModule, HttpModule],
@@ -38,7 +39,8 @@ import {SideBlockComponent} from './common/components/side-block/side-block.comp
     {provide: ApiService, useClass: ApiService},
     {provide: UserService, useClass: UserService},
     {provide: DogCardService, useClass: DogCardService},
-    {provide: LostFoundService, useClass: LostFoundService}
+    {provide: LostFoundService, useClass: LostFoundService},
+    {provide: CookieManagerService, useClass: CookieManagerService}
   ],
   bootstrap: [appComponent]
 })

@@ -15,6 +15,7 @@ require('../../common/plugins/nodoubletapzoom.js');
 export class lostComponent {
   public dogCards: number[];
   public generalAnswer: any;
+  public goBack: boolean;
 
   constructor (public dogCardService: DogCardService, public lostService: LostFoundService, public router: Router, public userService: UserService, public domEl: ElementRef) {
     this.dogCards = [];
@@ -25,14 +26,24 @@ export class lostComponent {
     this.router.events.subscribe(data => {
       if (data instanceof NavigationEnd) {
         const urlChildLoction = data.url.split('/')[2];
+        this.lostService.parentPage = data.url.split('/')[1];
         const Indexlocation = this.lostService.sequence.indexOf(urlChildLoction);
         this.lostService.pagePosition = Indexlocation !== -1 ? Indexlocation : 0;
-        console.log('page position', this.lostService.pagePosition);
+
+        if (this.lostService.retrieveData) {
+          this.lostService.retrieveData(this.lostService.pageAnswers[this.lostService.pagePosition], this.lostService);
+          this.lostService.retrieveData = undefined;
+        }
 
         setTimeout(() => {
           this.lostService.maskInit();
         }, 20)
 
+        const previousIndex = this.lostService.pagePosition === 0 ? this.lostService.pagePosition : this.lostService.pagePosition -1;
+        if (this.lostService.optional && this.lostService.pageAnswers[previousIndex]) {
+          this.lostService.pageAnswers[this.lostService.pagePosition] = [];
+        }
+        this.goBack = this.lostService.pagePosition !== 0 && !this.lostService.pageAnswers[previousIndex];
       }
     });
   }
@@ -40,7 +51,10 @@ export class lostComponent {
 /*    if (!this.userService.isAuth) {
       this.router.navigate(['/home']);
     }*/
-    this.lostService.sequence = ['date', 'location', 'breed', 'gender', 'size', 'color', 'extras'];
+
+    this.lostService.sequence = ['date', 'location', 'breed', 'gender', 'size', 'color', 'extras', 'details','review'];
+    //not details and review in array.
+    this.lostService.displayedSequence = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Accessorios'];
     this.lostService.sequence.forEach((value: any, index: number) => {
       this.lostService.pageAnswers.push(undefined);
     });
@@ -48,6 +62,13 @@ export class lostComponent {
 
   public ngAfterViewInit(): void {
   }  
+
+  public ngDoCheck(): void {
+    if (this.goBack) {
+      this.lostService.back();
+      this.goBack = false;
+    }
+  }
 
   public onFocusAddres() {
     this.lostService.location = undefined;

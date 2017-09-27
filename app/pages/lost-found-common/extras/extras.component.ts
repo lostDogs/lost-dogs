@@ -10,6 +10,9 @@ export class ExtrasComponent {
   public elements: any[];
   constructor(public LostService: LostFoundService) {
     this.LostService.multipleImgAnswers = [];
+    this.LostService.question2 = undefined;
+    this.LostService.question3 = undefined;
+    this.LostService.optional = true;
     this.setElement();
   }
   
@@ -17,7 +20,14 @@ export class ExtrasComponent {
     this.LostService.question = 'Que acessorios Tenia?';
     this.LostService.imgAnswer = undefined;
     this.LostService.inputField = {type: 'multiple', label: 'Extras'};
+   this.LostService.retrieveData = this.fillData;
   }
+
+  public fillData(pageAnswer: any, lostService: any): void {
+    if (pageAnswer) {
+      lostService.multipleImgAnswers = pageAnswer;
+    }
+  }  
 
   public setElement() {
   this.elements = [

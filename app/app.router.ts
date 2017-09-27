@@ -15,6 +15,8 @@ import {GenderComponent} from './pages/lost-found-common/gender/gender.component
 import {SizeComponent} from './pages/lost-found-common/size/size.component';
 import {ColorComponent} from './pages/lost-found-common/color/color.component';
 import {ExtrasComponent} from './pages/lost-found-common/extras/extras.component';
+import {DetailsComponent} from './pages/lost-found-common/pic-details/pic-details.component';
+import {ReviewComponent} from './pages/lost-found-common/review/review.component';
 
 export const router: Routes = [
 { path:'home', component: homeComponent},
@@ -29,14 +31,15 @@ export const router: Routes = [
     {path: 'size', component: SizeComponent},
     {path: 'color', component: ColorComponent},
     {path: 'extras', component: ExtrasComponent},
+    {path: 'details', component: DetailsComponent},
+    {path: 'review', component: ReviewComponent},
     { path: '', redirectTo: 'date' , pathMatch: 'full'},
     {path: '**', redirectTo: 'date'}
 ]},
 {path: 'profile', component: profileComponent},
 {path: 'selection', component: selectionComponent},
 {path: 'login', component: LoginComponent},
-{ path: '', redirectTo: 'home' , pathMatch: 'full'},
-{path: '**', redirectTo: 'home'}
+{ path: '', redirectTo: 'home' , pathMatch: 'full'}
 ];
 // TODO: check why routing is not working without the hash.
 // TODO: read full file https://angular.io/docs/ts/latest/guide/router.html.
@@ -60,5 +63,7 @@ export const routerComponents = [
   GenderComponent,
   SizeComponent,
   ColorComponent,
-  ExtrasComponent
+  ExtrasComponent,
+  DetailsComponent,
+  ReviewComponent
 ];

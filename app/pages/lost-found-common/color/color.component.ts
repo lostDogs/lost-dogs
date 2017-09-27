@@ -10,13 +10,23 @@ export class ColorComponent {
   public elements: any[];
   constructor(public LostService: LostFoundService) {
     this.setElement();
+    this.LostService.question2 = undefined;
+    this.LostService.question3 = undefined;
+    this.LostService.optional = false;
   }
   
   public ngOnInit(): void {
     this.LostService.imgAnswer = undefined;
     this.LostService.question = 'Cual es su color?';
     this.LostService.inputField = {type: 'image', label: 'Color'};
+    this.LostService.retrieveData = this.fillData;
   }
+
+  public fillData(pageAnswer: any, lostService: any): void {
+    if (pageAnswer) {
+      lostService.imgAnswer = pageAnswer;
+    }
+  }  
 
   public setElement() {
   this.elements = [

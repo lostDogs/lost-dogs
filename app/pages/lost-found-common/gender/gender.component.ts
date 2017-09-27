@@ -9,6 +9,9 @@ import {LostFoundService} from '../../../common/services/lost-found.service';
 export class GenderComponent { 
   public elements: any[];
   constructor(public LostService: LostFoundService) {
+    this.LostService.question2 = undefined;
+    this.LostService.question3 = undefined;
+    this.LostService.optional = false;
     this.setElement();
   }
   
@@ -16,7 +19,14 @@ export class GenderComponent {
     this.LostService.question = 'Cual es su genero?';
     this.LostService.imgAnswer = undefined;
     this.LostService.inputField = {type: 'image', label: 'Gender'};
+    this.LostService.retrieveData = this.fillData;
   }
+
+   public fillData(pageAnswer: any, lostService: any): void {
+    if (pageAnswer) {
+      lostService.imgAnswer = pageAnswer;
+    }
+  }  
 
   public setElement() {
   this.elements = [

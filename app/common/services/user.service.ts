@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {ApiService} from './api.service';
 import {Router} from '@angular/router';
 import {GlobalFunctionService} from './global-function.service';
+import {CookieManagerService} from './cookie-manager.service';
 
 @Injectable()
 export class UserService {
@@ -13,10 +14,10 @@ export class UserService {
   public errors: {passwordReq: boolean, userReq: boolean, invalidUser: boolean};
   public mapsApi: any;
 
-  constructor (public api: ApiService, public router: Router, public globalService: GlobalFunctionService) {
+  constructor (public api: ApiService, public router: Router, public globalService: GlobalFunctionService, public CookieService: CookieManagerService) {
     this.user = {};
     this.errors = {passwordReq: false, userReq: false, invalidUser: false};
-    const userCookie: any = this.getCookie(this.userCookieName);
+    const userCookie: any = this.CookieService.getCookie(this.userCookieName);
     if (userCookie) {
       this.user = userCookie;
       this.isAuth = true;
@@ -31,7 +32,7 @@ export class UserService {
     this.user.avatar = response.avatar_url;
     this.user.email = response.email;
     this.isAuth = true;
-    this.setCookie(this.userCookieName, this.user);
+    this.CookieService.setCookie(this.userCookieName, this.user);
   }
 
     public getUserLocation(): Promise<any> {
@@ -76,31 +77,6 @@ export class UserService {
   }
 
 
-  public setCookie(name: string, value: any): void {
-    if(value instanceof Object) {
-      value = JSON.stringify(value);
-    }
-    window.document.cookie =  name + '=' + value + '; path=/';
-  }
-
-  public deleteCookie(name: string): void {
-    if (this.getCookie) {
-          document.cookie = name + '=' + ';expires=Thu, 01 Jan 1970 00:00:01 GMT';
-    }
-  }
-
-  public getCookie(name: string): any {
-    const regex = new RegExp('[; ]'+name+'=([^\\s;]*)');
-    const sMatch = (' '+document.cookie).match(regex);
-    if (name && sMatch)  {
-      try {
-       return JSON.parse(sMatch[1]);
-      } catch (e) {
-        return decodeURI(sMatch[1]);
-      }
-    }
-    return null;
-  }
   public loginSucess(data: any): void {
     console.log('loggin sucess');
     this.loading = false;
@@ -134,7 +110,7 @@ export class UserService {
   public logout(): void {
     this.isAuth = false;
     this.isAvatarSet = false;
-    this.deleteCookie(this.userCookieName);
+    this.CookieService.deleteCookie(this.userCookieName);
     this.user = {};
   }
 }

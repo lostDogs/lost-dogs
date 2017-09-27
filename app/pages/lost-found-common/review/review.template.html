@@ -1,0 +1,35 @@
+<div class="review-page row">
+  <div class="col l6 push-l3 s12">
+    <div class="centered zise" *ngIf="LostService.dogPicture" (click)="LostService.goTo(LostService.sequence.length-2)">
+      <div  class="profile-dog" [ngStyle]="{'background-image': 'url(' + LostService.dogPicture + ')' }">
+        <div class="overlay"><a>Editar</a></div>
+      </div>
+    </div> 
+    <ul class="collection with-header">
+      <li class="collection-header avatar"  *ngIf="LostService.dogName"><h5>{{LostService.dogName}}</h5><a  class="secondary-content" (click)="LostService.goTo(LostService.sequence.length-3)">Editar</a></li>
+      <li class="collection-item avatar centered">
+        <div class="circle material-icons location"><i class="medium material-icons">attach_money</i></div>
+        <span class="title"><b>Recompenza:</b> $ {{LostService.reward}} MXN</span>
+        <a class="secondary-content" (click)="LostService.goTo(LostService.sequence.length-2)">Editar</a>
+      </li>
+      <li class="collection-item avatar centered" *ngFor="let description of LostService.displayedSequence; let i=index">
+        <div class="circle material-icons location" *ngIf="LostService.sequence[i]==='location'"><i class="medium material-icons">location_on</i></div>
+        <div class="circle material-icons location" *ngIf="LostService.sequence[i]==='date'"><i class="medium material-icons">date_range</i></div>
+        <div  style="margin: 0" *ngIf="LostService.pageAnswers[i] && window.Array.isArray(LostService.pageAnswers[i])">
+          <div *ngFor="let imgUrl of LostService.pageAnswers[i][0].imgUrls; let j=index" [ngStyle]="{'background-image': 'url(' + imgUrl+ ')' , 'left':  imgwidth*j + 'px'}" class="circle"></div>
+        </div>
+        <div [ngStyle]="{'background-image': 'url(' + LostService.pageAnswers[i].imgUrl + ')' }" class="circle" *ngIf="LostService.pageAnswers[i] && LostService.sequence[i]!=='location' && LostService.sequence[i]!=='date' && !window.Array.isArray(LostService.pageAnswers[i])"></div>
+        <span class="title" *ngIf="LostService.sequence[i]==='date'"><b>{{description}}:</b>  {{LostService.pageAnswers[i]}}</span>
+        <span class="title" *ngIf="LostService.pageAnswers[i] && LostService.sequence[i]==='location'"><b>{{description}}:</b>  {{LostService.pageAnswers[i].address}}</span>
+        <span class="title" *ngIf="LostService.pageAnswers[i] && LostService.sequence[i]!=='location' && LostService.sequence[i]!=='date' && !window.Array.isArray(LostService.pageAnswers[i])"><b>{{description}}:</b>  {{LostService.pageAnswers[i].name}}</span>
+        <span class="title" *ngIf="LostService.pageAnswers[i] && window.Array.isArray(LostService.pageAnswers[i])"><b>{{description}}:</b>  {{ ''+ LostService.pageAnswers[i][0].names}}</span>
+        <a class="secondary-content" (click)="LostService.goTo(i)">Editar</a>
+      </li>
+      <li class="collection-item avatar centered" *ngIf="LostService.comments">
+        <div class="circle material-icons location"><i class="medium material-icons">comment</i></div>
+        <span class="title"><b>Comentarios:</b>  {{LostService.comments}} </span>
+        <a class="secondary-content" (click)="LostService.goTo(LostService.sequence.length-2)">Editar</a>
+      </li>      
+    </ul>    
+  </div>
+</div>

@@ -1,6 +1,8 @@
 <section class="page">
   <div class="row title-question"  [ngClass]="{'blur-filter': dogCardService.open}">
-    <h5 class="col l4 push-l4 s12">{{lostService.question}}</h5>
+    <h5 class="col l4  s4" *ngIf="lostService.question2">{{lostService.question2}}</h5>
+    <h5 class="col l4 push-l4 s12" [ngClass]="{'push-l4 s12': !(lostService.question2&&lostService.question3), 's4': (lostService.question2&&lostService.question3)}">{{lostService.question}}</h5>
+    <h5 class="col l4  s4" *ngIf="lostService.question3">{{lostService.question3}}</h5>
     <div class="input-field col l2  s4 push-s4 push-l3" [hidden]="!(lostService.inputField && lostService.inputField.type==='date')">
           <input type="text" name="question" id="question" [(ngModel)]="lostService.answer" (focus)="lostService.answer=undefined">
           <!-- <label for="question">{{inputField.label}}</label> -->
@@ -14,7 +16,7 @@
     </form>
     <div class="input-field col l2  s10 push-l3 push-s1 img-output" *ngIf="lostService.inputField && lostService.inputField.type==='image'">
       <div style="height: 45px;"></div>
-        <div title="caracteristicas selecionada" class="img-block tooltipped left-centered" data-position="top" id="{{lostService.imgAnswer.key}}" *ngIf="lostService.imgAnswer && lostService.imgAnswer.disabled===true">
+        <div title="caracteristicas selecionada" class="img-block left-centered" data-position="top" id="{{lostService.imgAnswer.key}}" *ngIf="lostService.imgAnswer && lostService.imgAnswer.disabled===true">
           <div title="cerrar" class="close-icon" (click)="imgBlockRemove()">
             <i class="tiny material-icons">close</i>
           </div>
@@ -23,23 +25,25 @@
     </div>
     <div class="input-field col l3  s10 push-s1 push-l3 img-output" *ngIf="lostService.inputField && lostService.inputField.type==='multiple'">
       <div style="height: 45px;"></div>
-        <div *ngFor="let block of lostService.multipleImgAnswers;let i= index" title="caracteristicas selecionadas" class="img-block tooltipped" data-position="top" id="{{block.key}}">
+        <div *ngFor="let block of lostService.multipleImgAnswers;let i= index" title="caracteristicas selecionadas" class="img-block" data-position="top" id="{{block.key}}">
           <div title="cerrar" class="close-icon" (click)="multipleBlockRemove(i)">
             <i class="tiny material-icons">close</i>
           </div>
           <p>{{block.name}}</p>
         </div>
-    </div>    
+    </div>
+    <div class="progress-bar"></div>
   </div>
   <div class="component-container" [ngClass]="{'blur-filter': dogCardService.open}">
     <router-outlet></router-outlet>
-    <div class="buttons row">
-      <button class="waves-effect btn warning" (click)="lostService.back('lost')" [ngClass]="{'disappear': lostService.pagePosition === 0}">Atras <i class="material-icons left">chevron_left</i></button>
+    <div class="buttons row" *ngIf="lostService.pagePosition !== lostService.sequence.length - 1">
+      <button class="waves-effect btn warning" (click)="lostService.back()" [ngClass]="{'disappear': lostService.pagePosition === 0 || lostService.inReviewPage}">Atras <i class="material-icons left">chevron_left</i></button>
       <button class="waves-effect btn info" (click)="lostService.setAnwer()"  [disabled]="!lostService.getGeneralAnswer()">responder <i class="material-icons right">send</i></button>
-      <button class="waves-effect btn action"  (click)="lostService.next('lost')"  [disabled]="!lostService.pageAnswers[lostService.pagePosition] && lostService.inputField && lostService.inputField.type!=='multiple'">Siguiente <i class="material-icons right">chevron_right</i></button>
+      <button class="waves-effect btn action" *ngIf="!lostService.inReviewPage" (click)="lostService.next()"  [disabled]="!lostService.pageAnswers[lostService.pagePosition] && lostService.inputField && lostService.inputField.type!=='multiple'">Siguiente <i class="material-icons right">chevron_right</i></button>
+      <button class="waves-effect btn action" *ngIf="lostService.inReviewPage" (click)="lostService.goToReview()">A revision <i class="material-icons right">chevron_right</i></button>
     </div>
   </div>
-  <div class="row results">
+  <div class="row results" *ngIf="lostService.pagePosition !== lostService.sequence.length - 1">
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
     <dog-card *ngFor="let card of dogCards;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt"></dog-card>
   </div>
