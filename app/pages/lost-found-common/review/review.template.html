@@ -15,14 +15,14 @@
       <li class="collection-item avatar centered" *ngFor="let description of LostService.displayedSequence; let i=index">
         <div class="circle material-icons location" *ngIf="LostService.sequence[i]==='location'"><i class="medium material-icons">location_on</i></div>
         <div class="circle material-icons location" *ngIf="LostService.sequence[i]==='date'"><i class="medium material-icons">date_range</i></div>
-        <div  style="margin: 0" *ngIf="LostService.pageAnswers[i] && window.Array.isArray(LostService.pageAnswers[i])">
-          <div *ngFor="let imgUrl of LostService.pageAnswers[i][0].imgUrls; let j=index" [ngStyle]="{'background-image': 'url(' + imgUrl+ ')' , 'left':  imgwidth*j + 'px'}" class="circle"></div>
+        <div  style="margin: 0" *ngIf="pageAnswersCopy[i] && window.Array.isArray(pageAnswersCopy[i])">
+          <div *ngFor="let imgUrl of pageAnswersCopy[i][0].imgUrls; let j=index" [ngStyle]="{'background-image': 'url(' + imgUrl+ ')' , 'left':  imgwidth*j + 'px'}" class="circle"></div>
         </div>
-        <div [ngStyle]="{'background-image': 'url(' + LostService.pageAnswers[i].imgUrl + ')' }" class="circle" *ngIf="LostService.pageAnswers[i] && LostService.sequence[i]!=='location' && LostService.sequence[i]!=='date' && !window.Array.isArray(LostService.pageAnswers[i])"></div>
-        <span class="title" *ngIf="LostService.sequence[i]==='date'"><b>{{description}}:</b>  {{LostService.pageAnswers[i]}}</span>
-        <span class="title" *ngIf="LostService.pageAnswers[i] && LostService.sequence[i]==='location'"><b>{{description}}:</b>  {{LostService.pageAnswers[i].address}}</span>
-        <span class="title" *ngIf="LostService.pageAnswers[i] && LostService.sequence[i]!=='location' && LostService.sequence[i]!=='date' && !window.Array.isArray(LostService.pageAnswers[i])"><b>{{description}}:</b>  {{LostService.pageAnswers[i].name}}</span>
-        <span class="title" *ngIf="LostService.pageAnswers[i] && window.Array.isArray(LostService.pageAnswers[i])"><b>{{description}}:</b>  {{ ''+ LostService.pageAnswers[i][0].names}}</span>
+        <div [ngStyle]="{'background-image': 'url(' + pageAnswersCopy[i].imgUrl + ')' }" class="circle" *ngIf="pageAnswersCopy[i] && LostService.sequence[i]!=='location' && LostService.sequence[i]!=='date' && !window.Array.isArray(pageAnswersCopy[i])"></div>
+        <span class="title" *ngIf="LostService.sequence[i]==='date'"><b>{{description}}:</b>  {{pageAnswersCopy[i]}}</span>
+        <span class="title" *ngIf="pageAnswersCopy[i] && LostService.sequence[i]==='location'"><b>{{description}}:</b>  {{pageAnswersCopy[i].address}}</span>
+        <span class="title" *ngIf="pageAnswersCopy[i] && LostService.sequence[i]!=='location' && LostService.sequence[i]!=='date' && !window.Array.isArray(pageAnswersCopy[i])"><b>{{description}}:</b>  {{pageAnswersCopy[i].name}}</span>
+        <span class="title" *ngIf="pageAnswersCopy[i] && window.Array.isArray(pageAnswersCopy[i])"><b>{{description}}:</b>  {{ ''+ pageAnswersCopy[i][0].names}}</span>
         <a class="secondary-content" (click)="LostService.goTo(i)">Editar</a>
       </li>
       <li class="collection-item avatar centered" *ngIf="LostService.comments">

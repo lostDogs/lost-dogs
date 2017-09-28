@@ -12,6 +12,7 @@ export class MapComponent {
  public mapDef: google.maps.Map;
  public marker: google.maps.Marker;
  public geocoder: google.maps.Geocoder;
+ @Input()
  public location: {lat: number, lng: number};
  @Output()
  public locationEmiter: EventEmitter<any> = new EventEmitter<any>();
@@ -66,13 +67,17 @@ public custom: CustomMarker;
        ctrl.getFormatedAdress( ctrl.location, ctrl);
     });
     //initial location if user permits
-    if (userLocation) {
+    if (userLocation && !this.location) {
        this.addMarker(userLocation, this.mapDef, ctrl, {animation: google.maps.Animation.DROP});
        this.mapDef.panTo(userLocation);
        this.getFormatedAdress(userLocation, this);
        this.location = userLocation;
        ctrl.locationEmiter.emit(ctrl.location);
        this.mapDef.setZoom(15);
+    } else if (this.location) {
+      this.addMarker(this.location, this.mapDef, ctrl, {animation: google.maps.Animation.DROP});
+      this.mapDef.panTo(userLocation);
+      this.mapDef.setZoom(15);
     }
   }
 

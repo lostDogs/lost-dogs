@@ -25,7 +25,17 @@ export class ExtrasComponent {
 
   public fillData(pageAnswer: any, lostService: any): void {
     if (pageAnswer) {
-      lostService.multipleImgAnswers = pageAnswer;
+      if (pageAnswer[0].names) {
+        const tempAns: any[] = [];
+        pageAnswer[0].names.forEach((value: any, index: number) => {
+          const obj = {name: value,  imgUrl: pageAnswer[0].imgUrls[index], orginalIndex: pageAnswer[0].Indexs[index]};
+          tempAns.push(obj);
+        });
+        lostService.multipleImgAnswers = tempAns;
+      } else {
+        lostService.multipleImgAnswers = pageAnswer;
+      }
+
     }
   }  
 

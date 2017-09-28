@@ -16,9 +16,14 @@ export class lostComponent {
   public dogCards: number[];
   public generalAnswer: any;
   public goBack: boolean;
+  public fullWidth: number;
+  public progress: number;
+  @ViewChild('Progress')
+  public progressDom: ElementRef;
 
   constructor (public dogCardService: DogCardService, public lostService: LostFoundService, public router: Router, public userService: UserService, public domEl: ElementRef) {
     this.dogCards = [];
+    this.progress = 0;
     for (let i = 0; i < 13; ++i) {
       this.dogCards.push(i);
     }
@@ -38,12 +43,15 @@ export class lostComponent {
         setTimeout(() => {
           this.lostService.maskInit();
         }, 20)
-
+        // if the  page is option then an empty array should be set, but for this, the page should NOT have aldeay an answer and the previous
+        // page should have one.
         const previousIndex = this.lostService.pagePosition === 0 ? this.lostService.pagePosition : this.lostService.pagePosition -1;
-        if (this.lostService.optional && this.lostService.pageAnswers[previousIndex]) {
+        if (this.lostService.optional && this.lostService.pageAnswers[previousIndex] && !this.lostService.pageAnswers[this.lostService.pagePosition]) {
+          console.log('setting empty array on page ', this.lostService.pagePosition);
           this.lostService.pageAnswers[this.lostService.pagePosition] = [];
         }
         this.goBack = this.lostService.pagePosition !== 0 && !this.lostService.pageAnswers[previousIndex];
+        this.progress = this.lostService.pagePosition / (this.lostService.sequence.length - 1);
       }
     });
   }
@@ -51,9 +59,10 @@ export class lostComponent {
 /*    if (!this.userService.isAuth) {
       this.router.navigate(['/home']);
     }*/
-
+    this.lostService.inReviewPage = false;
+    this.fullWidth = this.progressDom.nativeElement.clientWidth;
     this.lostService.sequence = ['date', 'location', 'breed', 'gender', 'size', 'color', 'extras', 'details','review'];
-    //not details and review in array.
+    //not review in array. details = Accessorios
     this.lostService.displayedSequence = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Accessorios'];
     this.lostService.sequence.forEach((value: any, index: number) => {
       this.lostService.pageAnswers.push(undefined);
@@ -77,16 +86,19 @@ export class lostComponent {
 
   public imgBlockRemove(): void {
     //$('.tooltipped').tooltip('remove');
+    // making angular copy in order for the ngChange to detecte it;
+    this.lostService.imgAnswer = JSON.parse(JSON.stringify(this.lostService.imgAnswer));
     this.lostService.imgAnswer.disabled = false;
   }
 
    public multipleBlockRemove(index: number): void {
     //$('.tooltipped').tooltip('remove');
-    this.lostService.multipleImgAnswers[index].disabled = false;
     if (this.lostService.multipleImgAnswers[index].name === 'Placa Id') {
       this.lostService.openNameInput = false; 
     }
-    this.lostService.multipleImgAnswers.splice(index, 1);
+    this.lostService.multipleImgAnswers[index].disabled = false;
+    this.lostService.multipleImgAnswers = JSON.parse(JSON.stringify(this.lostService.multipleImgAnswers));
+
   } 
   
 }

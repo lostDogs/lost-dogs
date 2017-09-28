@@ -35,7 +35,7 @@ export class SideBlockComponent {
 @Output()
 public selectedEmitter: EventEmitter<any> = new EventEmitter<any>();
 @Input()
-public removedElement: Ielement;
+public removedElement: any;
 @Input()
 public multiple: boolean;
 public multipleElements: Ielement[];
@@ -121,30 +121,34 @@ public multipleElements: Ielement[];
     this.selectedEmitter.emit(this.elements[indexed]);
     this.previousSelected = indexed;
     } else {
-      if (this.elements[indexed].disabled) {
+      let removeIndex: number;
+      this.multipleElements = this.removedElement && this.removedElement.length ? this.removedElement : this.multipleElements;
+      const some: boolean = this.multipleElements.some((el: Ielement, index: number) => {
+        if (el.key === this.elements[indexed].key) {
+          removeIndex = index;
+          return true;
+        }
+      });
+      if (this.elements[indexed].disabled && !some) {
         this.multipleElements.push(this.elements[indexed]);
-      } else {
-        let removeIndex: number;
-        this.multipleElements.some((el: Ielement, index: number) => {
-          if (el.key === this.elements[indexed].key) {
-            removeIndex = index;
-            return true;
-          }
-        });
+      } else if (removeIndex !== undefined && ~removeIndex && !this.elements[indexed].disabled) {
         this.multipleElements.splice(removeIndex, 1)
       }
       this.selectedEmitter.emit(this.multipleElements);
     }
   }
 
-  // public ngDoCheck(): void {
-  //   if(!(this.scrolling.nativeElement.children[0] && this.scrolling.nativeElement.children[0].children[0].children[0].clientHeight)) {
-  //     console.log('container empty');
-  //   }
-  // }
-
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.elements && changes.elements.currentValue) {
+    if (changes.removedElement && changes.removedElement.currentValue) {
+      const elements: Ielement = changes.removedElement.currentValue;
+      if (Array.isArray(elements) && elements.length) {
+          elements.forEach((value: any, index: number) => {
+            this.elements[value.orginalIndex].disabled = value.disabled;
+          });
+      }else if(!Array.isArray(elements)) {
+          this.elements[elements.orginalIndex].disabled = elements.disabled;
+          this.previousSelected = elements.orginalIndex;
+      }
     }
   }
   

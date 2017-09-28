@@ -43,19 +43,16 @@ export class LostFoundService {
   public next() {
      const nextIndex: number =  this.pagePosition === (this.sequence.length-1) ? this.pagePosition : this.pagePosition + 1;
     const nextPage: string = this.parentPage + '/' + this.sequence[nextIndex];
-    console.log('to page', nextPage);
     this.router.navigate([nextPage]);
   }
 
   public goTo(index: number): void {
     const toPage = '/' + this.parentPage + '/' + this.sequence[index];
-    console.log('to page', toPage);
     this.router.navigateByUrl(toPage)
   }
 
   public goToReview(): void {
     const toPage = '/' + this.parentPage + '/' + this.sequence[this.sequence.length - 1];
-    console.log('to page', toPage);
     this.router.navigate([toPage]);
   }
 

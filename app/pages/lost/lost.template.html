@@ -16,7 +16,7 @@
     </form>
     <div class="input-field col l2  s10 push-l3 push-s1 img-output" *ngIf="lostService.inputField && lostService.inputField.type==='image'">
       <div style="height: 45px;"></div>
-        <div title="caracteristicas selecionada" class="img-block left-centered" data-position="top" id="{{lostService.imgAnswer.key}}" *ngIf="lostService.imgAnswer && lostService.imgAnswer.disabled===true">
+        <div title="caracteristicas selecionada" class="img-block left-centered" data-position="top" id="{{lostService.imgAnswer.key}}" *ngIf="lostService.imgAnswer && lostService.imgAnswer.disabled">
           <div title="cerrar" class="close-icon" (click)="imgBlockRemove()">
             <i class="tiny material-icons">close</i>
           </div>
@@ -25,14 +25,20 @@
     </div>
     <div class="input-field col l3  s10 push-s1 push-l3 img-output" *ngIf="lostService.inputField && lostService.inputField.type==='multiple'">
       <div style="height: 45px;"></div>
-        <div *ngFor="let block of lostService.multipleImgAnswers;let i= index" title="caracteristicas selecionadas" class="img-block" data-position="top" id="{{block.key}}">
+      <div *ngFor="let block of lostService.multipleImgAnswers;let i= index" class="multiple"  title="caracteristicas selecionadas">
+        <div class="img-block" data-position="top" id="{{block.key}}"  *ngIf="block.disabled">
           <div title="cerrar" class="close-icon" (click)="multipleBlockRemove(i)">
             <i class="tiny material-icons">close</i>
           </div>
           <p>{{block.name}}</p>
         </div>
+    </div>        
+      </div>
+  </div>
+  <div class="progress-bar col l12 s12 m12" #Progress  [ngClass]="{'blur-filter': dogCardService.open}">
+    <div class="progression" [ngStyle]="{'width':  progress*fullWidth + 'px' }" [ngClass]="{'completed': progress === 1}">
+      <p class="progress-number"  [ngClass]="{'progress-full': progress === 1}" *ngIf="progress">{{(progress*100).toPrecision(2) + '%'}}</p>
     </div>
-    <div class="progress-bar"></div>
   </div>
   <div class="component-container" [ngClass]="{'blur-filter': dogCardService.open}">
     <router-outlet></router-outlet>
