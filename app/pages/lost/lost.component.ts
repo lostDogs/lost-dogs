@@ -31,7 +31,6 @@ export class lostComponent {
     this.router.events.subscribe(data => {
       if (data instanceof NavigationEnd) {
         const urlChildLoction = data.url.split('/')[2];
-        this.lostService.parentPage = data.url.split('/')[1];
         const Indexlocation = this.lostService.sequence.indexOf(urlChildLoction);
         this.lostService.pagePosition = Indexlocation !== -1 ? Indexlocation : 0;
 
@@ -52,6 +51,7 @@ export class lostComponent {
         }
         this.goBack = this.lostService.pagePosition !== 0 && !this.lostService.pageAnswers[previousIndex];
         this.progress = this.lostService.pagePosition / (this.lostService.sequence.length - 1);
+        this.progress = this.lostService.inReviewPage ? 1 : this.progress;
       }
     });
   }
@@ -59,11 +59,19 @@ export class lostComponent {
 /*    if (!this.userService.isAuth) {
       this.router.navigate(['/home']);
     }*/
+    this.lostService.resetService();
+    this.lostService.parentPage = this.router.url.split('/')[1];
     this.lostService.inReviewPage = false;
     this.fullWidth = this.progressDom.nativeElement.clientWidth;
-    this.lostService.sequence = ['date', 'location', 'breed', 'gender', 'size', 'color', 'extras', 'details','review'];
-    //not review in array. details = Accessorios
-    this.lostService.displayedSequence = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Accessorios'];
+    if (this.lostService.parentPage === 'lost') {
+      this.lostService.sequence = ['date', 'location', 'breed', 'gender', 'size', 'color', 'extras', 'details','review'];
+      //not review in array. details = Accessorios
+      this.lostService.displayedSequence = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Accessorios'];
+    } else if(this.lostService.parentPage === 'found') {
+        this.lostService.sequence = ['date', 'location', 'breed', 'gender', 'size', 'color', 'extras', 'details','review'];
+        //not review in array. details = Accessorios
+        this.lostService.displayedSequence = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Accessorios'];
+    }
     this.lostService.sequence.forEach((value: any, index: number) => {
       this.lostService.pageAnswers.push(undefined);
     });

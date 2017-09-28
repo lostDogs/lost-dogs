@@ -31,10 +31,15 @@ export class BreedComponent {
   }
   
   public ngOnInit(): void {
-    this.LostService.question = 'Que raza es?';
     this.LostService.inputField = {type: 'image', label: 'raza'};
     this.LostService.imgAnswer = undefined;
     this.LostService.retrieveData = this.fillData;
+    
+    if (this.LostService.parentPage === 'lost') { 
+      this.LostService.question = 'Que raza es?';
+    } else if(this.LostService.parentPage === 'found') {
+      this.LostService.question = 'A cual se parece?';
+    }
   }
 
   public changeElement(event: any): void {

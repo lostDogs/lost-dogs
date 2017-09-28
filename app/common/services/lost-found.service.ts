@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {Ielement} from '../components/side-block/side-block.component';
 import {Router} from '@angular/router';
 import {CookieManagerService} from './cookie-manager.service';
+import { DecimalPipe } from '@angular/common';
+
 @Injectable()
 export class LostFoundService {
   public locationAdressInput: string;
@@ -105,5 +107,32 @@ export class LostFoundService {
       return this.binaryDogImg;
     }
     return undefined;
+  }
+  public resetService() {
+     this.locationAdressInput = undefined;
+     this.address = undefined;
+     this.location = undefined;
+     this.question = undefined;
+     this.question2 = undefined;
+     this.question3 = undefined;
+     this.inputField = undefined;
+     this.optional = undefined;
+     this.answer = undefined;
+     this.rechangeDate = undefined;
+     this.imgAnswer = undefined;
+     this.sequence = undefined;
+     this.displayedSequence = undefined;
+     this.pageAnswers = [];
+     this.pagePosition = undefined;
+     this.multipleImgAnswers = undefined;
+     this.parentPage = undefined;
+     this.inReviewPage = undefined;
+     this.retrieveData = undefined;
+     this.openNameInput = undefined;
+     this.dogName = undefined;
+     this.binaryDogImg = undefined;
+     this.dogPicture = this.defaultDogPic;
+     this.reward = this.defaultReward;
+     this.comments = undefined;
   }
 }

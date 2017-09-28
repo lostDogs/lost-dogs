@@ -17,11 +17,6 @@ export class DatePickerComponent {
   @Input()
   public seletedDate: string;
   @Output()
-  public question: EventEmitter<string> = new EventEmitter<string>();
-  @Output()
-  public inputFeildEmiter: EventEmitter<any> = new EventEmitter<any>();
-  public inputField: {type: string, label: string};
-  @Output()
   public seletedDateEmitter: EventEmitter<string> = new EventEmitter<string>();
   @Input()
   public rechangeDate: string;
@@ -41,14 +36,9 @@ export class DatePickerComponent {
     this.generateYears(10);
     this.generateMonths();
     $('text-scroll').nodoubletapzoom();
-    this.question.emit('Cuando lo Perdiste?');
-    this.inputField = {type: 'date', label: 'dd/mm/aaaa'};
-    this.inputFeildEmiter.emit(this.inputField);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    console.log('current value', changes.rechangeDate);
-    console.log('seleted date', changes.seletedDate);
     if (changes.rechangeDate && changes.rechangeDate.currentValue) {
      const dateFromEdit: string = changes.rechangeDate.currentValue;
      const day: number = +dateFromEdit.split('/')[2];

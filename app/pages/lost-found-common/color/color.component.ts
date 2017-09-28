@@ -17,9 +17,9 @@ export class ColorComponent {
   
   public ngOnInit(): void {
     this.LostService.imgAnswer = undefined;
-    this.LostService.question = 'Cual es su color?';
     this.LostService.inputField = {type: 'image', label: 'Color'};
     this.LostService.retrieveData = this.fillData;
+    this.LostService.question = 'Cual es su color?';
   }
 
   public fillData(pageAnswer: any, lostService: any): void {

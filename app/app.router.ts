@@ -17,30 +17,37 @@ import {ColorComponent} from './pages/lost-found-common/color/color.component';
 import {ExtrasComponent} from './pages/lost-found-common/extras/extras.component';
 import {DetailsComponent} from './pages/lost-found-common/pic-details/pic-details.component';
 import {ReviewComponent} from './pages/lost-found-common/review/review.component';
+const self = this;
+self.pathBuild = (pathName: string): any => {
+  const pathObj = {path: pathName, component: lostComponent,
+    children: [
+      { path:'date', component: DateComponent},
+      {path: 'location', component: LocationComponent},
+      {path: 'breed', component: BreedComponent},
+      {path: 'gender', component: GenderComponent},
+      {path: 'size', component: SizeComponent},
+      {path: 'color', component: ColorComponent},
+      {path: 'extras', component: ExtrasComponent},
+      {path: 'details', component: DetailsComponent},
+      {path: 'review', component: ReviewComponent},
+      { path: '', redirectTo: 'date' , pathMatch: 'full'},
+      {path: '**', redirectTo: 'date'}
+    ]};
+    return pathObj;
+};
 
 export const router: Routes = [
-{ path:'home', component: homeComponent},
-{path: 'board', component: boardComponent},
-{path: 'account', component: accountComponent},
-{path: 'lost', component: lostComponent, 
-  children: [
-    { path:'date', component: DateComponent},
-    {path: 'location', component: LocationComponent},
-    {path: 'breed', component: BreedComponent},
-    {path: 'gender', component: GenderComponent},
-    {path: 'size', component: SizeComponent},
-    {path: 'color', component: ColorComponent},
-    {path: 'extras', component: ExtrasComponent},
-    {path: 'details', component: DetailsComponent},
-    {path: 'review', component: ReviewComponent},
-    { path: '', redirectTo: 'date' , pathMatch: 'full'},
-    {path: '**', redirectTo: 'date'}
-]},
-{path: 'profile', component: profileComponent},
-{path: 'selection', component: selectionComponent},
-{path: 'login', component: LoginComponent},
-{ path: '', redirectTo: 'home' , pathMatch: 'full'}
+  { path:'home', component: homeComponent},
+  {path: 'board', component: boardComponent},
+  {path: 'account', component: accountComponent},
+  self.pathBuild('lost'),
+  self.pathBuild('found'),
+  {path: 'profile', component: profileComponent},
+  {path: 'selection', component: selectionComponent},
+  {path: 'login', component: LoginComponent},
+  { path: '', redirectTo: 'home' , pathMatch: 'full'}
 ];
+
 // TODO: check why routing is not working without the hash.
 // TODO: read full file https://angular.io/docs/ts/latest/guide/router.html.
 @NgModule({

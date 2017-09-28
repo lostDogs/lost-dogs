@@ -15,6 +15,12 @@ export class LocationComponent {
 
   public ngOnInit(): void {
     this.LostService.retrieveData = this.fillData;
+    this.LostService.inputField = {type:'address', label:''}
+    if (this.LostService.parentPage === 'lost') {
+      this.LostService.question = 'Donde lo perdiste?';
+    } else if(this.LostService.parentPage === 'found') {
+      this.LostService.question = 'Donde lo econtraste?';
+    }
   }
 
    public fillData(pageAnswer: any, lostService: any): void {

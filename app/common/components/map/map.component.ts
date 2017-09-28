@@ -12,6 +12,7 @@ export class MapComponent {
  public mapDef: google.maps.Map;
  public marker: google.maps.Marker;
  public geocoder: google.maps.Geocoder;
+public custom: CustomMarker;
  @Input()
  public location: {lat: number, lng: number};
  @Output()
@@ -19,21 +20,11 @@ export class MapComponent {
  @Input()
  public locationAdress: string;
  @Output()
- public question: EventEmitter<string> = new EventEmitter<string>();
- @Output()
  public locationAdressEmiter: EventEmitter<string> = new EventEmitter<string>();
- @Output()
- public inputFeildEmiter: EventEmitter<any> = new EventEmitter<any>();
 
-public custom: CustomMarker;
+  constructor(public el: ElementRef, public userService: UserService) {}
 
-  constructor(public el: ElementRef, public userService: UserService) {
-  }
-
-  public ngOnInit(): void {
-    this.inputFeildEmiter.emit({type:'address', label:''});
-    this.question.emit('Donde lo perdiste?');
-  }
+  public ngOnInit(): void {}
 
   public ngAfterViewInit(): void {
     let initlocation: any;

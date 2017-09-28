@@ -37,7 +37,7 @@
   </div>
   <div class="progress-bar col l12 s12 m12" #Progress  [ngClass]="{'blur-filter': dogCardService.open}">
     <div class="progression" [ngStyle]="{'width':  progress*fullWidth + 'px' }" [ngClass]="{'completed': progress === 1}">
-      <p class="progress-number"  [ngClass]="{'progress-full': progress === 1}" *ngIf="progress">{{(progress*100).toPrecision(2) + '%'}}</p>
+      <p class="progress-number"  [ngClass]="{'progress-full': progress === 1}" *ngIf="progress">{{progress * 100 | number:'2.0-0'}}%</p>
     </div>
   </div>
   <div class="component-container" [ngClass]="{'blur-filter': dogCardService.open}">

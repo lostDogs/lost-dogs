@@ -15,6 +15,13 @@ export class DateComponent {
 
   public ngOnInit(): void {
     this.LostService.retrieveData = this.fillData;
+    this.LostService.inputField = {type: 'date', label: 'dd/mm/aaaa'};
+
+    if (this.LostService.parentPage === 'lost') { 
+      this.LostService.question = 'Cuando lo Perdiste?';
+    } else if(this.LostService.parentPage === 'found') {
+      this.LostService.question = 'Cuando lo Encontraste?';
+    }
   }
 
   public fillData(pageAnswer: any, lostService: any): void {

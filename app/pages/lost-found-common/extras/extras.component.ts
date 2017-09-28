@@ -17,10 +17,14 @@ export class ExtrasComponent {
   }
   
   public ngOnInit(): void {
-    this.LostService.question = 'Que acessorios Tenia?';
     this.LostService.imgAnswer = undefined;
     this.LostService.inputField = {type: 'multiple', label: 'Extras'};
    this.LostService.retrieveData = this.fillData;
+    if (this.LostService.parentPage === 'lost') { 
+      this.LostService.question = 'Que acessorios tenia?';
+    } else if(this.LostService.parentPage === 'found') {
+      this.LostService.question = 'Que acessorios tiene?';
+    }    
   }
 
   public fillData(pageAnswer: any, lostService: any): void {
