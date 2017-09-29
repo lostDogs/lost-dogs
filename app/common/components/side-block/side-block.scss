@@ -1,0 +1,79 @@
+@import '../../styles/variables.scss';
+side-block {
+  section {
+     padding: 30px 0;
+     @media screen and (max-device-width: $screen-mobile-max) {
+      padding: 50px 0;
+      padding-bottom: 120px;
+     }
+    .active {
+      background-color: rgba(195, 197, 201, 0.3);
+      .material-icons {
+        opacity: 0.5;
+      }
+    }
+    .clickable {
+      cursor: pointer;
+      display: flex;
+      position: absolute;
+      transition: 0.5s;
+      // should match with padding on section
+      top: 30px;
+      &.left {
+        left: 0;
+      }
+      &.right {
+        right: 0;
+      }
+      .material-icons {
+        cursor: pointer;
+        font-size: 5rem;
+        margin: auto;
+        @media screen and (max-device-width: $screen-mobile-max) {
+          font-size: 10rem;
+        }
+      }
+    }
+    .scroll-section {
+        overflow-x: scroll;
+        text-align: center;
+      .row {
+        .element {
+          transition: 1s;
+          margin: 0 5px;
+          display: inline-block;
+          border-radius: 5px;
+         box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+         &.disabled-img {
+            box-shadow: none;
+         }
+          .img-bg {
+            width: 200px;
+            height: 150px;
+            border-radius: 5px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            &.cover-disable {
+              background: rgba(224, 224, 224, 0.6);
+              transition: display 1s;
+            }
+          }
+          @media screen and (max-device-width: $screen-mobile-max) {
+            border-radius: 10px;
+            .img-bg {
+              border-radius: 10px;
+              width: 350px;
+              height: 350px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+.disabled-img {
+  filter: grayscale(100%) blur(1px);
+}

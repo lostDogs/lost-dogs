@@ -1,0 +1,85 @@
+@import '../../../common/styles/variables.scss';
+pic-details {
+  .col {
+    margin-top: 20px;
+    margin-bottom: 40px;
+     @media screen and (max-device-width: $screen-mobile-max) { 
+      margin-top: 40px;
+      margin-bottom: 120px;
+     }
+  }
+  textarea#textarea1 {
+    border: none;
+    padding: 0;
+    box-sizing: inherit;
+    margin: 0;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      font-size: 2.5rem;
+    }  
+    &:focus:not([readonly]) {
+      box-shadow: none;
+    }
+  }
+  .money  {
+    width: 100%;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      text-align: center;
+      h2 {
+        font-size: 3.5rem;
+      }
+    }
+    * {
+      vertical-align: middle;
+      display: inline-block;
+    }
+    input {
+      width: 60%;
+      margin-bottom: 0px;
+      border: none; 
+      font-size: 3.5rem;
+      height: 4rem;
+      text-align: right;
+    }
+    input[type]:focus:not([readonly])  {
+      border: none;
+      box-shadow: none;
+    }
+  }
+  .ext-cont {
+    padding: 10px;
+    .size {
+      width: 100%;
+      height: 250px;
+      @media screen and (max-device-width: $screen-mobile-max) { 
+        height: 350px;
+      }
+    }
+    .description {
+      text-align: center;
+      width: 100%;
+      @media screen and (max-device-width: $screen-mobile-max) { 
+        font-size: 3rem;
+        h2 {
+          font-size: 3rem;
+        }
+      }
+      &.abs {
+        position: absolute;
+        opacity: 0.8;
+        @media screen and (max-device-width: $screen-mobile-max) { 
+          padding: 20px;
+        }
+      }
+      i {
+        display: block
+      }
+    }
+    #dog-pic {
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      border-radius: 10px;
+    }
+    
+  }
+}

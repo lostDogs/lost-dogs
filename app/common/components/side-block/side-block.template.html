@@ -1,0 +1,17 @@
+<section>
+  <div class="clickable left"[ngStyle]="{'height': scrolling.nativeElement.clientHeight + 'px'}" (click)="goLeft()" [ngClass]="{'active': pressedLeft}" *ngIf="showArrows && scrolling.nativeElement.scrollLeft">
+    <i class="material-icons">navigate_before</i>
+  </div>
+  <div class="scroll-section" (scroll)="onScroll($event)" #ScollSection>
+    <div class="row" id="rowSide" *ngFor="let rowSide of arrayOfArrays;let i= index" [ngStyle]="{'width': rowWidth}">
+        <div  *ngFor="let element of rowSide;let j= index" class="tooltipped element"  data-position="top" id="{{element.key}}" #block (click)="blockSelected(i,j)"  [ngClass]="{'disabled-img': element.disabled}">
+        <div class="img-bg" [ngStyle]="{'background-image': 'url(' + element.imgUrl + ')' }">
+          <div class="img-bg cover-disable" [hidden]="!element.disabled"></div>
+        </div>
+        </div>
+    </div>
+  </div>
+  <div class="clickable right"[ngStyle]="{'height': scrolling.nativeElement.clientHeight + 'px'}" (click)="goRight()" [ngClass]="{'active': pressedRight}" *ngIf="showArrows && scrolling.nativeElement.scrollLeft!==maxScrollLeft ">
+    <i class="material-icons">navigate_next</i>
+  </div>
+</section>

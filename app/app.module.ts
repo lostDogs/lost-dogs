@@ -11,11 +11,14 @@ import { FormsModule }  from '@angular/forms';
 import {ApiService} from './common/services/api.service';
 import {UserService} from './common/services/user.service';
 import {DogCardService} from './common/services/dog-card.service';
+import {LostFoundService} from './common/services/lost-found.service';
 import {GlobalError} from './common/components/gobal-error/global-error.component';
 import {DogCardComponent} from './common/components/dog-card/dog-card.component';
 import {TextScrollComponent} from './common/components/text-scroll/text-scroll.component';
 import {DatePickerComponent} from './common/components/date-picker/date-picker.component';
 import {MapComponent} from './common/components/map/map.component';
+import {SideBlockComponent} from './common/components/side-block/side-block.component';
+import {CookieManagerService} from './common/services/cookie-manager.service';
 
 @NgModule({
   imports: [BrowserModule, AppRouterModule, FormsModule, HttpModule],
@@ -27,14 +30,17 @@ import {MapComponent} from './common/components/map/map.component';
   GlobalError, DogCardComponent,
   TextScrollComponent,
   DatePickerComponent,
-  MapComponent
+  MapComponent,
+  SideBlockComponent
   ],
   providers: [
     {provide: GlobalFunctionService, useClass: GlobalFunctionService},
     {provide: ValidationService, useClass: ValidationService},
     {provide: ApiService, useClass: ApiService},
     {provide: UserService, useClass: UserService},
-    {provide: DogCardService, useClass: DogCardService}
+    {provide: DogCardService, useClass: DogCardService},
+    {provide: LostFoundService, useClass: LostFoundService},
+    {provide: CookieManagerService, useClass: CookieManagerService}
   ],
   bootstrap: [appComponent]
 })

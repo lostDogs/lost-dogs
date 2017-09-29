@@ -1,0 +1,67 @@
+<section class="page">
+  <div class="row title-question"  [ngClass]="{'blur-filter': dogCardService.open}">
+    <h5 class="col l4  s4" *ngIf="lostService.question2">{{lostService.question2}}</h5>
+    <h5 class="col l4 push-l4 s12" [ngClass]="{'push-l4 s12': !(lostService.question2&&lostService.question3), 's4': (lostService.question2&&lostService.question3)}">{{lostService.question}}</h5>
+    <h5 class="col l4  s4" *ngIf="lostService.question3">{{lostService.question3}}</h5>
+    <div class="input-field col l2  s4 push-s4 push-l3" [hidden]="!(lostService.inputField && lostService.inputField.type==='date')">
+          <input type="text" name="question" id="question" [(ngModel)]="lostService.answer" (focus)="lostService.answer=undefined">
+          <!-- <label for="question">{{inputField.label}}</label> -->
+    </div>
+    <form #addressSearch="ngForm" (ngSubmit)="lostService.locationAdressInput=lostService.address" [hidden]="!(lostService.inputField && lostService.inputField.type==='address')">
+      <div class="input-field col l3  s10 push-s1 push-l3">
+            <input type="text" name="addresss" id="address" [(ngModel)]="lostService.address" (focus)="onFocusAddres()">
+            <i class="material-icons right" (click)="lostService.locationAdressInput=lostService.address">search</i>
+            <!-- <label for="question">{{inputField.label}}</label> -->
+      </div> 
+    </form>
+    <div class="input-field col l2  s10 push-l3 push-s1 img-output" *ngIf="lostService.inputField && lostService.inputField.type==='image'">
+      <div style="height: 45px;"></div>
+        <div title="caracteristicas selecionada" class="img-block left-centered" data-position="top" id="{{lostService.imgAnswer.key}}" *ngIf="lostService.imgAnswer && lostService.imgAnswer.disabled">
+          <div title="cerrar" class="close-icon" (click)="imgBlockRemove()">
+            <i class="tiny material-icons">close</i>
+          </div>
+          <p>{{lostService.imgAnswer.name}}</p>
+        </div>
+    </div>
+    <div class="input-field col l3  s10 push-s1 push-l3 img-output" *ngIf="lostService.inputField && lostService.inputField.type==='multiple'">
+      <div style="height: 45px;"></div>
+      <div *ngFor="let block of lostService.multipleImgAnswers;let i= index" class="multiple"  title="caracteristicas selecionadas">
+        <div class="img-block" data-position="top" id="{{block.key}}"  *ngIf="block.disabled">
+          <div title="cerrar" class="close-icon" (click)="multipleBlockRemove(i)">
+            <i class="tiny material-icons">close</i>
+          </div>
+          <p>{{block.name}}</p>
+        </div>
+    </div>        
+      </div>
+  </div>
+  <div class="progress-bar col l12 s12 m12" #Progress  [ngClass]="{'blur-filter': dogCardService.open}">
+    <div class="progression" [ngStyle]="{'width':  progress*fullWidth + 'px' }" [ngClass]="{'completed': progress === 1}">
+      <p class="progress-number"  [ngClass]="{'progress-full': progress === 1}" *ngIf="progress">{{progress * 100 | number:'2.0-0'}}%</p>
+    </div>
+  </div>
+  <div class="component-container" [ngClass]="{'blur-filter': dogCardService.open}">
+    <router-outlet></router-outlet>
+    <div class="buttons row" *ngIf="lostService.pagePosition !== lostService.sequence.length - 1">
+      <button class="waves-effect btn warning" (click)="lostService.back()" [ngClass]="{'disappear': lostService.pagePosition === 0 || lostService.inReviewPage}">Atras <i class="material-icons left">chevron_left</i></button>
+      <button class="waves-effect btn info" (click)="lostService.setAnwer()"  [disabled]="!lostService.getGeneralAnswer()">responder <i class="material-icons right">send</i></button>
+      <button class="waves-effect btn action" *ngIf="!lostService.inReviewPage" (click)="lostService.next()"  [disabled]="!lostService.pageAnswers[lostService.pagePosition] && lostService.inputField && lostService.inputField.type!=='multiple'">Siguiente <i class="material-icons right">chevron_right</i></button>
+      <button class="waves-effect btn action" *ngIf="lostService.inReviewPage" (click)="lostService.goToReview()">A revision <i class="material-icons right">chevron_right</i></button>
+    </div>
+  </div>
+  <div class="row results" *ngIf="lostService.pagePosition !== lostService.sequence.length - 1">
+    <div *ngIf="dogCardService.open" class="block-back col l12"></div>
+    <dog-card *ngFor="let card of dogCards;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt"></dog-card>
+  </div>
+  <div class="row intro" *ngIf="displayIntro">
+    <div class="lost col l12 s12 m12" *ngIf="lostService.parentPage==='lost'">
+      <h3>No te preocupes, lo vamos econtrar<i class="medium material-icons">sentiment_very_satisfied</i></h3>
+      <h5>solo responde las siguentes {{lostService.displayedSequence.length}} preguntas</h5>
+    </div>
+    <div class="found col l12 s12 m12" *ngIf="lostService.parentPage==='found'">
+      <h3>Muchas gracias por ayudar a que encuentre a su dueno <i class="medium material-icons">sentiment_very_satisfied</i></h3>
+      <h5>solo responde las siguentes {{lostService.displayedSequence.length}} preguntas</h5>
+    </div>
+    <button class="waves-effect btn info" (click)="displayIntro=false; dogCardService.open=false; ">comenzar!<i class="medium material-icons left">thumb_up</i></button>
+  </div>
+</section>

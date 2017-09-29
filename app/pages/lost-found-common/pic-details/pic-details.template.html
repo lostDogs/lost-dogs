@@ -1,0 +1,33 @@
+<div class="row details">
+  <div class="col l4 s4 file-field">
+    <div class="ext-cont draw account-completed"  [ngClass]="{'action': LostService.dogPicture!==LostService.defaultDogPic}">
+      <div alt="image de perro" class="centered size" id="dog-pic" [ngStyle]="{'background-image': 'url(' + LostService.dogPicture + ')' }">
+        <div  class="description" *ngIf="LostService.dogPicture===LostService.defaultDogPic">
+          <i class="large material-icons">camera_alt</i>
+          <span>Agrega una foto</span>
+        </div>        
+      </div>
+      <input type="file"  name="image del perro" (change)="filePicChange($event)" >
+    </div>
+  </div>
+  <div class="col l4 s4">
+    <div class="ext-cont draw account-completed action" (mouseover)="setFocusOnMoney()" (mouseleave)="clearInput()">
+      <div class="size centered" title="recompoenza">
+        <div class="money">
+          <h2>$</h2>
+          <input id="money-input" type="text" name="recompoenza"  [(ngModel)]="LostService.reward" size="10">
+          <h2>MXN</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col l4 s4">
+    <div class="ext-cont draw account-completed"  [ngClass]="{'action': true}" (mouseover)="setFocusOnComments()" (mouseleave)="clearComments=false">
+      <div class="description abs" *ngIf="!clearComments && !LostService.comments">
+        <h2>agrega un comentario <br> extra</h2>
+      </div> 
+      <textarea id="textarea1" class="materialize-textarea size" [(ngModel)]="LostService.comments">
+      </textarea>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+<div class="extras">
+<side-block (selectedEmitter)="changeElement($event)" [removedElement]="LostService.multipleImgAnswers" [elements]="elements" [numberOfRows]="1" [multiple]="true"></side-block>
+    <div class="input-field row" [hidden]="!LostService.openNameInput">
+          <h4 class="col l2  s4 push-s1 push-l3">Nombre: </h4><input class="col l2  s5 push-s1 push-l3" type="text" name="dog name" id="dog-name" [(ngModel)]="LostService.dogName">
+    </div>
+</div>
