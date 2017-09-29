@@ -18,6 +18,7 @@ export class lostComponent {
   public goBack: boolean;
   public fullWidth: number;
   public progress: number;
+  public displayIntro: boolean;
   @ViewChild('Progress')
   public progressDom: ElementRef;
 
@@ -60,9 +61,12 @@ export class lostComponent {
       this.router.navigate(['/home']);
     }*/
     this.lostService.resetService();
+    this.displayIntro = true;
+    this.dogCardService.open = true;
     this.lostService.parentPage = this.router.url.split('/')[1];
     this.lostService.inReviewPage = false;
     this.fullWidth = this.progressDom.nativeElement.clientWidth;
+    // sequence could change according to the action Lost/ Found.
     if (this.lostService.parentPage === 'lost') {
       this.lostService.sequence = ['date', 'location', 'breed', 'gender', 'size', 'color', 'extras', 'details','review'];
       //not review in array. details = Accessorios
@@ -72,7 +76,8 @@ export class lostComponent {
         //not review in array. details = Accessorios
         this.lostService.displayedSequence = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Accessorios'];
     }
-    this.lostService.sequence.forEach((value: any, index: number) => {
+
+    this.lostService.displayedSequence.forEach((value: any, index: number) => {
       this.lostService.pageAnswers.push(undefined);
     });
   }
@@ -93,7 +98,6 @@ export class lostComponent {
   }
 
   public imgBlockRemove(): void {
-    //$('.tooltipped').tooltip('remove');
     // making angular copy in order for the ngChange to detecte it;
     this.lostService.imgAnswer = JSON.parse(JSON.stringify(this.lostService.imgAnswer));
     this.lostService.imgAnswer.disabled = false;

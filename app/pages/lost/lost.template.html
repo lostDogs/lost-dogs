@@ -53,4 +53,15 @@
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
     <dog-card *ngFor="let card of dogCards;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt"></dog-card>
   </div>
+  <div class="row intro" *ngIf="displayIntro">
+    <div class="lost col l12 s12 m12" *ngIf="lostService.parentPage==='lost'">
+      <h3>No te preocupes, lo vamos econtrar<i class="medium material-icons">sentiment_very_satisfied</i></h3>
+      <h5>solo responde las siguentes {{lostService.displayedSequence.length}} preguntas</h5>
+    </div>
+    <div class="found col l12 s12 m12" *ngIf="lostService.parentPage==='found'">
+      <h3>Muchas gracias por ayudar a que encuentre a su dueno <i class="medium material-icons">sentiment_very_satisfied</i></h3>
+      <h5>solo responde las siguentes {{lostService.displayedSequence.length}} preguntas</h5>      
+    </div>
+    <button class="waves-effect btn info" (click)="displayIntro=false; dogCardService.open=false; ">comenzar!<i class="medium material-icons left">thumb_up</i></button>
+  </div>
 </section>
