@@ -31,5 +31,9 @@
         <a class="secondary-content" (click)="LostService.goTo(LostService.sequence.length-2)">Editar</a>
       </li>      
     </ul>    
+    <button class="waves-effect btn action submit">
+      <div  *ngIf="LostService.parentPage==='lost'">Si, es mi perro<i class="material-icons right">send</i></div>
+      <div *ngIf="LostService.parentPage==='found'">Si,  es el perro<i class="material-icons right">send</i></div>
+    </button>
   </div>
 </div>

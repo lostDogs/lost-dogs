@@ -31,6 +31,7 @@ export class lostComponent {
     // route change detection
     this.router.events.subscribe(data => {
       if (data instanceof NavigationEnd) {
+         window.scroll(0,0);
         const urlChildLoction = data.url.split('/')[2];
         const Indexlocation = this.lostService.sequence.indexOf(urlChildLoction);
         this.lostService.pagePosition = Indexlocation !== -1 ? Indexlocation : 0;
@@ -64,7 +65,6 @@ export class lostComponent {
     this.displayIntro = true;
     this.dogCardService.open = true;
     this.lostService.parentPage = this.router.url.split('/')[1];
-    this.lostService.inReviewPage = false;
     this.fullWidth = this.progressDom.nativeElement.clientWidth;
     // sequence could change according to the action Lost/ Found.
     if (this.lostService.parentPage === 'lost') {

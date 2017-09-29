@@ -18,6 +18,7 @@ export class ReviewComponent {
     this.LostService.question = 'Revisa los datos!';
     this.LostService.imgAnswer = undefined;
     this.LostService.answer = undefined;
+    this.LostService.inputField = undefined;
   }
 
   public ngOnInit(): void {
