@@ -1,6 +1,6 @@
 <content class="login-page">
   <div class="main-title row">
-    <h4>Inicia sesion</h4>
+    <h4>Inicia sesión</h4>
   </div>
   <form class="create-account" name="page-login" #loginPage="ngForm" (ngSubmit)="userService.login(userName, password)" novalidate>
     <div class="row login-fields">
@@ -14,8 +14,8 @@
       </div>
     </div>
     <div class="row centered row-extraspace">
-      <button class="btn waves-effect col l4 s8 action" type="submit"  [disabled]="userService.loading">
-        <div *ngIf="!userService.loading">login <i class="material-icons right">send</i></div>
+      <button class="btn waves-effect col l2 s8 action" type="submit"  [disabled]="userService.loading">
+        <div *ngIf="!userService.loading">Iniciar sesión <i class="material-icons right">send</i></div>
         <div *ngIf="userService.loading">Cargando ...</div>
       </button>
     </div>
