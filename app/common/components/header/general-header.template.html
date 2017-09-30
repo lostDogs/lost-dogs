@@ -45,9 +45,9 @@
       <li><a href="javascript:void(0)" class="waves-effect" *ngIf="userService.isAuth" (click)="userService.logout()"><i class="material-icons left">reply</i>Cerrar sesión</a></li>
       <li><div class="divider"></div></li>
       <li><a class="subheader" *ngIf="userService.isAuth">mas acciones</a></li>
-      <li><a routerLink="" class="waves-effect" *ngIf="userService.isAuth"><i class="material-icons left">security</i>Perdi un perro</a></li>
-      <li><a routerLink="" class="waves-effect" *ngIf="userService.isAuth"><i class="material-icons left">search</i>Encontre un perro</a></li>
-      <li><a routerLink="" class="waves-effect"><i class="material-icons left">style</i>Catalogo</a></li>
+      <li><a routerLink="lost" class="waves-effect" *ngIf="userService.isAuth"><i class="material-icons left">security</i>Perdi un perro</a></li>
+      <li><a routerLink="found" class="waves-effect" *ngIf="userService.isAuth"><i class="material-icons left">search</i>Encontre un perro</a></li>
+      <li><a routerLink="board" class="waves-effect"><i class="material-icons left">style</i>Catalogo</a></li>
       <li><div class="divider"></div></li>
    </ul>
 </header>

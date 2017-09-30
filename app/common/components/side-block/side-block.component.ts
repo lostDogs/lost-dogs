@@ -81,19 +81,16 @@ public multipleElements: Ielement[];
   }
 
   public ngAfterViewInit(): void {
+
     for ( let i = 0; i < this.elements.length; ++i) {
       $('#data-' + i).attr('data-tooltip', this.elements[i].name);
     } 
-    $('.tooltipped').tooltip({delay: 50});
+    if (!this.mobile) {
+      $('.tooltipped').tooltip({delay: 50});
+    }
     $('.sideblock').nodoubletapzoom();
     const scrollLeft: any = this.scrolling.nativeElement;
     this.maxScrollLeft = scrollLeft.scrollWidth - scrollLeft.clientWidth;
-    //TODO: revomove if doesnt work on mobile.
-    if (this.mobile) {
-      $('.element').click(() => {
-         $('.element').dblclick();
-      });
-    }
   }
 
   public goLeft():void {

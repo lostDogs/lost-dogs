@@ -11,12 +11,20 @@ map {
         width: 250px;
         height: 187px;
       }
+      @media screen and (max-device-width: $screen-mobile-max) { 
+        padding-top: 75px;
+        padding-bottom: 120px;
+        img {
+          width: 500px;
+          height: 374px;
+        }
+      }
     }
   }
   #map {
     height: 400px;
     @media screen and (max-device-width: $screen-mobile-max) {
-      height: 810px;
+      height: 820px;
     }
   }
   .range {
