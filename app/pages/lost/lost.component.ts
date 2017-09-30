@@ -3,6 +3,8 @@ import {DogCardService} from '../../common/services/dog-card.service';
 import {LostFoundService} from '../../common/services/lost-found.service';
 import {Router, NavigationEnd} from '@angular/router';
 import {UserService} from  '../../common/services/user.service';
+import {GlobalFunctionService} from '../../common/services/global-function.service';
+
 
 require('../../common/plugins/masks.js');
 require('../../common/plugins/nodoubletapzoom.js');
@@ -22,7 +24,7 @@ export class lostComponent {
   @ViewChild('Progress')
   public progressDom: ElementRef;
 
-  constructor (public dogCardService: DogCardService, public lostService: LostFoundService, public router: Router, public userService: UserService, public domEl: ElementRef) {
+  constructor (public dogCardService: DogCardService, public lostService: LostFoundService, public router: Router, public userService: UserService, public domEl: ElementRef, public globalService: GlobalFunctionService) {
     this.dogCards = [];
     this.progress = 0;
     for (let i = 0; i < 13; ++i) {
@@ -58,9 +60,12 @@ export class lostComponent {
     });
   }
   public ngOnInit(): void {
-/*    if (!this.userService.isAuth) {
+    if (!this.userService.isAuth) {
+      this.globalService.clearErroMessages();
+      this.globalService.setErrorMEssage('Necesitas iniciar sesión');
+      this.globalService.openErrorModal();
       this.router.navigate(['/home']);
-    }*/
+    }
     this.lostService.resetService();
     this.displayIntro = true;
     this.dogCardService.open = true;

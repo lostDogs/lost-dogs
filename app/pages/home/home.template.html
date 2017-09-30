@@ -1,12 +1,13 @@
 <main id="home-dogs" [ngClass]="{'blur-new-user': newUser}" >
   <div class="row logo-huge" [ngStyle]="{'height': getWindowHeight()}">
     <img src="static/logo-huge.png" alt="Lost Dog Logo" [ngStyle]="{'opacity': scrollnormalize}" *ngIf="!newUser" class="blur-appear">
+    <div class="scroll-botttom centered" [ngStyle]="{'opacity': scrollnormalize - 0.2}" *ngIf="scrolldownDisplay"><i class="medium material-icons">play_arrow</i></div>
   </div>
-  <div  class="row home-description">
+  <div  class="row home-description" #Description>
+    <div class="title col l12 m12 s12"><h4>¡ Bienvenido a la comunidad Pet Lover más grande de todo Latino América !</h4></div>
     <article class="col l5 m12 s12">
-      <h4>Despreocupate!</h4>
-      <p>Ya no te vuelvas a preocupar si se perdio tu perro. Lost Dog es plataforma que genera comunidad entre duenios de perros y gente que los ha econtrado.</p>
-      <p> Asi que si perdiste a tu perro de seguro hay una persona que ya lo encontro. Manten la calma y sigue los siguentes passos </p>
+      <p>Lost Dog es una plataforma web donde puedes publicar mascotas perdidas y encontradas de manera sencilla y con un alto nivel de exposición, aumentando tus probabilidades de encontrar a tu mascota o al dueño.</p>
+      <p> A su vez, somos una plataforma que fomenta la adopción y cuidado de los animales y proporcionamos herramientas para esto.</p>
     </article>
     <figure class="col l6 m12 s12">
       <img src="static/dogCard.png" alt="tarjeta de un perro perdido">
@@ -20,20 +21,26 @@
   <article class="row options" >
     <div class="col l3 m12 s12 option" id="sad-dogo">
     <div class="info">
-        <h5 class="row"> <b>Perdi</b> mi perro y lo quiero <b >econtrar</b>.</h5>
-        <a class="row waves-effect waves-light btn">BUSCAR</a>
+        <h5 class="row"> <b>Perdi</b> mi perro y lo quiero <b >econtrar</b>.</h5>          
+        <button class="row waves-effect waves-light btn" (click)="goTo('/lost')" [disabled]="!userService.isAuth">
+          <div *ngIf="!userService.isAuth">Inicia sesión</div>
+          <div *ngIf="userService.isAuth">BUSCAR</div>
+        </button>
     </div>
     </div>
     <div class="col l6 m12 s12 option" id="muchos-dogos">
     <div class="info">
       <h5 class="row">Me gustaria ver la lista de todos los perros perdidos y filtralos a mi gusto.</h5>
-      <a class="row waves-effect waves-light btn">VER LISTA</a> 
+      <button class="row waves-effect waves-light btn" (click)="goTo('/board')">VER CATALOGO</button>
     </div>
     </div>
     <div class="col l3 m12 s12 option" id="happy-dogos">
     <div class="info">
       <h5 class="row"><b>Encontre</b> un perro y lo quiero <b>reportar</b>.</h5>
-      <a class="row waves-effect waves-light btn">REPORTAR</a>
+      <button class="row waves-effect waves-light btn" (click)="goTo('/found')"  [disabled]="!userService.isAuth">      
+      <div *ngIf="!userService.isAuth">Inicia sesión </div>
+      <div *ngIf="userService.isAuth">REPORTAR</div>
+    </button>
     </div>
     </div>    
   </article>
@@ -46,21 +53,21 @@
       <div class="circular">
         <img  class="motivation-icon" src="static/moneyMotivation.png" alt="motiva con dinero">
       </div>
-      <p>Buscar tu Perro no tiene ningun costo. Pero si lo encontramos  te haremos un pequenio cobro</p>
+      <p>Buscar a tu perro no tiene ningún costo, sin embargo, es bien visto otorgar una recompensa significativa a la persona que tuvo el tiempo y la disposición de rescatar a tu mascota, nosotros cobramos una pequeña comisión en dado caso que gustes hacer la aportación. </p>
     </article>
     <article class="col l4 m12 s12">
       <h4>Gana Dinero!</h4>
       <div class="circular">
         <img class="earn-money" src="static/earnMoney.png" alt="gana dinero">
       </div>
-      <p>puedes ganar dinero si alguien encuentra el perro que reportaste como perdido!</p>
+      <p>Obra bien y te ira bien, si encuentras una mascota y la rescatas, es muy probable que el dueño quiera recompensar económicamente tu tiempo y dedicación.</p>
     </article>
     <article class="col l4 m12 s12">
       <h4>Motiva la busqueda!</h4>
       <div class="circular">
         <img  class="motivation-icon" src="static/handsTeamWork.png" alt="motiva con dinero">
       </div>  
-      <p>puedes ganar dinero si alguien encuentra el perro que reportaste como perdido!</p>
+      <p>Se ha comprobado que existe 80% mayor probabilidad de que tu mascota regrese a casa si ofreces una recompensa económica por ella. Esta aportación nunca es obligatoria y no hay un monto fijo, puedes aportar lo que te parezca justo y propiciar una búsqueda y rescate más eficiente.</p>
     </article>
   </div> 
   <article class="row" style="margin:0">
