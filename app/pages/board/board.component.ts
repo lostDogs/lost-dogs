@@ -9,6 +9,7 @@ export interface Ifiltes {
     label?: string;
     typeOfAnswer?: string;
     width?: string;
+    asnwerExtraWidth?: number;
   }
 }
 
@@ -60,24 +61,34 @@ export class boardComponent {
   }
 
   public ngDoCheck(): void {
+    this.reziseFiltersRow();
+  }
+
+  public reziseFiltersRow(): void {
     if (this.answersDom && this.answersDom.length) {
-       //console.log('answerdom', this.answersDom[0]);
-       let extraWidth: number = 0;
-       let index: number = 0;
-      this.answersDom.forEach((answerDom: ElementRef, answerIndex: number) => {
-         index = this.activeIndex ? this.activeIndex : answerIndex;
-         if (this.filterElements[this.filtersKey[index]].answer) {
-           this.filterElements[this.filtersKey[index]].width = 'auto';
-         }
-        if (answerDom.nativeElement.clientWidth > this.widthPerFilter) {
-          extraWidth = extraWidth + (answerDom.nativeElement.clientWidth - this.widthPerFilter);
-        } else {
-          this.filterElements[this.filtersKey[index]].width = this.widthPerFilter + 'px';
+      const LastAnswerDom: ElementRef = this.answersDom.last;
+      let id: string = LastAnswerDom.nativeElement.id;
+      let index = this.filtersKey.indexOf(id);
+      if (~index) {
+        if (this.filterElements[this.filtersKey[index]].answer) {
+          this.filterElements[this.filtersKey[index]].width = 'auto';
+          if (LastAnswerDom.nativeElement.clientWidth >= this.widthPerFilter) {
+             this.filterElements[this.filtersKey[index]].asnwerExtraWidth = (LastAnswerDom.nativeElement.clientWidth - this.widthPerFilter);
+          } else {
+            this.filterElements[this.filtersKey[index]].asnwerExtraWidth = 0;
+            this.filterElements[this.filtersKey[index]].width = this.widthPerFilter + 'px';
+          }
         }
-        //console.log('answerDom.clientWidth', answerDom.nativeElement.clientWidth);
+      }
+      // setting the general fitlers row witdth
+      let widthTemp: number =  0;
+      this.filtersKey.forEach((elementKey: string, elementIndex: number) => {
+        if (this.filterElements[elementKey].asnwerExtraWidth) {
+          widthTemp += this.filterElements[elementKey].asnwerExtraWidth;
+        }
       });
-      this.extraWidth = extraWidth;
-    }
+      this.extraWidth = widthTemp;
+    }    
   }
 
   public enableComponent(componentName: string, activeIndex: number) {
@@ -97,6 +108,7 @@ export class boardComponent {
       this.initDateAnswer = true;
       this.filterElements[componentName].answer = this.tempDateAnswer;
     }
+    //this.reziseFiltersRow();
   }
 
   public selectionReciver(componentName: string, event: any): void {
@@ -112,6 +124,7 @@ export class boardComponent {
    this.filterElements[componentName].answer =  event;
    this.filterElements[componentName].typeOfAnswer = typeOfAnswer;
    this.resetDate = false;
+   //this.reziseFiltersRow();
   }
 
   public locationReciver(event: any) {
@@ -126,12 +139,15 @@ export class boardComponent {
       this.tempMapAnswer = this.location.latLng &&  this.location.address ? this.location : undefined;
     }
    this.filterElements.location.typeOfAnswer = 'location';
+   //this.reziseFiltersRow();
   }
 
 
   public imgBlockRemove(componentName: string): void {
     this.filterElements[componentName].answer = undefined;
     this.resetDate = !this.filterElements.date.answer;
+    this.filterElements[componentName].asnwerExtraWidth = 0;
+    this.filterElements[componentName].width = this.widthPerFilter + 'px';
   }
 
   public multipleBlockRemove(componentName: string, index: number) {
