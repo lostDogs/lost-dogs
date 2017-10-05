@@ -177,7 +177,6 @@ export class CustomMarker extends google.maps.OverlayView {
       div.style.width = disTwoPoint + 'px';
       div.style.height = disTwoPoint + 'px';
     }
-    console.log('div', this.div);
   }
 
   public remove() {

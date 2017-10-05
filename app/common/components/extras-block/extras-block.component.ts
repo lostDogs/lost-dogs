@@ -30,7 +30,6 @@ export class ExtrasBlockComponent {
 
 
   public changeElement(event: any): void {
-        console.log('event', event);
     this.selectedEmitter.emit(event);
   }
 }

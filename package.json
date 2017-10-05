@@ -7,7 +7,7 @@
     "build": "webpack --progress",
     "build:prod": "webpack -p --progress",
     "start": "node server.js",
-    "serve": "webpack-dev-server --disable-host-check --inline --hot --host 0.0.0.0  --port 8080 --content-base ./public  --progress"
+    "serve": "webpack-dev-server --disable-host-check --inline --hot   --port 8080 --content-base ./public  --progress"
   },
   "dependencies": {
     "@angular/common": "^2.3.0",

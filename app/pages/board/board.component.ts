@@ -1,6 +1,7 @@
-import { Component, ViewChildren, QueryList, ElementRef} from '@angular/core';
+import { Component, ViewChildren, QueryList, ElementRef, ViewChild} from '@angular/core';
 import {DogCardService} from '../../common/services/dog-card.service';
 import {LostFoundService} from '../../common/services/lost-found.service';
+import { AsyncPipe } from '@angular/common';
 
 export interface Ifiltes {
   [componentName: string]: {
@@ -29,8 +30,11 @@ export class boardComponent {
   public window: Window;
   public initMap: boolean;
   public screenWidth: number;
-  //location.reload();
-  @ViewChildren('AnswerBlock') 
+  @ViewChild('Location')
+  public LocationDom: ElementRef;
+  @ViewChild('Components')
+  public ComponentsDom: ElementRef;
+  @ViewChildren('AnswerBlock')
   public answersDom: QueryList<any>;
   public widthPerFilter: number;
   public extraWidth: number = 0;
@@ -65,7 +69,7 @@ export class boardComponent {
   }
 
   public reziseFiltersRow(): void {
-    if (this.answersDom && this.answersDom.length) {
+    if ((this.answersDom && this.answersDom.length) || this.LocationDom) {
       const LastAnswerDom: ElementRef = this.answersDom.last;
       let id: string = LastAnswerDom.nativeElement.id;
       let index = this.filtersKey.indexOf(id);
@@ -80,6 +84,14 @@ export class boardComponent {
           }
         }
       }
+      /*
+      * for some reason the locaton answer dom is not being detected in the QueryList nor Jquery so I have added a #Location to target it. It could be due to the ngFor and async data problems. 
+      * There for I am dding the followings lines of code to force the change of the width only on the location element
+      */
+      if (this.LocationDom && this.answersDom.last.nativeElement.id !== 'location') {
+         this.filterElements.location.width = 'auto';
+         this.filterElements.location.asnwerExtraWidth = this.LocationDom.nativeElement.clientWidth - this.widthPerFilter;
+      }
       // setting the general fitlers row witdth
       let widthTemp: number =  0;
       this.filtersKey.forEach((elementKey: string, elementIndex: number) => {
@@ -88,7 +100,7 @@ export class boardComponent {
         }
       });
       this.extraWidth = widthTemp;
-    }    
+    }
   }
 
   public enableComponent(componentName: string, activeIndex: number) {
@@ -113,6 +125,7 @@ export class boardComponent {
 
   public selectionReciver(componentName: string, event: any): void {
    let typeOfAnswer: string;
+   event = JSON.parse(JSON.stringify(event));
    if (event.name) {
      typeOfAnswer = 'image';
    } else if (!Array.isArray(event)) {
@@ -120,11 +133,9 @@ export class boardComponent {
      this.tempDateAnswer = event;
      event = this.initDateAnswer ? event : undefined;
    }
-   // event = typeof event === 'object' ? JSON.parse(JSON.stringify(event)) : event
    this.filterElements[componentName].answer =  event;
    this.filterElements[componentName].typeOfAnswer = typeOfAnswer;
    this.resetDate = false;
-   //this.reziseFiltersRow();
   }
 
   public locationReciver(event: any) {
@@ -139,7 +150,6 @@ export class boardComponent {
       this.tempMapAnswer = this.location.latLng &&  this.location.address ? this.location : undefined;
     }
    this.filterElements.location.typeOfAnswer = 'location';
-   //this.reziseFiltersRow();
   }
 
 
@@ -154,5 +164,12 @@ export class boardComponent {
     let disabledAmount: number = 0;
     this.filterElements[componentName].answer.splice(index, 1);
     this.filterElements[componentName].answer = JSON.parse(JSON.stringify(this.filterElements[componentName].answer));
+    if (!this.filterElements[componentName].answer.length) {
+      this.filterElements[componentName].asnwerExtraWidth = 0;
+      this.filterElements[componentName].width = this.widthPerFilter + 'px';
+      setTimeout(() => {
+        this.filterElements[componentName].answer = undefined;
+      }, 5);
+    }
   }
 };

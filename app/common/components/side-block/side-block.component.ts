@@ -122,9 +122,7 @@ public multipleElements: Ielement[];
       this.elements[ this.previousSelected].disabled = false;
     }
     // this variable adds the class of disable in an img.
-    console.log('before', this.elements[indexed].disabled)
     this.elements[indexed].disabled = !this.elements[indexed].disabled;
-    console.log('after', this.elements[indexed].disabled);
     if (!this.multiple) {
     this.selectedEmitter.emit(this.elements[indexed]);
     this.previousSelected = indexed;

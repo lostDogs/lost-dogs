@@ -7,7 +7,7 @@
           <div title="cerrar" class="close-icon" (click)="imgBlockRemove(filter)">
             <i class="tiny material-icons">close</i>
           </div>
-          <p *ngIf="filterElements[filter].typeOfAnswer==='location'" class="answer-text">{{filterElements[filter].answer.address}}</p>
+          <p *ngIf="filterElements[filter].typeOfAnswer==='location'" #Location class="answer-text">{{filterElements[filter].answer.address}}</p>
           <p *ngIf="filterElements[filter].typeOfAnswer==='date'" class="answer-text">{{filterElements[filter].answer}}</p>
           <p *ngIf="filterElements[filter].typeOfAnswer==='image'" class="answer-text">{{filterElements[filter].answer.name}}</p>
         </div>
@@ -22,7 +22,7 @@
     </div>
     </section>
   </div>
-  <section class="row component-filter" >
+  <section class="row component-filter" #Components [ngStyle]="{'border-bottom': !ComponentsDom.nativeElement.clientHeight ? 'none' : '6px solid white'}">
     <gender-block (selectedEmitter)="selectionReciver('gender', $event)" [removedElement]="filterElements.gender.answer" [hidden]="!filterElements.gender.enable"></gender-block>
     <breed-block (selectedEmitter)="selectionReciver('breed', $event)" [removedElement]="filterElements.breed.answer" [hidden]="!filterElements.breed.enable"></breed-block>
     <size-block (selectedEmitter)="selectionReciver('size', $event)" [removedElement]="filterElements.size.answer" [hidden]="!filterElements.size.enable"></size-block>
