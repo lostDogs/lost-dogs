@@ -7,7 +7,6 @@ export class CookieManagerService {
     if(value instanceof Object) {
       value = JSON.stringify(value);
     }
-    console.log('JSON value', value);
     window.document.cookie =  name + '=' + value + '; path=/';
   }
 
@@ -22,12 +21,10 @@ export class CookieManagerService {
     const sMatch = (' ' + document.cookie).match(regex);
     if (name && sMatch)  {
       try {
-        console.log('smatch', sMatch);
         const input = sMatch.input.split('=')[1];
-        console.log('unput', input);
        return JSON.parse(input);
       } catch (e) {
-        console.log('error in json parser in get cookie', e);
+        console.error('error in json parser in get cookie', e);
       }
     }
     return null;

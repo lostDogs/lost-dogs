@@ -2,6 +2,7 @@
 side-block {
   section {
      padding: 30px 0;
+     position: relative;
      @media screen and (max-device-width: $screen-mobile-max) {
       padding: 50px 0;
       padding-bottom: 130px;
@@ -17,6 +18,7 @@ side-block {
       display: flex;
       position: absolute;
       transition: 0.5s;
+      color: white;
       // should match with padding on section
       top: 30px;
       &.left {

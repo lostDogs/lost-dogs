@@ -6,13 +6,12 @@ import {LostFoundService} from '../../../common/services/lost-found.service';
   styles: [ require('./gender.scss')]
 })
 
-export class GenderComponent { 
-  public elements: any[];
+export class GenderComponent {
+
   constructor(public LostService: LostFoundService) {
     this.LostService.question2 = undefined;
     this.LostService.question3 = undefined;
     this.LostService.optional = false;
-    this.setElement();
   }
   
   public ngOnInit(): void {
@@ -22,19 +21,11 @@ export class GenderComponent {
     this.LostService.retrieveData = this.fillData;
   }
 
-   public fillData(pageAnswer: any, lostService: any): void {
+  public fillData(pageAnswer: any, lostService: any): void {
     if (pageAnswer) {
       lostService.imgAnswer = pageAnswer;
     }
-  }  
-
-  public setElement() {
-  this.elements = [
-  {imgUrl:'http://cdn.lostdog.mx/assets/img/male-icon1.png', name: 'macho'},
-  {imgUrl:'http://cdn.lostdog.mx/assets/img/female-icon1.png', name: 'hembra'}
-  ];
   }
-
 
   public changeElement(event: any): void {
     this.LostService.imgAnswer = event;

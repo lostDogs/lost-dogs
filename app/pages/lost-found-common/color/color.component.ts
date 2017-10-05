@@ -7,9 +7,7 @@ import {LostFoundService} from '../../../common/services/lost-found.service';
 })
 
 export class ColorComponent { 
-  public elements: any[];
   constructor(public LostService: LostFoundService) {
-    this.setElement();
     this.LostService.question2 = undefined;
     this.LostService.question3 = undefined;
     this.LostService.optional = false;
@@ -27,33 +25,6 @@ export class ColorComponent {
       lostService.imgAnswer = pageAnswer;
     }
   }  
-
-  public setElement() {
-  this.elements = [
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color1.jpg', name: 'cafe claro con blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color2.jpg', name: 'negro con blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color3.jpg', name: 'blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color1.jpg', name: 'cafe claro con blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color2.jpg', name: 'negro con blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color3.jpg', name: 'blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color1.jpg', name: 'cafe claro con blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color2.jpg', name: 'negro con blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color3.jpg', name: 'blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color1.jpg', name: 'cafe claro con blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color2.jpg', name: 'negro con blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color3.jpg', name: 'blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color1.jpg', name: 'cafe claro con blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color2.jpg', name: 'negro con blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color3.jpg', name: 'blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color1.jpg', name: 'cafe claro con blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color2.jpg', name: 'negro con blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color3.jpg', name: 'blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color1.jpg', name: 'cafe claro con blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color2.jpg', name: 'negro con blanco'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/temp-color3.jpg', name: 'blanco'}
-  ];
-  }
-
 
   public changeElement(event: any): void {
     this.LostService.imgAnswer = event;

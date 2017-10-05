@@ -13,12 +13,17 @@ import {UserService} from './common/services/user.service';
 import {DogCardService} from './common/services/dog-card.service';
 import {LostFoundService} from './common/services/lost-found.service';
 import {GlobalError} from './common/components/gobal-error/global-error.component';
+import {CookieManagerService} from './common/services/cookie-manager.service';
 import {DogCardComponent} from './common/components/dog-card/dog-card.component';
 import {TextScrollComponent} from './common/components/text-scroll/text-scroll.component';
 import {DatePickerComponent} from './common/components/date-picker/date-picker.component';
 import {MapComponent} from './common/components/map/map.component';
 import {SideBlockComponent} from './common/components/side-block/side-block.component';
-import {CookieManagerService} from './common/services/cookie-manager.service';
+import {GenderBlockComponent} from './common/components/gender-block/gender-block.component';
+import {BreedBlockComponent} from './common/components/breed-block/breed-block.component';
+import {SizeBlockComponent} from './common/components/size-block/size-block.component';
+import {ColorBlockComponent} from './common/components/color-block/color-block.component';
+import {ExtrasBlockComponent} from './common/components/extras-block/extras-block.component';
 
 @NgModule({
   imports: [BrowserModule, AppRouterModule, FormsModule, HttpModule],
@@ -31,7 +36,12 @@ import {CookieManagerService} from './common/services/cookie-manager.service';
   TextScrollComponent,
   DatePickerComponent,
   MapComponent,
-  SideBlockComponent
+  SideBlockComponent,
+  GenderBlockComponent,
+  BreedBlockComponent,
+  SizeBlockComponent,
+  ColorBlockComponent,
+  ExtrasBlockComponent
   ],
   providers: [
     {provide: GlobalFunctionService, useClass: GlobalFunctionService},

@@ -19,7 +19,9 @@ export class LostFoundService {
   public rechangeDate: string;
   public imgAnswer: Ielement;
   public sequence: string[];
-  public displayedSequence: string[]
+  public defualtSequence: string[] = ['date', 'location', 'breed', 'gender', 'size', 'color', 'extras', 'details','review'];
+  public displayedSequence: string[];
+  public defaultDisplayedSequence: string[] = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Accessorios'];
   public pageAnswers: any[];
   public pagePosition: number;
   public multipleImgAnswers: Ielement[];
@@ -120,8 +122,6 @@ export class LostFoundService {
      this.answer = undefined;
      this.rechangeDate = undefined;
      this.imgAnswer = undefined;
-     this.sequence = undefined;
-     this.displayedSequence = undefined;
      this.pageAnswers = [];
      this.pagePosition = undefined;
      this.multipleImgAnswers = undefined;
