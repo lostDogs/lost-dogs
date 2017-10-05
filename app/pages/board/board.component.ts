@@ -86,7 +86,7 @@ export class boardComponent {
       }
       /*
       * for some reason the locaton answer dom is not being detected in the QueryList nor Jquery so I have added a #Location to target it. It could be due to the ngFor and async data problems. 
-      * There for I am dding the followings lines of code to force the change of the width only on the location element
+      * Therefore I am dding the followings lines of code to force the change of the width only on the location element
       */
       if (this.LocationDom && this.answersDom.last.nativeElement.id !== 'location') {
          this.filterElements.location.width = 'auto';
@@ -132,7 +132,18 @@ export class boardComponent {
      typeOfAnswer = 'date';
      this.tempDateAnswer = event;
      event = this.initDateAnswer ? event : undefined;
+   }else if (Array.isArray(event)) {
+     let indexSplice: number;
+     event.forEach((el: any, elIndex: number) => {
+       console.log('el disable', el.disabled);
+       if (!el.disabled) {
+         // watch out you are modifing the array inside the loop.
+         event.splice(elIndex, 1);
+       }
+     });
+     event = !event.length ? undefined : event;
    }
+   console.log('event', event);
    this.filterElements[componentName].answer =  event;
    this.filterElements[componentName].typeOfAnswer = typeOfAnswer;
    this.resetDate = false;
