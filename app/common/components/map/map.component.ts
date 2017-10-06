@@ -132,7 +132,7 @@ export class CustomMarker extends google.maps.OverlayView {
   public latlng: google.maps.LatLng;
   public map: google.maps.Map;
   public div: any;
-  // distance in km wich is diamter
+  // distance in km wich is radius
   public distance: number = 0.5;
   public earthRadius: number = 6371;
 
@@ -173,12 +173,12 @@ export class CustomMarker extends google.maps.OverlayView {
 
     if(pointMin && pointMax) {
       const disTwoPoint = Math.sqrt(Math.pow(pointMax.x - pointMin.x, 2) + Math.pow(pointMax.y - pointMin.y, 2)) / 2;
-      div.style.top = (Math.abs(point.y) - disTwoPoint / 2) * (point.y / point.y) + 'px';
-      div.style.left = (Math.abs(point.x) - disTwoPoint / 2) * (point.x / point.x) + 'px';
+      div.style.top = (point.y - disTwoPoint / 2) * (point.y / point.y) + 'px';
+      div.style.left = (point.x - disTwoPoint / 2) * (point.x / point.x) + 'px';
       div.style.width = disTwoPoint + 'px';
       div.style.height = disTwoPoint + 'px';
     }
-    console.log('div', this.div);
+    //console.log('div', this.div);
   }
 
   public remove() {

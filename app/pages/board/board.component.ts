@@ -74,6 +74,10 @@ export class boardComponent {
 
   public ngOnInit(): void {
     $('#date-input').mask('0000/00/00');
+    $('body').click((event)=>{
+      console.log('x', event.pageX)
+      console.log('y', event.pageY)
+    })
   }
 
   public reziseFiltersRow(): void {
