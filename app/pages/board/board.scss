@@ -1,7 +1,50 @@
 @import '../../common/styles/variables.scss';
 
+.toggle-buttons {
+  button {
+    border-radius: 10px;
+  }
+  :nth-child(1) {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+  }
+  :nth-child(2) {
+    background-color: red;
+    margin-left: -2px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+  }
+}
+
+.select-wrapper  {
+  .invisible {
+    opacity: 0;
+  }
+  input.select-dropdown {
+    z-index: 1;
+  }
+  div.select-dropdown {
+    position: absolute;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
+    outline: none;
+    height: 3rem;
+    line-height: 3rem;
+    width: 100%;
+    font-size: 1rem;
+    margin: 0 0 20px 0;
+    padding: 0;
+    display: block;
+    z-index: 0;
+    top: 0;
+  }
+}
+
 board {
   .page.board {
+    background-color: $lightGrey;
     date-picker section.row.date {
       margin-bottom: 0px;
       padding-bottom: 20px;
@@ -13,6 +56,7 @@ board {
     }
     .scrollable {
       overflow-y: scroll;
+      background-color: $pink;
     }
     .row.form {
       margin-bottom:  0;
@@ -26,6 +70,22 @@ board {
     }
     .row.form {
       padding-top: 0px;
+    }
+    .row.options {
+      margin: 20px 0;
+      .right-controls {
+        position: absolute;
+        right: 20px;
+        .toggle-buttons {
+          display: inline-block;
+          margin: 0 10px;
+        }
+        .sort-by {
+          display: inline-block;
+          width: 165px; 
+          margin: 0 10px;
+        }
+      }
     }
     .input-field {
       input {
@@ -48,10 +108,10 @@ board {
       }      
       &.location {
         position: absolute;
-        top: 43px;
+        top: -3px;
         z-index: 10;
         padding-left: 0;
-        left: 7px;
+        left: 3px;
         input  {
           background-color: white;
           color: black;

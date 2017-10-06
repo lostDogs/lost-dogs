@@ -47,6 +47,7 @@ public custom: CustomMarker;
       center: {lat: -34.397, lng: 150.644},
       zoom: 10,
       streetViewControl: false,
+      mapTypeControl: false
     });
 
     this.geocoder = new google.maps.Geocoder;

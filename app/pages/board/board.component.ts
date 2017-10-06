@@ -52,7 +52,7 @@ export class boardComponent {
     this.filtersKey = [];
     this.dogCards = [];
     this.window = window;
-    this.screenWidth = window.screen.width;
+    this.screenWidth = document.documentElement.clientWidth;
     for (let i = 0; i < 13; ++i) {
       this.dogCards.push(i);
     } 
@@ -74,10 +74,25 @@ export class boardComponent {
 
   public ngOnInit(): void {
     $('#date-input').mask('0000/00/00');
-    $('body').click((event)=>{
-      console.log('x', event.pageX)
-      console.log('y', event.pageY)
-    })
+  }
+
+  public ngAfterViewInit(): void {
+    $('select').material_select();
+    $('select').change(() => {
+      const input = $('#sort-by');
+      const selectedElement: string = $('.sort-dropdown option[value="' +input.val() +'"]')[0].innerHTML;
+       const initReplazable: JQuery = $('input.select-dropdown');
+       if (!initReplazable.hasClass('invisible')) {
+         initReplazable.addClass('invisible');
+       }
+      const replaceBlock: string = '<div class="select-dropdown replaced">' + selectedElement + '</div>'
+      const replacedBlock: JQuery = $('div.select-dropdown.replaced');
+      if (!replacedBlock.length) {
+        initReplazable.after(replaceBlock);
+      } else {
+        replacedBlock.replaceWith(replaceBlock);
+      }
+    });    
   }
 
   public reziseFiltersRow(): void {
