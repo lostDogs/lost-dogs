@@ -5,7 +5,6 @@ import {Router, NavigationEnd} from '@angular/router';
 import {UserService} from  '../../common/services/user.service';
 import {GlobalFunctionService} from '../../common/services/global-function.service';
 
-
 require('../../common/plugins/masks.js');
 require('../../common/plugins/nodoubletapzoom.js');
 

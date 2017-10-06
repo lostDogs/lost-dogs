@@ -16,8 +16,14 @@
             <div title="cerrar" class="close-icon" (click)="multipleBlockRemove(filter, j)">
               <i class="tiny material-icons">close</i>
             </div>
-            <p class="answer-text">{{answerSelected.name}}</p>          
+            <p class="answer-text">{{answerSelected.name}}</p>
           </div>
+          <div class="answerSelected" *ngIf="nameInput && showNameInput" (click)="enableComponent(filter, i)">
+            <div title="cerrar" class="close-icon" (click)="nameInput=undefined;nameModel=''">
+              <i class="tiny material-icons">close</i>
+            </div>
+            <p class="answer-text">{{nameInput}}</p>
+          </div>          
         </div>      
     </div>
     </section>
@@ -27,9 +33,32 @@
     <breed-block (selectedEmitter)="selectionReciver('breed', $event)" [removedElement]="filterElements.breed.answer" [hidden]="!filterElements.breed.enable"></breed-block>
     <size-block (selectedEmitter)="selectionReciver('size', $event)" [removedElement]="filterElements.size.answer" [hidden]="!filterElements.size.enable"></size-block>
     <color-block (selectedEmitter)="selectionReciver('color', $event)" [removedElement]="filterElements.color.answer" [hidden]="!filterElements.color.enable"></color-block>
-    <extras-block (selectedEmitter)="selectionReciver('extras', $event)" [removedElement]="filterElements.extras.answer" [hidden]="!filterElements.extras.enable"></extras-block>
-    <date-picker  (seletedDateEmitter)="selectionReciver('date', $event)"  [reset]="resetDate" [hidden]="!filterElements.date.enable"></date-picker>
-    <map (locationAdressEmiter)="locationReciver($event)" (locationEmiter)="locationReciver($event)" [ngClass]="{'far-away': !initMap}" [ngStyle]="{'width': screenWidth + 'px'}"></map>
+    <div class="extra-name-block" [hidden]="!filterElements.extras.enable">
+      <extras-block (selectedEmitter)="selectionReciver('extras', $event)" [removedElement]="filterElements.extras.answer"></extras-block>
+      <div class="row form centered" [hidden]="!showNameInput || !(filterElements.extras && filterElements.extras.answer)">
+        <form #NameFrom="ngForm" (ngSubmit)="nameInput=nameModel" class="input-field col l4">
+           <h5>Nombre: </h5>
+           <input class="text-centered" type="text" name="nameInput" id="name-input" [(ngModel)]="nameModel">
+           <button class="btn waves-effect info" type="submit"><i class="material-icons">send</i></button>
+        </form>        
+      </div>      
+    </div>
+    <div class="date-block" [ngClass]="{'far-away': !filterElements.date.enable}">
+      <date-picker  (seletedDateEmitter)="selectionReciver('date', $event)" [reset]="resetDate"  [seletedDate]="dateModel"></date-picker>
+      <div class="row form centered">
+        <form #DateFrom="ngForm" (ngSubmit)="filterElements.date.answer=dateModel" class="input-field col l3 text-centered">
+           <input class="text-centered" type="text" name="dateInput" id="date-input" [(ngModel)]="dateModel">
+           <button class="btn waves-effect info" type="submit"><i class="material-icons">send</i></button>
+        </form>        
+      </div>
+    </div>
+    <div  [ngClass]="{'far-away': !filterElements.location.enable, 'location-block': filterElements.location.enable}" [ngStyle]="{'width': screenWidth + 'px'}">
+      <form #LocationFrom="ngForm" (ngSubmit)="locationSubmit=locationModal" class="input-field col l3 location" *ngIf="showMapInput">
+         <input type="text" name="location" id="location-input" [(ngModel)]="locationModal">
+         <button class="btn waves-effect info" type="submit"><i class="material-icons">search</i></button>
+      </form>        
+      <map (locationAdressEmiter)="locationReciver($event)" (locationEmiter)="locationReciver($event)"  [locationAdress]="locationSubmit"></map>
+    </div>
   </section>
   <section title="resultados"  class="row results">
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>

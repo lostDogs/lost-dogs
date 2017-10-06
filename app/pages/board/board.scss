@@ -2,6 +2,10 @@
 
 board {
   .page.board {
+    date-picker section.row.date {
+      margin-bottom: 0px;
+      padding-bottom: 20px;
+    }
     .far-away {
     position: absolute;
     top: -1000px;
@@ -9,6 +13,52 @@ board {
     }
     .scrollable {
       overflow-y: scroll;
+    }
+    .row.form {
+      margin-bottom:  0;
+      padding-top: 20px;
+    }
+    .text-centered {
+      text-align: center;
+    }
+    .location-block {
+      position: relative;
+    }
+    .row.form {
+      padding-top: 0px;
+    }
+    .input-field {
+      input {
+        width: 65%;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        display: inline-block;
+        font-size: 1.5rem;;
+      }
+      button {
+        position: absolute;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        height: 3rem;
+      }
+      h5 {
+        display: inline-block;
+        color: white;
+        padding-right: 10px;
+      }      
+      &.location {
+        position: absolute;
+        top: 43px;
+        z-index: 10;
+        padding-left: 0;
+        left: 7px;
+        input  {
+          background-color: white;
+          color: black;
+          padding-left: 10px;
+          font-size: 1rem;
+        }
+      }      
     }
     .title-filtes {
       padding-top: 130px;
@@ -33,7 +83,7 @@ board {
       position: relative;
       display: inline-block;
       &.multiple {
-        display: flex;
+        display: inline-flex;
       }
       .answerSelected {
         position: relative;

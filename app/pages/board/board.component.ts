@@ -2,6 +2,7 @@ import { Component, ViewChildren, QueryList, ElementRef, ViewChild} from '@angul
 import {DogCardService} from '../../common/services/dog-card.service';
 import {LostFoundService} from '../../common/services/lost-found.service';
 import { AsyncPipe } from '@angular/common';
+require('../../common/plugins/masks.js');
 
 export interface Ifiltes {
   [componentName: string]: {
@@ -28,7 +29,6 @@ export class boardComponent {
   public resetDate: any;
   public location:  {latLng?: any, address?: string} = {};
   public window: Window;
-  public initMap: boolean;
   public screenWidth: number;
   @ViewChild('Location')
   public LocationDom: ElementRef;
@@ -43,6 +43,10 @@ export class boardComponent {
   public tempMapAnswer: any;
   public initDateAnswer: boolean;
   public tempDateAnswer: string;
+  public dateModel: string;
+  public showMapInput: boolean;
+  public showNameInput: boolean;
+  public nameInput: string;
 
   constructor(public dogCardService: DogCardService, public lostService: LostFoundService) {
     this.filtersKey = [];
@@ -66,6 +70,10 @@ export class boardComponent {
 
   public ngDoCheck(): void {
     this.reziseFiltersRow();
+  }
+
+  public ngOnInit(): void {
+    $('#date-input').mask('0000/00/00');
   }
 
   public reziseFiltersRow(): void {
@@ -110,7 +118,6 @@ export class boardComponent {
     this.filterElements[componentName].enable = !this.filterElements[componentName].enable;
     this.activeIndex = activeIndex;
     this.previousElementSelected = componentName;
-    this.initMap = this.filterElements.location.enable;
 
     if (this.filterElements.location.enable) {
        this.initMapAnswer = true;
@@ -130,12 +137,13 @@ export class boardComponent {
      typeOfAnswer = 'image';
    } else if (!Array.isArray(event)) {
      typeOfAnswer = 'date';
+     this.dateModel = event;
      this.tempDateAnswer = event;
      event = this.initDateAnswer ? event : undefined;
+
    }else if (Array.isArray(event)) {
      let indexSplice: number;
      event.forEach((el: any, elIndex: number) => {
-       console.log('el disable', el.disabled);
        if (!el.disabled) {
          // watch out you are modifing the array inside the loop.
          event.splice(elIndex, 1);
@@ -143,10 +151,10 @@ export class boardComponent {
      });
      event = !event.length ? undefined : event;
    }
-   console.log('event', event);
    this.filterElements[componentName].answer =  event;
    this.filterElements[componentName].typeOfAnswer = typeOfAnswer;
    this.resetDate = false;
+   this.searchForName(componentName);
   }
 
   public locationReciver(event: any) {
@@ -156,13 +164,13 @@ export class boardComponent {
       this.location.address = event
     }
     if (this.initMapAnswer) {
-     this.filterElements.location.answer = this.location.latLng &&  this.location.address ? this.location : undefined;            
+     this.filterElements.location.answer = this.location.latLng &&  this.location.address ? this.location : undefined;
     } else  {
       this.tempMapAnswer = this.location.latLng &&  this.location.address ? this.location : undefined;
     }
-   this.filterElements.location.typeOfAnswer = 'location';
+    this.showMapInput = !!event;
+    this.filterElements.location.typeOfAnswer = 'location';
   }
-
 
   public imgBlockRemove(componentName: string): void {
     this.filterElements[componentName].answer = undefined;
@@ -181,6 +189,18 @@ export class boardComponent {
       setTimeout(() => {
         this.filterElements[componentName].answer = undefined;
       }, 5);
+    }
+    this.searchForName(componentName);
+  }
+
+  public searchForName(componentName: string): void {
+    if (this.filterElements[componentName].answer && Array.isArray(this.filterElements[componentName].answer)) {
+      this.showNameInput = this.filterElements[componentName].answer.some((answer: any, answerIndex: number) => {
+        if (answer.name === 'Placa Id') {
+          return true;
+        }
+        return false;
+      });
     }
   }
 };

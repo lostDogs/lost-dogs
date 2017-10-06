@@ -96,6 +96,7 @@ public custom: CustomMarker;
       if (status === 'OK') {
         ctrl.location = results[0].geometry.location;
         ctrl.locationEmiter.emit(ctrl.location);
+        ctrl.locationAdressEmiter.emit(formatedAddresss);
         ctrl.addMarker(ctrl.location, ctrl.mapDef, ctrl, {animation: google.maps.Animation.DROP});
         ctrl.mapDef.panTo(ctrl.location);
         ctrl.mapDef.setZoom(15);
@@ -164,7 +165,7 @@ export class CustomMarker extends google.maps.OverlayView {
       div.style.color = '#ff1744';
       div.className = 'range sonar sonar-infinite sonar-stroke';
       google.maps.event.addDomListener(div, 'click', (event: any) => {
-          google.maps.event.trigger(me, 'click');
+      google.maps.event.trigger(me, 'click');
       });
       const panes = this.getPanes();
       panes.overlayImage.appendChild(div);
@@ -177,6 +178,7 @@ export class CustomMarker extends google.maps.OverlayView {
       div.style.width = disTwoPoint + 'px';
       div.style.height = disTwoPoint + 'px';
     }
+    console.log('div', this.div);
   }
 
   public remove() {
