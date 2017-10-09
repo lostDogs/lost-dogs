@@ -42,7 +42,7 @@ div.select-wrapper  {
   }
   @media screen and (max-device-width: $screen-mobile-max) {
     input.select-dropdown {
-      font-size: 2.2rem;
+      font-size: 2.5rem;
       height: 4rem;
     }
     span.caret {
@@ -110,7 +110,7 @@ board {
           background: white;
         }
       @media screen and (max-device-width: $screen-mobile-max) {
-        padding-bottom: 40px;
+        padding-bottom: 65px;
         padding-right: 90px;        
         .material-icons.circle-white {
           font-size: 5rem;
@@ -126,8 +126,9 @@ board {
         @media screen and (max-device-width: $screen-mobile-max) {
           display: block;
           margin-left: 125px;
+          margin-top: 15px;
           .btn {
-            height: 4.5rem;
+            height: 5rem;
             i {
               vertical-align: bottom;
             }
