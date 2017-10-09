@@ -47,12 +47,19 @@ export class boardComponent {
   public showMapInput: boolean;
   public showNameInput: boolean;
   public nameInput: string;
+  public mobile: boolean;
+  public mapWidth: number;
 
   constructor(public dogCardService: DogCardService, public lostService: LostFoundService) {
     this.filtersKey = [];
     this.dogCards = [];
     this.window = window;
+    this.mobile = window.screen.width <= 767;
     this.screenWidth = document.documentElement.clientWidth;
+    this.mapWidth = this.screenWidth;
+    if (this.mobile) {
+       this.screenWidth *= 2;
+    }
     for (let i = 0; i < 13; ++i) {
       this.dogCards.push(i);
     } 

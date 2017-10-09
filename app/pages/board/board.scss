@@ -16,7 +16,7 @@
   }
 }
 
-.select-wrapper  {
+div.select-wrapper  {
   .invisible {
     opacity: 0;
   }
@@ -40,6 +40,26 @@
     z-index: 0;
     top: 0;
   }
+  @media screen and (max-device-width: $screen-mobile-max) {
+    input.select-dropdown {
+      font-size: 2.2rem;
+      height: 4rem;
+    }
+    span.caret {
+      right: -20px;
+      font-size: 2rem;
+    }
+    div.select-dropdown {
+      font-size: 2.5rem;
+      height: 4rem;
+      text-align: center;      
+    }
+    ul.dropdown-content.select-dropdown {
+      li > span {
+        font-size: 2.5rem;
+      }
+    }
+  }
 }
 
 board {
@@ -60,30 +80,69 @@ board {
     }
     .row.form {
       margin-bottom:  0;
-      padding-top: 20px;
+      padding-top: 0px;
+      @media screen and (max-device-width: $screen-mobile-max) {
+        margin: 32px 0;
+      }
     }
     .text-centered {
       text-align: center;
     }
     .location-block {
       position: relative;
-    }
-    .row.form {
-      padding-top: 0px;
+      @media screen and (max-device-width: $screen-mobile-max) {
+        overflow: hidden;
+        map section.row {
+          transform: scale(2);
+        }
+
+      }
     }
     .row.options {
       margin: 20px 0;
+      h3 {
+        .material-icons.circle-white {
+          margin-right: 4px;
+          vertical-align: text-top;
+          font-size: 3rem;
+          border: 2px solid;
+          border-radius: 50%;
+          background: white;
+        }
+      @media screen and (max-device-width: $screen-mobile-max) {
+        padding-bottom: 40px;
+        padding-right: 90px;        
+        .material-icons.circle-white {
+          font-size: 5rem;
+        }
+      }        
+      }
       .right-controls {
         position: absolute;
         right: 20px;
         .toggle-buttons {
           display: inline-block;
           margin: 0 10px;
+        @media screen and (max-device-width: $screen-mobile-max) {
+          display: block;
+          margin-left: 125px;
+          .btn {
+            height: 4.5rem;
+            i {
+              vertical-align: bottom;
+            }
+          }
+        }
         }
         .sort-by {
           display: inline-block;
           width: 165px; 
           margin: 0 10px;
+          @media screen and (max-device-width: $screen-mobile-max) {
+            margin-top: 20px;
+            width: 325px;
+            padding-right: 30px;            
+          }
         }
       }
     }
@@ -93,13 +152,27 @@ board {
         border-bottom-right-radius: 0;
         border-top-right-radius: 0;
         display: inline-block;
-        font-size: 1.5rem;;
+        font-size: 1.5rem;
+        @media screen and (max-device-width: $screen-mobile-max) {
+          font-size: 4rem;
+          height: 4rem;
+          border-bottom: 3px solid Gainsboro;
+        }
       }
       button {
         position: absolute;
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
         height: 3rem;
+        @media screen and (max-device-width: $screen-mobile-max) {
+          height: 60px;
+          border-top-right-radius: 20px;
+          border-bottom-right-radius: 20px;
+          right: -10px;
+          .material-icons {
+            vertical-align: bottom;
+          }
+        }
       }
       h5 {
         display: inline-block;
@@ -117,6 +190,11 @@ board {
           color: black;
           padding-left: 10px;
           font-size: 1rem;
+          @media screen and (max-device-width: $screen-mobile-max) {
+            width: 88%;
+            font-size: 2rem;
+            height: 4.2rem;
+          }
         }
       }      
     }
@@ -130,6 +208,9 @@ board {
       .filter {
         display: inline-block;
         cursor: pointer;
+        @media screen and (max-device-width: $screen-mobile-max) {
+          margin: 20px 0;
+        }
         .filter-title {
           color: $lightGrey;
           font-weight: 500;
@@ -155,6 +236,10 @@ board {
         border-radius: 15px;
         margin: 0;
         line-height: 32px;
+        @media screen and (max-device-width: $screen-mobile-max) {
+          line-height: 70px;
+          border-radius: 30px;          
+        }
       }
       .close-icon {
         position: absolute;
@@ -165,6 +250,12 @@ board {
         background-color: black;
         width: 22px;
         height: 22px;
+        @media screen and (max-device-width: $screen-mobile-max) {
+          width: 50px;
+          height: 50px;
+          top: -20px;
+          right: -20px;
+        }
         .tiny.material-icons {
           margin-top: 3px;
           color: white;

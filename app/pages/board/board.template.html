@@ -46,14 +46,14 @@
     <div class="date-block" [ngClass]="{'far-away': !filterElements.date.enable}">
       <date-picker  (seletedDateEmitter)="selectionReciver('date', $event)" [reset]="resetDate"  [seletedDate]="dateModel"></date-picker>
       <div class="row form centered">
-        <form #DateFrom="ngForm" (ngSubmit)="filterElements.date.answer=dateModel" class="input-field col l3 text-centered">
+        <form #DateFrom="ngForm" (ngSubmit)="filterElements.date.answer=dateModel" class="input-field col l3 s6 text-centered">
            <input class="text-centered" type="text" name="dateInput" id="date-input" [(ngModel)]="dateModel">
            <button class="btn waves-effect info" type="submit"><i class="material-icons">send</i></button>
         </form>        
       </div>
     </div>
-    <div  [ngClass]="{'far-away': !filterElements.location.enable, 'location-block': filterElements.location.enable}" [ngStyle]="{'width': screenWidth + 'px'}">
-      <form #LocationFrom="ngForm" (ngSubmit)="locationSubmit=locationModal" class="input-field col l3 location" *ngIf="showMapInput">
+    <div  [ngClass]="{'far-away': !filterElements.location.enable, 'location-block': filterElements.location.enable}" [ngStyle]="{'width': mapWidth + 'px'}">
+      <form #LocationFrom="ngForm" (ngSubmit)="locationSubmit=locationModal" class="input-field col l3 s9 location" *ngIf="showMapInput">
          <input type="text" name="location" id="location-input" [(ngModel)]="locationModal">
          <button class="btn waves-effect info" type="submit"><i class="material-icons">search</i></button>
       </form>        
@@ -61,8 +61,14 @@
     </div>
   </section>
   <section class="row centered options">
-    <h3 *ngIf="!searchFound">Perdidos</h3>
-    <h3 *ngIf="searchFound">Econtrados</h3>
+    <h3 *ngIf="!searchFound">
+      <i class="medium material-icons circle-white">search</i>
+      Perdidos
+    </h3>
+    <h3 *ngIf="searchFound">
+    <i class="medium material-icons circle-white">pets</i>
+      Econtrados
+    </h3>
     <div class="right-controls">
       <div class="toggle-buttons">
         <button title="Perdidos" class="btn waves-effect info lost" (click)="searchFound=false" [disabled]="!searchFound"><i class="medium material-icons">search</i></button>
