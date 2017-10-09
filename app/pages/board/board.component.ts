@@ -85,6 +85,7 @@ export class boardComponent {
 
   public ngAfterViewInit(): void {
     $('select').material_select();
+    $('input.select-dropdown').attr('disabled','disabled');
     $('select').change(() => {
       const input = $('#sort-by');
       const selectedElement: string = $('.sort-dropdown option[value="' +input.val() +'"]')[0].innerHTML;
