@@ -1,0 +1,93 @@
+<div class="page board">
+  <div class="scrollable">
+    <section  title="filtros" class="row title-filtes" [ngClass]="{'blur-filter': dogCardService.open}" [ngStyle]="{'width': screenWidth  + extraWidth + 'px'}">
+      <div class="filter" *ngFor="let filter of filtersKey;let i= index" [ngStyle]="{'width': filterElements[filter].width}">
+        <h5 class="filter-title" (click)="enableComponent(filter, i)" *ngIf="!filterElements[filter].answer" [ngClass]="{'active': filterElements[filter] && filterElements[filter].enable}">{{filterElements[filter].label}}</h5>
+        <div class="filter-element" #AnswerBlock *ngIf="filterElements[filter].answer && !window.Array.isArray(filterElements[filter].answer)"  title="caracteristicas selecionada" (click)="enableComponent(filter, i)"  id="{{filter}}">
+          <div title="cerrar" class="close-icon" (click)="imgBlockRemove(filter)">
+            <i class="tiny material-icons">close</i>
+          </div>
+          <p *ngIf="filterElements[filter].typeOfAnswer==='location'" #Location class="answer-text">{{filterElements[filter].answer.address}}</p>
+          <p *ngIf="filterElements[filter].typeOfAnswer==='date'" class="answer-text">{{filterElements[filter].answer}}</p>
+          <p *ngIf="filterElements[filter].typeOfAnswer==='image'" class="answer-text">{{filterElements[filter].answer.name}}</p>
+        </div>
+        <div class="filter-element multiple" #AnswerBlock *ngIf="filterElements[filter].answer && window.Array.isArray(filterElements[filter].answer)"  title="caracteristicas selecionada"  id="{{filter}}">
+          <div class="answerSelected" *ngFor="let answerSelected of filterElements[filter].answer; let j = index" (click)="enableComponent(filter, i)">
+            <div title="cerrar" class="close-icon" (click)="multipleBlockRemove(filter, j)">
+              <i class="tiny material-icons">close</i>
+            </div>
+            <p class="answer-text">{{answerSelected.name}}</p>
+          </div>
+          <div class="answerSelected" *ngIf="nameInput && showNameInput" (click)="enableComponent(filter, i)">
+            <div title="cerrar" class="close-icon" (click)="nameInput=undefined;nameModel=''">
+              <i class="tiny material-icons">close</i>
+            </div>
+            <p class="answer-text">{{nameInput}}</p>
+          </div>          
+        </div>      
+    </div>
+    </section>
+  </div>
+  <section class="row component-filter" #Components [ngStyle]="{'border-bottom': !ComponentsDom.nativeElement.clientHeight ? 'none' : '6px solid white'}">
+    <gender-block (selectedEmitter)="selectionReciver('gender', $event)" [removedElement]="filterElements.gender.answer" [hidden]="!filterElements.gender.enable"></gender-block>
+    <breed-block (selectedEmitter)="selectionReciver('breed', $event)" [removedElement]="filterElements.breed.answer" [hidden]="!filterElements.breed.enable"></breed-block>
+    <size-block (selectedEmitter)="selectionReciver('size', $event)" [removedElement]="filterElements.size.answer" [hidden]="!filterElements.size.enable"></size-block>
+    <color-block (selectedEmitter)="selectionReciver('color', $event)" [removedElement]="filterElements.color.answer" [hidden]="!filterElements.color.enable"></color-block>
+    <div class="extra-name-block" [hidden]="!filterElements.extras.enable">
+      <extras-block (selectedEmitter)="selectionReciver('extras', $event)" [removedElement]="filterElements.extras.answer"></extras-block>
+      <div class="row form centered" [hidden]="!showNameInput || !(filterElements.extras && filterElements.extras.answer)">
+        <form #NameFrom="ngForm" (ngSubmit)="nameInput=nameModel" class="input-field col l4">
+           <h5>Nombre: </h5>
+           <input class="text-centered" type="text" name="nameInput" id="name-input" [(ngModel)]="nameModel">
+           <button class="btn waves-effect info" type="submit"><i class="material-icons">send</i></button>
+        </form>        
+      </div>      
+    </div>
+    <div class="date-block" [ngClass]="{'far-away': !filterElements.date.enable}">
+      <date-picker  (seletedDateEmitter)="selectionReciver('date', $event)" [reset]="resetDate"  [seletedDate]="dateModel"></date-picker>
+      <div class="row form centered">
+        <form #DateFrom="ngForm" (ngSubmit)="filterElements.date.answer=dateModel" class="input-field col l3 s6 text-centered">
+           <input class="text-centered" type="text" name="dateInput" id="date-input" [(ngModel)]="dateModel">
+           <button class="btn waves-effect info" type="submit"><i class="material-icons">send</i></button>
+        </form>        
+      </div>
+    </div>
+    <div  [ngClass]="{'far-away': !filterElements.location.enable, 'location-block': filterElements.location.enable}" [ngStyle]="{'width': mapWidth + 'px'}">
+      <form #LocationFrom="ngForm" (ngSubmit)="locationSubmit=locationModal" class="input-field col l3 s9 location" *ngIf="showMapInput">
+         <input type="text" name="location" id="location-input" [(ngModel)]="locationModal">
+         <button class="btn waves-effect info" type="submit"><i class="material-icons">search</i></button>
+      </form>        
+      <map (locationAdressEmiter)="locationReciver($event)" (locationEmiter)="locationReciver($event)"  [locationAdress]="locationSubmit"></map>
+    </div>
+  </section>
+  <section class="row centered options">
+    <h3 *ngIf="!searchFound">
+      <i class="medium material-icons circle-white">search</i>
+      Perdidos
+    </h3>
+    <h3 *ngIf="searchFound">
+    <i class="medium material-icons circle-white">pets</i>
+      Econtrados
+    </h3>
+    <div class="right-controls">
+      <div class="toggle-buttons">
+        <button title="Perdidos" class="btn waves-effect info lost" (click)="searchFound=false" [disabled]="!searchFound"><i class="medium material-icons">search</i></button>
+        <button title="Econtrados" class="btn waves-effect info found" (click)="searchFound=true" [disabled]="searchFound"><i class="medium material-icons">pets</i></button>
+      </div>
+      <div class="sort-by" >
+        <select name="ordenar por" class="sort-dropdown" id="sort-by" [(ngModel)]="sorting">
+          <option value="0" selected disabled>Ordena por:</option>
+          <option value="1">Fecha <i class="material-icons">arrow_downward</i></option>
+          <option value="2">Fecha <i class="material-icons">arrow_upward</i></option>
+          <option value="3" >Recompenza <i class="material-icons">arrow_downward</i></option>
+          <option value="4" >Recompenza<i class="material-icons">arrow_upward</i></option>          
+        </select>      
+      </div>
+    </div>
+  </section>
+  <section title="resultados"  class="row results">
+    <div *ngIf="dogCardService.open" class="block-back col l12"></div>
+      <dog-card *ngFor="let card of dogCards;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt"></dog-card> 
+  </section>
+  <!-- <section title="paginacion"  class="row pagination" [ngClass]="{'blur-filter': dogCardService.open}"></section> -->
+</div>

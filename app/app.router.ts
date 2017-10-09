@@ -45,7 +45,8 @@ export const router: Routes = [
   {path: 'profile', component: profileComponent},
   {path: 'selection', component: selectionComponent},
   {path: 'login', component: LoginComponent},
-  { path: '', redirectTo: 'home' , pathMatch: 'full'}
+  { path: '', redirectTo: 'home' , pathMatch: 'full'},
+  {path: '**', redirectTo: 'home'}
 ];
 
 // TODO: check why routing is not working without the hash.

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {LostFoundService} from '../../../common/services/lost-found.service';
 @Component({
   selector: 'breed',
@@ -6,25 +6,9 @@ import {LostFoundService} from '../../../common/services/lost-found.service';
   styles: [ require('./breed.scss')]
 })
 
-export class BreedComponent { 
-  public elements: any[];
-  public neverAgain: boolean = true;
+export class BreedComponent {  
+ 
   constructor(public LostService: LostFoundService) {
-    this.elements = [
-      {imgUrl:'/static/temp-profile-dog.jpg', name: 'dog1'},
-      {imgUrl:'/static/temp-profile-dog.jpg', name: 'dog2'},
-      {imgUrl:'/static/temp-profile-dog.jpg', name: 'dog3'},
-      {imgUrl:'/static/temp-profile-dog.jpg', name: 'dog4'},
-      {imgUrl:'/static/temp-profile-dog.jpg', name: 'dog5'},
-      {imgUrl:'/static/temp-profile-dog.jpg', name: 'dog6'},
-      {imgUrl:'/static/temp-profile-dog.jpg', name: 'dog7'},
-      {imgUrl:'/static/temp-profile-dog.jpg', name: 'dog8'},
-      {imgUrl:'/static/temp-profile-dog.jpg', name: 'dog9'},
-      {imgUrl:'/static/temp-profile-dog.jpg', name: 'dog10'},
-      {imgUrl:'/static/temp-profile-dog.jpg', name: 'dog11'},
-      {imgUrl:'/static/temp-profile-dog.jpg', name: 'dog12'},
-      {imgUrl:'/static/temp-profile-dog.jpg', name: 'dog13'}
-    ];
     this.LostService.optional = false;
     this.LostService.question2 = undefined;
     this.LostService.question3 = undefined;

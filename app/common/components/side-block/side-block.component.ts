@@ -32,6 +32,7 @@ export class SideBlockComponent {
   public previousSelected: number = 0;
   public mobile: boolean;
   public showArrows: boolean;
+  public repeatedIds: number;
 @Output()
 public selectedEmitter: EventEmitter<any> = new EventEmitter<any>();
 @Input()
@@ -70,27 +71,30 @@ public multipleElements: Ielement[];
     this.splittedArray = Math.trunc(splitArr);
     //TODO: 25 is hardcodded margin, try to get it from DOM elment;
     this.rowWidth = splitArr * this.blockWidth + 25 + 'px';
-    this.showArrows = this.scrolling.nativeElement.clientWidth < +this.rowWidth.split('px')[0];
-    this.rowWidth = this.showArrows ? this.rowWidth : this.scrolling.nativeElement.clientWidth;
     for (let i = 0; i < (j - 1); i += splitArr) {
         this.arrayOfArrays.push(this.elements.slice(i,i+splitArr));
-    }   
+    }
+    this.repeatedIds =  $('[id^="data-"]').length;
     for ( let i = 0; i < this.elements.length; ++i) {
-      this.elements[i]['key'] = 'data-' + i;
+      this.elements[i]['key'] = 'data-' + i + this.repeatedIds;
     }
   }
 
-  public ngAfterViewInit(): void {
+  public ngDoCheck(): void {
+    this.showArrows = this.scrolling.nativeElement.clientWidth < +this.rowWidth.split('px')[0];
+    this.rowWidth = this.showArrows ? this.rowWidth : this.scrolling.nativeElement.clientWidth + 'px';
+    const scrollLeft: any = this.scrolling.nativeElement;
+    this.maxScrollLeft = scrollLeft.scrollWidth - scrollLeft.clientWidth;
+  }
 
+  public ngAfterViewInit(): void {
     for ( let i = 0; i < this.elements.length; ++i) {
-      $('#data-' + i).attr('data-tooltip', this.elements[i].name);
+      $('#data-' + i + this.repeatedIds).attr('data-tooltip', this.elements[i].name);
     } 
     if (!this.mobile) {
       $('.tooltipped').tooltip({delay: 50});
     }
     $('.sideblock').nodoubletapzoom();
-    const scrollLeft: any = this.scrolling.nativeElement;
-    this.maxScrollLeft = scrollLeft.scrollWidth - scrollLeft.clientWidth;
   }
 
   public goLeft():void {
@@ -125,17 +129,17 @@ public multipleElements: Ielement[];
     } else {
       let removeIndex: number;
       this.multipleElements = this.removedElement && this.removedElement.length ? this.removedElement : this.multipleElements;
-      const some: boolean = this.multipleElements.some((el: Ielement, index: number) => {
+      // search for uniqueness
+      let some: boolean = this.multipleElements.some((el: Ielement, index: number) => {
         if (el.key === this.elements[indexed].key) {
           removeIndex = index;
           return true;
         }
       });
-      if (this.elements[indexed].disabled && !some) {
-        this.multipleElements.push(this.elements[indexed]);
-      } else if (removeIndex !== undefined && ~removeIndex && !this.elements[indexed].disabled) {
-        this.multipleElements.splice(removeIndex, 1)
+      if (removeIndex !== undefined && ~removeIndex) {
+        this.multipleElements.splice(removeIndex, 1);
       }
+      this.multipleElements.push(this.elements[indexed]);
       this.selectedEmitter.emit(this.multipleElements);
     }
   }
@@ -143,13 +147,23 @@ public multipleElements: Ielement[];
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.removedElement && changes.removedElement.currentValue) {
       const elements: Ielement = changes.removedElement.currentValue;
-      if (Array.isArray(elements) && elements.length) {
-          elements.forEach((value: any, index: number) => {
-            this.elements[value.orginalIndex].disabled = value.disabled;
-          });
+      if (Array.isArray(elements)) {
+        this.elements.forEach((value: Ielement, index: number) => {
+          this.elements[index].disabled = false;
+        });
+        elements.forEach((value: any, index: number) => {
+          this.elements[value.orginalIndex].disabled = value.disabled;
+        });
+        this.multipleElements = elements;
       }else if(!Array.isArray(elements)) {
           this.elements[elements.orginalIndex].disabled = elements.disabled;
           this.previousSelected = elements.orginalIndex;
+      }
+    }else if (changes.removedElement && !changes.removedElement.currentValue && changes.removedElement.previousValue) {
+      const prevElment: Ielement = changes.removedElement.previousValue;
+      if(prevElment.key && !Array.isArray(prevElment)) {
+      this.elements[prevElment.orginalIndex].disabled = false;
+      this.previousSelected = prevElment.orginalIndex;        
       }
     }
   }

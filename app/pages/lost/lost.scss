@@ -1,15 +1,16 @@
 @import '../../common/styles/variables.scss';
+.left-centered {
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.blur-filter {
+  filter: blur(5px);
+  @media screen and (max-device-width: $screen-mobile-max) {
+    filter: blur(10px);
+  }
+}
+
 lost, found {
-  .left-centered {
-    left: 50%;
-    transform: translate(-50%, 0);
-  }
-  .blur-filter {
-    filter: blur(5px);
-    @media screen and (max-device-width: $screen-mobile-max) {
-      filter: blur(10px);
-    }
-  }
   .disappear {
     opacity: 0;
     cursor: default;    
@@ -112,7 +113,7 @@ lost, found {
               margin: 0;
             }
           }
-        }      
+        }
       img {
         width: 80px;
         height: 100%;
@@ -242,7 +243,7 @@ lost, found {
             }
             .left {
              position: absolute;
-            left: 15px;              
+            left: 15px;
             }
         }
       }

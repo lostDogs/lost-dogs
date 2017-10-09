@@ -47,6 +47,7 @@ public custom: CustomMarker;
       center: {lat: -34.397, lng: 150.644},
       zoom: 10,
       streetViewControl: false,
+      mapTypeControl: false
     });
 
     this.geocoder = new google.maps.Geocoder;
@@ -96,6 +97,7 @@ public custom: CustomMarker;
       if (status === 'OK') {
         ctrl.location = results[0].geometry.location;
         ctrl.locationEmiter.emit(ctrl.location);
+        ctrl.locationAdressEmiter.emit(formatedAddresss);
         ctrl.addMarker(ctrl.location, ctrl.mapDef, ctrl, {animation: google.maps.Animation.DROP});
         ctrl.mapDef.panTo(ctrl.location);
         ctrl.mapDef.setZoom(15);
@@ -131,7 +133,7 @@ export class CustomMarker extends google.maps.OverlayView {
   public latlng: google.maps.LatLng;
   public map: google.maps.Map;
   public div: any;
-  // distance in km wich is diamter
+  // distance in km wich is radius
   public distance: number = 0.5;
   public earthRadius: number = 6371;
 
@@ -164,7 +166,7 @@ export class CustomMarker extends google.maps.OverlayView {
       div.style.color = '#ff1744';
       div.className = 'range sonar sonar-infinite sonar-stroke';
       google.maps.event.addDomListener(div, 'click', (event: any) => {
-          google.maps.event.trigger(me, 'click');
+      google.maps.event.trigger(me, 'click');
       });
       const panes = this.getPanes();
       panes.overlayImage.appendChild(div);
@@ -172,12 +174,12 @@ export class CustomMarker extends google.maps.OverlayView {
 
     if(pointMin && pointMax) {
       const disTwoPoint = Math.sqrt(Math.pow(pointMax.x - pointMin.x, 2) + Math.pow(pointMax.y - pointMin.y, 2)) / 2;
-      div.style.top = (Math.abs(point.y) - disTwoPoint / 2) * (point.y / point.y) + 'px';
-      div.style.left = (Math.abs(point.x) - disTwoPoint / 2) * (point.x / point.x) + 'px';
+      div.style.top = (point.y - disTwoPoint / 2) * (point.y / point.y) + 'px';
+      div.style.left = (point.x - disTwoPoint / 2) * (point.x / point.x) + 'px';
       div.style.width = disTwoPoint + 'px';
       div.style.height = disTwoPoint + 'px';
     }
-    console.log('div', this.div);
+    //console.log('div', this.div);
   }
 
   public remove() {

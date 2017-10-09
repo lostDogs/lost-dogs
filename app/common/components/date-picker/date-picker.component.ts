@@ -20,21 +20,23 @@ export class DatePickerComponent {
   public seletedDateEmitter: EventEmitter<string> = new EventEmitter<string>();
   @Input()
   public rechangeDate: string;
+  @Input()
+  public reset: boolean;
 
   constructor()  {
     const currentTime = new Date();
     this.todaysYear = currentTime.getFullYear();
     this.todaysMonth = currentTime.getMonth() + 1;
-    this.todaysDay = currentTime.getDate();
+    this.todaysDay = currentTime.getDate();    
     this.years = [];
     this.months = [];
     this.days = [];
     this.selectedIndexDate ={year: 0, month: 0, day: 0};
+    this.generateYears(10);
+    this.generateMonths();    
   }
 
   public ngOnInit(): void {
-    this.generateYears(10);
-    this.generateMonths();
     $('text-scroll').nodoubletapzoom();
   }
 
@@ -54,7 +56,7 @@ export class DatePickerComponent {
         const indexedYear: number = this.years.indexOf(+dateFromInput);
         if (indexedYear !== -1) {
           this.selectedIndexDate.year = indexedYear;
-        }        
+        }
       } else if (dateFromInput.length === 7 && +dateFromInput.split('/')[1] >= 1 && +dateFromInput.split('/')[1] <= 12) {
         const month: string = dateFromInput.split('/')[1];
         this.selectedIndexDate.month = +month - 1;
@@ -68,6 +70,12 @@ export class DatePickerComponent {
           this.selectedIndexDate.day = day - 1;
         }
       }
+    }
+    if (changes.reset && changes.reset.currentValue) {
+     const indexedYear: number = this.years.indexOf(this.todaysYear);
+     this.selectedIndexDate.year = indexedYear;
+     this.selectedIndexDate.month = this.todaysMonth - 1;
+     this.selectedIndexDate.day = this.todaysDay - 1;
     }
   }
   // will generate year arround +-range of todays date

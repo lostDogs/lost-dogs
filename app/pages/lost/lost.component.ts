@@ -5,7 +5,6 @@ import {Router, NavigationEnd} from '@angular/router';
 import {UserService} from  '../../common/services/user.service';
 import {GlobalFunctionService} from '../../common/services/global-function.service';
 
-
 require('../../common/plugins/masks.js');
 require('../../common/plugins/nodoubletapzoom.js');
 
@@ -73,13 +72,11 @@ export class lostComponent {
     this.fullWidth = this.progressDom.nativeElement.clientWidth;
     // sequence could change according to the action Lost/ Found.
     if (this.lostService.parentPage === 'lost') {
-      this.lostService.sequence = ['date', 'location', 'breed', 'gender', 'size', 'color', 'extras', 'details','review'];
-      //not review in array. details = Accessorios
-      this.lostService.displayedSequence = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Accessorios'];
+      this.lostService.sequence = this.lostService.defualtSequence;
+      this.lostService.displayedSequence = this.lostService.defaultDisplayedSequence;
     } else if(this.lostService.parentPage === 'found') {
-        this.lostService.sequence = ['date', 'location', 'breed', 'gender', 'size', 'color', 'extras', 'details','review'];
-        //not review in array. details = Accessorios
-        this.lostService.displayedSequence = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Accessorios'];
+      this.lostService.sequence = this.lostService.defualtSequence;
+      this.lostService.displayedSequence = this.lostService.defaultDisplayedSequence;
     }
 
     this.lostService.displayedSequence.forEach((value: any, index: number) => {
