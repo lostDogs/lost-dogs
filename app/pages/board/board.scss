@@ -93,7 +93,7 @@ board {
       @media screen and (max-device-width: $screen-mobile-max) {
         overflow: hidden;
         map section.row {
-          transform: scale(2);
+          //transform: scale(2);
         }
 
       }
