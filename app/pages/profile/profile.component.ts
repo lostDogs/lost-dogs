@@ -1,12 +1,16 @@
 import { Component} from '@angular/core';
+import {UserService} from '../../common/services/user.service';
 
 @Component({
   selector: 'profile',
-  template: '<h3>{{profilepage}}</h3> <img  alt="profile_picture" style="width:150px;height:150px;"><div>name: el loco fer<div><br>'
+  template: require('./profile.template.html'),
+  styles: [ require('./profile.scss')]
 })
 export class profileComponent {
-  public profilepage: string;
-  constructor () {
-    this.profilepage = 'Your profile...';
+  constructor (public userService: UserService) {
+  }
+  public ngOnInit(): void {
+  }
+  public ngAfterViewInit(): void {
   }
 };

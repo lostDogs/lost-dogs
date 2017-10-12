@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, Input} from '@angular/core';
 import {ValidationService} from  '../../common/services/validation.service';
 import {ApiService} from '../../common/services/api.service';
 import * as countryData from '../../common/services/countries.json';
@@ -13,7 +13,7 @@ export interface formObj {
   label?: string;
 }
 
-export interface user {
+export interface Iuser {
   pic: formObj;
   name: {first: formObj, last1: formObj, last2: formObj};
   adress: {adressName: formObj, postalCode: formObj, city: formObj, numberExt: formObj, numberInt: formObj, country: formObj};
@@ -27,10 +27,19 @@ export interface user {
   styles: [ require('./account-style.scss')]
 })
 export class accountComponent {
-  public user: user;
+  @Input()
+  public user: Iuser;
   public countries: any;
   public binaryImg: any;
   public loading: boolean;
+  @Input()
+  public title: string = 'Crea tu cuenta';
+  @Input()
+  public profilePage: boolean;
+  @Input()
+  public orginalUser: Iuser;
+  @Input()
+  public disableButton: (userBlock: any, originalUserBlock: any) => void;
 
   constructor (public validate: ValidationService, public api: ApiService, public router: Router, public userService: UserService, public globalService: GlobalFunctionService) {
     this.countries = countryData;
@@ -66,6 +75,17 @@ export class accountComponent {
 
   public ngAfterViewInit(): void {
    $('select').material_select();
+   if (this.profilePage && this.userService.user.address.country) {
+      $('#country option[value=' + this.userService.user.address.country + ']').attr('selected','selected');
+      $('#country').change();
+      let countrySelected: string
+      this.countries.some((value: any) => {
+        if (value.id === this.userService.user.address.country) {
+          return countrySelected = value.name;
+        }
+      });
+      $('input[type=text].select-dropdown').val(countrySelected);
+   }
   }
 
   public ngOnInit(): void {

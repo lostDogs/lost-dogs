@@ -9,6 +9,7 @@ export class UserService {
   public isAuth: boolean;
   public isAvatarSet: boolean;
   public user: any;
+  public token: string;
   public userCookieName: string = 'user';
   public loading: boolean;
   public errors: {passwordReq: boolean, userReq: boolean, invalidUser: boolean};
@@ -31,8 +32,14 @@ export class UserService {
     this.user.lastName = response.surname;
     this.user.avatar = response.avatar_url;
     this.user.email = response.email;
+    this.user.lastName2 = response.lastname;
+    this.user.address = response.address;
+    this.user.phoneNumber = response.phone_number;
+    this.user.username = response.username;
+    this.token = response.token;
     this.isAuth = true;
     this.CookieService.setCookie(this.userCookieName, this.user);
+    this.CookieService.setCookie('authToken', this.token);
   }
 
     public getUserLocation(): Promise<any> {
