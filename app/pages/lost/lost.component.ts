@@ -63,7 +63,7 @@ export class lostComponent {
       this.globalService.clearErroMessages();
       this.globalService.setErrorMEssage('Necesitas iniciar sesión');
       this.globalService.openErrorModal();
-      this.router.navigate(['/home']);
+      this.router.navigate(['/login']);
     }
     this.lostService.resetService();
     this.displayIntro = true;
