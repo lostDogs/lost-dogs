@@ -11,6 +11,10 @@ main-profile {
    }
   .row.sub-title {
     color: black;
+    margin-top: 30px;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin-top: 70px;
+    }
     h3 {
       .material-icons {
         margin-right: 4px;
@@ -21,6 +25,7 @@ main-profile {
         background: white;
         @media screen and (max-device-width: $screen-mobile-max) {
           font-size: 5rem;
+          margin-right: 30px;
         }
       }
     }
@@ -59,6 +64,7 @@ main-profile {
         }
       }
       .row.names {
+        color: black;
         h4 {
           display: inline-block;
         }
