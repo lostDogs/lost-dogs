@@ -38,7 +38,7 @@
           </div>        
         </div>      
         <div class="row centered profile-row" *ngIf="profilePage && disableButton">
-          <button class="btn waves-effect col l4 s8 action" (click)="profileAction()" [disabled]="!disableButton(user.name, orginalUser.name) && user.pic.value === orginalUser.pic.value">
+          <button class="btn waves-effect col l4 s8 action" type="button" (click)="user.name.pic=user.pic;actionToEdit(user.name)" [disabled]="!disableButton(user.name, orginalUser.name) && user.pic.value === orginalUser.pic.value">
           <div *ngIf="!loading">Cambiar <i class="material-icons right">loop</i></div>
           <div *ngIf="loading">Cargando ...</div>
           </button>
@@ -94,7 +94,7 @@
           </div>
         </div> 
         <div class="row centered profile-row" *ngIf="profilePage && disableButton">
-          <button class="btn waves-effect col l4 s8 action" (click)="profileAction()" [disabled]="!disableButton(user.adress, orginalUser.adress)">
+          <button class="btn waves-effect col l4 s8 action" (click)="actionToEdit(user.adress, userBuilder, ApiService, UserService)" [disabled]="!disableButton(user.adress, orginalUser.adress)">
             <div *ngIf="!loading">Cambiar <i class="material-icons right">loop</i></div>
             <div *ngIf="loading">Cargando ...</div>
           </button>
@@ -130,7 +130,7 @@
           </div>
         </div>
         <div class="row centered profile-row" *ngIf="profilePage && disableButton">
-          <button class="btn waves-effect col l4 s8 action" (click)="profileAction()" [disabled]="!disableButton(user.contact, orginalUser.contact)">
+          <button class="btn waves-effect col l4 s8 action" (click)="actionToEdit(user.contact, userBuilder, ApiService, UserService)" [disabled]="!disableButton(user.contact, orginalUser.contact)">
             <div *ngIf="!loading">Cambiar <i class="material-icons right">loop</i></div>
             <div *ngIf="loading">Cargando ...</div>
           </button>
@@ -166,7 +166,7 @@
           </div>
         </div>      
         <div class="row centered profile-row" *ngIf="profilePage && disableButton">
-          <button class="btn waves-effect col l4 s8 action" (click)="profileAction()" [disabled]="!disableButton(user.access, orginalUser.access)">
+          <button class="btn waves-effect col l4 s8 action" (click)="actionToEdit(user.access, userBuilder, ApiService, UserService)" [disabled]="!disableButton(user.access, orginalUser.access)">
             <div *ngIf="!loading">Cambiar <i class="material-icons right">loop</i></div>
             <div *ngIf="loading">Cargando ...</div>
           </button>

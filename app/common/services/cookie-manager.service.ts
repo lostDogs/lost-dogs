@@ -22,7 +22,8 @@ export class CookieManagerService {
     if (name && sMatch)  {
       try {
         const input = sMatch[1];
-       return JSON.parse(input);
+        return JSON.parse(input);
+
       } catch (e) {
         console.error('error in json parser in get cookie', e);
       }

@@ -19,15 +19,18 @@ export class UserService {
     this.user = {};
     this.errors = {passwordReq: false, userReq: false, invalidUser: false};
     const userCookie: any = this.CookieService.getCookie(this.userCookieName);
+    const userToken: any = this.CookieService.getCookie('authToken');
     if (userCookie) {
       this.user = userCookie;
       this.isAuth = true;
       this.isAvatarSet = true;
     }
+    if (userToken) {
+      this.token = userToken.authToken;
+    }
   }
 
   public setUser(response: any): void {
-    console.log('user >>>>', response);
     this.user.name = response.name || response.username;
     this.user.lastName = response.surname;
     this.user.avatar = response.avatar_url;
@@ -36,10 +39,12 @@ export class UserService {
     this.user.address = response.address;
     this.user.phoneNumber = response.phone_number;
     this.user.username = response.username;
-    this.token = response.token;
     this.isAuth = true;
     this.CookieService.setCookie(this.userCookieName, this.user);
-    this.CookieService.setCookie('authToken', this.token);
+    if (response.token) {
+      this.token = response.token;
+      this.CookieService.setCookie('authToken', {authToken: this.token});
+    }
   }
 
     public getUserLocation(): Promise<any> {
@@ -85,7 +90,6 @@ export class UserService {
 
 
   public loginSucess(data: any): void {
-    console.log('loggin sucess');
     this.loading = false;
       this.setUser(data);
       this.isAvatarSet = true;
@@ -118,6 +122,7 @@ export class UserService {
     this.isAuth = false;
     this.isAvatarSet = false;
     this.CookieService.deleteCookie(this.userCookieName);
+    this.CookieService.deleteCookie('authToken');
     this.user = {};
   }
 }
