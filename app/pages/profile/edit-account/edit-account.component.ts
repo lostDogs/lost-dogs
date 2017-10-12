@@ -64,5 +64,16 @@ export class editAccountComponent {
         return true;
       }
     });
-  }  
+  }
+  public hoverRetainState(): void {
+   $('input[type=text]').focusin((event) => {
+     const idparent: string = $('#'+event.target.id).parents().eq(2)[0].id;
+     $('#' + idparent).addClass('hover');
+   });
+
+      $('input[type=text]').focusout((event) => {
+     const idparent: string = $('#'+event.target.id).parents().eq(2)[0].id;
+     $('#' + idparent).removeClass('hover');
+   });
+  }
 };

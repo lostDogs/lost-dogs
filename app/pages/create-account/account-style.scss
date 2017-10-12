@@ -215,12 +215,14 @@
     height: 100%;
   }
 
-  &:hover {
+  &:hover, &.hover {
     box-shadow: none;
   }
 
   &:hover::before,
-  &:hover::after {
+  &:hover::after,
+  &.hover::before,
+  &.hover::after {
     width: 0;
     height: 0;
     border: 4px solid transparent;

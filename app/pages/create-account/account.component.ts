@@ -40,6 +40,8 @@ export class accountComponent {
   public orginalUser: Iuser;
   @Input()
   public disableButton: (userBlock: any, originalUserBlock: any) => void;
+  @Input()
+  public hoverRetainState: () => void;
 
   constructor (public validate: ValidationService, public api: ApiService, public router: Router, public userService: UserService, public globalService: GlobalFunctionService) {
     this.countries = countryData;
@@ -72,9 +74,11 @@ export class accountComponent {
     };
   }
 
-
   public ngAfterViewInit(): void {
    $('select').material_select();
+   if (this.hoverRetainState)  {
+     this.hoverRetainState();
+   }
    if (this.profilePage && this.userService.user.address.country) {
       $('#country option[value=' + this.userService.user.address.country + ']').attr('selected','selected');
       $('#country').change();
