@@ -1,6 +1,6 @@
-<content  class="create-account">
+<content  class="page create-account">
   <div class="main-title row">
-    <h4>Crea tu cuenta</h4>
+    <h4>{{title}}</h4>
   </div>
   <div class="main-create-account row">
 
@@ -37,6 +37,12 @@
                 <label for="last-name-2" [ngClass]="{'fadeInDown': !user.name.last2.valid && !user.name.last2.value}" [hidden]="!(!user.name.last2.valid && !user.name.last2.value)">Apellido materno es equerido</label> 
           </div>        
         </div>      
+        <div class="row centered profile-row" *ngIf="profilePage && disableButton">
+          <button class="btn waves-effect col l4 s8 action" (click)="profileAction()" [disabled]="!disableButton(user.name, orginalUser.name) && user.pic.value === orginalUser.pic.value">
+          <div *ngIf="!loading">Cambiar <i class="material-icons right">loop</i></div>
+          <div *ngIf="loading">Cargando ...</div>
+          </button>
+        </div>
       </div>
       <div class="account-completed account-block draw" [ngClass]="{'action': user.adress.numberExt.valid && user.adress.adressName.valid && user.adress.postalCode.valid && user.adress.city.valid && user.adress.country.valid && user.adress.numberExt.value && user.adress.adressName.value && user.adress.postalCode.value && user.adress.city.value && user.adress.country.value}">
         <div class="row">
@@ -85,8 +91,14 @@
                <!--  <label for="country" [ngClass]="{'fadeInDown': user.adress.country.valid && createAccount.controls.country && createAccount.controls.country.dirty}" [hidden]="!user.adress.country.valid">Pais</label>
                 <label for="country" [ngClass]="{'fadeInDown': (!user.adress.country.valid && user.adress.country.value)}" [hidden]="!(!user.adress.country.valid && user.adress.country.value)">{{validate.errors.name}}</label>
                 <label for="country" [ngClass]="{'fadeInDown': !user.adress.country.valid && !user.adress.country.value}" [hidden]="!(!user.adress.country.valid && !user.adress.country.value)">Pais es requerido</label>               -->
-          </div>              
-        </div>        
+          </div>
+        </div> 
+        <div class="row centered profile-row" *ngIf="profilePage && disableButton">
+          <button class="btn waves-effect col l4 s8 action" (click)="profileAction()" [disabled]="!disableButton(user.adress, orginalUser.adress)">
+            <div *ngIf="!loading">Cambiar <i class="material-icons right">loop</i></div>
+            <div *ngIf="loading">Cargando ...</div>
+          </button>
+        </div>
       </div>
       <div class="account-completed account-block draw" [ngClass]="{'action': user.contact.email.valid && user.contact.areaCode.valid && user.contact.phone.valid && user.contact.email.value && user.contact.areaCode.value && user.contact.phone.value}">
         <div class="row">
@@ -117,6 +129,12 @@
                 <label for="phone" [ngClass]="{'fadeInDown': !user.contact.phone.valid && !user.contact.phone.value}" [hidden]="!(!user.contact.phone.valid && !user.contact.phone.value)">Telefono celular es requerido</label>
           </div>
         </div>
+        <div class="row centered profile-row" *ngIf="profilePage && disableButton">
+          <button class="btn waves-effect col l4 s8 action" (click)="profileAction()" [disabled]="!disableButton(user.contact, orginalUser.contact)">
+            <div *ngIf="!loading">Cambiar <i class="material-icons right">loop</i></div>
+            <div *ngIf="loading">Cargando ...</div>
+          </button>
+        </div>        
       </div>
       <div class="account-completed account-block draw" [ngClass]="{'action': user.access.userName.valid && user.access.password.valid && user.access.password2.valid && user.access.userName.value && user.access.password.value && user.access.password2.value}">
         <div class="row">
@@ -126,8 +144,8 @@
           </h5>
         </div>         
         <div class="row">
-          <div class="input-field alt-black col l12 s12" [ngClass]="{'wrong-red': !user.access.userName.valid}">
-                <input type="text" name="userName" id="user-name" [(ngModel)]="user.access.userName.value" (keyup)="user.access.userName.valid = validate.userName(user.access.userName.value);"  (change)="user.access.userName.valid = validate.userName(user.access.userName.value);">
+          <div class="input-field alt-black col l12 s12 disabled-blur" [ngClass]="{'wrong-red': !user.access.userName.valid}">
+                <input type="text" name="userName" id="user-name" [disabled]="profilePage" [(ngModel)]="user.access.userName.value" (keyup)="user.access.userName.valid = validate.userName(user.access.userName.value);"  (change)="user.access.userName.valid = validate.userName(user.access.userName.value);">
                 <label for="user-name" [ngClass]="{'fadeInDown': user.access.userName.valid && createAccount.controls.userName && createAccount.controls.userName.dirty}" [hidden]="!user.access.userName.valid">Nombre de usuario</label>
                 <label for="user-name" [ngClass]="{'fadeInDown': (!user.access.userName.valid && user.access.userName.value)}" [hidden]="!(!user.access.userName.valid && user.access.userName.value)">{{validate.errors.userName}}</label>
                 <label for="user-name" [ngClass]="{'fadeInDown': !user.access.userName.valid && !user.access.userName.value}" [hidden]="!(!user.access.userName.valid && !user.access.userName.value)">Nombre de usuario es requerido</label>              
@@ -147,15 +165,20 @@
                 <label for="password2" [ngClass]="{'fadeInDown': !user.access.password2.valid && !user.access.password2.value}" [hidden]="!(!user.access.password2.valid && !user.access.password2.value)">repetirla es requerido</label>              
           </div>
         </div>      
-        
+        <div class="row centered profile-row" *ngIf="profilePage && disableButton">
+          <button class="btn waves-effect col l4 s8 action" (click)="profileAction()" [disabled]="!disableButton(user.access, orginalUser.access)">
+            <div *ngIf="!loading">Cambiar <i class="material-icons right">loop</i></div>
+            <div *ngIf="loading">Cargando ...</div>
+          </button>
+        </div>
       </div>
-      <div class="row centered row-extraspace">
+      <div class="row centered row-extraspace" *ngIf="!profilePage">
         <button class="btn waves-effect col l4 s8 action" type="submit" [disabled]="loading">
         <div *ngIf="!loading">Crear cuenta <i class="material-icons right">perm_identity</i></div>
         <div *ngIf="loading">Cargando ...</div>
         </button>
       </div>
-      <div class="row centered">
+      <div class="row centered" [hidden]="profilePage">
         <div class="privacy-policy">
           <p>Te prometemos que no vamos a <b>compartir</b> tu informacion con nadie mas.Ve nuetras <a href="javascript:void(0)" title="privacy policy"> politicas de privacidad</a>.</p>
         </div>

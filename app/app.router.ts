@@ -6,6 +6,8 @@ import {boardComponent} from './pages/board/board.component';
 import {accountComponent} from './pages/create-account/account.component';
 import {lostComponent} from './pages/lost/lost.component';
 import {profileComponent} from './pages/profile/profile.component';
+import {editAccountComponent} from './pages/profile/edit-account/edit-account.component';
+import {mainProfileComponent} from './pages/profile/main-profile/main-profile.component';
 import {selectionComponent} from './pages/selection/selection.component';
 import {LoginComponent} from './pages/login/login.component';
 import {DateComponent} from './pages/lost-found-common/date/date.component';
@@ -17,6 +19,7 @@ import {ColorComponent} from './pages/lost-found-common/color/color.component';
 import {ExtrasComponent} from './pages/lost-found-common/extras/extras.component';
 import {DetailsComponent} from './pages/lost-found-common/pic-details/pic-details.component';
 import {ReviewComponent} from './pages/lost-found-common/review/review.component';
+
 const self = this;
 self.pathBuild = (pathName: string): any => {
   const pathObj = {path: pathName, component: lostComponent,
@@ -42,7 +45,14 @@ export const router: Routes = [
   {path: 'account', component: accountComponent},
   self.pathBuild('lost'),
   self.pathBuild('found'),
-  {path: 'profile', component: profileComponent},
+  {path: 'profile', component: profileComponent, 
+    children: [
+      { path:'edit', component: editAccountComponent},
+      {path:'main', component: mainProfileComponent},
+      { path: '', redirectTo: 'main' , pathMatch: 'full'},
+      {path: '**', redirectTo: 'main'}
+    ]
+  },
   {path: 'selection', component: selectionComponent},
   {path: 'login', component: LoginComponent},
   { path: '', redirectTo: 'home' , pathMatch: 'full'},
@@ -73,5 +83,7 @@ export const routerComponents = [
   ColorComponent,
   ExtrasComponent,
   DetailsComponent,
-  ReviewComponent
+  ReviewComponent,
+  editAccountComponent,
+  mainProfileComponent
 ];

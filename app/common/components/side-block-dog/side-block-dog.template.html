@@ -1,0 +1,13 @@
+<section class="sideblock">
+  <div class="clickable left"[ngStyle]="{'height': scrolling.nativeElement.clientHeight + 'px'}" (click)="goLeft()" [ngClass]="{'active': pressedLeft, 'blur-filter': dogCard.open}" *ngIf="showArrows && scrolling.nativeElement.scrollLeft">
+    <i class="material-icons">navigate_before</i>
+  </div>
+  <div class="scroll-section" (scroll)="onScroll($event)" #ScollSection>
+    <div class="" id="rowSide" [ngStyle]="{'width': rowWidth}">
+      <dog-card *ngFor="let dog of dogData;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt"></dog-card>
+    </div>
+  </div>
+  <div class="clickable right"[ngStyle]="{'height': scrolling.nativeElement.clientHeight + 'px'}" (click)="goRight()" [ngClass]="{'active': pressedRight, 'blur-filter': dogCard.open}" *ngIf="showArrows && scrolling.nativeElement.scrollLeft!==maxScrollLeft ">
+    <i class="material-icons">navigate_next</i>
+  </div>
+</section>

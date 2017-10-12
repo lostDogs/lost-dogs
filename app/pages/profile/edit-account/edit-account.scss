@@ -1,0 +1,57 @@
+@import '../../../common/styles/variables.scss';
+
+editaccount {
+  .disabled-blur {
+    filter: blur(1px);
+    @media screen and (max-device-width: $screen-mobile-max) {
+      filter: blur(3px);
+    }
+  }
+  .float-button {
+    position: absolute; 
+  }
+  div.profile-row {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    margin-bottom: 0;
+    position: absolute;
+    transition: none;
+  }
+  @media screen and (max-device-width: $screen-mobile-max) {
+    .file-field.input-field  {
+      margin-bottom: 60px;
+      margin-top: 0;
+    }
+    
+  }
+  .profile-pic img { 
+      transform: scale(1.5);
+      background-color: $lightGrey;
+      transition: 1s;
+  }
+  .draw {
+    &:hover {
+    @media screen and (max-device-width: $screen-mobile-max) {
+      .file-field.input-field  {
+        margin-bottom: 0;
+        margin-top: 55px;
+      }
+    }      
+      .profile-pic img {
+        transform: none;
+      }      
+    }
+    &.action:hover {
+      div.profile-row {
+        width: auto;
+        height: auto;
+        opacity: 1;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        position: relative;
+        transition: opacity 1s;
+      }
+    }
+  }
+}

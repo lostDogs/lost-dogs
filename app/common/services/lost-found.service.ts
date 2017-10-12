@@ -52,7 +52,7 @@ export class LostFoundService {
 
   public goTo(index: number): void {
     const toPage = '/' + this.parentPage + '/' + this.sequence[index];
-    this.router.navigateByUrl(toPage)
+    this.router.navigateByUrl(toPage);
   }
 
   public goToReview(): void {

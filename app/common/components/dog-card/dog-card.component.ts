@@ -37,6 +37,7 @@ export class DogCardComponent {
   }
 
   public ngAfterViewInit(): void {
+      this.dogCardService.width = this.elRef.nativeElement.clientWidth;
      $('.tooltipped').tooltip({delay: 100});
   }
 }

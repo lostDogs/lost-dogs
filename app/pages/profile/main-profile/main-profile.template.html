@@ -1,0 +1,48 @@
+<div class="page main-profile create-account"> 
+<div class="main-title row"  [ngClass]="{'blur-filter': dogCardService.open}">
+  <h4> Mi perfil</h4>
+</div>
+  <div class="row info" (click)="router.navigate(['/profile/edit']);"  [ngClass]="{'blur-filter': dogCardService.open}">
+    <div class="col l6 s12 offset-l3">
+      <div class="row file-field">
+        <div class="profile-pic blur-hover">
+          <img [src]="userService.user.avatar" alt="image de perfil" class="circle width-center" id="prof-pic">
+        </div>
+      </div> 
+      <div class="stars text-centered blur-hover">
+        <i class="material-icons Small">star</i>
+        <i class="material-icons Small">star</i>
+        <i class="material-icons Small">star</i>
+        <i class="material-icons Small">star_half</i>
+        <i class="material-icons Small">star_border</i>
+      </div>
+      <div class="row names text-centered blur-hover">
+        <h4>{{userService.user.name}}</h4>
+        <h4>{{userService.user.lastName}}</h4>
+        <h4>{{userService.user.lastName2}}</h4>
+      </div>
+      <div class="edit-text text-centered">
+        <h3>Editar</h3>
+      </div>
+      <div class="edit-text-mobile centered">
+        <h3>Editar</h3>
+      </div>
+    </div>
+  </div>
+  <div class="sub-title row text-centered"  [ngClass]="{'blur-filter': dogCardService.open}">
+    <h3  class="col l10 s12 offset-l1"> <i class="small material-icons circle-white">search</i>Mis perdidos</h3>
+  </div>
+  <div class="row info my-losts">
+    <div class="col l10 s12 offset-l1" [ngClass]="{'no-border': dogCardService.open}">
+      <side-block-dog [dogData]="[1,2,3,4,5,6]"></side-block-dog>
+    </div>
+  </div>
+  <div class="sub-title row text-centered"  [ngClass]="{'blur-filter': dogCardService.open}">
+    <h3  class="col l10 s12 offset-l1"> <i class="small material-icons circle-white">pets</i>Mis Encontrados</h3>
+  </div>
+  <div class="row info my-founds">
+    <div class="col l10 s12 offset-l1" [ngClass]="{'no-border': dogCardService.open}">
+      <side-block-dog [dogData]="[1,2,3,4,5,6]"></side-block-dog>
+    </div>
+  </div>
+</div>

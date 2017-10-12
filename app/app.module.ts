@@ -19,6 +19,7 @@ import {TextScrollComponent} from './common/components/text-scroll/text-scroll.c
 import {DatePickerComponent} from './common/components/date-picker/date-picker.component';
 import {MapComponent} from './common/components/map/map.component';
 import {SideBlockComponent} from './common/components/side-block/side-block.component';
+import {SideBlockDogComponent} from './common/components/side-block-dog/side-block-dog.component'
 import {GenderBlockComponent} from './common/components/gender-block/gender-block.component';
 import {BreedBlockComponent} from './common/components/breed-block/breed-block.component';
 import {SizeBlockComponent} from './common/components/size-block/size-block.component';
@@ -41,7 +42,8 @@ import {ExtrasBlockComponent} from './common/components/extras-block/extras-bloc
   BreedBlockComponent,
   SizeBlockComponent,
   ColorBlockComponent,
-  ExtrasBlockComponent
+  ExtrasBlockComponent,
+  SideBlockDogComponent
   ],
   providers: [
     {provide: GlobalFunctionService, useClass: GlobalFunctionService},

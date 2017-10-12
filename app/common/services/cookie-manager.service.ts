@@ -21,7 +21,7 @@ export class CookieManagerService {
     const sMatch = (' ' + document.cookie).match(regex);
     if (name && sMatch)  {
       try {
-        const input = sMatch.input.split('=')[1];
+        const input = sMatch[1];
        return JSON.parse(input);
       } catch (e) {
         console.error('error in json parser in get cookie', e);

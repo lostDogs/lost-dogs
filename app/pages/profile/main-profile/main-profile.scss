@@ -1,0 +1,99 @@
+@import '../../../common/styles/variables.scss';
+main-profile {
+  .page {
+    color: white;
+  }
+  .text-centered {
+    text-align: center;
+  }
+   side-block-dog section {
+    padding: 0;
+   }
+  .row.sub-title {
+    color: black;
+    h3 {
+      .material-icons {
+        margin-right: 4px;
+        vertical-align: text-top;
+        font-size: 3rem;
+        border: 2px solid;
+        border-radius: 50%;
+        background: white;
+        @media screen and (max-device-width: $screen-mobile-max) {
+          font-size: 5rem;
+        }
+      }
+    }
+  }  
+  .row.info {
+    margin-top: 20px;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+    div.no-border {
+      border: none;
+      box-shadow: none;
+    }
+    .col {
+      position: relative;
+      border: 4px solid white;
+      border-radius: 12px;
+      @media screen and (max-device-width: $screen-mobile-max) {
+        border-radius: 25px;
+        border: 8px solid white;
+      }
+      transition: 1s;
+      cursor: pointer;
+      padding: 0;
+      box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      &:hover {
+        .blur-hover {
+          filter: blur(3px);
+        }
+        .edit-text {
+          opacity: 1;
+          @media screen and (max-device-width: $screen-mobile-max) {
+            opacity: 0;
+          }
+        }
+      }
+      .row.names {
+        h4 {
+          display: inline-block;
+        }
+      }
+      .row.file-field {
+        margin-top: 20px;
+      }
+    }
+    .blur-hover {
+      filter: none;
+      transition: 1s;
+    }
+    .edit-text {
+      position: absolute;
+      top: 30%;
+      left: 0;
+      right: 0;
+      margin: auto;
+      cursor: pointer;
+      opacity: 0;
+      transition: 1s;
+      h3 {
+        font-weight: 600;
+        text-shadow: 5px 2px 13px black;
+      }
+    }
+    .edit-text-mobile {
+      color: $lightGrey;
+      background-color: white;
+      margin: 0;
+      height: 150px;
+      display: none;
+      @media screen and (max-device-width: $screen-mobile-max) {
+        display: flex;
+      }
+    }
+  }
+}
