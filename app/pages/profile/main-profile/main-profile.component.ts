@@ -10,6 +10,7 @@ import {DogCardService} from '../../../common/services/dog-card.service';
 })
 export class mainProfileComponent {
   constructor (public userService: UserService, public router: Router, public dogCardService: DogCardService) {
+    this.dogCardService.open = false;
   }
   public ngOnInit(): void {
   }

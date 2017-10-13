@@ -38,7 +38,7 @@
           </div>        
         </div>      
         <div class="row centered profile-row" *ngIf="profilePage && disableButton">
-          <button class="btn waves-effect col l4 s8 action" type="button" (click)="user.name.pic=user.pic;actionToEdit(user.name)" [disabled]="!disableButton(user.name, orginalUser.name) && user.pic.value === orginalUser.pic.value">
+          <button class="btn waves-effect col l4 s8 action" type="button" (click)="user.name.pic=user.pic;actionToEdit(user.name)" [disabled]="(!disableButton(user.name, orginalUser.name) && user.pic.value === orginalUser.pic.value) || loading">
           <div *ngIf="!loading">Cambiar <i class="material-icons right">loop</i></div>
           <div *ngIf="loading">Cargando ...</div>
           </button>
@@ -94,13 +94,13 @@
           </div>
         </div> 
         <div class="row centered profile-row" *ngIf="profilePage && disableButton">
-          <button class="btn waves-effect col l4 s8 action" (click)="actionToEdit(user.adress, userBuilder, ApiService, UserService)" [disabled]="!disableButton(user.adress, orginalUser.adress)">
+          <button class="btn waves-effect col l4 s8 action" type="button" (click)="actionToEdit(user.adress)" [disabled]="!disableButton(user.adress, orginalUser.adress) || loading">
             <div *ngIf="!loading">Cambiar <i class="material-icons right">loop</i></div>
             <div *ngIf="loading">Cargando ...</div>
           </button>
         </div>
       </div>
-      <div class="account-completed account-block draw" [ngClass]="{'action': user.contact.email.valid && user.contact.areaCode.valid && user.contact.phone.valid && user.contact.email.value && user.contact.areaCode.value && user.contact.phone.value}">
+      <div class="account-completed account-block draw" id="contact-block" [ngClass]="{'action': user.contact.email.valid && user.contact.areaCode.valid && user.contact.phone.valid && user.contact.email.value && user.contact.areaCode.value && user.contact.phone.value}">
         <div class="row">
           <h5  class="col l4 s12">
             Contato
@@ -130,13 +130,13 @@
           </div>
         </div>
         <div class="row centered profile-row" *ngIf="profilePage && disableButton">
-          <button class="btn waves-effect col l4 s8 action" (click)="actionToEdit(user.contact, userBuilder, ApiService, UserService)" [disabled]="!disableButton(user.contact, orginalUser.contact)">
+          <button class="btn waves-effect col l4 s8 action" type="button" (click)="actionToEdit(user.contact)" [disabled]="!disableButton(user.contact, orginalUser.contact) || loading">
             <div *ngIf="!loading">Cambiar <i class="material-icons right">loop</i></div>
             <div *ngIf="loading">Cargando ...</div>
           </button>
         </div>        
       </div>
-      <div class="account-completed account-block draw" [ngClass]="{'action': user.access.userName.valid && user.access.password.valid && user.access.password2.valid && user.access.userName.value && user.access.password.value && user.access.password2.value}">
+      <div class="account-completed account-block draw" id="access-block" [ngClass]="{'action': user.access.userName.valid && user.access.password.valid && user.access.password2.valid && user.access.userName.value && user.access.password.value && user.access.password2.value}">
         <div class="row">
           <h5 class="col l4 s12">
             Usuario
@@ -166,7 +166,7 @@
           </div>
         </div>      
         <div class="row centered profile-row" *ngIf="profilePage && disableButton">
-          <button class="btn waves-effect col l4 s8 action" (click)="actionToEdit(user.access, userBuilder, ApiService, UserService)" [disabled]="!disableButton(user.access, orginalUser.access)">
+          <button class="btn waves-effect col l4 s8 action" type="button" (click)="actionToEdit(user.access)" [disabled]="!disableButton(user.access, orginalUser.access) || loading">
             <div *ngIf="!loading">Cambiar <i class="material-icons right">loop</i></div>
             <div *ngIf="loading">Cargando ...</div>
           </button>

@@ -66,14 +66,15 @@ export class editAccountComponent {
     });
   }
   public hoverRetainState(): void {
-   $('input[type=text]').focusin((event) => {
-     const idparent: string = $('#'+event.target.id).parents().eq(2)[0].id;
-     $('#' + idparent).addClass('hover');
-   });
+    const jqueryObj: JQuery =  $('input[type=text],input[type=password]');
+    jqueryObj.focusin((event) => {
+      const idparent: string = $('#'+event.target.id).parents().eq(2)[0].id;
+      $('#' + idparent).addClass('hover');
+    });
 
-      $('input[type=text]').focusout((event) => {
-     const idparent: string = $('#'+event.target.id).parents().eq(2)[0].id;
-     $('#' + idparent).removeClass('hover');
-   });
+    jqueryObj.focusout((event) => {
+      const idparent: string = $('#'+event.target.id).parents().eq(2)[0].id;
+      $('#' + idparent).removeClass('hover');
+    });
   }
 };

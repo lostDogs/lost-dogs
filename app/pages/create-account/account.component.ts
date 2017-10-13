@@ -254,8 +254,8 @@ export class accountComponent {
       console.log('token', this.userService.token);
       this.api.put(url, userToEdit, headers).subscribe(
         data => {
-          console.log('data', data.json());
           this.userService.setUser(data.json());
+          this.loading = false;
           this.router.navigate(['/profile/main']);
         },
         e => {
