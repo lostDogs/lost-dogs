@@ -27,9 +27,9 @@
   <ul id="slide-out" class="side-nav">
       <li><div class="user-profile">
         <div class="user-background" *ngIf="userService.isAuth">
-          <a routerLink="" class="profile-link"><img *ngIf="userService.isAvatarSet" src="{{userService.user.avatar}}" alt="profile picture" class="circle profile-mobile"></a>
-          <a routerLink="" class="row">{{userService.user.name}}</a>
-          <a routerLink="">{{userService.user.email}}</a>
+          <a routerLink="/profile/edit" class="profile-link"><img *ngIf="userService.isAvatarSet" src="{{userService.user.avatar}}" alt="profile picture" class="circle profile-mobile"></a>
+          <a routerLink="/profile/edit" class="row">{{userService.user.name}}</a>
+          <a routerLink="/profile/edit">{{userService.user.email}}</a>
         </div>
         <div class="no-user-background centered" *ngIf="!userService.isAuth">
           <a routerLink="/home">
