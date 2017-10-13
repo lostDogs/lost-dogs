@@ -2,8 +2,8 @@
 <div class="main-title row"  [ngClass]="{'blur-filter': dogCardService.open}">
   <h4> Mi cuenta</h4>
 </div>
-  <div class="row info" (click)="router.navigate(['/profile/edit']);"  [ngClass]="{'blur-filter': dogCardService.open}">
-    <div class="col l6 s12 offset-l3">
+  <div class="row info" [ngClass]="{'blur-filter': dogCardService.open}">
+    <div class="col l6 s12 offset-l3" (click)="router.navigate(['/profile/edit']);">
       <div class="row file-field">
         <div class="profile-pic blur-hover">
           <img [src]="userService.user.avatar" alt="image de perfil" class="circle width-center" id="prof-pic">

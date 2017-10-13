@@ -40,6 +40,8 @@ export class accountComponent {
   public orginalUser: Iuser;
   @Input()
   public disableButton: (userBlock: any, originalUserBlock: any) => void;
+  @Input()
+  public hoverRetainState: () => void;
 
   constructor (public validate: ValidationService, public api: ApiService, public router: Router, public userService: UserService, public globalService: GlobalFunctionService) {
     this.countries = countryData;
@@ -72,9 +74,11 @@ export class accountComponent {
     };
   }
 
-
   public ngAfterViewInit(): void {
    $('select').material_select();
+   if (this.hoverRetainState)  {
+     this.hoverRetainState();
+   }
    if (this.profilePage && this.userService.user.address.country) {
       $('#country option[value=' + this.userService.user.address.country + ']').attr('selected','selected');
       $('#country').change();
@@ -188,34 +192,39 @@ export class accountComponent {
   }
 
   public afterCreateError(e: any): void {
-    this.loading = false;
     let errorMessage: string = this.globalService.parseJsonError(e);
     this.globalService.setErrorMEssage(errorMessage);
     this.globalService.openErrorModal();
+    this.loading = false;
+  }
+
+  public userBuilder(user: Iuser): any {
+    const userPost: any = {
+      'name': user.name.first.value,
+      'surname':  user.name.last1.value,
+      'lastname':  user.name.last2.value,
+      'address': {
+        'ext_number': user.adress.numberExt.value,
+        'neighborhood': user.adress.adressName.value,
+        'zip_code': user.adress.postalCode.value,
+        'city': user.adress.city.value,
+        'country': user.adress.country.value
+      },
+      'phone_number': {
+        'number': user.contact.phone.value,
+        'area_code': user.contact.areaCode.value
+      },
+      'email': user.contact.email.value,
+      'username': user.access.userName.value,
+      'confirm_password': user.access.password.value,
+      'password': user.access.password2.value,
+      'avatarFileType': 'image/jpeg'
+    };
+    return userPost;
   }
 
   public postUser(): void {
-    const userPost: any = {
-      'name': this.user.name.first.value,
-      'surname':  this.user.name.last1.value,
-      'lastname':  this.user.name.last2.value,
-      'address': {
-        'ext_number': this.user.adress.numberExt.value,
-        'neighborhood': this.user.adress.adressName.value,
-        'zip_code': this.user.adress.postalCode.value,
-        'city': this.user.adress.city.value,
-        'country': this.user.adress.country.value
-      },
-      'phone_number': {
-        'number': this.user.contact.phone.value,
-        'area_code': this.user.contact.areaCode.value
-      },
-      'email': this.user.contact.email.value,
-      'username': this.user.access.userName.value,
-      'confirm_password': this.user.access.password.value,
-      'password': this.user.access.password2.value,
-      'avatarFileType': 'image/jpeg'
-    }
+    const userPost: any = this.userBuilder(this.user);
     this.loading = true;
     this.api.post('https://fierce-falls-25549.herokuapp.com/api/users', userPost).subscribe(
       data => this.afterCreateData(data),
@@ -223,4 +232,36 @@ export class accountComponent {
       () => this.toHomePage()
       );
   }
+
+   public actionToEdit(userBlock: any): void {
+    // this function is being executed on the create-account.template.html that is why i am passing the accountCtrl.
+    this.loading = true;
+    const objKeys: string[] = Object.keys(userBlock);
+    
+    const valid: boolean = !objKeys.some((userElement: string, userElIndex: number) => {
+      if (!userBlock[userElement].valid) {
+        return true;
+      }
+    });
+    
+    if (valid) {
+      const userToEdit: any = this.userBuilder(this.user);
+      const url: string = 'https://fierce-falls-25549.herokuapp.com/api/users/' + this.userService.user.username;
+      const headers: any = {
+        'Content-Type': 'application/json',
+        'Authorization': 'token ' + this.userService.token
+      };
+      console.log('token', this.userService.token);
+      this.api.put(url, userToEdit, headers).subscribe(
+        data => {
+          this.userService.setUser(data.json());
+          this.loading = false;
+          this.router.navigate(['/profile/main']);
+        },
+        e => {
+          this.afterCreateError(e);
+        },
+      )
+    }
+  } 
 };

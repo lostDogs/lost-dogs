@@ -5,7 +5,7 @@
   <div class="main-create-account row">
 
     <form name="createaccount"  #createAccount="ngForm" (ngSubmit)="createUser(createAccount)" class="col l6 s12 offset-l3 form-create-account">
-      <div class="account-completed account-block draw" [ngClass]="{'action': user.name.first.valid && user.name.last1.valid && user.name.last2.valid && user.name.first.value && user.name.last1.value && user.name.last2.value &&  (user.pic.value !== './static/profile-undef.png') && user.pic.valid}">
+      <div class="account-completed account-block draw" id="name-block" [ngClass]="{'action': user.name.first.valid && user.name.last1.valid && user.name.last2.valid && user.name.first.value && user.name.last1.value && user.name.last2.value &&  (user.pic.value !== './static/profile-undef.png') && user.pic.valid}">
         <div class="file-field input-field alt-black">
           <div class="profile-pic">
             <div  class="img-txt" *ngIf="user.pic.valid && user.pic.value ==='./static/profile-undef.png'">
@@ -38,13 +38,13 @@
           </div>        
         </div>      
         <div class="row centered profile-row" *ngIf="profilePage && disableButton">
-          <button class="btn waves-effect col l4 s8 action" (click)="profileAction()" [disabled]="!disableButton(user.name, orginalUser.name) && user.pic.value === orginalUser.pic.value">
+          <button class="btn waves-effect col l4 s8 action" type="button" (click)="user.name.pic=user.pic;actionToEdit(user.name)" [disabled]="(!disableButton(user.name, orginalUser.name) && user.pic.value === orginalUser.pic.value) || loading">
           <div *ngIf="!loading">Cambiar <i class="material-icons right">loop</i></div>
           <div *ngIf="loading">Cargando ...</div>
           </button>
         </div>
       </div>
-      <div class="account-completed account-block draw" [ngClass]="{'action': user.adress.numberExt.valid && user.adress.adressName.valid && user.adress.postalCode.valid && user.adress.city.valid && user.adress.country.valid && user.adress.numberExt.value && user.adress.adressName.value && user.adress.postalCode.value && user.adress.city.value && user.adress.country.value}">
+      <div class="account-completed account-block draw"  id="address-block" [ngClass]="{'action': user.adress.numberExt.valid && user.adress.adressName.valid && user.adress.postalCode.valid && user.adress.city.valid && user.adress.country.valid && user.adress.numberExt.value && user.adress.adressName.value && user.adress.postalCode.value && user.adress.city.value && user.adress.country.value}">
         <div class="row">
           <h5 class="col l4 s12" >
             Domicilio
@@ -94,13 +94,13 @@
           </div>
         </div> 
         <div class="row centered profile-row" *ngIf="profilePage && disableButton">
-          <button class="btn waves-effect col l4 s8 action" (click)="profileAction()" [disabled]="!disableButton(user.adress, orginalUser.adress)">
+          <button class="btn waves-effect col l4 s8 action" type="button" (click)="actionToEdit(user.adress)" [disabled]="!disableButton(user.adress, orginalUser.adress) || loading">
             <div *ngIf="!loading">Cambiar <i class="material-icons right">loop</i></div>
             <div *ngIf="loading">Cargando ...</div>
           </button>
         </div>
       </div>
-      <div class="account-completed account-block draw" [ngClass]="{'action': user.contact.email.valid && user.contact.areaCode.valid && user.contact.phone.valid && user.contact.email.value && user.contact.areaCode.value && user.contact.phone.value}">
+      <div class="account-completed account-block draw" id="contact-block" [ngClass]="{'action': user.contact.email.valid && user.contact.areaCode.valid && user.contact.phone.valid && user.contact.email.value && user.contact.areaCode.value && user.contact.phone.value}">
         <div class="row">
           <h5  class="col l4 s12">
             Contato
@@ -130,13 +130,13 @@
           </div>
         </div>
         <div class="row centered profile-row" *ngIf="profilePage && disableButton">
-          <button class="btn waves-effect col l4 s8 action" (click)="profileAction()" [disabled]="!disableButton(user.contact, orginalUser.contact)">
+          <button class="btn waves-effect col l4 s8 action" type="button" (click)="actionToEdit(user.contact)" [disabled]="!disableButton(user.contact, orginalUser.contact) || loading">
             <div *ngIf="!loading">Cambiar <i class="material-icons right">loop</i></div>
             <div *ngIf="loading">Cargando ...</div>
           </button>
         </div>        
       </div>
-      <div class="account-completed account-block draw" [ngClass]="{'action': user.access.userName.valid && user.access.password.valid && user.access.password2.valid && user.access.userName.value && user.access.password.value && user.access.password2.value}">
+      <div class="account-completed account-block draw" id="access-block" [ngClass]="{'action': user.access.userName.valid && user.access.password.valid && user.access.password2.valid && user.access.userName.value && user.access.password.value && user.access.password2.value}">
         <div class="row">
           <h5 class="col l4 s12">
             Usuario
@@ -166,7 +166,7 @@
           </div>
         </div>      
         <div class="row centered profile-row" *ngIf="profilePage && disableButton">
-          <button class="btn waves-effect col l4 s8 action" (click)="profileAction()" [disabled]="!disableButton(user.access, orginalUser.access)">
+          <button class="btn waves-effect col l4 s8 action" type="button" (click)="actionToEdit(user.access)" [disabled]="!disableButton(user.access, orginalUser.access) || loading">
             <div *ngIf="!loading">Cambiar <i class="material-icons right">loop</i></div>
             <div *ngIf="loading">Cargando ...</div>
           </button>

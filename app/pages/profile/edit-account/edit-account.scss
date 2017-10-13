@@ -31,7 +31,8 @@ editaccount {
       transition: 1s;
   }
   .draw {
-    &:hover {
+    &:hover, &.hover {
+      padding-bottom: 50px;
     @media screen and (max-device-width: $screen-mobile-max) {
       .file-field.input-field  {
         margin-bottom: 0;
@@ -42,7 +43,7 @@ editaccount {
         transform: none;
       }      
     }
-    &.action:hover {
+    &.action:hover,&.action.hover {
       div.profile-row {
         width: auto;
         height: auto;

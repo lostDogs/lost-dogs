@@ -1,6 +1,9 @@
 import { Component} from '@angular/core';
-import {Iuser} from '../../create-account/account.component';
+import {Iuser, formObj} from '../../create-account/account.component';
 import {UserService} from '../../../common/services/user.service';
+import {ApiService} from '../../../common/services/api.service';
+import {accountComponent} from '../../create-account/account.component'
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'editaccount',
@@ -49,6 +52,7 @@ export class editAccountComponent {
   }
 
   public disableButton(userBlock: any, originalUserBlock: any): boolean {
+     // this function is being executed on the create-account.template.html every dom interaction.
     const objKeys = Object.keys(userBlock);
     return objKeys.some((userElement: string, userElementIndex: number) => {
       if (userBlock[userElement].value) {
@@ -60,5 +64,17 @@ export class editAccountComponent {
         return true;
       }
     });
-  }  
+  }
+  public hoverRetainState(): void {
+    const jqueryObj: JQuery =  $('input[type=text],input[type=password]');
+    jqueryObj.focusin((event) => {
+      const idparent: string = $('#'+event.target.id).parents().eq(2)[0].id;
+      $('#' + idparent).addClass('hover');
+    });
+
+    jqueryObj.focusout((event) => {
+      const idparent: string = $('#'+event.target.id).parents().eq(2)[0].id;
+      $('#' + idparent).removeClass('hover');
+    });
+  }
 };
