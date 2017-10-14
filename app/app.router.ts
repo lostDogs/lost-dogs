@@ -19,6 +19,7 @@ import {ColorComponent} from './pages/lost-found-common/color/color.component';
 import {ExtrasComponent} from './pages/lost-found-common/extras/extras.component';
 import {DetailsComponent} from './pages/lost-found-common/pic-details/pic-details.component';
 import {ReviewComponent} from './pages/lost-found-common/review/review.component';
+import {InformationComponent} from './pages/information/information.component';
 
 const self = this;
 self.pathBuild = (pathName: string): any => {
@@ -55,6 +56,7 @@ export const router: Routes = [
   },
   {path: 'selection', component: selectionComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'info/:param', component: InformationComponent},
   { path: '', redirectTo: 'home' , pathMatch: 'full'},
   {path: '**', redirectTo: 'home'}
 ];
@@ -85,5 +87,6 @@ export const routerComponents = [
   DetailsComponent,
   ReviewComponent,
   editAccountComponent,
-  mainProfileComponent
+  mainProfileComponent,
+  InformationComponent
 ];
