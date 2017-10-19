@@ -74,7 +74,9 @@ export class FormPaymentComponent {
     $('select').material_select();
     $('#cc-number').mask('0000-0000-0000-0000');
     $('#ccv'). mask('0000');
-    this.creaditCard.ownerName.value = this.userService.user.name + ' ' + this.userService.user.lastName + ' ' + this.userService.user.lastName2;
+    if (this.userService.isAuth) {
+      this.creaditCard.ownerName.value = this.userService.user.name + ' ' + this.userService.user.lastName + ' ' + this.userService.user.lastName2;
+    }
   }
   public pay(): void {
     this.creaditCard.type.value = this.validate.cardType;
