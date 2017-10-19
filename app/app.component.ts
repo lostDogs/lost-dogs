@@ -1,6 +1,7 @@
 import { Component} from '@angular/core';
 import {ViewEncapsulation} from '@angular/core';
 import {Router, NavigationEnd} from '@angular/router';
+import {GlobalFunctionService} from './common/services/global-function.service'
 import 'jquery';
 import 'materialize-css/dist/js/materialize.js';
 import 'materialize-css/bin/materialize.css';
@@ -14,9 +15,10 @@ import 'hammer-timejs';
   styles: [require('./main.scss')]
 })
 export class appComponent {
-  constructor (public router: Router) {
+  constructor (public router: Router, public globalService: GlobalFunctionService) {
     this.router.events.subscribe(data => {
       if (data instanceof NavigationEnd) {
+        this.globalService.paymentRewardSucess = undefined;
         window.scroll(0,0);
       }
     });

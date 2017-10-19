@@ -1,0 +1,186 @@
+@import '../../../common/styles/variables.scss';
+.card-container {
+  perspective: 1000px;
+  width: 550px;
+  height: 350px;
+  position: relative;
+  &.mobile {
+    display: none;
+  }
+  @media screen and (max-device-width: $screen-mobile-max) {
+    width: 800px;
+    height: 605px;
+    margin-top: 50px;
+    display: none;
+    &.mobile {
+      display: block;
+    }
+  }
+  .credit-card {
+    font-family: $cardFont, cursive;
+    font-size: 2.5rem;
+    color: $disabledGrey;
+    text-shadow: -1px 1px 1px #000;
+    letter-spacing: 3px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    cursor: pointer;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      font-size: 5rem;
+      text-shadow: -3px 3px 3px #000;
+    }
+    .card-bg {
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 500px;
+      height: 316px;
+      border-radius: 17px;
+      backface-visibility: hidden;
+      position: absolute;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      width: 800px;
+      height: 505px;
+      border-radius: 34px;      
+    }
+    }
+    .card-front {
+      background-image: url('http://cdn.lostdog.mx/assets/img/credit-card-compressed.jpg');
+    }
+    .card-back {
+     background-image: url('http://cdn.lostdog.mx/assets/img/credit-card-back-compressed.jpg');
+     transform: rotateY( 180deg );
+    }
+
+    &.flipped {
+        transform: rotateY( 180deg );
+    }
+       &.full-rotate {
+        transform: rotateY( 360deg );
+    }
+ 
+
+    .number {
+      position: absolute;
+      padding-top: 150px;
+      text-align: center;
+      width: 500px;
+      @media screen and (max-device-width: $screen-mobile-max) {
+        width: 100%;
+        top: 90px;
+      }
+    }
+    .exp-date {
+      position: absolute;
+      top: 205px;
+      left: 275px;
+      font-size: 2.2rem;    
+      @media screen and (max-device-width: $screen-mobile-max) {
+        font-size: 4.2rem;
+        top: 330px;
+        left: 420px;
+      }
+    }
+    .name {
+      position: absolute;
+      top: 262px;
+      left: 50px;
+      font-size: 2rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      @media screen and (max-device-width: $screen-mobile-max) {
+        font-size: 4rem;
+        top: 415px;
+      }
+    }
+    .ccv {
+      color: black;
+      top: 105px;
+      position: absolute;
+      left: 260px;
+      font-size: 1.8rem;
+      text-shadow: none;
+      @media screen and (max-device-width: $screen-mobile-max) {
+        top: 170px;
+        left: 425px;
+        font-size: 3rem;        
+      }
+    }
+    .card-type {
+      position: relative;
+      .logo {
+      width: 120px;
+      position: absolute;
+      right: 15px;
+      top: 30px;
+      @media screen and (max-device-width: $screen-mobile-max) {
+        width: 200px;
+        right: 40px;
+        top: 45px;
+      }
+      }
+    }
+  }  
+}
+form-payment {
+  .submit {
+    margin-top: 40px;
+    width: 100%;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin-top: 80px;
+    }
+  }
+  .total {
+    text-align: inherit;
+  * {
+    display: inline-block;
+  }
+  .money {
+    color: $greenMat;
+  }
+  @media screen and (max-device-width: $screen-mobile-max) {
+    text-align: center;
+    .money {
+      font-size: 6rem;
+    }
+  }
+}
+  .todo {
+    text-align: center;
+  }
+  ul.dropdown-content.select-dropdown {
+    &.dropdown-content.select-dropdown {
+      li:first-of-type > span {
+        padding-left: 5px;
+      }
+    }
+  }
+  label.centered {
+    width: auto;
+  }
+  @media screen and (max-device-width: $screen-mobile-max) {
+    .create-account .input-field {
+      margin-top: 70px;
+    }
+    .mobile-centered {
+      text-align: center;
+    }
+    div.col.mobile-left {
+      padding-left: 90px;
+    }
+    .create-account .input-field span.caret{
+      right: 20px;
+    }
+    input[type='text'] {
+      text-align: center;
+    }
+    label.centered {
+      width: 100%;
+      text-align: center;
+    }    
+  }
+}

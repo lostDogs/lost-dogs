@@ -1,0 +1,22 @@
+@import '../../common/styles/variables.scss';
+.info {
+  background-color: $lightGrey;
+  .main-content {
+    padding: 30px 0;
+    margin-bottom: 0;
+    .subtitle {
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 500;
+    }
+  }
+}
+
+payment {
+  div.main-title {
+    transition: background-color 2s;
+    &.sucess-pay {
+        background-color: $greenMat;
+      }
+  }
+}

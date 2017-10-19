@@ -89,3 +89,23 @@ button.btn {
   }
 }
 
+[type="checkbox"]:checked + label:before  {
+ @media screen and (max-device-width: $screen-mobile-max) {
+    top: -15px;
+    left: -30px;
+    width: 24px;
+    height: 44px;
+    border-width: 6px;
+ }
+}
+
+[type="checkbox"] + label:before, [type="checkbox"]:not(.filled-in) + label:after {
+  @media screen and (max-device-width: $screen-mobile-max) {
+    top: -8px;
+    left: -16px;
+    width: 36px;
+    height: 36px;
+    border-width: 4px;
+    border-radius: 2px;
+  }
+}
