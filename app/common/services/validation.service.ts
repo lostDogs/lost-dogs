@@ -3,7 +3,9 @@ import {Injectable} from '@angular/core';
 @Injectable ()
 export class ValidationService {
   public errors: any = {};
-
+  public cardType: string;
+  public VISA: string = 'visa';
+  public MASTER: string = 'MasterCard';
   constructor(){
     this.errors.onlyNumbers = {};
   };
@@ -103,5 +105,52 @@ export class ValidationService {
     return true;
   }
 
+  public cardLength(cardNumber: string, maxLength: number): boolean {
+    const noHyphen = cardNumber.replace(/-/g, '');
+    if (noHyphen.length < maxLength) {
+      this.errors.creditcard = 'debe tener al menos ' + maxLength +  ' digitos';
+      return false;
+    }
+    return true;
+  }
+
+  public cardDetector(cardNumber: string): boolean {
+    const firstTwoDigits: number = +cardNumber.substring(0, 2);
+    if (cardNumber.charAt(0) === '4') {
+      this.cardType = this.VISA;
+      return true;
+    } else if (firstTwoDigits >= 51 && firstTwoDigits <= 55 ) {
+      this.cardType = this.MASTER;
+      return true;
+    } else if (firstTwoDigits >= 22 && firstTwoDigits <= 27 ) {
+      this.cardType = this.MASTER;
+      return true;
+    } else {
+      this.cardType = undefined;
+      this.errors.creditcard = 'tarjeta no valida';
+      return false;
+    }
+  }
+
+  public creditcard(cardNumber: string): boolean {
+    if (cardNumber && cardNumber.length) {
+      const cardDetector: boolean = this.cardDetector(cardNumber);
+      let cardLenght: boolean;
+      if ( cardDetector && this.cardType === this.VISA) {
+        cardLenght = this.cardLength(cardNumber, 13);
+      }else if (cardDetector && this.cardType === this.MASTER) {
+        cardLenght = this.cardLength(cardNumber, 16)
+      }
+      return cardDetector && cardLenght;
+    }
+    this.errors.creditcard = 'requerido ';
+    this.cardType = undefined;
+    return false;
+  }
+
+  public getCardnumber(cardNumber: string): number {
+    const noHyphen = cardNumber.replace(/-/g, '');
+    return +noHyphen;
+  }
 
 }

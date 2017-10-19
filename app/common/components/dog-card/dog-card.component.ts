@@ -12,12 +12,14 @@ export class DogCardComponent {
   public cardIndex: number;
   @Input()
   public userAt: number;
+  @Input()
+  public atReviewPage: boolean;
 
   constructor(public dogCardService: DogCardService, public renderer: Renderer, public elRef: ElementRef)  {
    
     this.mobile = window.screen.width <= 767;
     this.renderer.listenGlobal('document', 'click', (event: any) => {
-      if (this.viewMore && !this.elRef.nativeElement.contains(event.target)) {
+      if (this.viewMore && !this.atReviewPage && !this.elRef.nativeElement.contains(event.target)) {
         this.viewMore = false;
         this.dogCardService.open = false;
       }
@@ -37,7 +39,8 @@ export class DogCardComponent {
   }
 
   public ngAfterViewInit(): void {
-      this.dogCardService.width = this.elRef.nativeElement.clientWidth;
-     $('.tooltipped').tooltip({delay: 100});
+    this.dogCardService.width = this.elRef.nativeElement.clientWidth;
+    this.viewMore = this.atReviewPage;
+   $('.tooltipped').tooltip({delay: 100});
   }
 }

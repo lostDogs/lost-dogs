@@ -19,6 +19,10 @@ import {ColorComponent} from './pages/lost-found-common/color/color.component';
 import {ExtrasComponent} from './pages/lost-found-common/extras/extras.component';
 import {DetailsComponent} from './pages/lost-found-common/pic-details/pic-details.component';
 import {ReviewComponent} from './pages/lost-found-common/review/review.component';
+import {InformationComponent} from './pages/information/information.component';
+import {PaymentComponent} from './pages/payment/payment.component';
+import {ReviewPaymentComponent} from './pages/payment/review-payment/review-payment.component';
+import {FormPaymentComponent} from './pages/payment/form-payment/form-payment.component';
 
 const self = this;
 self.pathBuild = (pathName: string): any => {
@@ -55,6 +59,15 @@ export const router: Routes = [
   },
   {path: 'selection', component: selectionComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'payment', component: PaymentComponent,
+    children: [
+      {path: 'review', component: ReviewPaymentComponent},
+      {path: 'form', component: FormPaymentComponent},
+      { path: '', redirectTo: 'review' , pathMatch: 'full'},
+      {path: '**', redirectTo: 'review'}
+    ]
+  },
+  {path: 'info/:param', component: InformationComponent},
   { path: '', redirectTo: 'home' , pathMatch: 'full'},
   {path: '**', redirectTo: 'home'}
 ];
@@ -62,7 +75,7 @@ export const router: Routes = [
 // TODO: check why routing is not working without the hash.
 // TODO: read full file https://angular.io/docs/ts/latest/guide/router.html.
 @NgModule({
-  imports: [RouterModule.forRoot(router, { useHash: true })],
+  imports: [RouterModule.forRoot(router, { useHash: true})],
   exports: [RouterModule]
 })
 export class AppRouterModule{}
@@ -85,5 +98,9 @@ export const routerComponents = [
   DetailsComponent,
   ReviewComponent,
   editAccountComponent,
-  mainProfileComponent
+  mainProfileComponent,
+  InformationComponent,
+  PaymentComponent,
+  ReviewPaymentComponent,
+  FormPaymentComponent
 ];

@@ -1,0 +1,98 @@
+<div class="page form-payment create-account"> 
+  <div class="row" [hidden]="sucess">
+    <div class="col push-l2 l5 push-s1 push-m1 card-container mobile">
+      <div class="credit-card"  [ngClass]="{'flipped': flipped, 'full-rotate': cardSpin}">
+        <div class="card-bg card-front" (click)="flipped=!flipped;">
+          <div class="card-type">
+           <img class="logo" src="http://cdn.lostdog.mx/assets/img/visa-logo.png" alt="Visa logo" [hidden]="!(validate.cardType === validate.VISA)">
+           <img class="logo" src="http://cdn.lostdog.mx/assets/img/mastercard-logo.png" alt="Mastercard logo"  [hidden]="!(validate.cardType === validate.MASTER)">
+         </div>
+          <div class="number">{{creaditCard.number.value}}</div>
+          <div class="exp-date">{{creaditCard.expMonth.value}} / {{creaditCard.expYear.value}}</div>
+          <div class="name">{{creaditCard.ownerName.value}}</div>
+        </div>
+        <div class="card-bg card-back" (click)="flipped=!flipped;">
+          <div class="ccv">{{creaditCard.ccv.value}}</div>
+        </div>      
+      </div>
+    </div>    
+    <div class="col push-l1 l4 m12 s12">
+      <form  class="row" name="payment form" #paymentDog="ngForm" (ngSubmit)="pay() ">
+        <div class="input-field alt-black  col l12 s12 m12" [ngClass]="{'wrong-red': !creaditCard.number.valid}">
+          <input type="text" name="ccNumber" id="cc-number" [(ngModel)]="creaditCard.number.value" (keyup)="creaditCard.number.valid = validate.creditcard(creaditCard.number.value);"  (change)="creaditCard.number.valid = validate.creditcard(creaditCard.number.value);">
+          <label for="cc-number" class="centered">
+            <div [hidden]="!creaditCard.number.valid"  [ngClass]="{'fadeInDown2': creaditCard.number.valid && paymentDog.controls.ccNumber && paymentDog.controls.ccNumber.dirty}">{{creaditCard.number.label}}</div>
+            <div [hidden]="!(!creaditCard.number.valid && creaditCard.number.value)"  [ngClass]="{'fadeInDown2': (!creaditCard.number.valid && creaditCard.number.value)}">{{validate.errors.creditcard}}</div>
+            <div [hidden]="!(!creaditCard.number.valid && !creaditCard.number.value)"  [ngClass]="{'fadeInDown2': !creaditCard.number.valid && !creaditCard.number.value}">{{creaditCard.number.label}} {{validate.errors.creditcard}} </div>
+          </label>
+        </div>
+        <div class="input-field alt-black  col l12 s12 m12" [ngClass]="{'wrong-red': !creaditCard.ownerName.valid}">
+          <input type="text" name="ccName" id="cc-name" [(ngModel)]="creaditCard.ownerName.value" (keyup)="creaditCard.ownerName.valid = validate.name(creaditCard.ownerName.value);"  (change)="creaditCard.ownerName.valid = validate.name(creaditCard.ownerName.value);">
+          <label for="cc-name" class="active centered">
+            <div [hidden]="!creaditCard.ownerName.valid"  [ngClass]="{'fadeInDown2': creaditCard.ownerName.valid && paymentDog.controls.ccName && paymentDog.controls.ccName.dirty}">{{creaditCard.ownerName.label}}</div>
+            <div [hidden]="!(!creaditCard.ownerName.valid && creaditCard.ownerName.value)"  [ngClass]="{'fadeInDown2': (!creaditCard.ownerName.valid && creaditCard.ownerName.value)}">{{validate.errors.name}}</div>
+            <div [hidden]="!(!creaditCard.ownerName.valid && !creaditCard.ownerName.value)"  [ngClass]="{'fadeInDown2': !creaditCard.ownerName.valid && !creaditCard.ownerName.value}">{{creaditCard.ownerName.label}} Requerido</div>
+          </label>
+        </div>
+        <div class="input-field alt-black  col l3 s4 m4" [ngClass]="{'wrong-red': !creaditCard.expMonth.valid}">
+          <select name="ccMonth" id="cc-month" [(ngModel)]="creaditCard.expMonth.value">
+            <option disabled selected>Mes</option>
+            <option *ngFor="let co of months" [value]="co">{{co}}</option>
+          </select>
+        </div>
+        <div class="input-field alt-black  col l3 s4 m4" [ngClass]="{'wrong-red': !creaditCard.expYear.valid}">
+          <select  name="ccYear" id="cc-year" [(ngModel)]="creaditCard.expYear.value">
+            <option disabled selected>Año</option>
+            <option *ngFor="let year of years" [value]="year">{{year}}</option>
+          </select>
+        </div>
+        <div class="input-field alt-black col l4 s4 m4" [ngClass]="{'wrong-red': !creaditCard.ccv.valid}">
+          <input type="text" name="ccv" id="ccv" [(ngModel)]="creaditCard.ccv.value" (keyup)="creaditCard.ccv.valid = !(!creaditCard.ccv.value && paymentDog.controls.ccv && paymentDog.controls.ccv.dirty)" (focusin)="flipped=true" (focusout)="flipped=false">
+          <label for="ccv" class="centered">
+            <div  [hidden]="!creaditCard.ccv.valid" [ngClass]="{'fadeInDown2': creaditCard.ccv.valid && paymentDog.controls.ccv && paymentDog.controls.ccv.dirty}">{{creaditCard.ccv.label}}</div>
+            <div  [hidden]="!(!creaditCard.ccv.valid && !creaditCard.ccv.value)" [ngClass]="{'fadeInDown2': !creaditCard.ccv.valid && !creaditCard.ccv.value}">{{creaditCard.ccv.label}} requerido</div>
+          </label>
+        </div>
+        <div class="input-field alt-black col l12 s12 m12 total">
+          <h5>Total: </h5> <h4 class="money"> $ 3,500.00 MXN</h4>
+        </div>
+        <div class="input-field alt-black col l12 s12 m12 mobile-left" [ngClass]="{'wrong-red': !extra.terms.valid}">
+          <input type="checkbox" name="termsCond" id="terms" [(ngModel)]="extra.terms.value" (change)="extra.terms.valid = extra.terms.value ? true : false">
+          <label for="terms"> Acepto los <a [routerLink]="['/info', 'terms']">Terminos & condiciones</a>.</label>
+        </div>
+        <div class="input-field alt-black col l12 s12 m12 mobile-left" [ngClass]="{'wrong-red': !extra.noPersonalData.valid}">
+          <input type="checkbox" name="noPersonalData" id="no-personal" [(ngModel)]="extra.noPersonalData.value" (change)="extra.noPersonalData.valid = extra.noPersonalData.value ? true : false">
+          <label for="no-personal">Por seguridad no establescas el lugar en tu domicilio.</label>
+        </div>        
+        <div class="col push-l3 submit mobile-centered">
+          <button type="submit" class="waves-effect btn action" [disabled]="loading">
+            <div [hidden]="loading">aceptar<i class="medium material-icons right">send</i></div>
+            <div [hidden]="!loading">cargando ...</div>
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col push-l2 l5 push-s1 push-m1 card-container">
+      <div class="credit-card"  [ngClass]="{'flipped': flipped, 'full-rotate': cardSpin}">
+        <div class="card-bg card-front" (click)="flipped=!flipped;">
+          <div class="card-type">
+           <img class="logo" src="http://cdn.lostdog.mx/assets/img/visa-logo.png" alt="Visa logo" [hidden]="!(validate.cardType === validate.VISA)">
+           <img class="logo" src="http://cdn.lostdog.mx/assets/img/mastercard-logo.png" alt="Mastercard logo"  [hidden]="!(validate.cardType === validate.MASTER)">
+         </div>
+          <div class="number">{{creaditCard.number.value}}</div>
+          <div class="exp-date">{{creaditCard.expMonth.value}} / {{creaditCard.expYear.value}}</div>
+          <div class="name">{{creaditCard.ownerName.value}}</div>
+        </div>
+        <div class="card-bg card-back" (click)="flipped=!flipped;">
+          <div class="ccv">{{creaditCard.ccv.value}}</div>
+        </div>      
+      </div>
+    </div>
+  </div>
+  <div class="row" [hidden]="!sucess">
+    <div class="col l10 push-l1 m12 s12 todo">
+      <h5>Pronto recibiras un corre para te pongas de acuerdo con Pedro</h5>
+      <h5>en donde y a que horas recoger el perro</h5>
+    </div>    
+  </div>
+</div>

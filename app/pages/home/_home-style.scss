@@ -74,6 +74,7 @@
     background-color: $pink;
     border-bottom: 6px solid white;
     border-top: 6px solid white;
+    padding-bottom: 35px;
     .title {
       padding-top: 20px;
       padding-bottom: 40px;
@@ -259,6 +260,14 @@
     }
    }
    .options {
+    #sad-dogo {
+    margin-bottom: 0px;
+    border-bottom-width: 0px;
+    }
+    #muchos-dogos {
+      margin-bottom: 0px;
+      border-bottom-width: 0px;      
+    }
       .option {
         border: 15px solid white;
          height: 500px;

@@ -1,0 +1,51 @@
+@import '../../../common/styles/variables.scss';
+review-payment {
+  dog-card {
+    width: 100%;
+    article.expanded {
+      position: inherit;
+      box-shadow: none;
+      max-height: 750px;
+      padding: 20px 5px;
+      a.close {
+        display: none;
+      }
+      a.btn {
+        display: none;
+      }
+      &.hoverable:hover {
+        box-shadow: none;
+      }
+    }     
+    }
+  .steps {
+    margin-top: 80px;
+    h6 {
+      padding-bottom: 20px;
+      @media screen and (max-device-width: $screen-mobile-max) {
+        padding-bottom: 50px;
+      }
+    }
+  }
+  .submit {
+    margin-top: 40px;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin-top: 80px;
+    }
+  }
+  button.btn {
+    @media screen and (max-device-width: $screen-mobile-max) {
+      height: 80px;
+      font-size: 2.5rem;
+      .material-icons {
+        font-size: 3rem;
+      }
+    }
+  }
+  div.col.steps-block {
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin-top: 50px;
+      padding: 50px;
+    }
+  }
+}

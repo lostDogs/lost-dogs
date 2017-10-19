@@ -80,6 +80,21 @@
     animation-name: fadeInDown;
   }
 
+  @keyframes fadeInDowns {
+    from {
+      opacity: 0.5;
+      transform: translate3d(0, -90%, 0);
+    }
+    to {
+      opacity: 1;
+    }
+  }  
+
+  .fadeInDown2 {
+    animation-duration: 1s;
+    animation-name: fadeInDowns;
+  }
+
   @media screen and (max-device-width: $screen-mobile-max) {
     .input-field.alt-black input[type='text'].select-dropdown {
       font-size: 2.5rem;
