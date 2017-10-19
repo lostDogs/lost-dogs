@@ -1,6 +1,6 @@
 <div class="page info">
   <div class="main-title row" [ngClass]="{'sucess-pay': globalService.paymentRewardSucess}">
-    <h4 [hidden]="globalService.paymentRewardSucess">Pago</h4>
+    <h4 [hidden]="globalService.paymentRewardSucess">{{title}}</h4>
     <h4 [hidden]="!globalService.paymentRewardSucess">Tu pago procedio satisfactoriamente!</h4>
   </div>
   <div class="main-content row">

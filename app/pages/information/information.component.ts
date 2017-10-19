@@ -15,7 +15,7 @@ export class InformationComponent {
   public urlsConst: any;
   public title: string;
   constructor (public domSan: DomSanitizer, public router: Router) {
-    this.urlsConst = {legal: 'legal', cookies: 'cookies' , privacy : 'privacy', aboutUs: 'about'};
+    this.urlsConst = {legal: 'legal', cookies: 'cookies' , privacy : 'privacy', aboutUs: 'about', terms: 'terms'};
     this.data = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut justo enim, fringilla sed malesuada id, rhoncus ut arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras <a>tristique</a> convallis augue vel lacinia. Maecenas viverra congue aliquam. Cras sit amet ante magna. Vivamus sed euismod diam. Quisque efficitur tempor vulputate. Sed eget neque at arcu eleifend faucibus. Donec posuere purus placerat porta malesuada. Nulla mollis maximus viverra. Morbi lobortis nulla et interdum eleifend. <br><br> \
       Nullam massa lectus, hendrerit vitae aliquet sed, <b>placerat quis</b> libero. Aliquam suscipit elit dolor. Duis vitae dui augue. Duis vehicula erat eu bibendum bibendum. Nunc vestibulum, lectus ut interdum efficitur, leo ex auctor magna, at maximus mi odio sit amet nulla. Mauris ullamcorper consectetur erat. Sed dapibus nisi metus, cursus luctus magna lacinia et. Fusce fringilla rhoncus pulvinar. Sed vitae fermentum dolor, non cursus arcu. Donec sed magna rutrum, sodales felis in, pulvinar dui. Donec interdum eleifend consectetur. Proin pretium est non magna luctus faucibus. Praesent ac massa velit. Phasellus porttitor vulputate est eget porttitor. <br><br>\
       Phasellus <b>malesuada</b> ex vel lorem pretium, ut facilisis leo maximus. Donec eget dictum neque. Vestibulum vitae dignissim purus. Suspendisse vitae nibh velit. Ut et mi tempor libero blandit rhoncus. Quisque pharetra urna sed sollicitudin sollicitudin. Vestibulum non nunc quis enim ultricies aliquet. Donec sed mauris vestibulum, lobortis neque vestibulum, pharetra nunc. Cras ullamcorper egestas commodo. Suspendisse vulputate <b>dignissim odio</b>, pharetra ultricies ante mattis sit amet. In at aliquet neque, at facilisis leo. Praesent a augue erat. Suspendisse tincidunt in ipsum quis efficitur. In sodales leo ac convallis iaculis. Aliquam ac erat ut elit luctus volutpat. Sed mauris mi, tempus non hendrerit at, aliquam <a>vitae</a> ex.<br><br> \
@@ -40,6 +40,8 @@ export class InformationComponent {
       this.title = 'Politicas de privacidad';
     } else if (this.urlsConst.aboutUs === this.urlOn) {
       this.title = 'Sobre nosotros';
+    }else if (this.urlsConst.terms === this.urlOn) {
+      this.title = 'Terminos y condiciones';
     }
   }
 
