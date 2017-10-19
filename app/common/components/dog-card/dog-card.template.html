@@ -44,5 +44,8 @@
   </div>
   <a class="close" (click)="toogleViewMore()">cerrar</a>
   <a class="row waves-effect btn info" (click)="toogleViewMore()" *ngIf="!viewMore">Ver mas</a>
-  <a class="row waves-effect btn action"  *ngIf="viewMore">Mi perro</a>
+  <a class="row waves-effect btn action"  *ngIf="viewMore" (click)="myDog()">
+    <div [hidden]="!lost">Mi perro</div>
+    <div [hidden]="lost">Lo encontré </div>
+  </a>
 </article>

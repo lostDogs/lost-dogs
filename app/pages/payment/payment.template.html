@@ -1,7 +1,8 @@
 <div class="page info">
-  <div class="main-title row" [ngClass]="{'sucess-pay': globalService.paymentRewardSucess}">
-    <h4 [hidden]="globalService.paymentRewardSucess">{{title}}</h4>
+  <div class="main-title row" [ngClass]="{'sucess-pay': globalService.paymentRewardSucess || globalService.emailSendedReview}">
+    <h4 [hidden]="globalService.paymentRewardSucess || globalService.emailSendedReview">{{title}}</h4>
     <h4 [hidden]="!globalService.paymentRewardSucess">Tu pago procedio satisfactoriamente!</h4>
+    <h4 [hidden]="!globalService.emailSendedReview">Revisa tu bandeja de correo!</h4>
   </div>
   <div class="main-content row">
     <router-outlet></router-outlet>

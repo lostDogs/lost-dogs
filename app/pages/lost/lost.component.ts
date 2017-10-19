@@ -36,6 +36,7 @@ export class lostComponent {
         const urlChildLoction = data.url.split('/')[2];
         const Indexlocation = this.lostService.sequence.indexOf(urlChildLoction);
         this.lostService.pagePosition = Indexlocation !== -1 ? Indexlocation : 0;
+        this.dogCardService.open = true;
 
         if (this.lostService.retrieveData) {
           this.lostService.retrieveData(this.lostService.pageAnswers[this.lostService.pagePosition], this.lostService);

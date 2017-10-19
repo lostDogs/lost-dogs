@@ -9,8 +9,8 @@
   }
   @media screen and (max-device-width: $screen-mobile-max) {
     width: 800px;
-    height: 605px;
-    margin-top: 50px;
+    height: 536px;
+    margin-top: 90px;
     display: none;
     &.mobile {
       display: block;
@@ -41,6 +41,7 @@
       height: 316px;
       border-radius: 17px;
       backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
       position: absolute;
     @media screen and (max-device-width: $screen-mobile-max) {
       width: 800px;
@@ -151,7 +152,17 @@ form-payment {
 }
   .todo {
     text-align: center;
-  }
+    h5  {
+      margin-bottom: 40px;
+    }
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin: 50px 0;
+      i.material-icons {
+        font-size: 9rem;
+      }
+    }
+  } 
+
   ul.dropdown-content.select-dropdown {
     &.dropdown-content.select-dropdown {
       li:first-of-type > span {
