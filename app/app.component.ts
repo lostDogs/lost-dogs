@@ -18,7 +18,7 @@ export class appComponent {
   constructor (public router: Router, public globalService: GlobalFunctionService) {
     this.router.events.subscribe(data => {
       if (data instanceof NavigationEnd) {
-        this.globalService.paymentRewardSucess = undefined;
+        this.globalService.paymentRewardSucess = this.globalService.emailSendedReview = undefined;
         window.scroll(0,0);
       }
     });

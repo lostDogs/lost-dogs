@@ -1,4 +1,5 @@
 import {Component, Input, Renderer, ElementRef} from '@angular/core';
+import {Router} from '@angular/router';
 import {DogCardService} from '../../services/dog-card.service';
 @Component({
   selector: 'dog-card',
@@ -14,8 +15,10 @@ export class DogCardComponent {
   public userAt: number;
   @Input()
   public atReviewPage: boolean;
+  @Input()
+  public lost: boolean;
 
-  constructor(public dogCardService: DogCardService, public renderer: Renderer, public elRef: ElementRef)  {
+  constructor(public dogCardService: DogCardService, public renderer: Renderer, public elRef: ElementRef, public router: Router)  {
    
     this.mobile = window.screen.width <= 767;
     this.renderer.listenGlobal('document', 'click', (event: any) => {
@@ -42,5 +45,9 @@ export class DogCardComponent {
     this.dogCardService.width = this.elRef.nativeElement.clientWidth;
     this.viewMore = this.atReviewPage;
    $('.tooltipped').tooltip({delay: 100});
+  }
+
+  public myDog(): void {
+    this.router.navigate(['/payment/review'], {queryParams: {Lt: this.lost, iD: 123455}});
   }
 }

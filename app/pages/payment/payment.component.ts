@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Router, NavigationEnd} from '@angular/router';
 import {GlobalFunctionService} from '../../common/services/global-function.service';
+import {UserService} from  '../../common/services/user.service';
 require('../../common/plugins/masks.js');
 
 @Component({
@@ -11,17 +12,22 @@ require('../../common/plugins/masks.js');
 })
 
 export class PaymentComponent {
-  public title: string = 'Payment';
-  constructor(public globalService: GlobalFunctionService, public router: Router) {
-  this.router.events.subscribe(data => {
-    if (data instanceof NavigationEnd) {
-      const urlChildLoction = data.url.split('/')[2];
-      if (urlChildLoction === 'review') {
-        this.title = 'Revisa';
-      }else if (urlChildLoction === 'form') {
-        this.title = 'Agrega tu tarjeta';
+  public title: string = 'Revisa';
+  constructor(public globalService: GlobalFunctionService, public router: Router, public userService: UserService) {
+    this.router.events.subscribe(data => {
+      if (data instanceof NavigationEnd) {
+        const urlChildLoction = data.url.split('/')[2];
+        if (urlChildLoction === 'review') {
+          this.title = 'Revisa';
+        }else if (urlChildLoction === 'form') {
+          this.title = 'Agrega tu tarjeta';
+        }
       }
+    });
+  }
+  public ngOnInit(): void {
+    if (!this.userService.isAuth) {
+      this.router.navigate(['/login']);
     }
-  });
   }
 }

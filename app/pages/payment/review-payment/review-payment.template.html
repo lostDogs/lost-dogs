@@ -1,19 +1,33 @@
 <div class="page review-payment"> 
-  <div class="row">
+  <div class="row" [hidden]="ShowSendEmail">
     <div class="col push-l1 l5 m12 s12 dog-card">
-      <h5 class="subtitle">Revisa tu perro</h5>
+      <h5 class="subtitle" [hidden]="!lost">Revisa tu perro</h5>
+      <h5 class="subtitle" [hidden]="lost">Revisa el perro que encontraste </h5>
       <dog-card  #DogCard [atReviewPage]="true"></dog-card>
     </div>
     <div class="col push-l2 l4 m12 s12 steps-block">
       <h5 class="subtitle">Pasos</h5>
-      <div class="steps">
+      <div class="steps" [hidden]="!lost">
         <h6><b>1.</b> primero te haremos el cargo  de la recompenza. No te preocupes si no es tu perro, <b>te regresamos tu dinero.</b></h6>
         <h6><b>2.</b> te mandaremos el contacto de quien lo econtro para que te pongas de acuerdo donde y a horas verse.</h6>
         <h6><b>3.</b> una vez que subas el perro asegura de pasarle tu codigo QR al otro usuario para que pudan recoletar la recompenza.</h6>
       </div>
+      <div class="steps" [hidden]="lost">
+        <h6><b>1.</b> Le mandaremos tu datos a Juan, si es su perro, El se podra en contanto contigo.</h6>
+        <h6><b>2.</b> Agenda una hora y lugar donde entregaras el perro.</h6>
+        <h6><b>3.</b> Una vez de lo entregues, recuerda escanear el codigo QR que tiene Juan.</h6>
+        <h6><b>4.</b> Subelo en la liga que te llegara por correo, para recibir tu recompenza.</h6>
+      </div>      
     <div class="centered submit">
       <button class="waves-effect btn info" (click)="next()">aceptar<i class="medium material-icons right">thumb_up</i></button>
     </div>
+    </div>    
+  </div>
+    <div class="row" [hidden]="!ShowSendEmail">
+    <div class="col l10 push-l1 m12 s12 todo"> <i class="medium material-icons">email</i></div>
+    <div class="col l10 push-l1 m12 s12 todo">
+      <h5>Te hemos enviado un correo con los datos del reporte.</h5>
+      <h5>Pronto Juan se pondra en contacto contigo.</h5>
     </div>    
   </div>
 </div>

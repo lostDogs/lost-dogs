@@ -12,6 +12,7 @@ export class GlobalFunctionService {
   public subErrorMessage: string[];
   public mapsApi: any;
   public paymentRewardSucess: boolean;
+  public emailSendedReview: boolean;
   constructor() {
     this.errorMessages = [];
     this.subErrorMessage = [];
