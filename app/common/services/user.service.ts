@@ -14,6 +14,7 @@ export class UserService {
   public loading: boolean;
   public errors: {passwordReq: boolean, userReq: boolean, invalidUser: boolean};
   public mapsApi: any;
+  public previousUrl: string;
 
   constructor (public api: ApiService, public router: Router, public globalService: GlobalFunctionService, public CookieService: CookieManagerService) {
     this.user = {};
@@ -94,7 +95,12 @@ export class UserService {
       this.setUser(data);
       this.isAvatarSet = true;
       this.errors.invalidUser = false;
-      this.router.navigate(['/home']);
+      if (this.previousUrl) {
+      this.router.navigateByUrl(this.previousUrl);
+      this.previousUrl = undefined;
+      } else  {
+        this.router.navigate(['/home']);
+      }
       window.scroll(0,0);
   }
 

@@ -11,6 +11,7 @@ export class profileComponent {
   }
   public ngOnInit(): void {
     if (!this.userService.isAuth) {
+      this.userService.previousUrl = this.router.url;
       this.router.navigate(['/login']);
     }    
   }

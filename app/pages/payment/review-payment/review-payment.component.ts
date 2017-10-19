@@ -18,7 +18,6 @@ export class ReviewPaymentComponent {
   constructor (public userService: UserService, public router: Router, public dogCardService: DogCardService, public activeRoute: ActivatedRoute, public globalService: GlobalFunctionService) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.lost = params.Lt === 'true';
-      console.log('lost', this.lost);
       this.dogId = params.iD;
     });
 
