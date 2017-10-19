@@ -36,7 +36,6 @@ export class lostComponent {
         const urlChildLoction = data.url.split('/')[2];
         const Indexlocation = this.lostService.sequence.indexOf(urlChildLoction);
         this.lostService.pagePosition = Indexlocation !== -1 ? Indexlocation : 0;
-        this.dogCardService.open = true;
 
         if (this.lostService.retrieveData) {
           this.lostService.retrieveData(this.lostService.pageAnswers[this.lostService.pagePosition], this.lostService);
@@ -50,7 +49,6 @@ export class lostComponent {
         // page should have one.
         const previousIndex = this.lostService.pagePosition === 0 ? this.lostService.pagePosition : this.lostService.pagePosition -1;
         if (this.lostService.optional && this.lostService.pageAnswers[previousIndex] && !this.lostService.pageAnswers[this.lostService.pagePosition]) {
-          console.log('setting empty array on page ', this.lostService.pagePosition);
           this.lostService.pageAnswers[this.lostService.pagePosition] = [];
         }
         this.goBack = this.lostService.pagePosition !== 0 && !this.lostService.pageAnswers[previousIndex];
@@ -61,9 +59,7 @@ export class lostComponent {
   }
   public ngOnInit(): void {
     if (!this.userService.isAuth) {
-      this.globalService.clearErroMessages();
-      this.globalService.setErrorMEssage('Necesitas iniciar sesión');
-      this.globalService.openErrorModal();
+      this.userService.previousUrl = this.router.url;
       this.router.navigate(['/login']);
     }
     this.lostService.resetService();
