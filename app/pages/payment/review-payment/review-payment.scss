@@ -56,7 +56,10 @@ review-payment {
     @media screen and (max-device-width: $screen-mobile-max) {
       margin: 50px 0;
       i.material-icons {
-        font-size: 9rem;
+        font-size: 8rem;
+      }
+      h5 {
+        font-size: 3rem;
       }
     }
   }  
