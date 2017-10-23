@@ -3,6 +3,8 @@ import {Ielement} from '../components/side-block/side-block.component';
 import {Router} from '@angular/router';
 import {CookieManagerService} from './cookie-manager.service';
 import { DecimalPipe } from '@angular/common';
+import {ApiService} from '../services/api.service';
+import {UserService} from '../services/user.service';
 
 @Injectable()
 export class LostFoundService {
@@ -22,6 +24,8 @@ export class LostFoundService {
   public defualtSequence: string[] = ['date', 'location', 'breed', 'gender', 'size', 'color', 'extras', 'details','review'];
   public displayedSequence: string[];
   public defaultDisplayedSequence: string[] = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Accessorios'];
+  public defaulApikeys: string[] = ['found_date', 'location', 'kind', 'gender', 'size', 'color', 'accessories'];
+  public extrasApiKeys: any = {name: 'name', img: 'imageFileType', comments: 'description', reward: 'reward'};
   public pageAnswers: any[];
   public pagePosition: number;
   public multipleImgAnswers: Ielement[];
@@ -38,13 +42,13 @@ export class LostFoundService {
   public defaultReward: string = '000,000.00';
   public defaultDogPic: string = 'http://cdn.lostdog.mx/assets/img/default-dog-pic.jpg';
   
-  constructor(public router: Router, public cookieService: CookieManagerService) {
+  constructor(public router: Router, public cookieService: CookieManagerService, public api: ApiService, public userService: UserService) {
     this.reward = this.defaultReward;
     this.dogPicture = this.defaultDogPic;
     this.pageAnswers = [];
   }
 
-  public next() {
+  public next(): void {
      const nextIndex: number =  this.pagePosition === (this.sequence.length-1) ? this.pagePosition : this.pagePosition + 1;
     const nextPage: string = this.parentPage + '/' + this.sequence[nextIndex];
     this.router.navigate([nextPage]);
@@ -60,15 +64,54 @@ export class LostFoundService {
     this.router.navigate([toPage]);
   }
 
-  public back() {
+  public back(): void {
     const nextIndex = this.pagePosition === 0 ? this.pagePosition : this.pagePosition -1;
     const previous: string = this.parentPage + '/' + this.sequence[nextIndex];
     this.router.navigate([previous]);
   }
 
-  public setAnwer() {
+  public setAnwer(): void {
     this.pageAnswers[this.pagePosition] = this.getGeneralAnswer();
     console.log('answer', this.pageAnswers);
+  }
+
+  public saveToApi(): void {
+    const dog: any = this.objDogBuilder();
+    const headers: any = {
+        'Content-Type': 'application/json',
+        'Authorization': 'token ' + this.userService.token
+      };
+    this.api.post('https://fierce-falls-25549.herokuapp.com/api/dogs',dog, headers).subscribe(data => {});
+  }
+
+  public objDogBuilder(): any {
+    let dogObj = {};
+    this.defaultDisplayedSequence.forEach((Keyname: string, nameIndex: number) => {
+      let subObj: any;
+      if (this.pageAnswers[nameIndex].name) {
+        subObj = {name: this.pageAnswers[nameIndex].name, imgUrl: this.pageAnswers[nameIndex].imgUrl};
+      } else if (Array.isArray(this.pageAnswers[nameIndex]) && this.pageAnswers.length && this.pageAnswers[nameIndex][0].name) {
+        subObj = [];
+        this.pageAnswers[nameIndex].forEach((multAnswer: any,multAnswerIndex: number) => {
+          subObj.push({name: multAnswer.name, imgUrl: multAnswer.imgUrl});
+        });
+      } else {
+        subObj = this.pageAnswers[nameIndex];
+      }
+      dogObj[this.defaulApikeys[nameIndex]] = subObj;
+    });
+    if (this.dogName) {
+      dogObj[this.extrasApiKeys.name] = this.dogName;
+    }
+    if (this.comments) {
+      dogObj[this.extrasApiKeys.comments] = this.comments;
+    }
+    if (this.reward && this.reward !== this.defaultReward) {
+    dogObj[this.extrasApiKeys.reward] = this.reward;
+    }
+    dogObj[this.extrasApiKeys.img] = this.binaryDogImg;
+    console.log(dogObj);
+    return dogObj;
   }
 
   public tooltipInit(): void {
@@ -84,16 +127,6 @@ export class LostFoundService {
     }else {
       $('#question').unmask();
     }
-  }
-
-  public saveIntoCookie(): void {
-    let answers = {
-      pageAnswers: this.pageAnswers,
-      commets: this.comments,
-      reward: this.reward,
-      dogName: this.dogName
-    }
-    this.cookieService.setCookie('lostFoundAnswers', answers);
   }
 
   public getGeneralAnswer(): any {
