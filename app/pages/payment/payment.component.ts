@@ -15,7 +15,7 @@ export class PaymentComponent {
   public title: string;
   constructor(public globalService: GlobalFunctionService, public router: Router, public userService: UserService) {
     this.router.events.subscribe(data => {
-      if (data instanceof NavigationEnd) {
+      if (data instanceof NavigationEnd &&data.url.length) {
         const urlChildLoction = data.url.split('/')[2].split('?')[0];
         if (urlChildLoction === 'review') {
           this.title = 'Revisa';
