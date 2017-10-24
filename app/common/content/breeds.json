@@ -1,0 +1,600 @@
+[
+  {
+    "id": "1",
+    "name": "Airedale-Terrier",
+    "otherNames": "Waterside Terrier, Bingley Terrier",
+    "looksLike": "42"
+  },
+  {
+    "id": "2",
+    "name": "Akita-inu",
+    "looksLike": "109"
+  },
+  {
+    "id": "3",
+    "name": "Alano Español "
+  },
+  {
+    "id": "4",
+    "name": "Malamute de Alaska",
+    "looksLike": "51"
+  },
+  {
+    "id": "5",
+    "name": "American Staffordshire Terrier",
+    "looksLike": "86 115"
+  },
+  {
+    "id": "6",
+    "name": "azawakh",
+    "looksLike": "48"
+  },
+  {
+    "id": "7",
+    "name": "basset hound "
+  },
+  {
+    "id": "8",
+    "name": "beagle ",
+    "looksLike": "139 140"
+  },
+  {
+    "id": "9",
+    "name": "Beauceron ",
+    "otherNames": "Bas Rouge, Pastor de beauce"
+  },
+  {
+    "id": "10",
+    "name": "bichon frise"
+  },
+  {
+    "id": "11",
+    "name": "bobtail dog "
+  },
+  {
+    "id": "12",
+    "name": "boerboel",
+    "looksLike": "21"
+  },
+  {
+    "id": "13",
+    "name": "border collie "
+  },
+  {
+    "id": "14",
+    "name": "boston-terrier "
+  },
+  {
+    "id": "15",
+    "name": "boxer"
+  },
+  {
+    "id": "16",
+    "name": "boyero de berna "
+  },
+  {
+    "id": "17",
+    "name": "Braco de weimar "
+  },
+  {
+    "id": "18",
+    "name": "bulldog frances"
+  },
+  {
+    "id": "19",
+    "name": "bulldog ingles "
+  },
+  {
+    "id": "20",
+    "name": "bullmastiff"
+  },
+  {
+    "id": "21",
+    "name": "cairn terrier"
+  },
+  {
+    "id": "22",
+    "name": "caniche"
+  },
+  {
+    "id": "23",
+    "name": "Carolina dog",
+    "otherNames": "Dingo, Dixie americano"
+  },
+  {
+    "id": "24",
+    "name": "catalburun",
+    "otherNames": "Pointer de turquia"
+  },
+  {
+    "id": "25",
+    "name": "cavalier king",
+    "otherNames": "Charles spaniel"
+  },
+  {
+    "id": "26",
+    "name": "chino crestado ",
+    "otherNames": "Crestado, Puff" 
+  },
+  {
+    "id": "27",
+    "name": "chihuahua "
+  },
+  {
+    "id": "28",
+    "name": "chow chow"
+  },
+  {
+    "id": "29",
+    "name": "cocker spaniel ingles"
+  },
+  {
+    "id": "30",
+    "name": "cocker-americano ",
+    "otherNames": "Cocker spaniel"
+  },
+  {
+    "id": "31",
+    "name": "Collie "
+  },
+  {
+    "id": "32",
+    "name": "dalmata "
+  },
+  {
+    "id": "33",
+    "name": "daschund ",
+    "otherNames": "Doxie, Teckel, salchica"
+  },
+  {
+    "id": "34",
+    "name": "doberman "
+  },
+  {
+    "id": "35",
+    "name": "Dogo mallorquín",
+    "otherNames": "Ca de bou"
+  },
+  {
+    "id": "36",
+    "name": "dogo_argentino"
+  },
+  {
+    "id": "37",
+    "name": "dogo-canario",
+    "otherNames": "Presa canario"
+  },
+  {
+    "id": "38",
+    "name": "dogo del tibet",
+    "otherNames": "Mastin tibetano"
+  },
+  {
+    "id": "39",
+    "name": "Drahthaar ",
+    "otherNames": "Braco aleman de pelo duro"
+  },
+  {
+    "id": "40",
+    "name": "Fila Brasileño "
+  },
+  {
+    "id": "41",
+    "name": "Fox Terrier de pelo duro",
+    "looksLike": "42 1",
+    "otherNames": "Wire fox terrier"
+  },
+  {
+    "id": "42",
+    "name": "fox terrier de pelo liso",
+    "looksLike": "41"
+  },
+  {
+    "id": "43",
+    "name": "french-poodle ",
+    "looksLike": "93 22",
+    "otherNames": "poodle "
+  },
+  {
+    "id": "44",
+    "name": "Galgo Ruso (Borzoi)",
+    "looksLike": "45"
+  },
+  {
+    "id": "45",
+    "name": "Galgo español",
+    "looksLike": "44"
+  },
+  {
+    "id": "46",
+    "name": "Golden retriever"
+  },
+  {
+    "id": "47",
+    "name": "gran danes "
+  },
+  {
+    "id": "48",
+    "name": "greyhound ",
+    "otherNames": "Lebrel ingles, Galgo ingles"
+  },
+  {
+    "id": "50",
+    "name": "Hokaido-inu ",
+    "otherNames": "Ainu Ken"
+  },
+  {
+    "id": "51",
+    "name": "husky siberiano",
+    "looksLike": "4"
+  },
+  {
+    "id": "52",
+    "name": "Jack Russell Terrier"
+  },
+  {
+    "id": "53",
+    "name": "komondor "
+  },
+  {
+    "id": "54",
+    "name": "Labrador"
+  },
+  {
+    "id": "55",
+    "name": "Labrel Persa",
+    "otherNames": "Ainu Ken, Perro real de egipto"
+  },
+  {
+    "id": "56",
+    "name": "Leonberger "
+  },
+  {
+    "id": "57",
+    "name": "Lhasa Apso "
+  },
+  {
+    "id": "58",
+    "name": "Lundehund noruego"
+  },
+  {
+    "id": "59",
+    "name": "Majorero"
+  },
+  {
+    "id": "60",
+    "name": "maltes "
+  },
+  {
+    "id": "61",
+    "name": "mastiff neapolitan"
+  },
+  {
+    "id": "62",
+    "name": "Mastín del Pirineo "
+  },
+  {
+    "id": "63",
+    "name": "Mastin Napolitano "
+  },
+  {
+    "id": "64",
+    "name": "mastin-espanol"
+  },
+  {
+    "id": "65",
+    "name": "Montaña del Pirineo"
+  },
+  {
+    "id": "66",
+    "name": "otherhound"
+  },
+  {
+    "id": "67",
+    "name": "papillon "
+  },
+  {
+    "id": "68",
+    "name": "Pastor Aleman "
+  },
+  {
+    "id": "69",
+    "name": "Pastor Aleman blanco "
+  },
+  {
+    "id": "70",
+    "name": "Pastor Belga"
+  },
+  {
+    "id": "71",
+    "name": "Pastor Catalán"
+  },
+  {
+    "id": "72",
+    "name": "Pastor de Anatolia "
+  },
+  {
+    "id": "73",
+    "name": "Pastor de los Pirineos"
+  },
+  {
+    "id": "74",
+    "name": "pastor de Shetland "
+  },
+  {
+    "id": "75",
+    "name": "Pastor del Cáucaso "
+  },
+  {
+    "id": "76",
+    "name": "Pastor griego"
+  },
+  {
+    "id": "77",
+    "name": "Pastor Mallorquin"
+  },
+  {
+    "id": "78",
+    "name": "Pastor Portugués "
+  },
+  {
+    "id": "79",
+    "name": "Pastor vasco"
+  },
+  {
+    "id": "80",
+    "name": "Pekinés "
+  },
+  {
+    "id": "81",
+    "name": "Perdiguero de Burgos"
+  },
+  {
+    "id": "82",
+    "name": "Perro de Agua Español "
+  },
+  {
+    "id": "83",
+    "name": "perro cantor de nueva guinea"
+  },
+  {
+    "id": "84",
+    "name": "perro peruano"
+  },
+  {
+    "id": "85",
+    "name": "Pinscher miniatura "
+  },
+  {
+    "id": "86",
+    "name": "Pitbull americano"
+  },
+  {
+    "id": "87",
+    "name": "Podenco Andaluz"
+  },
+  {
+    "id": "88",
+    "name": "Podenco Canario"
+  },
+  {
+    "id": "89",
+    "name": "Podenco Ibicenco"
+  },
+  {
+    "id": "90",
+    "name": "Podenco Portugués"
+  },
+  {
+    "id": "91",
+    "name": "Pointer"
+  },
+  {
+    "id": "92",
+    "name": "Pomerania "
+  },
+  {
+    "id": "93",
+    "name": "Puddle ",
+    "looksLike": "43 22"
+  },
+  {
+    "id": "94",
+    "name": "Pug"
+  },
+  {
+    "id": "95",
+    "name": "Ratonero Bodeguero Andaluz "
+  },
+  {
+    "id": "96",
+    "name": "Ridgeback tailandes "
+  },
+  {
+    "id": "97",
+    "name": "Rottweiler "
+  },
+  {
+    "id": "98",
+    "name": "Sabueso Español "
+  },
+  {
+    "id": "99",
+    "name": "Samoyedo "
+  },
+  {
+    "id": "100",
+    "name": "San Bernardo"
+  },
+  {
+    "id": "101",
+    "name": "Schnauzer Gigante"
+  },
+  {
+    "id": "102",
+    "name": "Schnauzer Miniatura "
+  },
+  {
+    "id": "103",
+    "name": "schnauzer mediano "
+  },
+  {
+    "id": "104",
+    "name": "Scottish Terrier "
+  },
+  {
+    "id": "105",
+    "name": "Setter Gordon"
+  },
+  {
+    "id": "106",
+    "name": "Setter Inglés "
+  },
+  {
+    "id": "107",
+    "name": "Setter Irlandés "
+  },
+  {
+    "id": "108",
+    "name": "Shar pei "
+  },
+  {
+    "id": "109",
+    "name": "Shiba-inu",
+    "looksLike": "2"
+  },
+  {
+    "id": "110",
+    "name": "Shikoku-inu "
+  },
+  {
+    "id": "111",
+    "name": "Shitzu"
+  },
+  {
+    "id": "112",
+    "name": "Spaniel Breton "
+  },
+  {
+    "id": "113",
+    "name": "Spitz Finlandés"
+  },
+  {
+    "id": "114",
+    "name": "Spitz japones"
+  },
+  {
+    "id": "115",
+    "name": "stafforshire bull-terrier"
+  },
+  {
+    "id": "116",
+    "name": "Teckel "
+  },
+  {
+    "id": "117",
+    "name": "terrier ingles",
+    "otherNames": "bull terrier"
+  },
+  {
+    "id": "118",
+    "name": "Terranova "
+  },
+  {
+    "id": "119",
+    "name": "Tosa-inu"
+  },
+  {
+    "id": "120",
+    "name": "Visla "
+  },
+  {
+    "id": "121",
+    "name": "Weimaraner "
+  },
+  {
+    "id": "122",
+    "name": "West Highland White Terrier "
+  },
+  {
+    "id": "123",
+    "name": "Whippet "
+  },
+  {
+    "id": "124",
+    "name": "Wolfhound "
+  },
+  {
+    "id": "125",
+    "name": "xoloescuincle "
+  },
+  {
+    "id": "126",
+    "name": "Yorkshire Terrier "
+  },
+  {
+    "id": "127",
+    "name": "Rhodesian Rigdeback"
+  },
+  {
+    "id": "128",
+    "name": "cane corso",
+    "otherNames": "mastin italiano"
+  },
+  {
+    "id": "129",
+    "name": "Pastor Australiano"
+  },
+  {
+    "id": "130",
+    "name": "cardigan welsh corgi"
+  },
+  {
+    "id": "131",
+    "name": "Pembroke Welsh Corgi"
+  },
+  {
+    "id": "132",
+    "name": "affenpinscher"
+  },
+  {
+    "id": "133",
+    "name": "bichon habanero"
+  },
+  {
+    "id": "134",
+    "name": "bichon maltes"
+  },
+  {
+    "id": "135",
+    "name": "galgo italiano"
+  },
+  {
+    "id": "136",
+    "name": "Pequeño brabantino"
+  },
+  {
+    "id": "137",
+    "name": "Cirneco del etna"
+  },
+  {
+    "id": "138",
+    "name": "Foxhound americano",
+    "looksLike": "140 9 139"
+  },
+  {
+    "id": "139",
+    "name": "Foxhound ingles",
+    "looksLike": "9"
+  },
+  {
+    "id": "140",
+    "name": "Sabueso de Halden",
+    "otherNames": "Haldenstover",
+    "looksLike": "139"
+  },
+  {
+    "id": "141",
+    "name": "Afgano"
+  }
+]

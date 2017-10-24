@@ -1,7 +1,7 @@
 import { Component, Input} from '@angular/core';
 import {ValidationService} from  '../../common/services/validation.service';
 import {ApiService} from '../../common/services/api.service';
-import * as countryData from '../../common/services/countries.json';
+import * as countryData from '../../common/content/countries.json';
 import {Router} from '@angular/router';
 import {UserService} from '../../common/services/user.service';
 import {GlobalFunctionService} from '../../common/services/global-function.service';

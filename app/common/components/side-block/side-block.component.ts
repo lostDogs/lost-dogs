@@ -47,8 +47,8 @@ public multipleElements: Ielement[];
     this.arrayOfArrays = [];
     this.multipleElements = [];
     //TODO: blockWidth is the hardcoded with of the component. Try to get it trought the dom element 
-    this.blockWidth = this.mobile ? 355 : 200;
-    this.scrollleftSteeps = this.mobile ? 80 : 20;
+    this.blockWidth = this.mobile ? 355 : 210;
+    this.scrollleftSteeps = this.mobile ? 100 : 50;
   }
 
     public onScroll(ev: Event): void {
@@ -65,12 +65,17 @@ public multipleElements: Ielement[];
     }
 
   public ngOnInit(): void {
-    let j: number = this.elements.length; 
+    let j: number = this.elements.length;
+    console.log('this.elements.length: ', this.elements.length)
     let splitArr: number = j / this.numberOfRows;
     splitArr = splitArr % 1 === 0 ? splitArr : splitArr + 1;
     this.splittedArray = Math.trunc(splitArr);
     //TODO: 25 is hardcodded margin, try to get it from DOM elment;
     this.rowWidth = splitArr * this.blockWidth + 25 + 'px';
+    console.log('split arr', splitArr);
+    console.log('blockWidth', this.blockWidth);
+    console.log('row width', this.rowWidth);
+
     for (let i = 0; i < (j - 1); i += splitArr) {
         this.arrayOfArrays.push(this.elements.slice(i,i+splitArr));
     }
