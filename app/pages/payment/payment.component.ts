@@ -12,11 +12,11 @@ require('../../common/plugins/masks.js');
 })
 
 export class PaymentComponent {
-  public title: string = 'Revisa';
+  public title: string;
   constructor(public globalService: GlobalFunctionService, public router: Router, public userService: UserService) {
     this.router.events.subscribe(data => {
-      if (data instanceof NavigationEnd) {
-        const urlChildLoction = data.url.split('/')[2];
+      if (data instanceof NavigationEnd && data.url.length) {
+        const urlChildLoction = data.url.split('/')[2].split('?')[0];
         if (urlChildLoction === 'review') {
           this.title = 'Revisa';
         }else if (urlChildLoction === 'form') {

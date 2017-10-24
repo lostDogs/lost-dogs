@@ -32,8 +32,8 @@
       </li>      
     </ul>    
     <button class="waves-effect btn action submit">
-      <div  *ngIf="LostService.parentPage==='lost'">Si, es mi perro<i class="material-icons right">send</i></div>
-      <div *ngIf="LostService.parentPage==='found'">Si,  es el perro<i class="material-icons right">send</i></div>
+      <div *ngIf="LostService.parentPage==='lost'" (click)="LostService.saveToApi()">Si! es mi perro<i class="material-icons right">send</i></div>
+      <div *ngIf="LostService.parentPage==='found'" (click)="LostService.saveToApi()">Si!  es el perro<i class="material-icons right">send</i></div>
     </button>
   </div>
 </div>

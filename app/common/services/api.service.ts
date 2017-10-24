@@ -28,9 +28,15 @@ export class ApiService {
       .catch((error: any) => Observable.throw(error || 'Server error'));
   }
 
-  public post(url: string, bodyObj: any): Observable<Response> {
+  public post(url: string, bodyObj: any, header?: any): Observable<Response> {
     console.log('calling POST! >');
-    let headers: Headers = new Headers({ 'Content-Type': 'application/json' });
+    let headersObj: any;
+    if ( !header) {
+      headersObj = {'Content-Type': 'application/json'};
+    } else {
+      headersObj = header;
+    }
+    let headers: Headers = new Headers(headersObj);
     let options: RequestOptions = new RequestOptions({ headers: headers });
     let queryParams: URLSearchParams =  new URLSearchParams();
     return this.http.post(url, bodyObj, options)
