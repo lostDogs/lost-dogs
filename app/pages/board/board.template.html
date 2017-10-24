@@ -28,7 +28,7 @@
     </div>
     </section>
   </div>
-  <section class="row component-filter" #Components [ngStyle]="{'border-bottom': !ComponentsDom.nativeElement.clientHeight ? 'none' : '6px solid white'}">
+  <section class="row component-filter" #Components [ngStyle]="{'border-bottom': !ComponentsDom.nativeElement.clientHeight ? 'none' : '6px solid white'}"  [ngClass]="{'blur-filter': dogCardService.open}">
     <gender-block (selectedEmitter)="selectionReciver('gender', $event)" [removedElement]="filterElements.gender.answer" [hidden]="!filterElements.gender.enable"></gender-block>
     <breed-block (selectedEmitter)="selectionReciver('breed', $event)" [removedElement]="filterElements.breed.answer" [hidden]="!filterElements.breed.enable"></breed-block>
     <size-block (selectedEmitter)="selectionReciver('size', $event)" [removedElement]="filterElements.size.answer" [hidden]="!filterElements.size.enable"></size-block>
