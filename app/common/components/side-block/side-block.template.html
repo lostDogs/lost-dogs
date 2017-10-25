@@ -5,7 +5,7 @@
   <div class="scroll-section" (scroll)="onScroll($event)" #ScollSection>
     <div class="row" id="rowSide" *ngFor="let rowSide of arrayOfArrays;let i= index" [ngStyle]="{'width': rowWidth}">
         <div  *ngFor="let element of rowSide;let j= index" class="tooltipped element"  data-position="top" id="{{element.key}}" #block (click)="blockSelected(i,j)"  [ngClass]="{'disabled-img': element.disabled}">
-        <div class="img-bg" [ngStyle]="{'background-image': 'url(' + element.imgUrl + ')' }">
+        <div class="img-bg" [ngStyle]="{'background-image': 'url(' + element.imgUrl + ')', 'background-color': element.bgColor }">
           <div class="img-bg cover-disable" [hidden]="!element.disabled"></div>
         </div>
         </div>

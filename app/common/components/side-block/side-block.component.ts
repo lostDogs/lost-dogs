@@ -7,6 +7,7 @@ export interface Ielement {
  key?: string;
  disabled?: boolean;
  orginalIndex?: number;
+ bgColor?: string;
 }
 
 @Component({
@@ -66,16 +67,11 @@ public multipleElements: Ielement[];
 
   public ngOnInit(): void {
     let j: number = this.elements.length;
-    console.log('this.elements.length: ', this.elements.length)
     let splitArr: number = j / this.numberOfRows;
     splitArr = splitArr % 1 === 0 ? splitArr : splitArr + 1;
     this.splittedArray = Math.trunc(splitArr);
     //TODO: 25 is hardcodded margin, try to get it from DOM elment;
     this.rowWidth = splitArr * this.blockWidth + 25 + 'px';
-    console.log('split arr', splitArr);
-    console.log('blockWidth', this.blockWidth);
-    console.log('row width', this.rowWidth);
-
     for (let i = 0; i < (j - 1); i += splitArr) {
         this.arrayOfArrays.push(this.elements.slice(i,i+splitArr));
     }
@@ -93,11 +89,13 @@ public multipleElements: Ielement[];
   }
 
   public ngAfterViewInit(): void {
-    for ( let i = 0; i < this.elements.length; ++i) {
-      $('#data-' + i + this.repeatedIds).attr('data-tooltip', this.elements[i].name);
-    } 
-    if (!this.mobile) {
-      $('.tooltipped').tooltip({delay: 50});
+    if (this.elements.length && this.elements[0].name) {
+      for ( let i = 0; i < this.elements.length; ++i) {
+        $('#data-' + i + this.repeatedIds).attr('data-tooltip', this.elements[i].name);
+      } 
+      if (!this.mobile) {
+        $('.tooltipped').tooltip({delay: 50});
+      }
     }
     $('.sideblock').nodoubletapzoom();
   }
