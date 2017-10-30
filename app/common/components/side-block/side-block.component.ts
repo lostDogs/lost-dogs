@@ -41,6 +41,8 @@ public removedElement: any;
 @Input()
 public multiple: boolean;
 public multipleElements: Ielement[];
+@Input()
+public patternType: boolean;
 
   @ViewChild('ScollSection') public scrolling: ElementRef;
   constructor() {

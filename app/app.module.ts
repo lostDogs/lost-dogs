@@ -25,7 +25,8 @@ import {BreedBlockComponent} from './common/components/breed-block/breed-block.c
 import {SizeBlockComponent} from './common/components/size-block/size-block.component';
 import {ColorBlockComponent} from './common/components/color-block/color-block.component';
 import {ExtrasBlockComponent} from './common/components/extras-block/extras-block.component';
-
+import {DogFigureComponent} from './common/components/dog-figure/dog-figure.component';
+import {PatternBlockComponent} from './common/components/pattern-block/pattern-block.component';
 @NgModule({
   imports: [BrowserModule, AppRouterModule, FormsModule, HttpModule],
   declarations: [
@@ -43,7 +44,9 @@ import {ExtrasBlockComponent} from './common/components/extras-block/extras-bloc
   SizeBlockComponent,
   ColorBlockComponent,
   ExtrasBlockComponent,
-  SideBlockDogComponent
+  SideBlockDogComponent,
+  DogFigureComponent,
+  PatternBlockComponent
   ],
   providers: [
     {provide: GlobalFunctionService, useClass: GlobalFunctionService},

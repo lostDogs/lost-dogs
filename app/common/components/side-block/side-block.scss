@@ -45,7 +45,7 @@ side-block, side-block-dog {
           margin: 0 5px;
           display: inline-block;
           border-radius: 5px;
-         box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+          box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
          &.disabled-img {
             box-shadow: none;
          }
@@ -61,6 +61,30 @@ side-block, side-block-dog {
               transition: display 1s;
             }
           }
+          .pattern {
+            transform: scale(0.5);
+            .full-dog {
+              position: relative;
+              top: -80px;
+              left: -100px;
+              .back {
+                position: absolute;
+                width: 180px;
+                height: 150px;
+              }
+            }
+          }
+          .colors {
+            padding-top: 1%;
+            width: 150px;
+            margin-bottom: 0;
+            div.color {
+              background-color: blue;
+              display: inline-block;
+              width: 65px;
+              height: 55px;
+            }
+          }          
           @media screen and (max-device-width: $screen-mobile-max) {
             border-radius: 10px;
             .img-bg {

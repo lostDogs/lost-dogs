@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 import {LostFoundService} from '../../../common/services/lost-found.service';
 @Component({
-  selector: 'color',
-  template: require('./color.template.html'),
-  styles: [ require('./color.scss')]
+  selector: 'Pattern',
+  template: require('./pattern.template.html'),
+  styles: [ require('./pattern.scss')]
 })
 
-export class ColorComponent { 
+export class PatternComponent { 
   constructor(public LostService: LostFoundService) {
     this.LostService.question2 = undefined;
     this.LostService.question3 = undefined;
@@ -15,9 +15,9 @@ export class ColorComponent {
   
   public ngOnInit(): void {
     this.LostService.imgAnswer = undefined;
-    this.LostService.inputField = {type: 'multiple', label: 'Color'};
+    this.LostService.inputField = {type: 'mutiple', label: 'Patron'};
     this.LostService.retrieveData = this.fillData;
-    this.LostService.question = 'Cual es su color?';
+    this.LostService.question = 'Cual es su Patron?';
   }
 
   public fillData(pageAnswer: any, lostService: any): void {
@@ -32,8 +32,9 @@ export class ColorComponent {
       } else {
         lostService.multipleImgAnswers = pageAnswer;
       }
+
     }
-  }   
+  }
 
   public changeElement(event: any): void {
     this.LostService.multipleImgAnswers = event;

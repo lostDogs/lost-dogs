@@ -21,10 +21,10 @@ export class LostFoundService {
   public rechangeDate: string;
   public imgAnswer: Ielement;
   public sequence: string[];
-  public defualtSequence: string[] = ['date', 'location', 'breed', 'gender', 'size', 'color', 'extras', 'details','review'];
+  public defualtSequence: string[] = ['date', 'location', 'breed', 'gender', 'size', 'color', 'pattern', 'extras', 'details','review'];
   public displayedSequence: string[];
-  public defaultDisplayedSequence: string[] = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Accessorios'];
-  public defaulApikeys: string[] = ['found_date', 'location', 'kind', 'gender', 'size', 'color', 'accessories'];
+  public defaultDisplayedSequence: string[] = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Patron','Accessorios'];
+  public defaulApikeys: string[] = ['found_date', 'location', 'kind', 'gender', 'size', 'color','pattern','accessories'];
   public extrasApiKeys: any = {name: 'name', img: 'imageFileType', comments: 'description', reward: 'reward'};
   public pageAnswers: any[];
   public pagePosition: number;
