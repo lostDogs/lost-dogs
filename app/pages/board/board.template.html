@@ -23,7 +23,7 @@
               <i class="tiny material-icons">close</i>
             </div>
             <p class="answer-text">{{nameInput}}</p>
-          </div>          
+          </div>
         </div>      
     </div>
     </section>
@@ -33,6 +33,7 @@
     <breed-block (selectedEmitter)="selectionReciver('breed', $event)" [removedElement]="filterElements.breed.answer" [hidden]="!filterElements.breed.enable"></breed-block>
     <size-block (selectedEmitter)="selectionReciver('size', $event)" [removedElement]="filterElements.size.answer" [hidden]="!filterElements.size.enable"></size-block>
     <color-block (selectedEmitter)="selectionReciver('color', $event)" [removedElement]="filterElements.color.answer" [hidden]="!filterElements.color.enable"></color-block>
+    <!-- <pattern-block (selectedEmitter)="selectionReciver('pattern', $event)" [removedElement]="filterElements.pattern.answer" [colors]="colorsSelected" [hidden]="!(filterElements.pattern.enable && colorsSelected && colorsSelected.length > 1)"></pattern-block> -->
     <div class="extra-name-block" [hidden]="!filterElements.extras.enable">
       <extras-block (selectedEmitter)="selectionReciver('extras', $event)" [removedElement]="filterElements.extras.answer"></extras-block>
       <div class="row form centered" [hidden]="!showNameInput || !(filterElements.extras && filterElements.extras.answer)">

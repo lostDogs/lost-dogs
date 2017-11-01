@@ -49,6 +49,7 @@ export class boardComponent {
   public nameInput: string;
   public mobile: boolean;
   public mapWidth: number;
+  public colorsSelected: string[];
 
   constructor(public dogCardService: DogCardService, public lostService: LostFoundService) {
     this.filtersKey = [];
@@ -64,8 +65,18 @@ export class boardComponent {
       this.dogCards.push(i);
     } 
     this.dogCardService.open = false;
+    // TEMP block
+    //TODO: integrate pattern well
+    const disPat: number = this.lostService.defaultDisplayedSequence.indexOf('Patron');
+    const seqPat: number = this.lostService.defualtSequence.indexOf('pattern');
+    if (~disPat && ~seqPat) {
+      const displayed = this.lostService.defaultDisplayedSequence.splice(disPat, 1);
+      const sequence = this.lostService.defualtSequence.splice(seqPat,1)
+    }
+    // TEMP end of  block
     this.lostService.defaultDisplayedSequence.forEach((componentLabel: string, index: number) => {
       this.filtersKey.push(this.lostService.defualtSequence[index]);
+      console.log('pattern name', componentLabel);
       this.filterElements[this.lostService.defualtSequence[index]] = {label: componentLabel};
     });
 
@@ -180,6 +191,9 @@ export class boardComponent {
    this.filterElements[componentName].answer =  event;
    this.filterElements[componentName].typeOfAnswer = typeOfAnswer;
    this.resetDate = false;
+   if (componentName =  'color') {
+     this.colorsSelected = this.getOnlyNames(event);
+   }
    this.searchForName(componentName);
   }
 
@@ -228,5 +242,13 @@ export class boardComponent {
         return false;
       });
     }
+  }
+
+  public getOnlyNames(answers: any): string[] {
+    let colors: string[] = [];
+    Array.isArray(answers) && answers.length && answers.forEach((answer: any, answerIndex: number) => {
+      colors.push(answer.name);
+    });
+    return colors.length ? colors : undefined;
   }
 };

@@ -88,16 +88,6 @@ public colorOptions: any;
     for ( let i = 0; i < this.elements.length; ++i) {
       this.elements[i]['key'] = 'data-' + i + this.repeatedIds;
     }
-    // For patternType only generating the disable block color for each pattern type.
-    if (this.patternType) {
-      let colorBlock: any = {};
-      this.colors.forEach((color: string, colorIndex: number) => {
-        colorBlock[colorIndex] = {disabled: false};
-      });
-      this.elements.forEach((value: any, index: number) => {
-        this.colorOptions[index] = JSON.parse(JSON.stringify(colorBlock));
-      });
-    }
   }
 
   public ngDoCheck(): void {
@@ -118,7 +108,7 @@ public colorOptions: any;
     }
     $('.sideblock').nodoubletapzoom();
     // default presseed option
-    if (this.patternType && this.elements[0].name === 'back-color') {
+    if (this.patternType && this.elements[0].name === 'back-color' && this.colors && this.colors.length > 1) {
       this.blockSelected(null, null, 0);
       this.colorSelected(0, 0, 0);
     }
@@ -225,6 +215,18 @@ public colorOptions: any;
       this.elements[prevElment.orginalIndex].disabled = false;
       this.previousSelected = prevElment.orginalIndex;        
       }
+    }
+    if (changes.colors && changes.colors.currentValue) {
+        // For patternType only generating the disable block color for each pattern type.
+        if (this.patternType && this.colors && this.colors.length) {
+          let colorBlock: any = {};
+          this.colors.length && this.colors.forEach((color: string, colorIndex: number) => {
+            colorBlock[colorIndex] = {disabled: false};
+          });
+          this.elements.forEach((value: any, index: number) => {
+            this.colorOptions[index] = JSON.parse(JSON.stringify(colorBlock));
+          });
+        }
     }
   }
 

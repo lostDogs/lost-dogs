@@ -15,7 +15,7 @@ export class PatternBlockComponent {
   public removedElement: any;
   public removedColor: any;
   @Input()
-  public colors: string[] = ['#ef6b13', '#DFA96D'];
+  public colors: string[];
   constructor(public dogCard: DogCardService) {
   }
   
