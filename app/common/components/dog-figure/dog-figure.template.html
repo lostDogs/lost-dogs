@@ -1,5 +1,5 @@
 <div class="full-dog">
-  <div class="back">
+  <div id="back-color">
     <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
      width="300.000000pt" height="226.000000pt" viewBox="0 0 300.000000 226.000000"
      preserveAspectRatio="xMidYMid meet">
@@ -74,7 +74,7 @@
     </g>
     </svg>
   </div>
-  <div id="chest-dog" [hidden]="!partLabels['huge-dots-dog'].visible">
+  <div id="chest-dog" [hidden]="!partLabels['chest-dog'].visible">
     <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
      width="300.000000pt" height="237.000000pt" viewBox="0 0 300.000000 237.000000"
      preserveAspectRatio="xMidYMid meet">
@@ -86,7 +86,7 @@
     </g>
     </svg>
   </div>
-  <div id="huge-dots-dog" [hidden]="!partLabels['chest-dog'].visible">
+  <div id="huge-dots-dog" [hidden]="!partLabels['huge-dots-dog'].visible">
     <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
      width="300.000000pt" height="223.000000pt" viewBox="0 0 300.000000 223.000000"
      preserveAspectRatio="xMidYMid meet">
@@ -403,7 +403,7 @@
     </g>
     </svg>    
   </div>
-  <div class="lineart">
+  <div class="lineart" (click)="dogclicked()">
     <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
      width="387.000000pt" height="294.000000pt" viewBox="0 0 387.000000 294.000000"
      preserveAspectRatio="xMidYMid meet">

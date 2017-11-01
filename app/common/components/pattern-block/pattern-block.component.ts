@@ -14,7 +14,8 @@ export class PatternBlockComponent {
   @Input()
   public removedElement: any;
   public removedColor: any;
-  public tempColor: [{bgColor: '#ef6b13', name: '#ef6b13'}, {bgColor: '#DFA96D', name: '#DFA96D'}, {bgColor: '#72736E', name: '#72736E'}];
+  @Input()
+  public colors: string[] = ['#ef6b13', '#DFA96D'];
   constructor(public dogCard: DogCardService) {
   }
   
@@ -30,6 +31,5 @@ export class PatternBlockComponent {
     this.selectedEmitter.emit(event);
   }
   public colorSelection(event: any): void {
-   console.log('seletected color');
   }
 }

@@ -4,8 +4,10 @@ dog-figure {
   .full-dog {
     position: relative;
   }
-  .back path {
-    fill: white;
+  #back-color {
+    g {
+      fill: white;
+    }
   }
   .lineart {
     position: absolute;

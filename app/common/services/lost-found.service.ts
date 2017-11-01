@@ -72,7 +72,6 @@ export class LostFoundService {
 
   public setAnwer(): void {
     this.pageAnswers[this.pagePosition] = this.getGeneralAnswer();
-    console.log('answer', this.pageAnswers);
   }
 
   public saveToApi(): void {
@@ -167,5 +166,8 @@ export class LostFoundService {
      this.dogPicture = this.defaultDogPic;
      this.reward = this.defaultReward;
      this.comments = undefined;
+     this.defualtSequence = ['date', 'location', 'breed', 'gender', 'size', 'color', 'pattern', 'extras', 'details','review'];
+     this.defaultDisplayedSequence  = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Patron','Accessorios'];
+     this.defaulApikeys = ['found_date', 'location', 'kind', 'gender', 'size', 'color','pattern','accessories'];
   }
 }

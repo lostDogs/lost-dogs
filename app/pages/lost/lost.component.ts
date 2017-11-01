@@ -38,6 +38,7 @@ export class lostComponent {
         this.lostService.pagePosition = Indexlocation !== -1 ? Indexlocation : 0;
 
         if (this.lostService.retrieveData) {
+          console.log('pages position', this.lostService.pagePosition);
           this.lostService.retrieveData(this.lostService.pageAnswers[this.lostService.pagePosition], this.lostService);
           this.lostService.retrieveData = undefined;
         }

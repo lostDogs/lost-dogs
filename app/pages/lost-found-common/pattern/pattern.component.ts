@@ -6,33 +6,33 @@ import {LostFoundService} from '../../../common/services/lost-found.service';
   styles: [ require('./pattern.scss')]
 })
 
-export class PatternComponent { 
+export class PatternComponent {
+  public colorsSelected: string[];
   constructor(public LostService: LostFoundService) {
     this.LostService.question2 = undefined;
     this.LostService.question3 = undefined;
     this.LostService.optional = false;
+    this.LostService.multipleImgAnswers = [];
   }
   
   public ngOnInit(): void {
     this.LostService.imgAnswer = undefined;
-    this.LostService.inputField = {type: 'mutiple', label: 'Patron'};
+    this.LostService.inputField = {type: 'multiple', label: 'Patron'};
     this.LostService.retrieveData = this.fillData;
     this.LostService.question = 'Cual es su Patron?';
+    const colorIndex: number = this.LostService.defualtSequence.indexOf('color');
+    if (~colorIndex) {
+      let tempColor: string[] = [];
+      this.LostService.pageAnswers[colorIndex].forEach((value: any, index: number) => {
+        tempColor.push(value.name)
+      });
+      this.colorsSelected = tempColor;
+    }
   }
 
   public fillData(pageAnswer: any, lostService: any): void {
     if (pageAnswer) {
-      if (pageAnswer[0].names) {
-        const tempAns: any[] = [];
-        pageAnswer[0].names.forEach((value: any, index: number) => {
-          const obj = {name: value, orginalIndex: pageAnswer[0].Indexs[index]};
-          tempAns.push(obj);
-        });
-        lostService.multipleImgAnswers = tempAns;
-      } else {
-        lostService.multipleImgAnswers = pageAnswer;
-      }
-
+      lostService.retrieveMultipleImgAnswers = pageAnswer;
     }
   }
 

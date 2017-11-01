@@ -45,10 +45,12 @@ side-block, side-block-dog {
           margin: 0 5px;
           display: inline-block;
           border-radius: 5px;
+          vertical-align: text-top;
           box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
-         &.disabled-img {
+         &.disabled-img, &.disabled-pattern {
             box-shadow: none;
          }
+
           .img-bg {
             width: 200px;
             height: 150px;
@@ -63,6 +65,7 @@ side-block, side-block-dog {
           }
           .pattern {
             transform: scale(0.5);
+            border-bottom: none;
             .full-dog {
               position: relative;
               top: -80px;
@@ -75,14 +78,42 @@ side-block, side-block-dog {
             }
           }
           .colors {
-            padding-top: 1%;
-            width: 150px;
-            margin-bottom: 0;
+            filter: grayscale(100%);
+            &.enable-colors {
+              filter:none;
+              .color {
+                box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                cursor: pointer;
+                position: relative;
+                z-index: 20;
+                &.disabled-color {
+                  box-shadow: none;
+                  cursor: default;
+                  filter: grayscale(100%);
+                }
+              }
+            }
+            .width-third {
+              width: 32%;
+            }
+            .width-half {
+              width: 48%;
+            }
+            .width-full {
+              width: 98%;
+            }
+            :first-child {
+              border-bottom-left-radius: 5px;
+            }
+            :last-child {
+              border-bottom-right-radius: 5px;
+            }            
             div.color {
               background-color: blue;
               display: inline-block;
-              width: 65px;
-              height: 55px;
+              height: 50px;
+              border: 2px solid black;
+              transition: 1s;
             }
           }          
           @media screen and (max-device-width: $screen-mobile-max) {
@@ -102,4 +133,9 @@ side-block, side-block-dog {
 
 .disabled-img {
   filter: grayscale(100%) blur(1px);
+}
+.disabled-pattern {
+  .pattern {
+    filter: blur(1px);
+  }
 }
