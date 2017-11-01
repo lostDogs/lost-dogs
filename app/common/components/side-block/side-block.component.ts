@@ -54,7 +54,7 @@ public colorOptions: any;
     this.arrayOfArrays = [];
     this.multipleElements = [];
     //TODO: blockWidth is the hardcoded with of the component. Try to get it trought the dom element 
-    this.blockWidth = this.mobile ? 355 : 210;
+    this.blockWidth = this.mobile ? 360 : 210;
     this.scrollleftSteeps = this.mobile ? 100 : 50;
      // For patternType only
     this.colorOptions = {};

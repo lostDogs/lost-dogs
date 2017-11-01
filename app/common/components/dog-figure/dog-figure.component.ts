@@ -42,11 +42,13 @@ export class DogFigureComponent {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.display && changes.display.currentValue) {
-      const partsDisplay: string[] = changes.display.currentValue.split(' ');
+      const partsDisplay: string[] = Array.isArray(changes.display.currentValue) ? changes.display.currentValue : changes.display.currentValue.split(' ');
       if (partsDisplay.length > 1) {
         partsDisplay.forEach((value: string, valueIndex: number) => {
-          if (this.partLabels[value]) {
-            this.partLabels[value].visible = true;
+          // when adding color into the name will be name:#A124de;
+          const splittedValue: string = value.split(':')[0];
+          if (this.partLabels[splittedValue]) {
+            this.partLabels[splittedValue].visible = true;
           }
         });
       } else if (this.partLabels[this.display]) {

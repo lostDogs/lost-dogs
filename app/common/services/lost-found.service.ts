@@ -60,7 +60,7 @@ export class LostFoundService {
   }
 
   public goToReview(): void {
-    const toPage = '/' + this.parentPage + '/' + this.sequence[this.sequence.length - 1];
+    const toPage = '/' + this.parentPage + '/' + this.sequence[this.defualtSequence.length - 1];
     this.router.navigate([toPage]);
   }
 

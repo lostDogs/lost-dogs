@@ -15,10 +15,13 @@
       <li class="collection-item avatar centered" *ngFor="let description of LostService.displayedSequence; let i=index">
         <div class="circle material-icons location" *ngIf="LostService.sequence[i]==='location'"><i class="medium material-icons">location_on</i></div>
         <div class="circle material-icons location" *ngIf="LostService.sequence[i]==='date'"><i class="medium material-icons">date_range</i></div>
-        <div  style="margin: 0" *ngIf="pageAnswersCopy[i] && window.Array.isArray(pageAnswersCopy[i])">
-          <div *ngFor="let imgUrl of pageAnswersCopy[i][0].imgUrls; let j=index" [ngStyle]="{'background-image': 'url(' + imgUrl+ ')' , 'left':  imgwidth*j + 'px'}" class="circle"></div>
+        <div  style="margin: 0" *ngIf="pageAnswersCopy[i] && window.Array.isArray(pageAnswersCopy[i]) && LostService.sequence[i]!=='pattern'">
+          <div  class="circle" *ngFor="let imgUrl of pageAnswersCopy[i][0].imgUrls; let j=index" [ngStyle]="{'background-image': 'url(' + imgUrl+ ')' , 'left':  imgwidth*j + 'px', 'background-color': pageAnswersCopy[i][0].names[j].charAt(0)==='#' && pageAnswersCopy[i][0].names[j]}"></div>
         </div>
-        <div [ngStyle]="{'background-image': 'url(' + pageAnswersCopy[i].imgUrl + ')' }" class="circle" *ngIf="pageAnswersCopy[i] && LostService.sequence[i]!=='location' && LostService.sequence[i]!=='date' && !window.Array.isArray(pageAnswersCopy[i])"></div>
+        <div class="circle " *ngIf="LostService.sequence[i]==='pattern' && pageAnswersCopy[i][0].names.length > 1" style="margin: 0">
+          <dog-figure [display]="pageAnswersCopy[i][0].names"></dog-figure>
+        </div>
+        <div class="circle" [ngStyle]="{'background-image': 'url(' + pageAnswersCopy[i].imgUrl + ')' }" *ngIf="pageAnswersCopy[i] && !LostService.sequence[i].imgUrl"></div>
         <span class="title" *ngIf="LostService.sequence[i]==='date'"><b>{{description}}:</b>  {{pageAnswersCopy[i]}}</span>
         <span class="title" *ngIf="pageAnswersCopy[i] && LostService.sequence[i]==='location'"><b>{{description}}:</b>  {{pageAnswersCopy[i].address}}</span>
         <span class="title" *ngIf="pageAnswersCopy[i] && LostService.sequence[i]!=='location' && LostService.sequence[i]!=='date' && !window.Array.isArray(pageAnswersCopy[i])"><b>{{description}}:</b>  {{pageAnswersCopy[i].name}}</span>

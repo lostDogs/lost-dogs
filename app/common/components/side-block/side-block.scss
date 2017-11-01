@@ -66,6 +66,7 @@ side-block, side-block-dog {
           .pattern {
             transform: scale(0.5);
             border-bottom: none;
+
             .full-dog {
               position: relative;
               top: -80px;
@@ -74,6 +75,13 @@ side-block, side-block-dog {
                 position: absolute;
                 width: 180px;
                 height: 150px;
+              }
+            }
+            @media screen and (max-device-width: $screen-mobile-max) {
+              transform: scale(0.9);
+              .full-dog {
+                 top: 0;
+                left: -25px;
               }
             }
           }
