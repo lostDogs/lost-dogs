@@ -23,10 +23,10 @@ export class homeComponent {
     this.scrollMax = (window.innerHeight - (window.innerHeight / 8)) / 2;
   }
   @HostListener('window:scroll', ['$event'])
-  onWindowScroll() {
+  onWindowScroll(event: any) {
       const scrollMax: number = (window.innerHeight - (window.innerHeight / 8)) / 2;
       this.scrollMax = scrollMax;
-      const scrollTop = this.document.body.scrollTop;
+      const scrollTop = this.document.documentElement.scrollTop;
       this.scrollnormalize = (scrollMax - scrollTop) / scrollMax;
       this.globalService.scrollOpacity = 1.2 - this.scrollnormalize;
       if(this.scrollnormalize <= 0) {
