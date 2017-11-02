@@ -21,7 +21,7 @@ export class PatternComponent {
     this.LostService.retrieveData = this.fillData;
     this.LostService.question = 'Cual es su Patron?';
     const colorIndex: number = this.LostService.defualtSequence.indexOf('color');
-    if (~colorIndex) {
+    if (~colorIndex && this.LostService.pageAnswers[colorIndex]) {
       let tempColor: string[] = [];
       this.LostService.pageAnswers[colorIndex].forEach((value: any, index: number) => {
         tempColor.push(value.name)
