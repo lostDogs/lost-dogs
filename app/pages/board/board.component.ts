@@ -67,6 +67,7 @@ export class boardComponent {
     this.dogCardService.open = false;
     // TEMP block
     //TODO: integrate pattern well
+    this.lostService.resetService();
     const disPat: number = this.lostService.defaultDisplayedSequence.indexOf('Patron');
     const seqPat: number = this.lostService.defualtSequence.indexOf('pattern');
     if (~disPat && ~seqPat) {
