@@ -76,7 +76,6 @@ export class boardComponent {
     // TEMP end of  block
     this.lostService.defaultDisplayedSequence.forEach((componentLabel: string, index: number) => {
       this.filtersKey.push(this.lostService.defualtSequence[index]);
-      console.log('pattern name', componentLabel);
       this.filterElements[this.lostService.defualtSequence[index]] = {label: componentLabel};
     });
 

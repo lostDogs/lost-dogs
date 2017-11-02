@@ -26,7 +26,7 @@ export class LocationComponent {
    public fillData(pageAnswer: any, lostService: any): void {
     if (pageAnswer) {
       lostService.address = pageAnswer.address;
-      lostService.location = pageAnswer.location;
+      lostService.latLong = pageAnswer.latLong;
     }
   } 
 }

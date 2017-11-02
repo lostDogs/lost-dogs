@@ -8,6 +8,7 @@ export interface Ielement {
  disabled?: boolean;
  orginalIndex?: number;
  bgColor?: string;
+ apiVal?: any;
 }
 
 @Component({

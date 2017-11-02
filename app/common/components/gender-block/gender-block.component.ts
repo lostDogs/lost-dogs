@@ -21,8 +21,8 @@ export class GenderBlockComponent {
 
   public setElement() {
   this.elements = [
-  {imgUrl:'http://cdn.lostdog.mx/assets/img/male-icon1.png', name: 'macho'},
-  {imgUrl:'http://cdn.lostdog.mx/assets/img/female-icon1.png', name: 'hembra'}
+  {imgUrl:'http://cdn.lostdog.mx/assets/img/male-icon1.png', name: 'macho', apiVal: true},
+  {imgUrl:'http://cdn.lostdog.mx/assets/img/female-icon1.png', name: 'hembra', apiVal: false}
   ];
   }
 

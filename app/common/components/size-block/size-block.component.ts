@@ -21,10 +21,10 @@ export class SizeBlockComponent {
 
   public setElement() {
   this.elements = [
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/size-tiny.png', name: 'Dimimuto'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/size-small.png', name: 'Pequeño'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/size-medium.png', name: 'mediano'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/size-big.png', name: 'grande'}
+    {imgUrl:'http://cdn.lostdog.mx/assets/img/size-tiny.png', name: 'Dimimuto', apiVal: '0'},
+    {imgUrl:'http://cdn.lostdog.mx/assets/img/size-small.png', name: 'Pequeño', apiVal: '1'},
+    {imgUrl:'http://cdn.lostdog.mx/assets/img/size-medium.png', name: 'mediano', apiVal: '2'},
+    {imgUrl:'http://cdn.lostdog.mx/assets/img/size-big.png', name: 'grande', apiVal: '3'}
     ];
   }
 

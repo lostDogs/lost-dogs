@@ -93,7 +93,7 @@ public custom: CustomMarker;
 
   public getLatLng(formatedAddresss: string, ctrl: any): void {
     ctrl = ctrl ? ctrl : this;
-    ctrl.geocoder.geocode({address: formatedAddresss}, (results: any, status: any) => {
+    ctrl.geocode && ctrl.geocoder.geocode({address: formatedAddresss}, (results: any, status: any) => {
       if (status === 'OK') {
         ctrl.location = results[0].geometry.location;
         ctrl.locationEmiter.emit(ctrl.location);

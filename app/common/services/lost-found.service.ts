@@ -10,7 +10,7 @@ import {UserService} from '../services/user.service';
 export class LostFoundService {
   public locationAdressInput: string;
   public address: string;
-  public location: {lat: number, lng: number};
+  public latLong: {lat: number, lng: number};
   public question: string;
   public question2: string;
   public question3: string;
@@ -21,11 +21,11 @@ export class LostFoundService {
   public rechangeDate: string;
   public imgAnswer: Ielement;
   public sequence: string[];
-  public defualtSequence: string[] = ['date', 'location', 'breed', 'gender', 'size', 'color', 'pattern', 'extras', 'details','review'];
   public displayedSequence: string[];
-  public defaultDisplayedSequence: string[] = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Patron','Accessorios'];
-  public defaulApikeys: string[] = ['found_date', 'location', 'kind', 'gender', 'size', 'color','pattern','accessories'];
-  public extrasApiKeys: any = {name: 'name', img: 'imageFileType', comments: 'description', reward: 'reward'};
+  public defaultDisplayedSequence: string[];
+  public defualtSequence: string[];
+  public defaulApikeys: string[];
+  public extrasApiKeys: any = {name: 'name', img: 'imageFileType', comments: 'description', reward: 'reward', lost: 'lost'};
   public pageAnswers: any[];
   public pagePosition: number;
   public multipleImgAnswers: Ielement[];
@@ -72,6 +72,7 @@ export class LostFoundService {
 
   public setAnwer(): void {
     this.pageAnswers[this.pagePosition] = this.getGeneralAnswer();
+    console.log('page answers', this.pageAnswers);
   }
 
   public saveToApi(): void {
@@ -80,35 +81,38 @@ export class LostFoundService {
         'Content-Type': 'application/json',
         'Authorization': 'token ' + this.userService.token
       };
-    this.api.post('https://fierce-falls-25549.herokuapp.com/api/dogs',dog, headers).subscribe(data => {});
+    this.api.post('https://fierce-falls-25549.herokuapp.com/api/dogs',dog, headers).subscribe(data => {
+      console.log('sucessss', data);
+    });
   }
 
   public objDogBuilder(): any {
     let dogObj = {};
     this.defaultDisplayedSequence.forEach((Keyname: string, nameIndex: number) => {
       let subObj: any;
-      if (this.pageAnswers[nameIndex].name) {
-        subObj = {name: this.pageAnswers[nameIndex].name, imgUrl: this.pageAnswers[nameIndex].imgUrl};
-      } else if (Array.isArray(this.pageAnswers[nameIndex]) && this.pageAnswers.length && this.pageAnswers[nameIndex][0].name) {
+      if (this.pageAnswers[nameIndex] && this.pageAnswers[nameIndex].name) {
+        subObj = this.pageAnswers[nameIndex].apiVal ? this.pageAnswers[nameIndex].apiVal : this.pageAnswers[nameIndex].name;
+      } else if (Array.isArray(this.pageAnswers[nameIndex]) && this.pageAnswers[nameIndex].length && this.pageAnswers[nameIndex][0].name) {
         subObj = [];
+
         this.pageAnswers[nameIndex].forEach((multAnswer: any,multAnswerIndex: number) => {
-          subObj.push({name: multAnswer.name, imgUrl: multAnswer.imgUrl});
+          subObj.push(multAnswer.apiVal ? multAnswer.apiVal : multAnswer.name);
         });
       } else {
         subObj = this.pageAnswers[nameIndex];
       }
+      console.log('this.defaulApikeys[nameIndex]', this.defaulApikeys[nameIndex]);
       dogObj[this.defaulApikeys[nameIndex]] = subObj;
     });
-    if (this.dogName) {
-      dogObj[this.extrasApiKeys.name] = this.dogName;
-    }
     if (this.comments) {
       dogObj[this.extrasApiKeys.comments] = this.comments;
     }
     if (this.reward && this.reward !== this.defaultReward) {
     dogObj[this.extrasApiKeys.reward] = this.reward;
     }
-    dogObj[this.extrasApiKeys.img] = this.binaryDogImg;
+    dogObj[this.extrasApiKeys.name] = '' + this.dogName;
+    dogObj[this.extrasApiKeys.lost] = this.parentPage === 'lost';
+    //dogObj[this.extrasApiKeys.img] = this.binaryDogImg;
     console.log(dogObj);
     return dogObj;
   }
@@ -131,8 +135,8 @@ export class LostFoundService {
   public getGeneralAnswer(): any {
     if (this.inputField && this.inputField.type === 'date') {
       return this.answer;
-    } else if (this.inputField && this.inputField.type === 'address' && this.location && this.address) {
-    return {address: this.address, location: this.location};
+    } else if (this.inputField && this.inputField.type === 'address' && this.latLong && this.address) {
+    return {address: this.address, latLong: this.latLong};
     } else if(this.imgAnswer && this.imgAnswer.disabled===true) {
      return this.imgAnswer;
     } else if (this.multipleImgAnswers && this.multipleImgAnswers.length) {
@@ -145,7 +149,7 @@ export class LostFoundService {
   public resetService() {
      this.locationAdressInput = undefined;
      this.address = undefined;
-     this.location = undefined;
+     this.latLong = undefined;
      this.question = undefined;
      this.question2 = undefined;
      this.question3 = undefined;
@@ -168,6 +172,6 @@ export class LostFoundService {
      this.comments = undefined;
      this.defualtSequence = ['date', 'location', 'breed', 'gender', 'size', 'color', 'pattern', 'extras', 'details','review'];
      this.defaultDisplayedSequence  = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Patron','Accessorios'];
-     this.defaulApikeys = ['found_date', 'location', 'kind', 'gender', 'size', 'color','pattern','accessories'];
+     this.defaulApikeys = ['found_date', 'location', 'kind_id', 'male', 'size_Id', 'color','pattern_Id','accessories_Id'];;
   }
 }

@@ -19,7 +19,7 @@ export class BreedBlockComponent {
   constructor() {
     this.elements = [];
     this.breeds.forEach((value: any, valueIndex: number) => {
-    this.elements.push({name: value.name, imgUrl: this.dogImgUrl + value.id + '.jpg'});
+    this.elements.push({name: value.name, imgUrl: this.dogImgUrl + value.id + '.jpg', apiVal: value.id});
     });
   }
   
