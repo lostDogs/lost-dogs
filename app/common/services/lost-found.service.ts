@@ -25,7 +25,7 @@ export class LostFoundService {
   public defaultDisplayedSequence: string[];
   public defualtSequence: string[];
   public defaulApikeys: string[];
-  public extrasApiKeys: any = {name: 'name', img: 'imageFileType', comments: 'description', reward: 'reward', lost: 'lost'};
+  public extrasApiKeys: any = {name: 'name', img: 'imageFileType', comments: 'description', reward: 'reward', lost: 'lost', reporter: 'reporter_id'};
   public pageAnswers: any[];
   public pagePosition: number;
   public multipleImgAnswers: Ielement[];
@@ -90,18 +90,22 @@ export class LostFoundService {
     let dogObj = {};
     this.defaultDisplayedSequence.forEach((Keyname: string, nameIndex: number) => {
       let subObj: any;
-      if (this.pageAnswers[nameIndex] && this.pageAnswers[nameIndex].name) {
-        subObj = this.pageAnswers[nameIndex].apiVal ? this.pageAnswers[nameIndex].apiVal : this.pageAnswers[nameIndex].name;
+      if (this.defualtSequence[nameIndex] === 'location') {
+         subObj = {
+           'coordinates': [this.pageAnswers[nameIndex].latLong.lat, this.pageAnswers[nameIndex].latLong.lng],
+           'address': this.pageAnswers[nameIndex].address
+         };
+      } else if (this.pageAnswers[nameIndex] && this.pageAnswers[nameIndex].name) {
+        subObj = this.pageAnswers[nameIndex].apiVal || typeof this.pageAnswers[nameIndex].apiVal === 'boolean' ? this.pageAnswers[nameIndex].apiVal : this.pageAnswers[nameIndex].name;
       } else if (Array.isArray(this.pageAnswers[nameIndex]) && this.pageAnswers[nameIndex].length && this.pageAnswers[nameIndex][0].name) {
         subObj = [];
-
         this.pageAnswers[nameIndex].forEach((multAnswer: any,multAnswerIndex: number) => {
-          subObj.push(multAnswer.apiVal ? multAnswer.apiVal : multAnswer.name);
+          subObj.push(multAnswer.apiVal || typeof multAnswer.apiVal === 'boolean' ? multAnswer.apiVal : multAnswer.name);
         });
       } else {
         subObj = this.pageAnswers[nameIndex];
       }
-      console.log('this.defaulApikeys[nameIndex]', this.defaulApikeys[nameIndex]);
+      console.log(this.defaulApikeys[nameIndex]);
       dogObj[this.defaulApikeys[nameIndex]] = subObj;
     });
     if (this.comments) {
@@ -110,8 +114,12 @@ export class LostFoundService {
     if (this.reward && this.reward !== this.defaultReward) {
     dogObj[this.extrasApiKeys.reward] = this.reward;
     }
-    dogObj[this.extrasApiKeys.name] = '' + this.dogName;
+    dogObj[this.extrasApiKeys.name] = this.dogName || 'NA/';
     dogObj[this.extrasApiKeys.lost] = this.parentPage === 'lost';
+    dogObj[this.extrasApiKeys.img] = 'application/jpeg';
+    dogObj[this.extrasApiKeys.reporter] = this.userService.user.username;
+    dogObj['color'] = dogObj['color'] ? dogObj['color'] + '': '';
+    dogObj['pattern_id'] = dogObj['pattern_id'] ? dogObj['pattern_id'] + '' : '';
     //dogObj[this.extrasApiKeys.img] = this.binaryDogImg;
     console.log(dogObj);
     return dogObj;
@@ -172,6 +180,6 @@ export class LostFoundService {
      this.comments = undefined;
      this.defualtSequence = ['date', 'location', 'breed', 'gender', 'size', 'color', 'pattern', 'extras', 'details','review'];
      this.defaultDisplayedSequence  = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Patron','Accessorios'];
-     this.defaulApikeys = ['found_date', 'location', 'kind_id', 'male', 'size_Id', 'color','pattern_Id','accessories_Id'];;
+     this.defaulApikeys = ['found_date', 'location', 'kind', 'male', 'size_id', 'color','pattern_id','accessories_id'];;
   }
 }

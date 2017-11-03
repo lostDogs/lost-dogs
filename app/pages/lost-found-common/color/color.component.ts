@@ -37,7 +37,7 @@ export class ColorComponent {
     if (notDisabled.length > 1 && !(~patternIndex)) {
       this.LostService.defualtSequence.splice( this.LostService.pagePosition + 1, 0, patternString);
       this.LostService.defaultDisplayedSequence.splice(this.LostService.pagePosition + 1, 0, patternName);
-      this.LostService.defaulApikeys.splice(this.LostService.pagePosition + 1, 0, patternString);
+      this.LostService.defaulApikeys.splice(this.LostService.pagePosition + 1, 0, patternString + '_id');
     }
     if (notDisabled.length && notDisabled.length <= 1 && ~patternIndex) {
       this.LostService.defualtSequence.splice(patternIndex, 1);
