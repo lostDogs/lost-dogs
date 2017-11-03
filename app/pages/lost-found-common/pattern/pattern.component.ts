@@ -12,27 +12,35 @@ export class PatternComponent {
     this.LostService.question2 = undefined;
     this.LostService.question3 = undefined;
     this.LostService.optional = false;
-    this.LostService.multipleImgAnswers = [];
   }
   
   public ngOnInit(): void {
     this.LostService.imgAnswer = undefined;
     this.LostService.inputField = {type: 'multiple', label: 'Patron'};
-    this.LostService.retrieveData = this.fillData;
+    this.LostService.retrieveData = undefined;
     this.LostService.question = 'Cual es su Patron?';
     const colorIndex: number = this.LostService.defualtSequence.indexOf('color');
     if (~colorIndex && this.LostService.pageAnswers[colorIndex]) {
       let tempColor: string[] = [];
-      this.LostService.pageAnswers[colorIndex].forEach((value: any, index: number) => {
-        tempColor.push(value.name)
+      const disabled: any[] = this.LostService.pageAnswers[colorIndex].filter((value: any, index: number)=>{return value.disabled});
+      disabled.forEach((value: any, index: number) => {
+        tempColor.push(value.name);
       });
       this.colorsSelected = tempColor;
+      this.retrieveData();
     }
   }
+  public ngAfterViewInit(): void {
+  }
 
-  public fillData(pageAnswer: any, lostService: any): void {
-    if (pageAnswer) {
-      lostService.retrieveMultipleImgAnswers = pageAnswer;
+  public retrieveData(): void {
+    const patternIndex: number = this.LostService.defualtSequence.indexOf('pattern');
+    const answer: any[] = this.LostService.pageAnswers[patternIndex];
+    if (answer && answer.length) {
+      answer.push('retrieve')
+      this.LostService.multipleImgAnswers = answer;
+    } else {
+      this.LostService.multipleImgAnswers = [];
     }
   }
 

@@ -28,7 +28,7 @@ dog-figure {
     top: 3px;
     left: 3px;
     g {
-      fill: $buttonWarningHover;
+      fill: red;
     }
   }
   #left-ear-dog {
@@ -36,19 +36,22 @@ dog-figure {
     top: 1px;
     left: 10px;
     g {
-      fill: brown;
+      fill: red;
     }
   }
   #small-dots-dog {
     position: absolute;
     top: 0;
+    g {
+      fill: red;
+    }    
   }
   #back-dog {
     position: absolute;
     top: -2px;
     left: -11px;
     g {
-      fill: blue;
+      fill: red;
     }
   }
   #huge-dots-dog {
@@ -56,14 +59,14 @@ dog-figure {
     top: 7px;
     left: -2px;
     g {
-      fill: green;
+      fill: red;
     }
   }
   #tuxedo-dog {
     position: absolute;
     top: 0;
     g {
-      fill: orange;
+      fill: red;
     }
   }
   #chest-dog {
@@ -71,7 +74,7 @@ dog-figure {
     top: -6px;
     left: -8px;
     g {
-      fill: yellow;
+      fill: red;
     }
   }
   #back-legs-dog {
@@ -79,7 +82,7 @@ dog-figure {
     top: 4px;
     left: 4px;
     g {
-      fill: $buttonInfo;
+      fill: red;
     }
   }
   #front-legs-dog {
@@ -87,7 +90,7 @@ dog-figure {
     top: 2px;
     left: 2px;
     g {
-      fill: $buttonAction;
+      fill: red;
     }
   }
   #paws-dog {
@@ -102,7 +105,7 @@ dog-figure {
     position: absolute;
     top: 0;
     g {
-      fill: $greenMat;
+      fill: red;
     }
   }
 }

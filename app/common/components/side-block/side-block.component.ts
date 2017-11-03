@@ -30,7 +30,7 @@ export class SideBlockComponent {
   public pressedRight: boolean;
   public pressedLeft: boolean;
   public actualScroll: number = 0;
-  public splittedArray: number;
+  public splittedArray: number = 0;
   public previousSelected: number = 0;
   public mobile: boolean;
   public showArrows: boolean;
@@ -108,11 +108,6 @@ public colorOptions: any;
       }
     }
     $('.sideblock').nodoubletapzoom();
-    // default presseed option
-    if (this.patternType && this.elements[0].name === 'back-color' && this.colors && this.colors.length > 1) {
-      this.blockSelected(null, null, 0);
-      this.colorSelected(0, 0, 0);
-    }
   }
 
   public goLeft():void {
@@ -124,6 +119,14 @@ public colorOptions: any;
 
   }
 
+  public initDog(): void {
+    // default presseed option
+    if (this.patternType && this.elements[0].name === 'back-color' && this.colors && this.colors.length > 1) {
+      this.blockSelected(null, null, 0);
+      setTimeout(() => {this.colorSelected(0, 0, 0);}, 20);
+    }    
+  }
+
   public goRight(): void {
     if ( this.scrolling.nativeElement.scrollLeft + this.scrollleftSteeps <= this.maxScrollLeft) {
       this.pressedRight = true;
@@ -133,7 +136,7 @@ public colorOptions: any;
   }
 
   public blockSelected(row: number, column: number, indexed?: number) {
-    if(!indexed) {
+    if(indexed === undefined || indexed === null) {
       indexed = row *this.splittedArray  + column;
     }
     // saving the original index into the object so we can emit it and latter deleted if selected.
@@ -152,7 +155,7 @@ public colorOptions: any;
       //this.multipleElements = this.removedElement && this.removedElement.length ? this.removedElement : this.multipleElements;
       // search for uniqueness
       let some: boolean = this.multipleElements.some((el: Ielement, index: number) => {
-        if (el.key === this.elements[indexed].key) {
+        if (el.name === this.elements[indexed].name) {
           removeIndex = index;
           return true;
         }
@@ -164,8 +167,9 @@ public colorOptions: any;
       this.selectedEmitter.emit(this.multipleElements);
     }
   }
+
   public colorSelected(row: number, column: number, colorNum: number, indexed?: number) {
-    if (!indexed) {
+    if(indexed === undefined || indexed === null) {
       indexed = row *this.splittedArray  + column;
     }
     if (this.elements[indexed].disabled) {
@@ -191,32 +195,6 @@ public colorOptions: any;
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.removedElement && changes.removedElement.currentValue) {
-      const elements: Ielement = changes.removedElement.currentValue;
-      if (Array.isArray(elements)) {
-        const disabled = elements.filter((value: any, index: number) => {return value.disabled});
-        if (!changes.removedElement.isFirstChange && !disabled) {
-          this.elements.forEach((value: Ielement, index: number) => {
-            this.elements[index].disabled = false;
-          });
-          elements.forEach((value: any, index: number) => {
-            this.elements[value.orginalIndex].disabled = value.disabled;
-          });
-          this.multipleElements = elements;
-        } else  {
-         this.retrieveMultiple();
-        }
-      }else if(!Array.isArray(elements)) {
-          this.elements[elements.orginalIndex].disabled = elements.disabled;
-          this.previousSelected = elements.orginalIndex;
-      }
-    }else if (changes.removedElement && !changes.removedElement.currentValue && changes.removedElement.previousValue) {
-      const prevElment: Ielement = changes.removedElement.previousValue;
-      if(prevElment.key && !Array.isArray(prevElment)) {
-      this.elements[prevElment.orginalIndex].disabled = false;
-      this.previousSelected = prevElment.orginalIndex;        
-      }
-    }
     if (changes.colors && changes.colors.currentValue) {
         // For patternType only generating the disable block color for each pattern type.
         if (this.patternType && this.colors && this.colors.length) {
@@ -229,6 +207,36 @@ public colorOptions: any;
           });
         }
     }
+    if (changes.removedElement && changes.removedElement.currentValue) {
+      const elements: Ielement = changes.removedElement.currentValue;
+      if (Array.isArray(elements)) {
+        const disabled = elements.filter((value: any, index: number) => {return value.disabled});
+        const notDisabled = elements.filter((value: any, index: number) => {return !value.disabled});
+        if (!changes.removedElement.isFirstChange() && notDisabled.length && elements[elements.length - 1] !== 'retrieve') {
+          this.elements.forEach((value: Ielement, index: number) => {
+            this.elements[index].disabled = false;
+          });
+          elements.forEach((value: any, index: number) => {
+            this.elements[value.orginalIndex].disabled = value.disabled;
+          });
+          this.multipleElements = elements;
+        } else if(disabled.length && elements[elements.length - 1] === 'retrieve') {
+         elements.splice(elements.length - 1, 1);
+         this.retrieveMultiple();
+        } else if (this.colors && changes.removedElement.isFirstChange()) {
+           this.initDog();
+        }
+      }else if(!Array.isArray(elements)) {
+          this.elements[elements.orginalIndex].disabled = elements.disabled;
+          this.previousSelected = elements.orginalIndex;
+      }
+    }else if (changes.removedElement && !changes.removedElement.currentValue && changes.removedElement.previousValue) {
+      const prevElment: Ielement = changes.removedElement.previousValue;
+      if(prevElment.key && !Array.isArray(prevElment)) {
+      this.elements[prevElment.orginalIndex].disabled = false;
+      this.previousSelected = prevElment.orginalIndex;
+      }
+    }
   }
 
   public retrieveMultiple(): void {
@@ -236,8 +244,13 @@ public colorOptions: any;
       const disabled: Ielement[] = this.removedElement.filter((value: any, index: number) => {return value.disabled});
       disabled.forEach((value: Ielement, index: number) => {
         this.elements[value.orginalIndex].disabled = true;
+        if (this.patternType && value.name.split(':')[1]) {
+          const color: string = value.name.split(':')[1].trim();
+          const colorIndex: number = this.colors.indexOf(color);
+          ~colorIndex && setTimeout(() => {this.colorSelected(null, null, colorIndex, value.orginalIndex);}, 20);
+        }        
       });
-      this.multipleElements = disabled;
+      this.multipleElements = this.removedElement;
     }
   }
 
