@@ -36,6 +36,7 @@ export class SideBlockComponent {
   public showArrows: boolean;
   public repeatedIds: number;
   public inPatternType: number;
+  public maxElments: number = 3;
 @Output()
 public selectedEmitter: EventEmitter<any> = new EventEmitter<any>();
 @Input()
@@ -145,8 +146,10 @@ public colorOptions: any;
       // removing previous elemet, index saved in a varaible 'previousSelected' to avoid using a loop. 
       this.elements[ this.previousSelected].disabled = false;
     }
+    //getting all disable elements, if there are more than the limit at maxElments then the will not be set to true
+    const disabled = this.elements.filter((value: any, index: number) => {return value.disabled});
     // this variable adds the class of disable in an img.
-    this.elements[indexed].disabled = !this.elements[indexed].disabled;
+    this.elements[indexed].disabled = disabled.length < this.maxElments ? !this.elements[indexed].disabled : false;
     if (!this.multiple) {
     this.selectedEmitter.emit(this.elements[indexed]);
     this.previousSelected = indexed;
@@ -163,7 +166,9 @@ public colorOptions: any;
       if (removeIndex !== undefined && ~removeIndex) {
         this.multipleElements.splice(removeIndex, 1);
       }
-      this.multipleElements.push(this.elements[indexed]);
+      if(disabled.length < this.maxElments) {
+        this.multipleElements.push(this.elements[indexed]);
+      }
       this.selectedEmitter.emit(this.multipleElements);
     }
   }
