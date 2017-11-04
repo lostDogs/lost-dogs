@@ -30,7 +30,7 @@
           <div title="cerrar" class="close-icon" (click)="multipleBlockRemove(i)">
             <i class="tiny material-icons">close</i>
           </div>
-          <p>{{block.name}}</p>
+          <p [ngStyle]="{'background-color': block.name.charAt(0)==='#' && block.name}">{{block.name}}</p>
         </div>
     </div>        
       </div>

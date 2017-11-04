@@ -21,11 +21,11 @@ export class ExtrasBlockComponent {
 
 
   public setElement() {
-  this.elements = [
-  {imgUrl:'http://cdn.lostdog.mx/assets/img/acess-collar.png', name: 'collar'},
-  {imgUrl:'http://cdn.lostdog.mx/assets/img/acess-sueter.png', name: 'suter'},
-  {imgUrl:'http://cdn.lostdog.mx/assets/img/acess-tag.png', name: 'Placa Id'}
-  ];
+    this.elements = [
+      {imgUrl:'http://cdn.lostdog.mx/assets/img/acess-collar.png', name: 'collar', apiVal: 'collar'},
+      {imgUrl:'http://cdn.lostdog.mx/assets/img/acess-sueter.png', name: 'suter', apiVal: 'coat'},
+      {imgUrl:'http://cdn.lostdog.mx/assets/img/acess-tag.png', name: 'Placa Id', apiVal: 'dog_tag'}
+    ];
   }
 
 

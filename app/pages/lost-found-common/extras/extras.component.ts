@@ -13,6 +13,7 @@ export class ExtrasComponent {
     this.LostService.question2 = undefined;
     this.LostService.question3 = undefined;
     this.LostService.optional = true;
+    this.LostService.multipleImgAnswers = [];
   }
   
   public ngOnInit(): void {
@@ -28,17 +29,8 @@ export class ExtrasComponent {
 
   public fillData(pageAnswer: any, lostService: any): void {
     if (pageAnswer) {
-      if (pageAnswer[0].names) {
-        const tempAns: any[] = [];
-        pageAnswer[0].names.forEach((value: any, index: number) => {
-          const obj = {name: value,  imgUrl: pageAnswer[0].imgUrls[index], orginalIndex: pageAnswer[0].Indexs[index]};
-          tempAns.push(obj);
-        });
-        lostService.multipleImgAnswers = tempAns;
-      } else {
-        lostService.multipleImgAnswers = pageAnswer;
-      }
-
+      pageAnswer.push('retrieve');
+      lostService.retrieveMultipleImgAnswers = pageAnswer;
     }
   }  
 

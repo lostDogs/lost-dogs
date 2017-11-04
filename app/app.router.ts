@@ -23,6 +23,7 @@ import {InformationComponent} from './pages/information/information.component';
 import {PaymentComponent} from './pages/payment/payment.component';
 import {ReviewPaymentComponent} from './pages/payment/review-payment/review-payment.component';
 import {FormPaymentComponent} from './pages/payment/form-payment/form-payment.component';
+import {PatternComponent} from './pages/lost-found-common/pattern/pattern.component';
 
 const self = this;
 self.pathBuild = (pathName: string): any => {
@@ -34,6 +35,7 @@ self.pathBuild = (pathName: string): any => {
       {path: 'gender', component: GenderComponent},
       {path: 'size', component: SizeComponent},
       {path: 'color', component: ColorComponent},
+      {path: 'pattern', component: PatternComponent},
       {path: 'extras', component: ExtrasComponent},
       {path: 'details', component: DetailsComponent},
       {path: 'review', component: ReviewComponent},
@@ -102,5 +104,6 @@ export const routerComponents = [
   InformationComponent,
   PaymentComponent,
   ReviewPaymentComponent,
-  FormPaymentComponent
+  FormPaymentComponent,
+  PatternComponent
 ];

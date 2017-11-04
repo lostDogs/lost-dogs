@@ -5,6 +5,19 @@ review {
   .review-page.row {
     color: black;
     padding: 40px 0;
+    dog-figure {
+      .full-dog {
+          transform: scale(0.2);
+          top: -110px;
+          left: -35px;
+          position: relative;
+          @media screen and (max-device-width: $screen-mobile-max) {
+            transform: scale(0.4);
+            top: -60px;
+            left: -50px;
+          }
+      }
+    }
     button.btn.submit {
       left: 50%;
       transform: translate(-50%, 0);
