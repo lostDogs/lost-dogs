@@ -25,7 +25,7 @@ export class LostFoundService {
   public defaultDisplayedSequence: string[];
   public defualtSequence: string[];
   public defaulApikeys: string[];
-  public extrasApiKeys: any = {name: 'name', img: 'imageFileType', comments: 'description', reward: 'reward', lost: 'lost', reporter: 'reporter_id'};
+  public extrasApiKeys: any = {name: 'name', img: 'imageFileType', comments: 'description', reward: 'reward', lost: 'lost', reporter: 'reporter_id', address: 'address'};
   public pageAnswers: any[];
   public pagePosition: number;
   public multipleImgAnswers: Ielement[];
@@ -88,13 +88,12 @@ export class LostFoundService {
 
   public objDogBuilder(): any {
     let dogObj = {};
+    let addressVal: string;
     this.defaultDisplayedSequence.forEach((Keyname: string, nameIndex: number) => {
       let subObj: any;
       if (this.defualtSequence[nameIndex] === 'location') {
-         subObj = {
-           'coordinates': [this.pageAnswers[nameIndex].latLong.lat, this.pageAnswers[nameIndex].latLong.lng],
-           'address': this.pageAnswers[nameIndex].address
-         };
+         subObj = {'coordinates': [this.pageAnswers[nameIndex].latLong.lng, this.pageAnswers[nameIndex].latLong.lat]};
+         addressVal = this.pageAnswers[nameIndex].address;
       } else if (this.pageAnswers[nameIndex] && this.pageAnswers[nameIndex].name) {
         subObj = this.pageAnswers[nameIndex].apiVal || typeof this.pageAnswers[nameIndex].apiVal === 'boolean' ? this.pageAnswers[nameIndex].apiVal : this.pageAnswers[nameIndex].name;
       } else if (Array.isArray(this.pageAnswers[nameIndex]) && this.pageAnswers[nameIndex].length && this.pageAnswers[nameIndex][0].name) {
@@ -118,6 +117,7 @@ export class LostFoundService {
     dogObj[this.extrasApiKeys.lost] = this.parentPage === 'lost';
     dogObj[this.extrasApiKeys.img] = 'application/jpeg';
     dogObj[this.extrasApiKeys.reporter] = this.userService.user.username;
+    dogObj[this.extrasApiKeys.address] = addressVal;
     dogObj['color'] = dogObj['color'] ? dogObj['color'] + '': '';
     dogObj['pattern_id'] = dogObj['pattern_id'] ? dogObj['pattern_id'] + '' : '';
     //dogObj[this.extrasApiKeys.img] = this.binaryDogImg;

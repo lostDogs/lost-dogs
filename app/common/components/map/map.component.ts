@@ -50,11 +50,11 @@ public custom: CustomMarker;
       mapTypeControl: false
     });
 
-    this.geocoder = new google.maps.Geocoder;
+    this.geocoder = new google.maps.Geocoder();
     // click linseter
     this.mapDef.addListener('click', (event: any) => {
       ctrl.addMarker(event.latLng, ctrl.mapDef, ctrl);
-       ctrl.location = event.latLng;
+      ctrl.location = typeof event.latLng.lat === 'function' ? {lat: event.latLng.lat(), lng: event.latLng.lng()} : event.latLng;
        ctrl.locationEmiter.emit(ctrl.location);
        ctrl.getFormatedAdress( ctrl.location, ctrl);
     });
@@ -86,14 +86,13 @@ public custom: CustomMarker;
       }else {
         ctrl.locationAdress = 'no se encontro ubicacion';
         ctrl.locationAdressEmiter.emit(ctrl.locationAdress);
-        console.error('geocoder failed due to ', status);
       }
     });
   }
 
   public getLatLng(formatedAddresss: string, ctrl: any): void {
     ctrl = ctrl ? ctrl : this;
-    ctrl.geocode && ctrl.geocoder.geocode({address: formatedAddresss}, (results: any, status: any) => {
+    ctrl.geocoder && ctrl.geocoder.geocode({address: formatedAddresss}, (results: any, status: any) => {
       if (status === 'OK') {
         ctrl.location = results[0].geometry.location;
         ctrl.locationEmiter.emit(ctrl.location);
