@@ -9,7 +9,7 @@
           <div class="img-bg cover-disable" [hidden]="!element.disabled"></div>
         </div>
         <div class="pattern img-bg"  *ngIf="patternType">
-          <dog-figure [display]="element.name" [indexed]="i *splittedArray+j" (dogClicked)="dogClicked($event)"></dog-figure>          
+          <dog-figure [display]="element.name" [indexed]="i *splittedArray+j" (dogClicked)="dogClicked($event)"></dog-figure>
         </div>
         <div class="colors centered" *ngIf="patternType && colors && colors.length > 1" [ngClass]="{'enable-colors': element.disabled}">
             <div  (click)="colorSelected(i,j,w)" class="color" *ngFor="let color of colors;let w=index" [ngStyle]="{'background-color': color}" [ngClass]="{'width-half': colors.length === 2, 'width-third': colors.length === 3, 'disabled-color': colorOptions[i *splittedArray+j][w].disabled}"></div>

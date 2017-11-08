@@ -22,6 +22,9 @@ export class DogCardComponent {
   @Input()
   public data: IdogData;
   public mappedData: ImappedData;
+  @Input()
+  public maxCards: number;
+
 
   constructor(public dogCardService: DogCardService, public renderer: Renderer, public elRef: ElementRef, public router: Router)  {
     this.mobile = window.screen.width <= 767;
@@ -53,7 +56,28 @@ export class DogCardComponent {
   public ngAfterViewInit(): void {
     this.dogCardService.width = this.elRef.nativeElement.clientWidth;
     this.viewMore = this.atReviewPage;
-   $('.tooltipped').tooltip({delay: 100});
+    const cardElments: number = $('article.hoverable.card').length;
+    this.colorFigures();
+    if (cardElments === this.maxCards) {
+      $('.tooltipped').tooltip({delay: 100});
+    }
+  }
+  public colorFigures() {
+    if(this.data.color.length > 1) {
+      const elNames: string[] = Object.keys(this.data.patternColors);
+      const colors: string[] = Object.values(this.data.patternColors);
+      elNames.forEach((elName: string, elIndex: number) => {
+        colors[elIndex] && this.fillColor(elName, colors[elIndex]);
+      });
+    } else if (this.data.color.length === 1) {
+      this.fillColor('back-color', this.data.color[0].trim());
+    }
+  }
+
+  public fillColor(elName: string, color: string): void {
+    const queryString: string = 'dog-figure #' + elName + ' g';
+    const thisCardDom: HTMLElement = $(queryString)[this.cardIndex];
+    $(thisCardDom).attr('style', 'fill:' + color);
   }
 
   public myDog(): void {

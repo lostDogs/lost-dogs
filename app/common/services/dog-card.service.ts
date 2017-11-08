@@ -8,7 +8,7 @@ import {IdogData} from './search.service';
 
 export interface ImappedData {
   gender: {name: string, imgUrl: string};
-  colors: {name: string, bgColor: string}[];
+  colors: string[];
   date: {name: string, short: string};
   size: {name: string, imgUrl: string};
   breed: {name: string, imgUrl: string} [];
@@ -73,13 +73,13 @@ export class DogCardService {
     return values
   }
 
-  public getKeysFromValues(names: string[], content: any): {name: string, bgColor: string} [] {
+  public getKeysFromValues(names: string[], content: any): string[] {
     const keys: string[] = Object.keys(content);
     const values: string[] = Object.values(content);
-    const paresedValues: {name: string, bgColor: string}[] = [];
+    const paresedValues: string[] = [];
     names && names.length && names.forEach((name: string, nameIndex: number) => {
       const colorIndex: number = values.indexOf(name);
-      ~colorIndex && paresedValues.push({name: keys[colorIndex], bgColor: name});
+      ~colorIndex && paresedValues.push(keys[colorIndex]);
     });
     return paresedValues;
   }

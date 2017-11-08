@@ -1,4 +1,4 @@
-<article class="hoverable" [ngClass]="{'expanded': viewMore, 'blur-filter': dogCardService.open && (userAt !== cardIndex)}" (click)="toogleviewMoreMobile()" *ngIf="data && mappedData">
+<article class="hoverable card" [ngClass]="{'expanded': viewMore, 'blur-filter': dogCardService.open && (userAt !== cardIndex)}" (click)="toogleviewMoreMobile()" *ngIf="data && mappedData">
 <h5>{{data.name || +data.kind}}</h5>
   <h6  *ngIf="viewMore && !data.name">{{+data.kind}}</h6>
   <h6 class="reward" *ngIf="viewMore && data.reward">{{data.reward}}</h6>
@@ -7,7 +7,9 @@
       <div class="dog-properties" [hidden]="!(!mobile || viewMore)">
         <!-- <div class="dog-gender-female property centered"><img src="/static/male.png"></div> -->
         <div class="dog-gender property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.gender.imgUrl + ')'}"  data-position="left" [attr.data-tooltip]="mappedData.gender.name"></div>
-        <div class="dog-color property bg-img tooltipped" [ngStyle]="{'background-image': 'url(/static/propertyColor.png)' }"  data-position="left" data-tooltip="cafe claro con blanco"></div>
+        <div class="dog-color property bg-img tooltipped" data-position="left" [attr.data-tooltip]="+mappedData.colors">
+          <dog-figure [display]="data.pattern_id"></dog-figure>
+        </div>
         <div class="dog-date property tooltipped " data-position="left" [attr.data-tooltip]="mappedData.date.name">
           <p class="truncate">{{mappedData.date.short.split(' ')[0]}} </p>
           <p class="truncate">{{mappedData.date.short.split(' ')[1]}}</p>
@@ -20,7 +22,9 @@
     <div class="dog-properties-mobile" *ngIf="!(!mobile || viewMore)">
       <!-- <div class="dog-gender-female property centered"><img src="/static/male.png"></div> -->
       <div class="dog-gender property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.gender.imgUrl + ')'}"  data-position="left" [attr.data-tooltip]="mappedData.gender.name"></div>
-      <div class="dog-color property bg-img tooltipped" [ngStyle]="{'background-image': 'url(/static/propertyColor.png)' }"  data-position="left" data-tooltip="cafe claro con blanco"></div>
+      <div class="dog-color property bg-img tooltipped"  data-position="left" [attr.data-tooltip]="+mappedData.colors">
+        <dog-figure [display]="data.pattern_id"></dog-figure>
+      </div>
       <div class="dog-date property tooltipped " data-position="left" [attr.data-tooltip]="mappedData.date.name">
         <p class="truncate">{{mappedData.date.short.split(' ')[0]}} </p>
         <p class="truncate">{{mappedData.date.short.split(' ')[1]}}</p>
@@ -42,7 +46,7 @@
   <a class="close" (click)="toogleViewMore()">cerrar</a>
   <a class="row waves-effect btn info" (click)="toogleViewMore()" *ngIf="!viewMore">Ver mas</a>
   <a class="row waves-effect btn action"  *ngIf="viewMore" (click)="myDog()">
-    <div [hidden]="!data.lost">Mi perro</div>
-    <div [hidden]="data.lost">Lo encontré </div>
+    <div [hidden]="data.lost">Mi perro</div>
+    <div [hidden]="!data.lost">Lo encontré </div>
   </a>
 </article>

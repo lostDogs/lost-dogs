@@ -19,6 +19,7 @@ export interface IdogData {
   reward: string;
   size_id: string;
   _id: string;
+  patternColors?: {[patternName: string]: string};
 }
 
 @Injectable()
@@ -49,19 +50,21 @@ export class SearchService {
   }
 
   public search(): void {
-const headers: any = {
-        'Content-Type': 'application/json',
-        'Authorization': 'token ' + this.userService.token
-      };
+    const headers: any = {
+      'Content-Type': 'application/json',
+      'Authorization': 'token ' + this.userService.token
+    };
     this.api.get(this._endpointUrl + '&', this.queryObj, headers).subscribe(data => {
       console.log('sucessss', data);
       this.results = data['results'] && data['results'].length ? data['results'] : undefined;
       this.results && this.results.forEach((res: IdogData, resIndex: number) => {
-        this.patternConvertion(res);
+        this.results[resIndex].patternColors = this.patternConvertion(res);
+        this.results[resIndex].pattern_id = res.pattern_id.replace(/\s/g, '').replace(/,/g, ' ');
         this.results[resIndex].name =  res.name && res.name === 'NA/'  ? undefined : res.name;
         this.results[resIndex].color =  res.color && res.color.split(',');
         this.results[resIndex].kind = res.kind && res.kind.split(',');
       });
+      console.log('converted values', this.results);
       this.totalResults = data['hits'];
     });    
   }
@@ -117,7 +120,7 @@ const headers: any = {
     return answerParsed;
   }
 
-  public patternConvertion(dogData: IdogData): void {
+  public patternConvertion(dogData: IdogData): {[patternName: string]: string} {
     if (dogData.pattern_id && dogData.pattern_id.length) {
       const patterns = dogData.pattern_id.split(',');
       let patConverted: any = {};
@@ -126,7 +129,7 @@ const headers: any = {
         const color: string = patAndColor[1] && patAndColor[1].trim();
         patConverted[patAndColor[0]] = color;
       });
-      dogData.pattern_id = patConverted;
+      return patConverted;
     }
   }
 

@@ -181,6 +181,7 @@ export class LostFoundService {
      this.comments = undefined;
      this.defualtSequence = ['date', 'location', 'breed', 'gender', 'size', 'color', 'pattern', 'extras', 'details','review'];
      this.defaultDisplayedSequence  = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Patron','Accessorios'];
-     this.defaulApikeys = ['found_date', 'location', 'kind', 'male', 'size_id', 'color','pattern_id','accessories_id'];;
+     this.defaulApikeys = ['found_date', 'location', 'kind', 'male', 'size_id', 'color','pattern_id','accessories_id'];
+     this.searchService.results = [];
   }
 }

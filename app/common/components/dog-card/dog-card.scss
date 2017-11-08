@@ -186,6 +186,18 @@ dog-card {
         }
         &.dog-size {
         }
+        &.dog-color {
+          dog-figure .full-dog {
+            transform: scale(0.1);
+            top: -136px;
+            left: -18px;
+            @media screen and (max-device-width: $screen-mobile-max) {
+              transform: scale(0.3);
+              top: -108px;
+              left: -44px;
+            }
+          }
+        }
       }      
       .main-image {
         width: 100%;

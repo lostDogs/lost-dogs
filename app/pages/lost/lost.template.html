@@ -51,7 +51,7 @@
   </div>
   <div class="row results" *ngIf="(lostService.pagePosition !== lostService.sequence.length - 1) && lostService.searchService.results">
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
-    <dog-card *ngFor="let card of lostService.searchService.results;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt" [lost]="lostService.parentPage === 'lost'" [data]="card"></dog-card>
+    <dog-card *ngFor="let card of lostService.searchService.results;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt" [lost]="lostService.parentPage === 'lost'" [data]="card" [maxCards]="lostService.searchService.results.length"></dog-card>
   </div>
   <div class="row intro" *ngIf="displayIntro">
     <div class="lost col l12 s12 m12" *ngIf="lostService.parentPage==='lost'">
