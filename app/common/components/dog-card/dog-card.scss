@@ -176,27 +176,15 @@ dog-card {
             }
           }
         }
-        &.dog-gender-female {
-          background-color: $pinkFemale;
-          img {
-            width: 20px;
-            height: 27px;
-          }
-        }
-        &.dog-gender-male {
-          background-color: $lightBlue;
-          img {
-          width: 50%;
-          height: 56%;
-          }
-        }
         &.bg-img {
           background-repeat: no-repeat;
           background-position: center;
           background-size: contain;
         }
-        &.dog-size.small {
-          background-image: url(/static/propertySize.png);
+        &.dog-gender {
+          background-size: cover;
+        }
+        &.dog-size {
         }
       }      
       .main-image {
@@ -228,21 +216,6 @@ dog-card {
         @media screen and (max-device-width: $screen-mobile-max) {
           width: 120px;
           height: 120px;          
-        }
-        &.colar {
-          background-image: url(/static/collar.png);
-        }
-        &.tag {
-         background-image: url(/static/tag.png); 
-        }
-        &.sueter {
-         background-image: url(/static/sueter.png); 
-        }
-        &.sueter {
-         background-image: url(/static/sueter.png); 
-        }
-        &.sun-glasses {
-         background-image: url(/static/lentes.png);  
         }
       }
     }

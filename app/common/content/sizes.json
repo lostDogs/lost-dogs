@@ -1,0 +1,6 @@
+[
+  {"imgUrl":"http://cdn.lostdog.mx/assets/img/size-tiny.png", "name": "Dimimuto", "id": "0"},
+  {"imgUrl":"http://cdn.lostdog.mx/assets/img/size-small.png", "name": "Pequeño", "id": "1"},
+  {"imgUrl":"http://cdn.lostdog.mx/assets/img/size-medium.png", "name": "mediano", "id": "2"},
+  {"imgUrl":"http://cdn.lostdog.mx/assets/img/size-big.png", "name": "grande", "id": "3"}
+]

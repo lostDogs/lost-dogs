@@ -49,9 +49,9 @@
       <button class="waves-effect btn action" *ngIf="lostService.inReviewPage" (click)="lostService.goToReview()">A revision <i class="material-icons right">chevron_right</i></button>
     </div>
   </div>
-  <div class="row results" *ngIf="lostService.pagePosition !== lostService.sequence.length - 1">
+  <div class="row results" *ngIf="(lostService.pagePosition !== lostService.sequence.length - 1) && lostService.searchService.results">
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
-    <dog-card *ngFor="let card of dogCards;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt" [lost]="lostService.parentPage === 'lost'"></dog-card>
+    <dog-card *ngFor="let card of lostService.searchService.results;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt" [lost]="lostService.parentPage === 'lost'" [data]="card"></dog-card>
   </div>
   <div class="row intro" *ngIf="displayIntro">
     <div class="lost col l12 s12 m12" *ngIf="lostService.parentPage==='lost'">
@@ -62,6 +62,6 @@
       <h3>Muchas gracias por ayudar a que encuentre a su dueno <i class="medium material-icons">sentiment_very_satisfied</i></h3>
       <h5>solo responde las siguentes {{lostService.displayedSequence.length}} preguntas</h5>
     </div>
-    <button class="waves-effect btn info" (click)="displayIntro=false; dogCardService.open=false; ">comenzar!<i class="medium material-icons left">thumb_up</i></button>
+    <button class="waves-effect btn info" (click)="start()">comenzar!<i class="medium material-icons left">thumb_up</i></button>
   </div>
 </section>

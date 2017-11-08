@@ -5,12 +5,13 @@ import {CookieManagerService} from './cookie-manager.service';
 import { DecimalPipe } from '@angular/common';
 import {ApiService} from '../services/api.service';
 import {UserService} from '../services/user.service';
+import {SearchService} from '../services/search.service';
 
 @Injectable()
 export class LostFoundService {
   public locationAdressInput: string;
   public address: string;
-  public latLong: {lat: number, lng: number};
+  public latLng: {lat: number, lng: number};
   public question: string;
   public question2: string;
   public question3: string;
@@ -25,7 +26,7 @@ export class LostFoundService {
   public defaultDisplayedSequence: string[];
   public defualtSequence: string[];
   public defaulApikeys: string[];
-  public extrasApiKeys: any = {name: 'name', img: 'imageFileType', comments: 'description', reward: 'reward', lost: 'lost', reporter: 'reporter_id', address: 'address'};
+  public extrasApiKeys: any = {name: 'name', img: 'imageFileType', images: 'images', comments: 'description', reward: 'reward', lost: 'lost', reporter: 'reporter_id', address: 'address'};
   public pageAnswers: any[];
   public pagePosition: number;
   public multipleImgAnswers: Ielement[];
@@ -42,7 +43,7 @@ export class LostFoundService {
   public defaultReward: string = '000,000.00';
   public defaultDogPic: string = 'http://cdn.lostdog.mx/assets/img/default-dog-pic.jpg';
   
-  constructor(public router: Router, public cookieService: CookieManagerService, public api: ApiService, public userService: UserService) {
+  constructor(public router: Router, public cookieService: CookieManagerService, public api: ApiService, public userService: UserService, public searchService: SearchService) {
     this.reward = this.defaultReward;
     this.dogPicture = this.defaultDogPic;
     this.pageAnswers = [];
@@ -72,6 +73,8 @@ export class LostFoundService {
 
   public setAnwer(): void {
     this.pageAnswers[this.pagePosition] = this.getGeneralAnswer();
+    this.searchFilter();
+    this.searchService.search();
     console.log('page answers', this.pageAnswers);
   }
 
@@ -86,25 +89,23 @@ export class LostFoundService {
     });
   }
 
+  public searchFilter(): void {
+    const apiKey: string = this.defaulApikeys[this.pagePosition];
+    const answer: string = this.searchService.answerToApi(this.pageAnswers[this.pagePosition], true);
+    this.searchService.addQuery(apiKey, answer);
+  }
+
   public objDogBuilder(): any {
     let dogObj = {};
     let addressVal: string;
     this.defaultDisplayedSequence.forEach((Keyname: string, nameIndex: number) => {
       let subObj: any;
       if (this.defualtSequence[nameIndex] === 'location') {
-         subObj = {'coordinates': [this.pageAnswers[nameIndex].latLong.lng, this.pageAnswers[nameIndex].latLong.lat]};
+         subObj = {'coordinates': [this.pageAnswers[nameIndex].latLng.lng, this.pageAnswers[nameIndex].latLng.lat]};
          addressVal = this.pageAnswers[nameIndex].address;
-      } else if (this.pageAnswers[nameIndex] && this.pageAnswers[nameIndex].name) {
-        subObj = this.pageAnswers[nameIndex].apiVal || typeof this.pageAnswers[nameIndex].apiVal === 'boolean' ? this.pageAnswers[nameIndex].apiVal : this.pageAnswers[nameIndex].name;
-      } else if (Array.isArray(this.pageAnswers[nameIndex]) && this.pageAnswers[nameIndex].length && this.pageAnswers[nameIndex][0].name) {
-        subObj = [];
-        this.pageAnswers[nameIndex].forEach((multAnswer: any,multAnswerIndex: number) => {
-          subObj.push(multAnswer.apiVal || typeof multAnswer.apiVal === 'boolean' ? multAnswer.apiVal : multAnswer.name);
-        });
       } else {
-        subObj = this.pageAnswers[nameIndex];
+        subObj = this.searchService.answerToApi(this.pageAnswers[nameIndex], false);
       }
-      console.log(this.defaulApikeys[nameIndex]);
       dogObj[this.defaulApikeys[nameIndex]] = subObj;
     });
     if (this.comments) {
@@ -117,10 +118,10 @@ export class LostFoundService {
     dogObj[this.extrasApiKeys.lost] = this.parentPage === 'lost';
     dogObj[this.extrasApiKeys.img] = 'application/jpeg';
     dogObj[this.extrasApiKeys.reporter] = this.userService.user.username;
+    //dogObj[this.extrasApiKeys.images] = [this.dogPicture];
     dogObj[this.extrasApiKeys.address] = addressVal;
     dogObj['color'] = dogObj['color'] ? dogObj['color'] + '': '';
     dogObj['pattern_id'] = dogObj['pattern_id'] ? dogObj['pattern_id'] + '' : '';
-    //dogObj[this.extrasApiKeys.img] = this.binaryDogImg;
     console.log(dogObj);
     return dogObj;
   }
@@ -143,8 +144,8 @@ export class LostFoundService {
   public getGeneralAnswer(): any {
     if (this.inputField && this.inputField.type === 'date') {
       return this.answer;
-    } else if (this.inputField && this.inputField.type === 'address' && this.latLong && this.address) {
-    return {address: this.address, latLong: this.latLong};
+    } else if (this.inputField && this.inputField.type === 'address' && this.latLng && this.address) {
+    return {address: this.address, latLng: this.latLng};
     } else if(this.imgAnswer && this.imgAnswer.disabled===true) {
      return this.imgAnswer;
     } else if (this.multipleImgAnswers && this.multipleImgAnswers.length) {
@@ -157,7 +158,7 @@ export class LostFoundService {
   public resetService() {
      this.locationAdressInput = undefined;
      this.address = undefined;
-     this.latLong = undefined;
+     this.latLng = undefined;
      this.question = undefined;
      this.question2 = undefined;
      this.question3 = undefined;

@@ -67,10 +67,12 @@ export class lostComponent {
     this.lostService.parentPage = this.router.url.split('/')[1];
     this.fullWidth = this.progressDom.nativeElement.clientWidth;
     // sequence could change according to the action Lost/ Found.
-    if (this.lostService.parentPage === 'lost') {
+    const lost: boolean = this.lostService.parentPage === 'lost';
+    this.lostService.searchService.addQuery('lost', !lost);
+    if (lost) {
       this.lostService.sequence = this.lostService.defualtSequence;
       this.lostService.displayedSequence = this.lostService.defaultDisplayedSequence;
-    } else if(this.lostService.parentPage === 'found') {
+    } else if(!lost) {
       this.lostService.sequence = this.lostService.defualtSequence;
       this.lostService.displayedSequence = this.lostService.defaultDisplayedSequence;
     }
@@ -91,7 +93,7 @@ export class lostComponent {
   }
 
   public onFocusAddres() {
-    this.lostService.latLong = undefined;
+    this.lostService.latLng = undefined;
     this.lostService.address = undefined;
   }
 
@@ -110,5 +112,11 @@ export class lostComponent {
     this.lostService.multipleImgAnswers = JSON.parse(JSON.stringify(this.lostService.multipleImgAnswers));
 
   } 
+
+  public start() {
+    this.displayIntro=false;
+    this.dogCardService.open=false;
+    this.lostService.searchService.search();
+  }
   
 }

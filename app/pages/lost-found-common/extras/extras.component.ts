@@ -34,8 +34,8 @@ export class ExtrasComponent {
     }
   }  
 
-  public changeElement(event: any): void {
-    this.LostService.multipleImgAnswers = event;
+  public changeElement(event: any[]): void {
+    this.LostService.multipleImgAnswers = event.filter((value: any, index: number)=>{return value.disabled});
     const lastIndex: number = this.LostService.multipleImgAnswers.length - 1;
     this.LostService.openNameInput = this.LostService.multipleImgAnswers.length && this.LostService.multipleImgAnswers[lastIndex].name === 'Placa Id';
   }

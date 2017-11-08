@@ -1,6 +1,8 @@
 import {Component, Input, Renderer, ElementRef} from '@angular/core';
 import {Router} from '@angular/router';
-import {DogCardService} from '../../services/dog-card.service';
+import {DogCardService, ImappedData} from '../../services/dog-card.service';
+import {IdogData} from '../../services/search.service';
+
 @Component({
   selector: 'dog-card',
   template: require('./dog-card.template.html'),
@@ -17,9 +19,11 @@ export class DogCardComponent {
   public atReviewPage: boolean;
   @Input()
   public lost: boolean;
+  @Input()
+  public data: IdogData;
+  public mappedData: ImappedData;
 
   constructor(public dogCardService: DogCardService, public renderer: Renderer, public elRef: ElementRef, public router: Router)  {
-   
     this.mobile = window.screen.width <= 767;
     this.renderer.listenGlobal('document', 'click', (event: any) => {
       if (this.viewMore && !this.atReviewPage && !this.elRef.nativeElement.contains(event.target)) {
@@ -28,6 +32,11 @@ export class DogCardComponent {
       }
     });
   }
+
+  public ngOnInit(): void {
+    this.mappedData = this.dogCardService.mapData(this.data);
+  }
+
   public toogleViewMore (): void {
     setTimeout(() => {
       this.viewMore = !this.viewMore;
