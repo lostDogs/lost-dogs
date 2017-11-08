@@ -1,4 +1,6 @@
 import {Component, EventEmitter, Output, Input} from '@angular/core';
+import * as genderContent from '../../content/genders.json';
+
 @Component({
   selector: 'gender-block',
   template: require('./gender-block.template.html'),
@@ -20,10 +22,11 @@ export class GenderBlockComponent {
   }
 
   public setElement() {
-  this.elements = [
-  {imgUrl:'http://cdn.lostdog.mx/assets/img/male-icon1.png', name: 'macho', apiVal: true},
-  {imgUrl:'http://cdn.lostdog.mx/assets/img/female-icon1.png', name: 'hembra', apiVal: false}
-  ];
+    const content: any = genderContent;
+    this.elements = content;
+    this.elements.forEach((gender: any, index: number) => {
+      this.elements[index].apiVal =  gender.id;
+    });    
   }
 
 

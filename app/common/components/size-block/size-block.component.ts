@@ -1,4 +1,6 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
+import * as sizesContent from '../../content/sizes.json';
+
 @Component({
   selector: 'size-block',
   template: require('./size-block.template.html'),
@@ -13,6 +15,8 @@ export class SizeBlockComponent {
   public removedElement: any
 
   constructor() {
+    const content: any = sizesContent;
+    this.elements = content;
     this.setElement();
   }
   
@@ -20,12 +24,9 @@ export class SizeBlockComponent {
 
 
   public setElement() {
-  this.elements = [
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/size-tiny.png', name: 'Dimimuto', apiVal: '0'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/size-small.png', name: 'Pequeño', apiVal: '1'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/size-medium.png', name: 'mediano', apiVal: '2'},
-    {imgUrl:'http://cdn.lostdog.mx/assets/img/size-big.png', name: 'grande', apiVal: '3'}
-    ];
+    this.elements.forEach((size: any, index: number) => {
+      this.elements[index].apiVal =  size.id;
+    });
   }
 
 

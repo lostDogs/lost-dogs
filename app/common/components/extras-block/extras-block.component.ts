@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Output, Input} from '@angular/core';
+import * as accessories from '../../content/accessories.json';
 
 @Component({
   selector: 'extras-block',
@@ -21,11 +22,11 @@ export class ExtrasBlockComponent {
 
 
   public setElement() {
-    this.elements = [
-      {imgUrl:'http://cdn.lostdog.mx/assets/img/acess-collar.png', name: 'collar', apiVal: 'collar'},
-      {imgUrl:'http://cdn.lostdog.mx/assets/img/acess-sueter.png', name: 'suter', apiVal: 'coat'},
-      {imgUrl:'http://cdn.lostdog.mx/assets/img/acess-tag.png', name: 'Placa Id', apiVal: 'dog_tag'}
-    ];
+    const content: any = accessories;
+    this.elements = content;
+    this.elements.forEach((access: any, index: number) => {
+      this.elements[index].apiVal =  access.id;
+    });    
   }
 
 

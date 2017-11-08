@@ -27,6 +27,7 @@ import {ColorBlockComponent} from './common/components/color-block/color-block.c
 import {ExtrasBlockComponent} from './common/components/extras-block/extras-block.component';
 import {DogFigureComponent} from './common/components/dog-figure/dog-figure.component';
 import {PatternBlockComponent} from './common/components/pattern-block/pattern-block.component';
+import {SearchService} from './common/services/search.service';
 @NgModule({
   imports: [BrowserModule, AppRouterModule, FormsModule, HttpModule],
   declarations: [
@@ -55,7 +56,8 @@ import {PatternBlockComponent} from './common/components/pattern-block/pattern-b
     {provide: UserService, useClass: UserService},
     {provide: DogCardService, useClass: DogCardService},
     {provide: LostFoundService, useClass: LostFoundService},
-    {provide: CookieManagerService, useClass: CookieManagerService}
+    {provide: CookieManagerService, useClass: CookieManagerService},
+    {provide: SearchService, useClass: SearchService}
   ],
   bootstrap: [appComponent]
 })

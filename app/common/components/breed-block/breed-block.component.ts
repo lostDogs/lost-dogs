@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output, Input} from '@angular/core';
-import * as breedContent from '../../content/breeds.json' ;
+import * as breedContent from '../../content/breeds.json';
 
 @Component({
   selector: 'breed-block',
