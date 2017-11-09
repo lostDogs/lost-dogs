@@ -49,7 +49,15 @@
       <button class="waves-effect btn action" *ngIf="lostService.inReviewPage" (click)="lostService.goToReview()">A revision <i class="material-icons right">chevron_right</i></button>
     </div>
   </div>
-  <div class="row results" *ngIf="(lostService.pagePosition !== lostService.sequence.length - 1) && lostService.searchService.results">
+  <div class="promise-reponses" [ngClass]="{'blur-filter': dogCardService.open}">
+    <div class="loading-block" [hidden]="!lostService.searchService.loading">
+      <img class="gif" src="http://cdn.lostdog.mx/assets/img/loading-grey.gif" alt="Cargando..">
+    </div>
+    <div class="no-results-block" *ngIf="!(lostService.searchService.results && lostService.searchService.results.length) && !lostService.searchService.loading">
+      <h4><b>No</b> hay resultados!</h4>
+    </div>  
+  </div>
+  <div class="row results" *ngIf="(lostService.pagePosition !== lostService.sequence.length - 1) && lostService.searchService.results && !lostService.searchService.loading">
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
     <dog-card *ngFor="let card of lostService.searchService.results;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt" [lost]="lostService.parentPage === 'lost'" [data]="card" [maxCards]="lostService.searchService.results.length"></dog-card>
   </div>

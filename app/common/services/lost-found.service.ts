@@ -74,7 +74,9 @@ export class LostFoundService {
   public setAnwer(): void {
     this.pageAnswers[this.pagePosition] = this.getGeneralAnswer();
     this.searchFilter();
-    this.searchService.search();
+    if (this.defualtSequence[this.pagePosition] !== 'date') {
+      this.searchService.search();
+    }
     console.log('page answers', this.pageAnswers);
   }
 
@@ -183,5 +185,7 @@ export class LostFoundService {
      this.defaultDisplayedSequence  = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Patron','Accessorios'];
      this.defaulApikeys = ['found_date', 'location', 'kind', 'male', 'size_id', 'color','pattern_id','accessories_id'];
      this.searchService.results = [];
+     this.searchService.innerFiltes = {};
+     this.searchService.queryObj = {};
   }
 }

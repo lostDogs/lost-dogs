@@ -32,6 +32,7 @@ export class SearchService {
   public totalResults: number;
   public beforeFilterResults: IdogData[];
   public innerFiltes: any;
+  public loading: boolean;
 
   constructor(public api: ApiService, public userService: UserService) {
     this.queryObj = {};
@@ -77,6 +78,7 @@ export class SearchService {
       'Content-Type': 'application/json',
       'Authorization': 'token ' + this.userService.token
     };
+    this.loading = true;
     this.api.get(this._endpointUrl + '&', this.queryObj, headers).subscribe(data => {
       console.log('sucessss', data);
       this.results = data['results'] && data['results'].length ? data['results'] : undefined;
@@ -96,6 +98,7 @@ export class SearchService {
           this.addQuery(name, this.innerFiltes[name]);
         });
       }
+      this.loading = false;
     });    
   }
 
@@ -107,6 +110,7 @@ export class SearchService {
   }
 
   public setDateFilter(value: string): void {
+    console.log('filtering date', value);
     const filteredDate: Date = new Date(value);
     let filteredResults: any[];
     filteredResults = this.results && this.results.length && this.results.filter((value: any, index: number) => {
@@ -120,7 +124,7 @@ export class SearchService {
      }
     });
     this.results = filteredResults;
-      console.log('results', this.results);
+      console.log('results from filter date', this.results);
   } 
 
   public setLocationFilter(name: string, value: any): void {

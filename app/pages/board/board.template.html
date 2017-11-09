@@ -1,4 +1,4 @@
-\<div class="page board">
+<div class="page board">
   <div class="scrollable">
     <section  title="filtros" class="row title-filtes" [ngClass]="{'blur-filter': dogCardService.open}" [ngStyle]="{'width': screenWidth  + extraWidth + 'px'}">
       <div class="filter" *ngFor="let filter of filtersKey;let i= index" [ngStyle]="{'width': filterElements[filter].width}">
@@ -86,7 +86,13 @@
       </div>
     </div>
   </section>
-  <section title="resultados"  class="row results" *ngIf="searchService.results && searchService.results.length">
+  <div class="loading-block" [hidden]="!searchService.loading">
+    <img class="gif" src="http://cdn.lostdog.mx/assets/img/loading-grey.gif" alt="Cargando..">
+  </div>
+  <div class="no-results-block" *ngIf="!(searchService.results && searchService.results.length) && !searchService.loading">
+    <h4><b>No</b> hay resultados para esta busqueda!</h4>
+  </div>
+  <section title="resultados"  class="row results" *ngIf="searchService.results && searchService.results.length && !searchService.loading">
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
       <dog-card *ngFor="let card of searchService.results;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt" [lost]="!searchFound" [data]="card" [maxCards]="searchService.results.length"></dog-card> 
   </section>
