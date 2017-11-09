@@ -1,4 +1,4 @@
-<article class="hoverable card" [ngClass]="{'expanded': viewMore, 'blur-filter': dogCardService.open && (userAt !== cardIndex)}" (click)="toogleviewMoreMobile()" *ngIf="data && mappedData">
+<article class="hoverable dog-card" [ngClass]="{'expanded': viewMore, 'blur-filter': dogCardService.open && (userAt !== cardIndex)}" (click)="toogleviewMoreMobile()" *ngIf="data && mappedData">
 <h5>{{data.name || +data.kind}}</h5>
   <h6  *ngIf="viewMore && !data.name">{{+data.kind}}</h6>
   <h6 class="reward" *ngIf="viewMore && data.reward">{{data.reward}}</h6>

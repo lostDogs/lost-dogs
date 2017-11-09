@@ -1,4 +1,4 @@
-<div class="page board">
+\<div class="page board">
   <div class="scrollable">
     <section  title="filtros" class="row title-filtes" [ngClass]="{'blur-filter': dogCardService.open}" [ngStyle]="{'width': screenWidth  + extraWidth + 'px'}">
       <div class="filter" *ngFor="let filter of filtersKey;let i= index" [ngStyle]="{'width': filterElements[filter].width}">
@@ -58,7 +58,7 @@
          <input type="text" name="location" id="location-input" [(ngModel)]="locationModal">
          <button class="btn waves-effect info" type="submit"><i class="material-icons">search</i></button>
       </form>        
-      <map (locationAdressEmiter)="locationReciver($event)" (locationEmiter)="locationReciver($event)"  [locationAdress]="locationSubmit"></map>
+      <map (locationAdressEmiter)="locationReciver($event)" (locationEmiter)="locationReciver($event);locationQuery($event);"  [locationAdress]="locationSubmit"></map>
     </div>
   </section>
   <section class="row centered options">
@@ -78,10 +78,10 @@
       <div class="sort-by" >
         <select name="ordenar por" class="sort-dropdown" id="sort-by" [(ngModel)]="sorting">
           <option value="0" selected disabled>Ordena por:</option>
-          <option value="1">Fecha <i class="material-icons">arrow_downward</i></option>
-          <option value="2">Fecha <i class="material-icons">arrow_upward</i></option>
-          <option value="3" >Recompenza <i class="material-icons">arrow_downward</i></option>
-          <option value="4" >Recompenza<i class="material-icons">arrow_upward</i></option>          
+          <option value="date">Fecha <i class="material-icons">arrow_downward</i></option>
+          <option value="date:1">Fecha <i class="material-icons">arrow_upward</i></option>
+          <option value="reward" >Recompenza <i class="material-icons">arrow_downward</i></option>
+          <option value="reward:1" >Recompenza<i class="material-icons">arrow_upward</i></option>          
         </select>      
       </div>
     </div>

@@ -31,17 +31,21 @@ export class SearchService {
   public queryObj: any;
   public totalResults: number;
   public beforeFilterResults: IdogData[];
+  public innerFiltes: any;
 
   constructor(public api: ApiService, public userService: UserService) {
     this.queryObj = {};
+    this.innerFiltes = {};
   }
-
+  // add queries adds the Query-filters that are going to be send to the api call in the queryObj.
+  // for filters that are happening internally in the app are saved in the inner filter.
   public addQuery(queryName: string, value: any): void {
     if (queryName === 'location') {
       this.setLocationFilter(queryName, value);
     }else if(queryName === 'found_date') {
       this.results = this.beforeFilterResults;
       this.setDateFilter(value);
+      this.addInnerFilter(queryName, value);
     }else {
       this.queryObj[queryName] = value;
     }
@@ -54,9 +58,18 @@ export class SearchService {
       delete this.queryObj.maxDistance;
     }else if(queryName === 'found_date') {
       this.results = this.beforeFilterResults;
+      this.removeInnerFilter(queryName);
     }else  {
      delete this.queryObj[queryName]; 
     }
+  }
+
+  public addInnerFilter(compName: string, value: any): void {
+    this.innerFiltes[compName] = value;
+  }
+
+  public removeInnerFilter(compName: string): void {
+    delete this.innerFiltes[compName];
   }
 
   public search(): void {
@@ -76,6 +89,13 @@ export class SearchService {
       });
       this.totalResults = data['hits'];
       this.beforeFilterResults = this.results && JSON.parse(JSON.stringify(this.results));
+      const innerKeys: string[] = Object.keys(this.innerFiltes);
+      // one a call is made the inner filters will be overwritten by the new call. so we need to apply them again.
+      if (innerKeys.length) {
+        innerKeys.forEach((name: string, nameIndex: number) => {
+          this.addQuery(name, this.innerFiltes[name]);
+        });
+      }
     });    
   }
 
@@ -87,7 +107,6 @@ export class SearchService {
   }
 
   public setDateFilter(value: string): void {
-    console.log('filtering date');
     const filteredDate: Date = new Date(value);
     let filteredResults: any[];
     filteredResults = this.results && this.results.length && this.results.filter((value: any, index: number) => {
@@ -100,7 +119,7 @@ export class SearchService {
        return date <= filteredDate;
      }
     });
-      this.results = filteredResults;
+    this.results = filteredResults;
       console.log('results', this.results);
   } 
 
@@ -109,8 +128,22 @@ export class SearchService {
     this.queryObj.maxDistance = this.maxDistance;
   }
 
-  public sort(value: string, ascent: boolean) {
-
+  public sort(type: string, dsc: boolean) {
+    this.results.sort((a: IdogData, b: IdogData) => {
+      let aParse: any;
+      let bParse: any;
+      if (type === 'date') {
+        aParse = new Date(a.found_date.split('T')[0].replace(/-/g, '/'));
+        bParse = new Date(b.found_date.split('T')[0].replace(/-/g, '/'));
+      } else if(type === 'reward') {
+        aParse = +a.reward;
+        bParse = +b.reward;
+      }
+      return aParse - bParse;
+    });
+    if(dsc) {
+      this.results.reverse();
+    }
   }
 
   public answerToApi(answer: any, toString: boolean): string {

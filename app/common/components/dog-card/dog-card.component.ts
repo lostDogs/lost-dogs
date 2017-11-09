@@ -56,7 +56,7 @@ export class DogCardComponent {
   public ngAfterViewInit(): void {
     this.dogCardService.width = this.elRef.nativeElement.clientWidth;
     this.viewMore = this.atReviewPage;
-    const cardElments: number = $('article.hoverable.card').length;
+    const cardElments: number = $('article.hoverable.dog-card').length;
     this.colorFigures();
     if (cardElments === this.maxCards) {
       $('.tooltipped').tooltip({delay: 100});

@@ -52,7 +52,6 @@ export class boardComponent {
   public colorsSelected: string[];
   public searchFound: boolean;
   public filteredResults: IdogData[];
-  public emitingLocTimes: number = 0;
 
   constructor(public dogCardService: DogCardService, public lostService: LostFoundService, public searchService: SearchService) {
     this.filtersKey = [];
@@ -100,8 +99,9 @@ export class boardComponent {
 
   public ngAfterViewInit(): void {
     $('select').material_select();
-    $('select').change(() => {
-      const input = $('#sort-by');
+    const input = $('#sort-by');
+    const self: boardComponent = this;
+    input.change(() => {
       const selectedElement: string = $('.sort-dropdown option[value="' +input.val() +'"]')[0].innerHTML;
        const initReplazable: JQuery = $('input.select-dropdown');
        if (!initReplazable.hasClass('invisible')) {
@@ -114,6 +114,8 @@ export class boardComponent {
       } else {
         replacedBlock.replaceWith(replaceBlock);
       }
+      const sortVal: string = (input.val()).split(':');
+      self.searchService.sort(sortVal[0], !!sortVal[1]);
     });    
   }
 
@@ -206,7 +208,6 @@ export class boardComponent {
   }
 
   public locationReciver(event: any): void {
-    ++this.emitingLocTimes;
      if (event.lat) {
       this.location.latLng = event;
     } else  {
@@ -214,17 +215,17 @@ export class boardComponent {
     }
     if (this.initMapAnswer) {
      this.filterElements.location.answer = this.location.latLng &&  this.location.address ? this.location : undefined;
-     console.log('emiting loc times', this.emitingLocTimes);
-     if (this.filterElements.location.answer && this.emitingLocTimes === 2) {
-       this.queryAndSearch('location', this.location);
-       this.emitingLocTimes = 0;
-     }
     } else  {
       this.tempMapAnswer = this.location.latLng &&  this.location.address ? this.location : undefined;
-      this.emitingLocTimes = 0;
     } 
     this.showMapInput = !!event;
     this.filterElements.location.typeOfAnswer = 'location';
+  }
+
+  public locationQuery(event: any): void {
+     if (this.initMapAnswer && this.filterElements.location.answer) {
+       this.queryAndSearch('location', this.location);
+     }
   }
 
   public imgBlockRemove(componentName: string): void {
