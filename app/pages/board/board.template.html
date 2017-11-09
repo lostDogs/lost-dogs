@@ -72,8 +72,8 @@
     </h3>
     <div class="right-controls">
       <div class="toggle-buttons">
-        <button title="Perdidos" class="btn waves-effect info lost" (click)="searchFound=false" [disabled]="!searchFound"><i class="medium material-icons">search</i></button>
-        <button title="Econtrados" class="btn waves-effect info found" (click)="searchFound=true" [disabled]="searchFound"><i class="medium material-icons">pets</i></button>
+        <button title="Perdidos" class="btn waves-effect info lost" (click)="toogleLost()" [disabled]="!searchFound"><i class="medium material-icons">search</i></button>
+        <button title="Econtrados" class="btn waves-effect info found" (click)="toogleLost()" [disabled]="searchFound"><i class="medium material-icons">pets</i></button>
       </div>
       <div class="sort-by" >
         <select name="ordenar por" class="sort-dropdown" id="sort-by" [(ngModel)]="sorting">
@@ -86,9 +86,9 @@
       </div>
     </div>
   </section>
-  <section title="resultados"  class="row results">
+  <section title="resultados"  class="row results" *ngIf="searchService.results && searchService.results.length">
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
-      <dog-card *ngFor="let card of dogCards;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt" [lost]="!searchFound"></dog-card> 
+      <dog-card *ngFor="let card of searchService.results;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt" [lost]="!searchFound" [data]="card" [maxCards]="searchService.results.length"></dog-card> 
   </section>
   <!-- <section title="paginacion"  class="row pagination" [ngClass]="{'blur-filter': dogCardService.open}"></section> -->
 </div>

@@ -23,7 +23,7 @@ export class DogCardComponent {
   public data: IdogData;
   public mappedData: ImappedData;
   @Input()
-  public maxCards: number;
+  public maxCards: number = 3;
 
 
   constructor(public dogCardService: DogCardService, public renderer: Renderer, public elRef: ElementRef, public router: Router)  {
@@ -62,6 +62,7 @@ export class DogCardComponent {
       $('.tooltipped').tooltip({delay: 100});
     }
   }
+  
   public colorFigures() {
     if(this.data.color.length > 1) {
       const elNames: string[] = Object.keys(this.data.patternColors);

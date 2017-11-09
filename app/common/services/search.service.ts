@@ -30,23 +30,33 @@ export class SearchService {
   public _endpointUrl: string = 'https://fierce-falls-25549.herokuapp.com/api/dogs?searchTerms=';
   public queryObj: any;
   public totalResults: number;
+  public beforeFilterResults: IdogData[];
+
   constructor(public api: ApiService, public userService: UserService) {
     this.queryObj = {};
   }
 
-  public addQuery(QueryName: string, value: any): void {
-    if (QueryName === 'location') {
-      this.setLocationFilter(QueryName, value);
-    }else if(QueryName === 'found_date') {
+  public addQuery(queryName: string, value: any): void {
+    if (queryName === 'location') {
+      this.setLocationFilter(queryName, value);
+    }else if(queryName === 'found_date') {
+      this.results = this.beforeFilterResults;
       this.setDateFilter(value);
     }else {
-      this.queryObj[QueryName] = value;
+      this.queryObj[queryName] = value;
     }
     console.log('query obj', this.queryObj);
   }
 
   public removeQuery(queryName:string): void {
-
+    if (queryName === 'location') {
+      delete this.queryObj.location;
+      delete this.queryObj.maxDistance;
+    }else if(queryName === 'found_date') {
+      this.results = this.beforeFilterResults;
+    }else  {
+     delete this.queryObj[queryName]; 
+    }
   }
 
   public search(): void {
@@ -64,8 +74,8 @@ export class SearchService {
         this.results[resIndex].color =  res.color && res.color.split(',');
         this.results[resIndex].kind = res.kind && res.kind.split(',');
       });
-      console.log('converted values', this.results);
       this.totalResults = data['hits'];
+      this.beforeFilterResults = this.results && JSON.parse(JSON.stringify(this.results));
     });    
   }
 
@@ -77,6 +87,7 @@ export class SearchService {
   }
 
   public setDateFilter(value: string): void {
+    console.log('filtering date');
     const filteredDate: Date = new Date(value);
     let filteredResults: any[];
     filteredResults = this.results && this.results.length && this.results.filter((value: any, index: number) => {

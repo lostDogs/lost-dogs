@@ -1,7 +1,8 @@
-import { Component, ViewChildren, QueryList, ElementRef, ViewChild} from '@angular/core';
+import {Component, ViewChildren, QueryList, ElementRef, ViewChild} from '@angular/core';
 import {DogCardService} from '../../common/services/dog-card.service';
+import {SearchService, IdogData} from '../../common/services/search.service';
 import {LostFoundService} from '../../common/services/lost-found.service';
-import { AsyncPipe } from '@angular/common';
+import {AsyncPipe} from '@angular/common';
 require('../../common/plugins/masks.js');
 
 export interface Ifiltes {
@@ -25,7 +26,6 @@ export class boardComponent {
   public activeIndex: number;
   public filtersKey: string[];
   public previousElementSelected: string;
-  public dogCards: any[];
   public resetDate: any;
   public location:  {latLng?: any, address?: string} = {};
   public window: Window;
@@ -50,10 +50,12 @@ export class boardComponent {
   public mobile: boolean;
   public mapWidth: number;
   public colorsSelected: string[];
+  public searchFound: boolean;
+  public filteredResults: IdogData[];
+  public emitingLocTimes: number = 0;
 
-  constructor(public dogCardService: DogCardService, public lostService: LostFoundService) {
+  constructor(public dogCardService: DogCardService, public lostService: LostFoundService, public searchService: SearchService) {
     this.filtersKey = [];
-    this.dogCards = [];
     this.window = window;
     this.mobile = window.screen.width <= 767;
     this.screenWidth = document.documentElement.clientWidth;
@@ -61,18 +63,18 @@ export class boardComponent {
     if (this.mobile) {
        this.screenWidth *= 2;
     }
-    for (let i = 0; i < 13; ++i) {
-      this.dogCards.push(i);
-    } 
     this.dogCardService.open = false;
     // TEMP block
     //TODO: integrate pattern well
     this.lostService.resetService();
     const disPat: number = this.lostService.defaultDisplayedSequence.indexOf('Patron');
     const seqPat: number = this.lostService.defualtSequence.indexOf('pattern');
-    if (~disPat && ~seqPat) {
+    const keyPat: number = this.lostService.defaulApikeys.indexOf('pattern_id');
+
+    if (~disPat && ~seqPat && ~keyPat) {
       const displayed = this.lostService.defaultDisplayedSequence.splice(disPat, 1);
-      const sequence = this.lostService.defualtSequence.splice(seqPat,1)
+      const sequence = this.lostService.defualtSequence.splice(seqPat, 1);
+      const apikey = this.lostService.defaulApikeys.splice(keyPat, 1);
     }
     // TEMP end of  block
     this.lostService.defaultDisplayedSequence.forEach((componentLabel: string, index: number) => {
@@ -92,6 +94,8 @@ export class boardComponent {
 
   public ngOnInit(): void {
     $('#date-input').mask('0000/00/00');
+    this.searchService.addQuery('lost', !this.searchFound);
+    this.searchService.search();
   }
 
   public ngAfterViewInit(): void {
@@ -157,14 +161,15 @@ export class boardComponent {
     this.previousElementSelected = componentName;
 
     if (this.filterElements.location.enable) {
+       !this.initMapAnswer && this.queryAndSearch(componentName, this.tempMapAnswer);
        this.initMapAnswer = true;
        this.filterElements[componentName].answer = this.tempMapAnswer;
     }
     if (this.filterElements.date.enable) {
+      !this.initMapAnswer && this.queryAndSearch(componentName, this.tempDateAnswer);
       this.initDateAnswer = true;
       this.filterElements[componentName].answer = this.tempDateAnswer;
     }
-    //this.reziseFiltersRow();
   }
 
   public selectionReciver(componentName: string, event: any): void {
@@ -177,7 +182,6 @@ export class boardComponent {
      this.dateModel = event;
      this.tempDateAnswer = event;
      event = this.initDateAnswer ? event : undefined;
-
    }else if (Array.isArray(event)) {
      let indexSplice: number;
      event.forEach((el: any, elIndex: number) => {
@@ -190,6 +194,10 @@ export class boardComponent {
    }
    this.filterElements[componentName].answer =  event;
    this.filterElements[componentName].typeOfAnswer = typeOfAnswer;
+   if (event) {
+     this.queryAndSearch(componentName, event);
+   }
+
    this.resetDate = false;
    if (componentName =  'color') {
      this.colorsSelected = this.getOnlyNames(event);
@@ -197,17 +205,24 @@ export class boardComponent {
    this.searchForName(componentName);
   }
 
-  public locationReciver(event: any) {
-    if (event.lat) {
+  public locationReciver(event: any): void {
+    ++this.emitingLocTimes;
+     if (event.lat) {
       this.location.latLng = event;
     } else  {
-      this.location.address = event
+      this.location.address = event;
     }
     if (this.initMapAnswer) {
      this.filterElements.location.answer = this.location.latLng &&  this.location.address ? this.location : undefined;
+     console.log('emiting loc times', this.emitingLocTimes);
+     if (this.filterElements.location.answer && this.emitingLocTimes === 2) {
+       this.queryAndSearch('location', this.location);
+       this.emitingLocTimes = 0;
+     }
     } else  {
       this.tempMapAnswer = this.location.latLng &&  this.location.address ? this.location : undefined;
-    }
+      this.emitingLocTimes = 0;
+    } 
     this.showMapInput = !!event;
     this.filterElements.location.typeOfAnswer = 'location';
   }
@@ -217,9 +232,10 @@ export class boardComponent {
     this.resetDate = !this.filterElements.date.answer;
     this.filterElements[componentName].asnwerExtraWidth = 0;
     this.filterElements[componentName].width = this.widthPerFilter + 'px';
+    this.delQueryAndSearch(componentName);
   }
 
-  public multipleBlockRemove(componentName: string, index: number) {
+  public multipleBlockRemove(componentName: string, index: number): void {
     let disabledAmount: number = 0;
     this.filterElements[componentName].answer.splice(index, 1);
     this.filterElements[componentName].answer = JSON.parse(JSON.stringify(this.filterElements[componentName].answer));
@@ -230,7 +246,35 @@ export class boardComponent {
         this.filterElements[componentName].answer = undefined;
       }, 5);
     }
+    this.queryAndSearch(componentName, this.filterElements[componentName].answer);
     this.searchForName(componentName);
+  }
+
+  public queryAndSearch(compName: string, answer: any): void {
+    console.log('compname ', compName);
+    const apiName: string = this.getApiName(compName);
+    const answerToApi: string = this.searchService.answerToApi(answer, true);
+    this.searchService.addQuery(apiName, answerToApi);
+    if (compName !== 'date') {
+      this.searchService.search();
+    }
+  }
+
+  public delQueryAndSearch(compName: string): void {
+    const apiName: string = this.getApiName(compName);
+    this.searchService.removeQuery(apiName);
+    this.searchService.search();
+  }
+
+  public toogleLost(): void {
+    this.searchFound = !this.searchFound;
+    this.searchService.addQuery('lost', !this.searchFound);
+    this.searchService.search();
+  }
+
+  public getApiName(componentName: string): string {
+    const index: number = this.lostService.defualtSequence.indexOf(componentName);
+    return ~index && this.lostService.defaulApikeys[index];
   }
 
   public searchForName(componentName: string): void {
