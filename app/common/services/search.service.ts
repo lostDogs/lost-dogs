@@ -4,14 +4,14 @@ import {UserService} from './user.service';
 
 export interface IdogData {
   found_date: string;
-  images: string[];
+  images?: [{image_url: string, uploadImageUrl: string, _id: string}];
   color: any;
   kind: any;
   location: {coordinates: [number, number]}; //lng, lat.
   address: string;
   lost: boolean;
-  description: string;
-  accessories_id: string[];
+  description?: string;
+  accessories_id?: string[];
   male: boolean;
   name: string;
   pattern_id: string;

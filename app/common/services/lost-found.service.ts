@@ -7,6 +7,7 @@ import {ApiService} from '../services/api.service';
 import {UserService} from '../services/user.service';
 import {SearchService, IdogData} from '../services/search.service';
 import {MatchMakerService} from '../services/match-maker.service';
+import {GlobalFunctionService} from  '../services/global-function.service';
 
 @Injectable()
 export class LostFoundService {
@@ -44,7 +45,15 @@ export class LostFoundService {
   public defaultReward: string = '000,000.00';
   public defaultDogPic: string = 'http://cdn.lostdog.mx/assets/img/default-dog-pic.jpg';
   
-  constructor(public router: Router, public cookieService: CookieManagerService, public api: ApiService, public userService: UserService, public searchService: SearchService, public matchService: MatchMakerService) {
+  constructor(
+    public router: Router,
+    public cookieService: CookieManagerService,
+    public api: ApiService,
+    public userService: UserService,
+    public searchService: SearchService, 
+    public matchService: MatchMakerService,
+    public globalService: GlobalFunctionService
+  ) {
     this.reward = this.defaultReward;
     this.dogPicture = this.defaultDogPic;
     this.pageAnswers = [];
@@ -104,7 +113,19 @@ export class LostFoundService {
       };
     this.api.post('https://fierce-falls-25549.herokuapp.com/api/dogs',dog, headers).subscribe(data => {
       console.log('sucessss', data);
+      this.setImgToBucket(data['images'][0].uploadImageUrl);
     });
+  }
+
+  public setImgToBucket(url: string): void {
+    this.api.put(url, this.binaryDogImg, {'Content-Type': 'image/jpeg', 'Content-encoding': 'base64'}).subscribe(
+      data => {console.log('sucess', data);},
+      e => {
+       this.globalService.clearErroMessages();
+       this.globalService.setErrorMEssage('No pudimos agregar las imagenes');
+       this.globalService.openErrorModal();
+      }
+    );
   }
 
   public searchFilter(): void {
@@ -137,6 +158,7 @@ export class LostFoundService {
     dogObj[this.extrasApiKeys.img] = 'application/jpeg';
     dogObj[this.extrasApiKeys.reporter] = this.userService.user.username;
     //dogObj[this.extrasApiKeys.images] = [this.dogPicture];
+    dogObj[this.extrasApiKeys.images] =  ['image/jpeg'];
     dogObj[this.extrasApiKeys.address] = addressVal;
     dogObj['color'] = dogObj['color'] ? dogObj['color'] + '': '';
     dogObj['pattern_id'] = dogObj['pattern_id'] ? dogObj['pattern_id'] + '' : '';

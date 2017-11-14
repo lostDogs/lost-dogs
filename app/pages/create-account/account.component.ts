@@ -175,6 +175,7 @@ export class accountComponent {
       e => this.errorImgToBucket(e)
     );
   }
+
   public sucessImgToBucket(data: any): void {
     console.log('sucessfully created', data);
     this.userService.isAvatarSet = true
