@@ -95,6 +95,7 @@ public custom: CustomMarker;
     ctrl.geocoder && ctrl.geocoder.geocode({address: formatedAddresss}, (results: any, status: any) => {
       if (status === 'OK') {
         ctrl.location = results[0].geometry.location;
+        ctrl.location = typeof ctrl.location.lat === 'function' ? {lat: ctrl.location.lat(), lng: ctrl.location.lng()} : ctrl.location;
         ctrl.locationEmiter.emit(ctrl.location);
         ctrl.locationAdressEmiter.emit(formatedAddresss);
         ctrl.addMarker(ctrl.location, ctrl.mapDef, ctrl, {animation: google.maps.Animation.DROP});
