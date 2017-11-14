@@ -180,7 +180,7 @@ public colorOptions: any;
     if (this.elements[indexed].disabled) {
       const color: string = this.colors[colorNum];
       const elName: string = this.elements[indexed].name.split(':')[0];
-      const queryString: string = '#' + this.elements[indexed].key + ' dog-figure #' +elName + ' g';
+      const queryString: string = '#' + this.elements[indexed].key + ' dog-figure #' + elName + ' g';
       const queryAllBlocks: string = ' dog-figure #' + elName + ' g';
       let queryColorChange: JQuery;
       if (elName === 'back-color') {

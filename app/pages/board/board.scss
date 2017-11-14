@@ -15,6 +15,28 @@
     border-top-left-radius: 0;
   }
 }
+.loading-block {
+    text-align: center;
+    padding: 25px;
+    color: white;
+  img.gif{
+    width: 100px;
+    height: 52px;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      width: 200px;
+      height: 102px;
+      margin: 50px;
+    }
+  }
+}
+.no-results-block {
+  color: white;
+  text-align: center;
+  padding: 25px;
+  @media screen and (max-device-width: $screen-mobile-max) {
+    padding: 80px;
+  }  
+}
 
 div.select-wrapper  {
   .invisible {

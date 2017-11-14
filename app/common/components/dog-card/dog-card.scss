@@ -126,7 +126,7 @@ dog-card {
              p {
                &:nth-child(2) {
                  font-size: 28px;
-                }            
+               }            
              }
            }
         }        
@@ -168,6 +168,7 @@ dog-card {
             margin: 0;
             text-align: center;
             padding: 0;
+            cursor: default;
             &:nth-child(2) {
               font-size: 15px;
               @media screen and (max-device-width: $screen-mobile-max) { 
@@ -185,6 +186,18 @@ dog-card {
           background-size: cover;
         }
         &.dog-size {
+        }
+        &.dog-color {
+          dog-figure .full-dog {
+            transform: scale(0.1);
+            top: -136px;
+            left: -18px;
+            @media screen and (max-device-width: $screen-mobile-max) {
+              transform: scale(0.3);
+              top: -108px;
+              left: -44px;
+            }
+          }
         }
       }      
       .main-image {

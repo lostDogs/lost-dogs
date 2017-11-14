@@ -28,6 +28,7 @@ import {ExtrasBlockComponent} from './common/components/extras-block/extras-bloc
 import {DogFigureComponent} from './common/components/dog-figure/dog-figure.component';
 import {PatternBlockComponent} from './common/components/pattern-block/pattern-block.component';
 import {SearchService} from './common/services/search.service';
+import {MatchMakerService} from './common/services/match-maker.service';
 @NgModule({
   imports: [BrowserModule, AppRouterModule, FormsModule, HttpModule],
   declarations: [
@@ -57,7 +58,8 @@ import {SearchService} from './common/services/search.service';
     {provide: DogCardService, useClass: DogCardService},
     {provide: LostFoundService, useClass: LostFoundService},
     {provide: CookieManagerService, useClass: CookieManagerService},
-    {provide: SearchService, useClass: SearchService}
+    {provide: SearchService, useClass: SearchService},
+    {provide: MatchMakerService, useClass: MatchMakerService}
   ],
   bootstrap: [appComponent]
 })

@@ -29,10 +29,10 @@ export class ColorComponent {
   }
 
   public changeElement(event: any): void {
-    this.LostService.multipleImgAnswers = event;
+    this.LostService.multipleImgAnswers = event.filter((value: any, index: number)=>{return value.disabled});
     const patternString: string = 'pattern';
     const patternName: string = 'Patron';
-    const notDisabled: any[] = this.LostService.multipleImgAnswers.filter((value: any, index: number)=>{return value.disabled});
+    const notDisabled: any[] = this.LostService.multipleImgAnswers;
     const patternIndex: number = this.LostService.defualtSequence.indexOf(patternString);
     if (notDisabled.length > 1 && !(~patternIndex)) {
       this.LostService.defualtSequence.splice( this.LostService.pagePosition + 1, 0, patternString);

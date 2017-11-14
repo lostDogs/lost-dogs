@@ -58,7 +58,7 @@
          <input type="text" name="location" id="location-input" [(ngModel)]="locationModal">
          <button class="btn waves-effect info" type="submit"><i class="material-icons">search</i></button>
       </form>        
-      <map (locationAdressEmiter)="locationReciver($event)" (locationEmiter)="locationReciver($event)"  [locationAdress]="locationSubmit"></map>
+      <map (locationAdressEmiter)="locationReciver($event)" (locationEmiter)="locationReciver($event);locationQuery($event);"  [locationAdress]="locationSubmit"></map>
     </div>
   </section>
   <section class="row centered options">
@@ -72,23 +72,29 @@
     </h3>
     <div class="right-controls">
       <div class="toggle-buttons">
-        <button title="Perdidos" class="btn waves-effect info lost" (click)="searchFound=false" [disabled]="!searchFound"><i class="medium material-icons">search</i></button>
-        <button title="Econtrados" class="btn waves-effect info found" (click)="searchFound=true" [disabled]="searchFound"><i class="medium material-icons">pets</i></button>
+        <button title="Perdidos" class="btn waves-effect info lost" (click)="toogleLost()" [disabled]="!searchFound"><i class="medium material-icons">search</i></button>
+        <button title="Econtrados" class="btn waves-effect info found" (click)="toogleLost()" [disabled]="searchFound"><i class="medium material-icons">pets</i></button>
       </div>
       <div class="sort-by" >
         <select name="ordenar por" class="sort-dropdown" id="sort-by" [(ngModel)]="sorting">
           <option value="0" selected disabled>Ordena por:</option>
-          <option value="1">Fecha <i class="material-icons">arrow_downward</i></option>
-          <option value="2">Fecha <i class="material-icons">arrow_upward</i></option>
-          <option value="3" >Recompenza <i class="material-icons">arrow_downward</i></option>
-          <option value="4" >Recompenza<i class="material-icons">arrow_upward</i></option>          
+          <option value="date">Fecha <i class="material-icons">arrow_downward</i></option>
+          <option value="date:1">Fecha <i class="material-icons">arrow_upward</i></option>
+          <option value="reward" >Recompenza <i class="material-icons">arrow_downward</i></option>
+          <option value="reward:1" >Recompenza<i class="material-icons">arrow_upward</i></option>          
         </select>      
       </div>
     </div>
   </section>
-  <section title="resultados"  class="row results">
+  <div class="loading-block" [hidden]="!searchService.loading">
+    <img class="gif" src="http://cdn.lostdog.mx/assets/img/loading-grey.gif" alt="Cargando..">
+  </div>
+  <div class="no-results-block" *ngIf="!(searchService.results && searchService.results.length) && !searchService.loading">
+    <h4><b>No</b> hay resultados para esta busqueda!</h4>
+  </div>
+  <section title="resultados"  class="row results" *ngIf="searchService.results && searchService.results.length && !searchService.loading">
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
-      <dog-card *ngFor="let card of dogCards;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt" [lost]="!searchFound"></dog-card> 
+      <dog-card *ngFor="let card of searchService.results;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt" [lost]="!searchFound" [data]="card" [maxCards]="searchService.results.length"></dog-card> 
   </section>
   <!-- <section title="paginacion"  class="row pagination" [ngClass]="{'blur-filter': dogCardService.open}"></section> -->
 </div>
