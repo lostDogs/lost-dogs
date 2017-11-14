@@ -44,7 +44,7 @@ export class MatchMakerService {
   }
 
   public filterByString(results: IdogData[], answer: string, apiKey: string): IdogData[] {
-    results.forEach((res: IdogData, resIndes: number) => {
+    results && Array.isArray(results) && results.forEach((res: IdogData, resIndes: number) => {
       let response: string[] = !Array.isArray(res[apiKey]) && res[apiKey] && res[apiKey].length ? res[apiKey].split(',') : res[apiKey];
       response = !Array.isArray(res[apiKey]) && res[apiKey] && res[apiKey].length ? res[apiKey].split(' ') : res[apiKey];
       let matches: number = 0;

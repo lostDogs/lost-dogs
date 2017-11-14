@@ -30,7 +30,7 @@ export class ExtrasComponent {
   public fillData(pageAnswer: any, lostService: any): void {
     if (pageAnswer) {
       pageAnswer.push('retrieve');
-      lostService.retrieveMultipleImgAnswers = pageAnswer;
+      lostService.multipleImgAnswers = pageAnswer;
     }
   }  
 
