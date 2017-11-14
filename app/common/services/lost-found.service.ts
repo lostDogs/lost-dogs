@@ -5,7 +5,8 @@ import {CookieManagerService} from './cookie-manager.service';
 import { DecimalPipe } from '@angular/common';
 import {ApiService} from '../services/api.service';
 import {UserService} from '../services/user.service';
-import {SearchService} from '../services/search.service';
+import {SearchService, IdogData} from '../services/search.service';
+import {MatchMakerService} from '../services/match-maker.service';
 
 @Injectable()
 export class LostFoundService {
@@ -43,7 +44,7 @@ export class LostFoundService {
   public defaultReward: string = '000,000.00';
   public defaultDogPic: string = 'http://cdn.lostdog.mx/assets/img/default-dog-pic.jpg';
   
-  constructor(public router: Router, public cookieService: CookieManagerService, public api: ApiService, public userService: UserService, public searchService: SearchService) {
+  constructor(public router: Router, public cookieService: CookieManagerService, public api: ApiService, public userService: UserService, public searchService: SearchService, public matchService: MatchMakerService) {
     this.reward = this.defaultReward;
     this.dogPicture = this.defaultDogPic;
     this.pageAnswers = [];
@@ -72,10 +73,25 @@ export class LostFoundService {
   }
 
   public setAnwer(): void {
+    const stopCall: boolean = this.matchService.stopCalling(this.searchService.totalResults, this.pagePosition);
+    const apiConst: string = this.defaulApikeys[this.pagePosition];
+    console.log('stop call', stopCall);
     this.pageAnswers[this.pagePosition] = this.getGeneralAnswer();
     this.searchFilter();
-    if (this.defualtSequence[this.pagePosition] !== 'date') {
+    if (this.defualtSequence[this.pagePosition] !== 'date' && !stopCall) {
       this.searchService.search();
+      // match making logic starts
+    } else if (stopCall && this.pagePosition <= this.defaultDisplayedSequence.length) {
+      // page position should be greater than 2 because adding-points  start after date(0), loc(1) and gender(2);
+      const answer: string = this.searchService.answerToApi(this.pageAnswers[this.pagePosition], true);
+      const answers = apiConst === 'pattern_id' ? answer.replace(/\s/g, '') : answer;
+      console.log('answers', answers);
+      const resWithPoints: IdogData[] = this.matchService.filterByString(this.searchService.results, answers, apiConst);
+      this.searchService.results = resWithPoints;
+      this.searchService.sort('match', true);
+      console.log('results', this.searchService.results);
+      // now we need to sort for points and debug
+
     }
     console.log('page answers', this.pageAnswers);
   }
@@ -181,10 +197,11 @@ export class LostFoundService {
      this.dogPicture = this.defaultDogPic;
      this.reward = this.defaultReward;
      this.comments = undefined;
-     this.defualtSequence = ['date', 'location', 'breed', 'gender', 'size', 'color', 'pattern', 'extras', 'details','review'];
-     this.defaultDisplayedSequence  = ['Fecha', 'Ubicacion', 'Raza', 'Genero', 'Tamaño', 'Color', 'Patron','Accessorios'];
-     this.defaulApikeys = ['found_date', 'location', 'kind', 'male', 'size_id', 'color','pattern_id','accessories_id'];
+     this.defualtSequence = ['date', 'location', 'gender', 'breed', 'size', 'color', 'pattern', 'extras', 'details','review'];
+     this.defaultDisplayedSequence  = ['Fecha', 'Ubicacion', 'Genero', 'Raza', 'Tamaño', 'Color', 'Patron','Accessorios'];
+     this.defaulApikeys = ['found_date', 'location', 'male', 'kind', 'size_id', 'color','pattern_id','accessories_id'];
      this.searchService.results = [];
+     this.searchService.totalResults = 0;
      this.searchService.innerFiltes = {};
      this.searchService.queryObj = {};
   }

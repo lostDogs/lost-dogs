@@ -50,7 +50,6 @@ export class DogCardService {
       breed: this.retrieveValues(dogData.kind, this.breeds),
       accessories: this.retrieveValues(dogData.accessories_id, this.accessories)
     }
-    console.log('mapped data', mappedData);
     return mappedData;
   }
 

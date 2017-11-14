@@ -20,6 +20,9 @@ export interface IdogData {
   size_id: string;
   _id: string;
   patternColors?: {[patternName: string]: string};
+  match?: number;
+  matchAtHist?: string[];
+  matchValHist?: number[];
 }
 
 @Injectable()
@@ -88,6 +91,8 @@ export class SearchService {
         this.results[resIndex].name =  res.name && res.name === 'NA/'  ? undefined : res.name;
         this.results[resIndex].color =  res.color && res.color.split(',');
         this.results[resIndex].kind = res.kind && res.kind.split(',');
+        this.results[resIndex].matchAtHist = [];
+        this.results[resIndex].matchValHist = [];
       });
       this.totalResults = data['hits'];
       this.beforeFilterResults = this.results && JSON.parse(JSON.stringify(this.results));
@@ -142,6 +147,9 @@ export class SearchService {
       } else if(type === 'reward') {
         aParse = +a.reward;
         bParse = +b.reward;
+      }else if (type === 'match') {
+        aParse = +a.match;
+        bParse = +b.match;
       }
       return aParse - bParse;
     });
