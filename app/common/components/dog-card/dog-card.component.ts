@@ -82,6 +82,6 @@ export class DogCardComponent {
   }
 
   public myDog(): void {
-    this.router.navigate(['/payment/review'], {queryParams: {Lt: this.lost, iD: 123455}});
+    this.router.navigate(['/payment/review'], {queryParams: {Lt: this.lost, iD: this.cardIndex}});
   }
 }

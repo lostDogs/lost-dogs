@@ -19,6 +19,7 @@ export interface IdogData {
   reward: string;
   size_id: string;
   _id: string;
+  //attrs added here.
   patternColors?: {[patternName: string]: string};
   match?: number;
   matchAtHist?: string[];
@@ -76,7 +77,7 @@ export class SearchService {
     delete this.innerFiltes[compName];
   }
 
-  public search(): void {
+  public search(removeQueryIfnoRes?: string): void {
     const headers: any = {
       'Content-Type': 'application/json',
       'Authorization': 'token ' + this.userService.token
@@ -102,6 +103,10 @@ export class SearchService {
         innerKeys.forEach((name: string, nameIndex: number) => {
           this.addQuery(name, this.innerFiltes[name]);
         });
+      }
+      // working only when reporting a dog.
+      if (removeQueryIfnoRes && !this.totalResults) {
+        this.removeQuery(removeQueryIfnoRes);
       }
       this.loading = false;
     });    
@@ -145,8 +150,8 @@ export class SearchService {
         aParse = new Date(a.found_date.split('T')[0].replace(/-/g, '/'));
         bParse = new Date(b.found_date.split('T')[0].replace(/-/g, '/'));
       } else if(type === 'reward') {
-        aParse = +a.reward;
-        bParse = +b.reward;
+        aParse = a.reward || typeof a.reward === 'number' ? +a.reward : 0;
+        bParse = b.reward || typeof b.reward === 'number' ? +b.reward : 0;
       }else if (type === 'match') {
         aParse = +a.match;
         bParse = +b.match;

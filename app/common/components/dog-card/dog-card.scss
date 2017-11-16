@@ -10,6 +10,28 @@ dog-card {
     padding: 5px;
     border-radius: 10px;
     margin: 15px 5px;
+    .reward {
+      color: $greenMat;
+      font-weight: 600;
+    }
+    .breed-title {
+      overflow: hidden;
+      height: 36px;
+      text-overflow: ellipsis;
+      @media screen and (max-device-width: $screen-mobile-max) {
+        height: 100px;
+        padding-top: 20px;        
+      }      
+    }
+    .name-title {
+      overflow: hidden;
+      height: 27px;
+      text-overflow: ellipsis;
+      @media screen and (max-device-width: $screen-mobile-max) {
+      height: 92px;
+      padding-top: 10px;
+      }
+    }
     @media screen and (max-device-width: $screen-mobile-max) {
       width: 450px;
       border-radius: 20px;

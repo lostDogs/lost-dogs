@@ -5,6 +5,21 @@ review {
   .review-page.row {
     color: black;
     padding: 40px 0;
+    .hoverable.dog-card.expanded {
+      position: relative;
+    max-height: unset;
+    overflow-y: hidden;
+      h5 {
+        display: block;
+        margin: 10px;
+      }
+      a.close,a.btn {
+        display: none;
+      }
+      .main-image {
+        margin: 20px 0;        
+      }
+    }
     dog-figure {
       .full-dog {
           transform: scale(0.2);

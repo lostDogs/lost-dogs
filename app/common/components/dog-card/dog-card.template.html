@@ -1,7 +1,9 @@
 <article class="hoverable dog-card" [ngClass]="{'expanded': viewMore, 'blur-filter': dogCardService.open && (userAt !== cardIndex)}" (click)="toogleviewMoreMobile()" *ngIf="data && mappedData">
-<h5>{{data.name || +data.kind}}</h5>
-  <h6  *ngIf="viewMore && !data.name">{{+data.kind}}</h6>
-  <h6 class="reward" *ngIf="viewMore && data.reward">{{data.reward}}</h6>
+<h5 *ngIf="data.name" class="name-title">{{data.name}}</h5>
+  <h6 class="breed-title" *ngIf="!viewMore && !data.name">{{mappedData.breed}}</h6>
+  <h5 *ngIf="viewMore && !data.name">{{mappedData.breed}}</h5>
+  <h6 *ngIf="viewMore && data.name">{{mappedData.breed}}</h6>
+  <h6 class="reward" *ngIf="viewMore && data.reward"> $ {{data.reward}} MXN</h6>
   <figure>
     <div class="main-image" [ngStyle]="{'background-image': 'url(' + (data.images && data.images.length && data.images[0].image_url) ||  '/static/temp-profile-dog.jpg' + ')' }">
       <div class="dog-properties" [hidden]="!(!mobile || viewMore)">

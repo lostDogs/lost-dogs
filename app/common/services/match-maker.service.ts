@@ -14,7 +14,7 @@ import {IdogData} from './search.service';
 @Injectable()
 export class MatchMakerService {
   public _minRangeRes: number = 10;
-  public _minMatch: number = 5;
+  public _minMatch: number = 1;
   public point: number = 10;
   public _topCandidates = 3;
   constructor() {}
