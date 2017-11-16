@@ -2,7 +2,8 @@ import { Component, ViewChild, ElementRef} from '@angular/core';
 import {UserService} from '../../../common/services/user.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {DogCardService} from '../../../common/services/dog-card.service';
-import {GlobalFunctionService} from '../../../common/services/global-function.service'
+import {GlobalFunctionService} from '../../../common/services/global-function.service';
+import {SearchService} from '../../../common/services/search.service';
 
 @Component({
   selector: 'review-payment',
@@ -15,7 +16,15 @@ export class ReviewPaymentComponent {
   public lost:boolean;
   public dogId: string;
   public ShowSendEmail: boolean;
-  constructor (public userService: UserService, public router: Router, public dogCardService: DogCardService, public activeRoute: ActivatedRoute, public globalService: GlobalFunctionService) {
+  public dogData: any;
+  constructor (
+    public userService: UserService,
+    public router: Router,
+    public dogCardService: DogCardService,
+    public activeRoute: ActivatedRoute,
+    public globalService: GlobalFunctionService,
+    public searchService: SearchService
+  ) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.lost = params.Lt === 'true';
       this.dogId = params.iD;
@@ -24,10 +33,11 @@ export class ReviewPaymentComponent {
   }
 
   public ngOnInit(): void {
-
+    this.dogData =  this.dogId && this.searchService.results[this.dogId];
   }
 
   public ngAfterViewInit(): void {
+    $('.tooltipped').tooltip({delay: 50});
   }
 
   public next(): void {

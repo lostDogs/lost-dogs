@@ -26,6 +26,16 @@ export class BreedBlockComponent {
   public ngOnInit(): void {}
 
   public changeElement(event: any): void {
+    const alike: string = this.findAlike(event.apiVal);
+    if (alike) {
+      event.apiVal += ' ' + alike;
+    }
+    event.apiVal = event.apiVal.trim().replace(/\s/g, ',');
     this.selectedEmitter.emit(event);
+  }
+
+  public findAlike(id: string): string {
+    const selectedBreed: any = this.breeds[+id - 1];
+    return selectedBreed.looksLike;
   }
 }

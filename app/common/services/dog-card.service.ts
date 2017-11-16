@@ -11,7 +11,7 @@ export interface ImappedData {
   colors: string[];
   date: {name: string, short: string};
   size: {name: string, imgUrl: string};
-  breed: {name: string, imgUrl: string} [];
+  breed: string;
   accessories: {name: string, imgUrl: string} [];
   };
 
@@ -47,7 +47,7 @@ export class DogCardService {
       colors: this.getKeysFromValues(dogData.color, this.colors),
       date: this.getMappedDate(dogData.found_date),
       size: this.retrieveValue(dogData.size_id, this.sizes),
-      breed: this.retrieveValues(dogData.kind, this.breeds),
+      breed: (this.getArrayOfStrings(dogData.kind, this.breeds, 'name') + '').replace(/,/g, ', '),
       accessories: this.retrieveValues(dogData.accessories_id, this.accessories)
     }
     return mappedData;
@@ -69,7 +69,19 @@ export class DogCardService {
         }
       });
     });
-    return values
+    return values;
+  }
+
+  public getArrayOfStrings(ids: any[], content: any, attrName: string): string[] {
+    let values: any[] = [];
+    content && content.length && content.forEach((element: any, elIndex: number) => {
+      ids && ids.length && ids.forEach((id: any, idIndex: number) => {
+        if(id === element.id) {
+          values.push(element[attrName]);
+        }
+      });
+    });
+    return values;
   }
 
   public getKeysFromValues(names: string[], content: any): string[] {

@@ -7,6 +7,7 @@ import {ApiService} from '../services/api.service';
 import {UserService} from '../services/user.service';
 import {SearchService, IdogData} from '../services/search.service';
 import {MatchMakerService} from '../services/match-maker.service';
+import {GlobalFunctionService} from  '../services/global-function.service';
 
 @Injectable()
 export class LostFoundService {
@@ -43,8 +44,21 @@ export class LostFoundService {
   public comments: string;
   public defaultReward: string = '000,000.00';
   public defaultDogPic: string = 'http://cdn.lostdog.mx/assets/img/default-dog-pic.jpg';
+
+  public loadingSave: boolean;
+  public savedSuccess: boolean;
+  public savedData: any;
+  public savedImgs: boolean;
   
-  constructor(public router: Router, public cookieService: CookieManagerService, public api: ApiService, public userService: UserService, public searchService: SearchService, public matchService: MatchMakerService) {
+  constructor(
+    public router: Router,
+    public cookieService: CookieManagerService,
+    public api: ApiService,
+    public userService: UserService,
+    public searchService: SearchService, 
+    public matchService: MatchMakerService,
+    public globalService: GlobalFunctionService
+  ) {
     this.reward = this.defaultReward;
     this.dogPicture = this.defaultDogPic;
     this.pageAnswers = [];
@@ -79,8 +93,13 @@ export class LostFoundService {
     this.pageAnswers[this.pagePosition] = this.getGeneralAnswer();
     this.searchFilter();
     if (this.defualtSequence[this.pagePosition] !== 'date' && !stopCall) {
-      this.searchService.search();
-      // match making logic starts
+      if (this.pagePosition > 2) {
+        // if there are no results on that query remove it!
+        this.searchService.search(apiConst);
+      } else {
+        this.searchService.search();
+      }
+      // match making logic starts when total results are less than 5.
     } else if (stopCall && this.pagePosition <= this.defaultDisplayedSequence.length) {
       // page position should be greater than 2 because adding-points  start after date(0), loc(1) and gender(2);
       const answer: string = this.searchService.answerToApi(this.pageAnswers[this.pagePosition], true);
@@ -88,9 +107,10 @@ export class LostFoundService {
       console.log('answers', answers);
       const resWithPoints: IdogData[] = this.matchService.filterByString(this.searchService.results, answers, apiConst);
       this.searchService.results = resWithPoints;
-      this.searchService.sort('match', true);
+      // sorting to see who has the highest matching value.
+      this.searchService.results && this.searchService.results.length && this.searchService.sort('match', true);
+      // take the first 3 or 1 and do something
       console.log('results', this.searchService.results);
-      // now we need to sort for points and debug
 
     }
     console.log('page answers', this.pageAnswers);
@@ -99,12 +119,50 @@ export class LostFoundService {
   public saveToApi(): void {
     const dog: any = this.objDogBuilder();
     const headers: any = {
-        'Content-Type': 'application/json',
-        'Authorization': 'token ' + this.userService.token
-      };
+      'Content-Type': 'application/json',
+      'Authorization': 'token ' + this.userService.token
+    };
+    this.loadingSave = true;
     this.api.post('https://fierce-falls-25549.herokuapp.com/api/dogs',dog, headers).subscribe(data => {
       console.log('sucessss', data);
+      this.loadingSave = false;
+      this.savedSuccess = true;
+      this.question = 'Perro creado con exito!';
+      this.savedData = this.trasnfromDogData(data);
+      console.log("saved data >>>", this.savedData);
+      this.setImgToBucket(data['images'][0].uploadImageUrl);
+    },
+    e => {
+      this.loadingSave = false;
+       this.globalService.clearErroMessages();
+       this.globalService.setErrorMEssage('Ops! tuvimos un problema y no se pudo guardar');
+       this.globalService.setSubErrorMessage('intenta mas tarde!');
+       this.globalService.openErrorModal();      
     });
+  }
+
+  public setImgToBucket(url: string): void {
+    this.api.put(url, this.binaryDogImg, {'Content-Type': 'image/jpeg', 'Content-encoding': 'base64'}).subscribe(
+      data => {
+        this.savedImgs = true;
+        console.log('sucess', data);
+
+      },
+      e => {
+       this.globalService.clearErroMessages();
+       this.globalService.setErrorMEssage('No pudimos agregar las imagenes');
+       this.globalService.openErrorModal();
+      }
+    );
+  }
+
+  public trasnfromDogData(data: any): any {
+    data.patternColors = this.searchService.patternConvertion(data);
+    data.pattern_id = data.pattern_id.replace(/\s/g, '').replace(/,/g, ' ');
+    data.name =  data.name && data.name === 'NA/'  ? undefined : data.name;
+    data.color =  data.color && data.color.split(',');
+    data.kind = data.kind && data.kind.split(',');
+    return data;
   }
 
   public searchFilter(): void {
@@ -137,6 +195,7 @@ export class LostFoundService {
     dogObj[this.extrasApiKeys.img] = 'application/jpeg';
     dogObj[this.extrasApiKeys.reporter] = this.userService.user.username;
     //dogObj[this.extrasApiKeys.images] = [this.dogPicture];
+    dogObj[this.extrasApiKeys.images] =  ['image/jpeg'];
     dogObj[this.extrasApiKeys.address] = addressVal;
     dogObj['color'] = dogObj['color'] ? dogObj['color'] + '': '';
     dogObj['pattern_id'] = dogObj['pattern_id'] ? dogObj['pattern_id'] + '' : '';
@@ -204,5 +263,8 @@ export class LostFoundService {
      this.searchService.totalResults = 0;
      this.searchService.innerFiltes = {};
      this.searchService.queryObj = {};
+     this.savedSuccess = undefined;
+     this.savedData = undefined;
+     this.savedImgs = undefined;
   }
 }
