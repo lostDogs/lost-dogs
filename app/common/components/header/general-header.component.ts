@@ -2,6 +2,7 @@ import {ElementRef, Renderer, Component, OnInit} from '@angular/core';
 import {GlobalFunctionService} from '../../services/global-function.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../services/user.service';
+import {LostFoundService} from '../../services/lost-found.service';
 
 @Component({
   selector: 'general-header',
@@ -16,7 +17,7 @@ export class generalHeaderComponent implements OnInit  {
   public userName: string;
   public password: string;
 
-  constructor (public renderer: Renderer, public elRef: ElementRef, public globalService: GlobalFunctionService, public activatedRoute: ActivatedRoute, public userService: UserService, public router: Router) {
+  constructor (public renderer: Renderer, public elRef: ElementRef, public globalService: GlobalFunctionService, public activatedRoute: ActivatedRoute, public userService: UserService, public router: Router, public lostService: LostFoundService) {
     this.renderer.listenGlobal('document', 'click', (event: any) => {
       const loginDom: any = this.elRef.nativeElement.childNodes[0].childNodes[5].childNodes[1].childNodes[2];
       const UserDom: any = this.elRef.nativeElement.childNodes[0].childNodes[5].childNodes[1].childNodes[4];

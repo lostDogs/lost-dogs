@@ -50,6 +50,8 @@ export class LostFoundService {
   public savedData: any;
   public savedImgs: boolean;
   
+  public prevResState: {data?: IdogData[], totalRes?: number, beforeFilter?: IdogData[]};
+
   constructor(
     public router: Router,
     public cookieService: CookieManagerService,
@@ -92,13 +94,31 @@ export class LostFoundService {
     console.log('stop call', stopCall);
     this.pageAnswers[this.pagePosition] = this.getGeneralAnswer();
     this.searchFilter();
-    if (this.defualtSequence[this.pagePosition] !== 'date' && !stopCall) {
-      if (this.pagePosition > 2) {
-        // if there are no results on that query remove it!
-        this.searchService.search(apiConst);
-      } else {
-        this.searchService.search();
-      }
+    if (this.defualtSequence[this.pagePosition] === 'location') {
+      // location has its own search logic see location.component
+      this.matchService.extendRange(this.searchService);
+    } else if (this.defualtSequence[this.pagePosition] !== 'date' && !stopCall) {
+      // date is being handled with inner filters once we call the addQuery method.
+      this.prevResState = {
+        data: this.searchService.results,
+        totalRes: this.searchService.totalResults,
+        beforeFilter: this.searchService.beforeFilterResults
+      };
+      this.searchService.search().add(() => {
+       if (this.pagePosition > 2 && !this.searchService.totalResults) {
+           //if we are here means there were values on the prev call 'stopCall'  but not on the new one 'searchService.totalResults'.
+           // we need to have more than 5 (matchService._minMatch) results on prev call and none on the new one.
+          //no more matches with that query, hence droping it and calling again
+          this.searchService.removeQuery(apiConst);
+          console.log(' Cero matches! with that query, hence droping it and calling again >', this.searchService.queryObj);
+          //this.searchService.search(); calling again in order to retrieve prev state.
+          // retrieving previous state without calling again.
+          this.searchService.results = this.prevResState.data;
+          this.searchService.totalResults = this.prevResState.totalRes;
+          this.searchService.beforeFilterResults = this.prevResState.beforeFilter;
+          this.prevResState = {};
+       }
+      });
       // match making logic starts when total results are less than 5.
     } else if (stopCall && this.pagePosition <= this.defaultDisplayedSequence.length) {
       // page position should be greater than 2 because adding-points  start after date(0), loc(1) and gender(2);
@@ -236,10 +256,10 @@ export class LostFoundService {
      this.locationAdressInput = undefined;
      this.address = undefined;
      this.latLng = undefined;
-     this.question = undefined;
+     //this.question = undefined;
      this.question2 = undefined;
      this.question3 = undefined;
-     this.inputField = undefined;
+     //this.inputField = undefined;
      this.optional = undefined;
      this.answer = undefined;
      this.rechangeDate = undefined;
@@ -266,5 +286,6 @@ export class LostFoundService {
      this.savedSuccess = undefined;
      this.savedData = undefined;
      this.savedImgs = undefined;
+     this.searchService.maxDistance = this.searchService.maxDistanceDefault;
   }
 }
