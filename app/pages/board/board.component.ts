@@ -52,6 +52,9 @@ export class boardComponent {
   public colorsSelected: string[];
   public searchFound: boolean;
   public filteredResults: IdogData[];
+  
+  public rangeDiameter: number = 1;
+  public radioInMap: number = 0.5;
 
   constructor(public dogCardService: DogCardService, public lostService: LostFoundService, public searchService: SearchService) {
     this.filtersKey = [];
@@ -296,4 +299,18 @@ export class boardComponent {
     });
     return colors.length ? colors : undefined;
   }
+
+  public increaseRange(): void {
+    this.rangeDiameter = this.rangeDiameter >= 8 ? this.rangeDiameter : this.rangeDiameter * 2;
+    this.searchService.maxDistance =  this.rangeDiameter * this.searchService.maxDistanceDefault;
+    this.radioInMap =  this.rangeDiameter * 0.5;
+    this.queryAndSearch('location', this.location);    
+  }
+
+ public decreaseRange(): void {
+    this.rangeDiameter = this.rangeDiameter <= 1 ? this.rangeDiameter : this.rangeDiameter / 2;
+    this.searchService.maxDistance =  this.rangeDiameter * this.searchService.maxDistanceDefault;
+    this.radioInMap =  this.rangeDiameter * 0.5;
+    this.queryAndSearch('location', this.location);
+ }
 };

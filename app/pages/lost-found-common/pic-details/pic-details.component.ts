@@ -22,6 +22,9 @@ export class DetailsComponent {
   
   public ngOnInit(): void {
   }
+  public debkeyUp() {
+    console.log('rewarnd', this.LostService.reward);
+  }
 
 public ngAfterViewInit(): void {
   $('#money-input').mask('000,000.00', {reverse: true});

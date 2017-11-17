@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from './api.service';
 import {UserService} from './user.service';
+import {Subscription} from 'rxjs/Rx';
 
 export interface IdogData {
   found_date: string;
@@ -29,8 +30,9 @@ export interface IdogData {
 @Injectable()
 export class SearchService {
   public results: IdogData[];
-  // raidus in meters for the geolocation.
-  public maxDistance: number = 1000;
+  // raidus (or diameter? idk :/ ) in meters for the geolocation.
+  public maxDistance: number;
+  public maxDistanceDefault: number = 1000;
   public _endpointUrl: string = 'https://fierce-falls-25549.herokuapp.com/api/dogs?searchTerms=';
   public queryObj: any;
   public totalResults: number;
@@ -41,6 +43,7 @@ export class SearchService {
   constructor(public api: ApiService, public userService: UserService) {
     this.queryObj = {};
     this.innerFiltes = {};
+    this.maxDistance = this.maxDistanceDefault;
   }
   // add queries adds the Query-filters that are going to be send to the api call in the queryObj.
   // for filters that are happening internally in the app are saved in the inner filter.
@@ -48,6 +51,8 @@ export class SearchService {
     if (queryName === 'location') {
       this.setLocationFilter(queryName, value);
     }else if(queryName === 'found_date') {
+      // every time filter date change, we need to filter for the orginal data. which is beforeFilterRes
+      // results could have filtered data, that is why is not the original.
       this.results = this.beforeFilterResults;
       this.setDateFilter(value);
       this.addInnerFilter(queryName, value);
@@ -77,13 +82,13 @@ export class SearchService {
     delete this.innerFiltes[compName];
   }
 
-  public search(removeQueryIfnoRes?: string): void {
+  public search(): Subscription {
     const headers: any = {
       'Content-Type': 'application/json',
       'Authorization': 'token ' + this.userService.token
     };
     this.loading = true;
-    this.api.get(this._endpointUrl + '&', this.queryObj, headers).subscribe(data => {
+    return this.api.get(this._endpointUrl + '&', this.queryObj, headers).subscribe(data => {
       console.log('sucessss', data);
       this.results = data['results'] && data['results'].length ? data['results'] : undefined;
       this.results && this.results.forEach((res: IdogData, resIndex: number) => {
@@ -104,12 +109,8 @@ export class SearchService {
           this.addQuery(name, this.innerFiltes[name]);
         });
       }
-      // working only when reporting a dog.
-      if (removeQueryIfnoRes && !this.totalResults) {
-        this.removeQuery(removeQueryIfnoRes);
-      }
       this.loading = false;
-    });    
+    });
   }
 
   public setQueryInUrl(queryName: string, value: any): void {
@@ -120,7 +121,6 @@ export class SearchService {
   }
 
   public setDateFilter(value: string): void {
-    console.log('filtering date', value);
     const filteredDate: Date = new Date(value);
     let filteredResults: any[];
     filteredResults = this.results && this.results.length && this.results.filter((value: any, index: number) => {
@@ -134,7 +134,6 @@ export class SearchService {
      }
     });
     this.results = filteredResults;
-      console.log('results from filter date', this.results);
   } 
 
   public setLocationFilter(name: string, value: any): void {

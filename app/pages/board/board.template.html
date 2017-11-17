@@ -56,9 +56,14 @@
     <div  [ngClass]="{'far-away': !filterElements.location.enable, 'location-block': filterElements.location.enable}" [ngStyle]="{'width': mapWidth + 'px'}">
       <form #LocationFrom="ngForm" (ngSubmit)="locationSubmit=locationModal" class="input-field col l3 s9 location" *ngIf="showMapInput">
          <input type="text" name="location" id="location-input" [(ngModel)]="locationModal">
-         <button class="btn waves-effect info" type="submit"><i class="material-icons">search</i></button>
-      </form>        
-      <map (locationAdressEmiter)="locationReciver($event)" (locationEmiter)="locationReciver($event);locationQuery($event);"  [locationAdress]="locationSubmit"></map>
+         <button class="btn waves-effect info" type="submit" [disabled]="searchService.loading"><i class="material-icons">search</i></button>
+      </form>
+      <div class="range-search" *ngIf="showMapInput">
+        <button class="btn waves-effect info decrease" [disabled]="rangeDiameter <= 1 || searchService.loading" (click)="decreaseRange()"><i class="material-icons">remove</i></button>
+        <h6 class="value">{{rangeDiameter}} km</h6>
+        <button class="btn waves-effect info increase" [disabled]="rangeDiameter >= 8 || searchService.loading" (click)="increaseRange()"><i class="material-icons">add</i></button>
+      </div>
+      <map (locationAdressEmiter)="locationReciver($event)" (locationEmiter)="locationReciver($event);locationQuery($event);"  [locationAdress]="locationSubmit" [rangeRadius]="radioInMap"></map>
     </div>
   </section>
   <section class="row centered options">

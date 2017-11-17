@@ -9,22 +9,24 @@
 */
 
 import { Injectable } from '@angular/core';
-import {IdogData} from './search.service';
-
+import {IdogData, SearchService} from './search.service';
 @Injectable()
 export class MatchMakerService {
-  public _minRangeRes: number = 10;
-  public _minMatch: number = 1;
+  private _minRangeRes: number = 10;
+  //minimum number of values that the DB should have in order to start adding points
+  private _minMatch: number = 5;
   public point: number = 10;
-  public _topCandidates = 3;
-  constructor() {}
+  private _topCandidates = 3;
 
-  public extendLocationRange(totalResults: number): number {
-    const increaseBy: number = 2;
-    if (totalResults < this._minRangeRes) {
-      return increaseBy;
-    }
-    return 1;
+// variables required to increase range
+  public timesIncreased: number = 0;
+  public rangeRadius: number;
+  public defaultRangeRadius: number =  0.5;
+  private _increaseByMap: number = 2;
+  private _maxTimesIn: number = 3;  
+  
+  constructor() {
+    this.rangeRadius = this.defaultRangeRadius;
   }
 
   public stopCalling (totalResults: number, pagePosition: number): boolean {
@@ -32,6 +34,20 @@ export class MatchMakerService {
       return true;
     }
     return false;
+  }
+
+   public extendRange(searchService: SearchService): void {
+      searchService.search().add(() => {
+        if (!searchService.totalResults && this.timesIncreased < this._maxTimesIn) {
+          this.timesIncreased++;
+          console.log('increasing range!!!! >.<!', this.timesIncreased);
+          const maxditance: number = searchService.queryObj.maxDistance;
+          searchService.queryObj.maxDistance = maxditance * this._increaseByMap;
+          searchService.maxDistance = maxditance * this._increaseByMap;
+          this.rangeRadius = this.rangeRadius * this._increaseByMap;
+          this.extendRange(searchService);
+        }
+      });
   }
 
   public findInString(result: string, filterValue: string): number {

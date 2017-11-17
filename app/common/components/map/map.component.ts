@@ -21,6 +21,8 @@ public custom: CustomMarker;
  public locationAdress: string;
  @Output()
  public locationAdressEmiter: EventEmitter<string> = new EventEmitter<string>();
+ @Input()
+ public rangeRadius: number;
 
   constructor(public el: ElementRef, public userService: UserService) {}
 
@@ -38,6 +40,13 @@ public custom: CustomMarker;
     if (changes.locationAdress && changes.locationAdress.currentValue) {
       const formatedAddress: string = changes.locationAdress.currentValue;
       this.getLatLng(formatedAddress, this);
+    }else if (changes.rangeRadius && changes.rangeRadius.currentValue && this.custom) {
+        const range: number = changes.rangeRadius.currentValue;
+        this.custom.remove();
+        this.custom = new CustomMarker(this.location, this.mapDef, range);
+        const zoom: number = this.getZoomFromRange(range);
+        this.mapDef.panTo(this.location);
+        this.mapDef.setZoom(zoom);
     }
   }
 
@@ -70,6 +79,23 @@ public custom: CustomMarker;
       this.addMarker(this.location, this.mapDef, ctrl, {animation: google.maps.Animation.DROP});
       this.mapDef.panTo(userLocation);
       this.mapDef.setZoom(15);
+    }
+  }
+
+  public getZoomFromRange(range: number): number {
+    switch (range) {
+      case 0.5:
+        return 15;
+      case 1:
+        return 14;
+      case 2:
+        return 12;
+      case 3:
+        return 12;
+      case 4:
+        return 11;
+      default:
+        return 15;
     }
   }
 
@@ -123,7 +149,11 @@ public custom: CustomMarker;
       location = {lat: location.lat(), lng: location.lng()};
     }
     ctrl.marker = new google.maps.Marker(markerConf);
-   ctrl.custom = new CustomMarker(location, map);
+    if (ctrl.rangeRadius) {
+      ctrl.custom = new CustomMarker(location, map, ctrl.rangeRadius);
+    } else {
+      ctrl.custom = new CustomMarker(location, map);
+    }
   }
 }
 
@@ -137,8 +167,9 @@ export class CustomMarker extends google.maps.OverlayView {
   public distance: number = 0.5;
   public earthRadius: number = 6371;
 
-  constructor(latlng: {lat: any, lng: any}, map: google.maps.Map) {
+  constructor(latlng: {lat: any, lng: any}, map: google.maps.Map, range?: number) {
     super();
+    this.distance = range || this.distance;
     if (typeof latlng.lat === 'function') {
       latlng = {lat: latlng.lat(), lng: latlng.lng()};
     }
