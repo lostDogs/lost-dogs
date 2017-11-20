@@ -27,7 +27,15 @@ export class DogCardService {
   public months: string[];
   public sizes: any;
   public genders: any;
-  public accessories: any;
+  public accessories: any;  
+    // 0,1 => 0
+    // 2,3 => 1
+    // 4,5 => 2
+    //  in dogcard.template I have two dog properties, one for mobile view
+    // and the other for normal view, to target both props and fill them wih jquery
+    // we need an extra index control -> fillColorMobileIndex
+    // will increase twice we a dogcard is created
+  public fillColorMobileIndex: number = 0;
 
   constructor() {
     this.shortMonths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];

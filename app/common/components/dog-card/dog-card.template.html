@@ -21,7 +21,7 @@
     </div>
   </figure>
   <figure>
-    <div class="dog-properties-mobile" *ngIf="!(!mobile || viewMore)">
+    <div class="dog-properties-mobile" [ngStyle]="{'display': (!mobile || viewMore) ? 'none' : 'flex'}">
       <!-- <div class="dog-gender-female property centered"><img src="/static/male.png"></div> -->
       <div class="dog-gender property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.gender.imgUrl + ')'}"  data-position="left" [attr.data-tooltip]="mappedData.gender.name"></div>
       <div class="dog-color property bg-img tooltipped"  data-position="left" [attr.data-tooltip]="+mappedData.colors">
