@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {LostFoundService} from '../../../common/services/lost-found.service';
-
+const imgCompress = require('@xkeshi/image-compressor');
 @Component({
   selector: 'pic-details',
   template: require('./pic-details.template.html'),
@@ -50,8 +50,7 @@ public ngAfterViewInit(): void {
       }    
   }
 
-  public minifyImgFile(file: File) {
-    const imgCompress = require('@xkeshi/image-compressor');
+  public minifyImgFile(file: File) {    
     const self:DetailsComponent = this;
     new imgCompress(file, {
       quality: .8,
