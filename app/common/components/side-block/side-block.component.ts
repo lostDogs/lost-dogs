@@ -180,8 +180,8 @@ public colorOptions: any;
     if (this.elements[indexed].disabled) {
       const color: string = this.colors[colorNum];
       const elName: string = this.elements[indexed].name.split(':')[0];
-      const queryString: string = '#' + this.elements[indexed].key + ' dog-figure #' + elName + ' g';
-      const queryAllBlocks: string = ' dog-figure #' + elName + ' g';
+      const queryString: string = '.sideblock ' + '#' + this.elements[indexed].key + ' dog-figure #' + elName + ' g';
+      const queryAllBlocks: string = '.sideblock dog-figure #' + elName + ' g';
       let queryColorChange: JQuery;
       if (elName === 'back-color') {
         queryColorChange = $(queryAllBlocks);
@@ -273,7 +273,7 @@ public colorOptions: any;
       });
       const name: string = this.elements[indexed].name.split(':')[0];
     if (!this.elements[indexed].disabled && name === 'back-color') {
-          const queryAllBlocks: string = ' dog-figure #' + name + ' g';
+          const queryAllBlocks: string = '.sideblock dog-figure #' + name + ' g';
           $(queryAllBlocks).attr('style', 'fill: white');
         }    
   }
