@@ -37,6 +37,7 @@ export class DogCardComponent {
 
   public ngOnInit(): void {
     this.mappedData = this.dogCardService.mapData(this.data);
+    console.log('creating dog card', this.cardIndex);
   }
 
   public toogleViewMore (): void {
@@ -57,7 +58,6 @@ export class DogCardComponent {
     this.viewMore = this.atReviewPage;
     const cardElments: number = $('article.hoverable.dog-card').length;
     this.colorFigures();
-    this.dogCardService.fillColorMobileIndex += 2;
     if (cardElments === this.maxCards) {
       $('.tooltipped').tooltip({delay: 100});
     }
@@ -81,10 +81,16 @@ export class DogCardComponent {
     let queryString: string = mobileDogQuery + ', ' + NotMobileQuery;
     // the query string will bring the double number of elements in the results array.
     // the reason it is double it is because we are having the mobile view and normal view in the template.
-    // therefore to target both and color them with jquery we are using dogCardService.fillColorMobileIndex
+    // therefore to target both and color them with jquery. we are multipling by 2 the index. to get next.
     // I'll the following repeated code to be undertanding.
-    const thisCardDom: HTMLElement = $(queryString)[this.dogCardService.fillColorMobileIndex];
-    const cardDomMobile: HTMLElement = $(queryString)[this.dogCardService.fillColorMobileIndex + 1];
+    // 0,1 => 0
+    // 2,3 => 1
+    // 4,5 => 2
+    // 6,7 => 3
+    // 8,9 => 4    
+    const index: number = 2 * this.cardIndex;
+    const thisCardDom: HTMLElement = $(queryString)[index];
+    const cardDomMobile: HTMLElement = $(queryString)[index + 1];
     $(thisCardDom).attr('style', 'fill:' + color);
     $(cardDomMobile).attr('style', 'fill:' + color);
   }
