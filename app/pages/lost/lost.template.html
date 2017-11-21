@@ -45,7 +45,7 @@
     <div class="buttons row" *ngIf="lostService.pagePosition !== lostService.sequence.length - 1">
       <button class="waves-effect btn warning" (click)="lostService.back()" [ngClass]="{'disappear': lostService.pagePosition === 0 || lostService.inReviewPage}">Atras <i class="material-icons left">chevron_left</i></button>
       <button class="waves-effect btn info" (click)="lostService.setAnwer()"  [disabled]="!lostService.getGeneralAnswer()">responder <i class="material-icons right">send</i></button>
-      <button class="waves-effect btn action" *ngIf="!lostService.inReviewPage" (click)="lostService.next()"  [disabled]="!lostService.pageAnswers[lostService.pagePosition] && lostService.inputField && lostService.inputField.type!=='multiple'">Siguiente <i class="material-icons right">chevron_right</i></button>
+      <button class="waves-effect btn action" *ngIf="!lostService.inReviewPage" (click)="lostService.next()"  [disabled]="!lostService.pageAnswers[lostService.pagePosition] && lostService.defualtSequence[lostService.pagePosition]!=='extras'">Siguiente <i class="material-icons right">chevron_right</i></button>
       <button class="waves-effect btn action" *ngIf="lostService.inReviewPage" (click)="lostService.goToReview()">A revision <i class="material-icons right">chevron_right</i></button>
     </div>
   </div>
