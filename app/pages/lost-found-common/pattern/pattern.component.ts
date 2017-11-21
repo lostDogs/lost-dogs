@@ -20,6 +20,8 @@ export class PatternComponent {
     this.LostService.retrieveData = undefined;
     this.LostService.question = 'Cual es su Patron?';
     const colorIndex: number = this.LostService.defualtSequence.indexOf('color');
+    console.log('color index', colorIndex);
+    console.log('answer of color ', this.LostService.pageAnswers[colorIndex]);
     if (~colorIndex && this.LostService.pageAnswers[colorIndex]) {
       let tempColor: string[] = [];
       const disabled: any[] = this.LostService.pageAnswers[colorIndex].filter((value: any, index: number)=>{return value.disabled});

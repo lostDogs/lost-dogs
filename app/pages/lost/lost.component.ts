@@ -104,13 +104,11 @@ export class lostComponent {
   }
 
    public multipleBlockRemove(index: number): void {
-    //$('.tooltipped').tooltip('remove');
     if (this.lostService.multipleImgAnswers[index].name === 'Placa Id') {
       this.lostService.openNameInput = false; 
     }
     this.lostService.multipleImgAnswers[index].disabled = false;
     this.lostService.multipleImgAnswers = JSON.parse(JSON.stringify(this.lostService.multipleImgAnswers));
-
   } 
 
   public start() {

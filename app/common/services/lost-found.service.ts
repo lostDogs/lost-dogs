@@ -92,7 +92,7 @@ export class LostFoundService {
     const stopCall: boolean = this.matchService.stopCalling(this.searchService.totalResults, this.pagePosition);
     const apiConst: string = this.defaulApikeys[this.pagePosition];
     console.log('stop call', stopCall);
-    this.pageAnswers[this.pagePosition] = this.getGeneralAnswer();
+    this.pageAnswers[this.pagePosition] = this.copyAnswer(this.getGeneralAnswer());
     this.searchFilter();
     if (this.defualtSequence[this.pagePosition] === 'location') {
       // location has its own search logic see location.component
@@ -133,7 +133,20 @@ export class LostFoundService {
       console.log('results', this.searchService.results);
 
     }
+    this.multipleImgAnswers && this.changePatternSequence(this.multipleImgAnswers.filter((value: any, index: number)=>{return value.disabled}));
     console.log('page answers', this.pageAnswers);
+  }
+
+  // answer should not be modifed unless the button aswer is hit.
+  // that is why I am making a copy of the answer obj to avoid pointing at the main obj.
+  public copyAnswer(answer: any) {
+    if(Array.isArray(answer)) {
+      return answer.slice(0);
+    }else if (typeof answer === 'object') {
+      return Object.assign({}, answer);
+    } else  {
+      return answer;
+    }
   }
 
   public saveToApi(): void {
@@ -287,5 +300,21 @@ export class LostFoundService {
      this.savedData = undefined;
      this.savedImgs = undefined;
      this.searchService.maxDistance = this.searchService.maxDistanceDefault;
+  }
+
+  public changePatternSequence(notDisabled: any[]) {
+    const patternString: string = 'pattern';
+    const patternName: string = 'Patron';
+    const patternIndex: number = this.defualtSequence.indexOf(patternString);
+    if (notDisabled.length > 1 && !(~patternIndex)) {
+      this.defualtSequence.splice( this.pagePosition + 1, 0, patternString);
+      this.defaultDisplayedSequence.splice(this.pagePosition + 1, 0, patternName);
+      this.defaulApikeys.splice(this.pagePosition + 1, 0, patternString + '_id');
+    }
+    if (notDisabled.length && notDisabled.length <= 1 && ~patternIndex) {
+      this.defualtSequence.splice(patternIndex, 1);
+      this.defaultDisplayedSequence.splice(patternIndex, 1);
+      this.defaulApikeys.splice(patternIndex, 1);
+    }
   }
 }
