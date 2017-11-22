@@ -107,15 +107,22 @@ export class lostComponent {
     if (this.lostService.multipleImgAnswers[index].name === 'Placa Id') {
       this.lostService.openNameInput = false; 
     }
-    // json parse so that change can detect the change.
+    // json parse so that Onchanges can detect the change.
     this.lostService.multipleImgAnswers = JSON.parse(JSON.stringify(this.lostService.multipleImgAnswers));
     this.lostService.multipleImgAnswers[index].disabled = false;
   } 
 
-  public start() {
+  public start(): void {
     this.displayIntro=false;
     this.dogCardService.open=false;
     this.lostService.searchService.search();
+  }
+
+  public showReview(): boolean {
+    const answer: any[] = this.lostService.pageAnswers[this.lostService.pagePosition];
+    const values: any[]= Array.isArray(answer) && answer.filter((value)=>{return value.disabled});
+    const inColor: boolean = this.lostService.defualtSequence[this.lostService.pagePosition]==='color';
+    return inColor && values.length > 1;
   }
   
 }

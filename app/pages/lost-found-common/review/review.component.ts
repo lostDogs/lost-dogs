@@ -25,8 +25,7 @@ export class ReviewComponent {
     if (this.LostService.reward) {
       const newVal: string = (' ' + this.LostService.reward).replace('.','');
       const rewardNewDecimal: string = newVal.substr(0, newVal.length - 2) + '.' + newVal.substr(newVal.length - 2);
-      const rewardNewComma: string = rewardNewDecimal.substr(0, newVal.length - 5) + ',' + rewardNewDecimal.substr(newVal.length - 5);
-      this.LostService.reward = rewardNewComma;
+      this.LostService.reward = rewardNewDecimal;
     }
     this.pageAnswersCopy =  JSON.parse(JSON.stringify(this.LostService.pageAnswers));
     this.pageAnswersCopy.forEach((answer: any, index: number) => {
