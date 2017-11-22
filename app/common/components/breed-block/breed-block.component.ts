@@ -19,15 +19,17 @@ export class BreedBlockComponent {
   constructor() {
     this.elements = [];
     this.breeds.forEach((value: any, valueIndex: number) => {
-    this.elements.push({name: value.name, imgUrl: this.dogImgUrl + value.id + '.jpg', apiVal: value.id});
+      // api val is adding the look alike,  and id value is the clean val.
+    this.elements.push({name: value.name, imgUrl: this.dogImgUrl + value.id + '.jpg', apiVal: value.id, id: value.id});
     });
   }
   
   public ngOnInit(): void {}
 
   public changeElement(event: any): void {
-    const alike: string = this.findAlike(event.apiVal);
+    const alike: string = this.findAlike(event.id);
     if (alike) {
+      event.apiVal = event.id;
       event.apiVal += ' ' + alike;
     }
     event.apiVal = event.apiVal.trim().replace(/\s/g, ',');
