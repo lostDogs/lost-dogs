@@ -24,7 +24,7 @@ export class ColorComponent {
   public fillData(pageAnswer: any, lostService: any): void {
     if (pageAnswer) {
       pageAnswer.push('retrieve');
-      lostService.multipleImgAnswers = pageAnswer;
+      lostService.multipleImgAnswers = lostService.copyAnswer(pageAnswer);
     }
   }
 

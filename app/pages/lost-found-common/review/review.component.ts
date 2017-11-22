@@ -35,9 +35,11 @@ export class ReviewComponent {
       let originalIndexs: number[] = []
       if(Array.isArray(answer)) {
         answer.forEach((innerAns: any, innerIndex: number) => {
-          names.push(innerAns.name);
-          imgUrls.push(innerAns.imgUrl);
-          originalIndexs.push(innerAns.orginalIndex);
+          if (innerAns.disabled) {
+            names.push(innerAns.name);
+            imgUrls.push(innerAns.imgUrl);
+            originalIndexs.push(innerAns.orginalIndex);
+          }
         });
         this.pageAnswersCopy[index] = [{names: names, imgUrls: imgUrls, Indexs: originalIndexs}];
       }

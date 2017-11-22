@@ -40,7 +40,7 @@ export class PatternComponent {
     const answer: any[] = this.LostService.pageAnswers[patternIndex];
     if (answer && answer.length) {
       answer.push('retrieve')
-      this.LostService.multipleImgAnswers = answer;
+      this.LostService.multipleImgAnswers =this.LostService.copyAnswer(answer);
     } else {
       this.LostService.multipleImgAnswers = [];
     }

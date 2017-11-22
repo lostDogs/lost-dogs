@@ -107,8 +107,9 @@ export class lostComponent {
     if (this.lostService.multipleImgAnswers[index].name === 'Placa Id') {
       this.lostService.openNameInput = false; 
     }
-    this.lostService.multipleImgAnswers[index].disabled = false;
+    // json parse so that change can detect the change.
     this.lostService.multipleImgAnswers = JSON.parse(JSON.stringify(this.lostService.multipleImgAnswers));
+    this.lostService.multipleImgAnswers[index].disabled = false;
   } 
 
   public start() {

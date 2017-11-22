@@ -111,6 +111,7 @@ public colorOptions: any;
     $('.sideblock').nodoubletapzoom();
   }
 
+
   public goLeft():void {
     if ( this.scrolling.nativeElement.scrollLeft - this.scrollleftSteeps >= 0) {
       this.pressedLeft = true;
@@ -218,6 +219,7 @@ public colorOptions: any;
         const disabled = elements.filter((value: any, index: number) => {return value.disabled});
         const notDisabled = elements.filter((value: any, index: number) => {return !value.disabled});
         if (!changes.removedElement.isFirstChange() && notDisabled.length && elements[elements.length - 1] !== 'retrieve') {
+          // setting
           this.elements.forEach((value: Ielement, index: number) => {
             this.elements[index].disabled = false;
           });

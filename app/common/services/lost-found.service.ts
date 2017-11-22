@@ -91,7 +91,6 @@ export class LostFoundService {
   public setAnwer(): void {
     const stopCall: boolean = this.matchService.stopCalling(this.searchService.totalResults, this.pagePosition);
     const apiConst: string = this.defaulApikeys[this.pagePosition];
-    console.log('stop call', stopCall);
     this.pageAnswers[this.pagePosition] = this.copyAnswer(this.getGeneralAnswer());
     this.searchFilter();
     if (this.defualtSequence[this.pagePosition] === 'location') {
