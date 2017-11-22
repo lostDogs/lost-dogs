@@ -24,25 +24,12 @@ export class ColorComponent {
   public fillData(pageAnswer: any, lostService: any): void {
     if (pageAnswer) {
       pageAnswer.push('retrieve');
-      lostService.multipleImgAnswers = pageAnswer;
+      lostService.multipleImgAnswers = lostService.copyAnswer(pageAnswer);
     }
   }
 
   public changeElement(event: any): void {
     this.LostService.multipleImgAnswers = event.filter((value: any, index: number)=>{return value.disabled});
-    const patternString: string = 'pattern';
-    const patternName: string = 'Patron';
-    const notDisabled: any[] = this.LostService.multipleImgAnswers;
-    const patternIndex: number = this.LostService.defualtSequence.indexOf(patternString);
-    if (notDisabled.length > 1 && !(~patternIndex)) {
-      this.LostService.defualtSequence.splice( this.LostService.pagePosition + 1, 0, patternString);
-      this.LostService.defaultDisplayedSequence.splice(this.LostService.pagePosition + 1, 0, patternName);
-      this.LostService.defaulApikeys.splice(this.LostService.pagePosition + 1, 0, patternString + '_id');
-    }
-    if (notDisabled.length && notDisabled.length <= 1 && ~patternIndex) {
-      this.LostService.defualtSequence.splice(patternIndex, 1);
-      this.LostService.defaultDisplayedSequence.splice(patternIndex, 1);
-      this.LostService.defaulApikeys.splice(patternIndex, 1);
-    }
+
   }
 }

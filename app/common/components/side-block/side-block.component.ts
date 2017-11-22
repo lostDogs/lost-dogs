@@ -111,6 +111,7 @@ public colorOptions: any;
     $('.sideblock').nodoubletapzoom();
   }
 
+
   public goLeft():void {
     if ( this.scrolling.nativeElement.scrollLeft - this.scrollleftSteeps >= 0) {
       this.pressedLeft = true;
@@ -180,8 +181,8 @@ public colorOptions: any;
     if (this.elements[indexed].disabled) {
       const color: string = this.colors[colorNum];
       const elName: string = this.elements[indexed].name.split(':')[0];
-      const queryString: string = '#' + this.elements[indexed].key + ' dog-figure #' + elName + ' g';
-      const queryAllBlocks: string = ' dog-figure #' + elName + ' g';
+      const queryString: string = '.sideblock ' + '#' + this.elements[indexed].key + ' dog-figure #' + elName + ' g';
+      const queryAllBlocks: string = '.sideblock dog-figure #' + elName + ' g';
       let queryColorChange: JQuery;
       if (elName === 'back-color') {
         queryColorChange = $(queryAllBlocks);
@@ -218,6 +219,7 @@ public colorOptions: any;
         const disabled = elements.filter((value: any, index: number) => {return value.disabled});
         const notDisabled = elements.filter((value: any, index: number) => {return !value.disabled});
         if (!changes.removedElement.isFirstChange() && notDisabled.length && elements[elements.length - 1] !== 'retrieve') {
+          // setting
           this.elements.forEach((value: Ielement, index: number) => {
             this.elements[index].disabled = false;
           });
@@ -273,7 +275,7 @@ public colorOptions: any;
       });
       const name: string = this.elements[indexed].name.split(':')[0];
     if (!this.elements[indexed].disabled && name === 'back-color') {
-          const queryAllBlocks: string = ' dog-figure #' + name + ' g';
+          const queryAllBlocks: string = '.sideblock dog-figure #' + name + ' g';
           $(queryAllBlocks).attr('style', 'fill: white');
         }    
   }

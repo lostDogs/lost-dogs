@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {LostFoundService} from '../../../common/services/lost-found.service';
-
+const imgCompress = require('@xkeshi/image-compressor');
 @Component({
   selector: 'pic-details',
   template: require('./pic-details.template.html'),
@@ -22,10 +22,7 @@ export class DetailsComponent {
   
   public ngOnInit(): void {
   }
-  public debkeyUp() {
-    console.log('rewarnd', this.LostService.reward);
-  }
-
+ 
 public ngAfterViewInit(): void {
   $('#money-input').mask('000,000.00', {reverse: true});
 }
@@ -34,6 +31,9 @@ public ngAfterViewInit(): void {
     this.LostService.binaryDogImg = file;
      if (ev.target && ev.target.files && file && file.type.match('image.*')) {
         try {
+          if (file.size > 3 * 1024 * 1024) {
+            this.minifyImgFile(file);
+          }
           const reader = new FileReader();
           reader.onload = (event: any) => {
             this.LostService.dogPicture = event.target.result;
@@ -49,6 +49,18 @@ public ngAfterViewInit(): void {
         console.error('not an image');
       }    
   }
+
+  public minifyImgFile(file: File) {    
+    const self:DetailsComponent = this;
+    new imgCompress(file, {
+      quality: .8,
+       success(result: any) {
+        console.log('reducing file zise', result);
+        self.LostService.binaryDogImg = result;
+       }
+    })
+  }
+
   public setFocusOnMoney(): void {
     this.LostService.reward = this.LostService.reward === this.LostService.defaultReward ? '' : this.LostService.reward;
     $('#money-input').focus();
