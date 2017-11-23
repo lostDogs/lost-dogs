@@ -30,8 +30,9 @@ export interface IdogData {
 @Injectable()
 export class SearchService {
   public results: IdogData[];
-  // raidus (or diameter? idk :/ ) in meters for the geolocation.
+  // dimeter in meters for the geolocation.
   public maxDistance: number;
+  // 1km diameter initially
   public maxDistanceDefault: number = 1000;
   public _endpointUrl: string = 'https://fierce-falls-25549.herokuapp.com/api/dogs?searchTerms=';
   public queryObj: any;
@@ -39,10 +40,15 @@ export class SearchService {
   public beforeFilterResults: IdogData[];
   public innerFiltes: any;
   public loading: boolean;
+  public _pageSize: number = 12;
+  public atPage: number = 0;
+  public totalPages: number;
+  public window: Window;
 
   constructor(public api: ApiService, public userService: UserService) {
     this.queryObj = {};
     this.innerFiltes = {};
+    this.window = window;
     this.maxDistance = this.maxDistanceDefault;
   }
   // add queries adds the Query-filters that are going to be send to the api call in the queryObj.
@@ -110,6 +116,8 @@ export class SearchService {
         });
       }
       this.loading = false;
+      this.totalPages = this.totalResults / this._pageSize;
+      console.log('total pages', this.totalPages);
     });
   }
 
@@ -127,10 +135,10 @@ export class SearchService {
       const date: Date = new Date(value.found_date.split('T')[0].replace(/-/g, '/'))
       if (this.queryObj.lost) {
         // If I lost a dog  bring all found from the date I lost it until todays day
-       return date >= filteredDate;
+       return date <= filteredDate;
      } else {
        // if I found a dog bring all lost dog from n until todays day.
-       return date <= filteredDate;
+       return date >= filteredDate;
      }
     });
     this.results = filteredResults;
@@ -192,5 +200,4 @@ export class SearchService {
       return patConverted;
     }
   }
-
 }

@@ -123,7 +123,6 @@ export class LostFoundService {
       // page position should be greater than 2 because adding-points  start after date(0), loc(1) and gender(2);
       const answer: string = this.searchService.answerToApi(this.pageAnswers[this.pagePosition], true);
       const answers = apiConst === 'pattern_id' ? answer.replace(/\s/g, '') : answer;
-      console.log('answers', answers);
       const resWithPoints: IdogData[] = this.matchService.filterByString(this.searchService.results, answers, apiConst);
       this.searchService.results = resWithPoints;
       // sorting to see who has the highest matching value.
@@ -132,7 +131,9 @@ export class LostFoundService {
       console.log('results', this.searchService.results);
 
     }
-    this.multipleImgAnswers && this.changePatternSequence(this.multipleImgAnswers.filter((value: any, index: number)=>{return value.disabled}));
+    if (this.defualtSequence[this.pagePosition] === 'color') {
+      this.multipleImgAnswers && this.changePatternSequence(this.multipleImgAnswers.filter((value: any, index: number)=>{return value.disabled}));
+    }
     console.log('page answers', this.pageAnswers);
   }
 
@@ -306,11 +307,13 @@ export class LostFoundService {
     const patternName: string = 'Patron';
     const patternIndex: number = this.defualtSequence.indexOf(patternString);
     if (notDisabled.length > 1 && !(~patternIndex)) {
+      this.pageAnswers.splice(this.pagePosition + 1, 0, undefined);
       this.defualtSequence.splice( this.pagePosition + 1, 0, patternString);
       this.defaultDisplayedSequence.splice(this.pagePosition + 1, 0, patternName);
       this.defaulApikeys.splice(this.pagePosition + 1, 0, patternString + '_id');
     }
     if (notDisabled.length && notDisabled.length <= 1 && ~patternIndex) {
+      this.pageAnswers.splice(patternIndex, 1);
       this.defualtSequence.splice(patternIndex, 1);
       this.defaultDisplayedSequence.splice(patternIndex, 1);
       this.defaulApikeys.splice(patternIndex, 1);

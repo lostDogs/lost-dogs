@@ -6,8 +6,7 @@ footer {
   color: white;
   border-top: 6px solid white;
   padding-bottom: 20px;
-  height: -moz-available;
-  height: -webkit-fill-available;
+  height: 100%;
   &.row {
     margin-bottom: 0;
   }
