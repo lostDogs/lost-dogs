@@ -40,6 +40,7 @@ export class SearchService {
   public beforeFilterResults: IdogData[];
   public innerFiltes: any;
   public loading: boolean;
+  //pagination
   public _pageSize: number = 12;
   public atPage: number = 0;
   public totalPages: number;

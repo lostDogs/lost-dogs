@@ -37,6 +37,22 @@
     padding: 80px;
   }  
 }
+.row.pagination {
+  margin: 0;
+  padding: 20px 0;
+  .number {
+    display: inline-block;
+    color: $notSoGrey;
+    cursor: pointer;
+    a {
+      padding: 0 5px;
+    }
+  }
+  .pag-at {
+    color: $aVisited;
+    text-decoration: underline;
+  }
+}
 
 div.select-wrapper  {
   .invisible {
