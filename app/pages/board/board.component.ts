@@ -117,7 +117,7 @@ export class boardComponent {
       } else {
         replacedBlock.replaceWith(replaceBlock);
       }
-      const sortVal: string = (input.val()).split(':');
+      const sortVal: string = input.val() && (input.val()).split(':');
       self.searchService.sort(sortVal[0], !!sortVal[1]);
     });    
   }
@@ -255,7 +255,6 @@ export class boardComponent {
   }
 
   public queryAndSearch(compName: string, answer: any): void {
-    console.log('compname ', compName);
     const apiName: string = this.getApiName(compName);
     const answerToApi: string = this.searchService.answerToApi(answer, true);
     this.searchService.addQuery(apiName, answerToApi);

@@ -35,14 +35,13 @@ export class ReviewPaymentComponent {
   }
 
   public ngOnInit(): void {
-    if (this.dogIndex && this.searchService.results && this.searchService.results[this.dogIndex]) {
+    if (this.dogIndex && this.searchService.results && this.searchService.results[this.dogIndex] && this.searchService.results[this.dogIndex]._id === this.dogID) {
       this.dogData = this.searchService.results[this.dogIndex];
-    }else {
+    }else if (this.dogID) {
       this.dogCardService.getDog(this.dogID).add(() => {
         this.dogData = this.dogCardService.dogData;
       });
     }
-    console.log('dogdata', this.dogData);
   }
 
   public ngAfterViewInit(): void {

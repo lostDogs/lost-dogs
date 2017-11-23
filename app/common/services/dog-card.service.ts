@@ -49,7 +49,7 @@ export class DogCardService {
     const headers: any = {
       'Content-Type': 'application/json',
       'Authorization': 'token ' + this.userService.token
-    };    
+    };
     return this.api.get('https://fierce-falls-25549.herokuapp.com/api/dogs',dogID, headers).subscribe(
       data => {
         this.dogData = this.searchService.parseDogData(data);
