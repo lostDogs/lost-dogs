@@ -44,11 +44,15 @@ export class SearchService {
   public _pageSize: number = 12;
   public atPage: number = 0;
   public totalPages: number;
+  public pagesCalled: number[];
+  public pagedResults: IdogData[];
   public window: Window;
 
   constructor(public api: ApiService, public userService: UserService) {
     this.queryObj = {};
     this.innerFiltes = {};
+    this.results = [];
+    this.pagesCalled = [];
     this.window = window;
     this.maxDistance = this.maxDistanceDefault;
   }
@@ -97,11 +101,13 @@ export class SearchService {
     this.loading = true;
     return this.api.get(this._endpointUrl + '&', this.queryObj, headers).subscribe(data => {
       console.log('sucessss', data);
-      this.results = data['results'] && data['results'].length ? data['results'] : undefined;
-      this.results && this.results.forEach((res: IdogData, resIndex: number) => {
-        this.results[resIndex] = this.parseDogData(res);
+      const results = data['results'] && data['results'].length ? data['results'] : undefined;
+      results && results.forEach((res: IdogData, resIndex: number) => {
+        results[resIndex] = this.parseDogData(res);
+        this.results.push(results[resIndex]);
       });
       this.totalResults = data['hits'];
+      console.log('results', this.results);
       this.beforeFilterResults = this.results && JSON.parse(JSON.stringify(this.results));
       const innerKeys: string[] = Object.keys(this.innerFiltes);
       // one a call is made the inner filters will be overwritten by the new call. so we need to apply them again.
@@ -111,8 +117,12 @@ export class SearchService {
         });
       }
       this.loading = false;
-      this.totalPages = this.totalResults / this._pageSize;
+      this.totalPages = Math.ceil(this.totalResults / this._pageSize);
       console.log('total pages', this.totalPages);
+      if (this.atPage === 0) {
+        this.pagedResults = this.results;
+        this.pagesCalled.push( this.atPage);
+      }
     });
   }
 
@@ -121,6 +131,34 @@ export class SearchService {
 
   public readQueryInUrl(): string {
     return 'yes';
+  }
+
+  public changePageTo(pageNumber: number): void {
+    this.atPage = pageNumber;
+    console.log('pageat',  this.atPage);
+    if (this.pagesCalled[pageNumber] === pageNumber) {
+      // means we already call this so we just the value in the array
+      this.pagedResults = this.results.slice(pageNumber * this._pageSize , (pageNumber + 1)  * this._pageSize);
+      console.log('pagedResults', this.pagedResults);
+    } else {
+      // means we dont have this page yet so we need to call the service.
+      this.pagesCalled.push( this.atPage);
+      this.pagesCalled.sort((a, b) => {return a-b});
+      this.addQuery('page', this.atPage);
+      console.log('pagesCalled & calling', this.pagesCalled);
+      this.search().add(() => {
+        this.pagedResults = this.results.slice(pageNumber * this._pageSize , (pageNumber + 1)  * this._pageSize);
+        console.log('pagesCalled & called', this.pagedResults);
+      });
+    }
+    $('html, body').animate({ scrollTop: 10 }, 600);
+  }
+
+  public resetResults(): void {
+    this.results = [];
+    this.pagedResults = [];
+    this.atPage = 0;
+    this.addQuery('page', 0);
   }
 
   public setDateFilter(value: string): void {

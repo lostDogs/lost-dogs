@@ -96,7 +96,9 @@ export class boardComponent {
 
   public ngOnInit(): void {
     $('#date-input').mask('0000/00/00');
+    this.searchService.resetResults();
     this.searchService.addQuery('lost', !this.searchFound);
+    this.searchService.addQuery('pageSize', this.searchService._pageSize);
     this.searchService.search();
   }
 
@@ -259,6 +261,7 @@ export class boardComponent {
     const answerToApi: string = this.searchService.answerToApi(answer, true);
     this.searchService.addQuery(apiName, answerToApi);
     if (compName !== 'date') {
+      this.searchService.resetResults();
       this.searchService.search();
     }
   }
@@ -266,12 +269,14 @@ export class boardComponent {
   public delQueryAndSearch(compName: string): void {
     const apiName: string = this.getApiName(compName);
     this.searchService.removeQuery(apiName);
+    this.searchService.resetResults();
     this.searchService.search();
   }
 
   public toogleLost(): void {
     this.searchFound = !this.searchFound;
     this.searchService.addQuery('lost', !this.searchFound);
+    this.searchService.resetResults();
     this.searchService.search();
   }
 

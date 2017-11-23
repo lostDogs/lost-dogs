@@ -99,15 +99,14 @@
   </div>
   <section title="resultados"  class="row results" *ngIf="searchService.results && searchService.results.length && !searchService.loading">
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
-      <dog-card *ngFor="let card of searchService.results;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt" [lost]="!searchFound" [data]="card" [maxCards]="searchService.results.length"></dog-card> 
+      <dog-card *ngFor="let card of searchService.pagedResults;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt" [lost]="!searchFound" [data]="card" [maxCards]="searchService.results.length"></dog-card> 
   </section>
-  <section title="pagination"  class="row pagination" [ngClass]="{'blur-filter': dogCardService.open}">
+  <section title="pagination"  class="row pagination"  *ngIf="searchService.totalPages && searchService.totalPages!==1" [ngClass]="{'blur-filter': dogCardService.open}">
     <div class="col l12 m12 s12 centered">
       <div>
-        <h5 class="number"><a class="pag-at">1</a>|</h5>
-        <h5 class="number"><a>2</a>|</h5>
-        <h5 class="number"><a>3</a>|</h5>
-        <h5 class="number"><a>4</a></h5>
+          <h5 class="number" *ngFor="let val of window.Array(searchService.totalPages);let i= index" (click)="searchService.changePageTo(i)">
+            <a [ngClass]="{'pag-at':searchService.atPage===i}">{{i+1}}</a>|
+          </h5>
       </div>
     </div>
   </section>
