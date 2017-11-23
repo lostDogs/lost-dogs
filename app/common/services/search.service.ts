@@ -99,13 +99,7 @@ export class SearchService {
       console.log('sucessss', data);
       this.results = data['results'] && data['results'].length ? data['results'] : undefined;
       this.results && this.results.forEach((res: IdogData, resIndex: number) => {
-        this.results[resIndex].patternColors = this.patternConvertion(res);
-        this.results[resIndex].pattern_id = res.pattern_id.replace(/\s/g, '').replace(/,/g, ' ');
-        this.results[resIndex].name =  res.name && res.name === 'NA/'  ? undefined : res.name;
-        this.results[resIndex].color =  res.color && res.color.split(',');
-        this.results[resIndex].kind = res.kind && res.kind.split(',');
-        this.results[resIndex].matchAtHist = [];
-        this.results[resIndex].matchValHist = [];
+        this.results[resIndex] = this.parseDogData(res);
       });
       this.totalResults = data['hits'];
       this.beforeFilterResults = this.results && JSON.parse(JSON.stringify(this.results));
@@ -200,5 +194,15 @@ export class SearchService {
       });
       return patConverted;
     }
+  }
+  public parseDogData(dogData: any): IdogData {
+    dogData.patternColors = this.patternConvertion(dogData);
+    dogData.pattern_id = dogData.pattern_id.replace(/\s/g, '').replace(/,/g, ' ');
+    dogData.name =  dogData.name && dogData.name === 'NA/'  ? undefined : dogData.name;
+    dogData.color =  dogData.color && dogData.color.split(',');
+    dogData.kind = dogData.kind && dogData.kind.split(',');
+    dogData.matchAtHist = [];
+    dogData.matchValHist = [];
+    return dogData;
   }
 }
