@@ -101,5 +101,9 @@
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
       <dog-card *ngFor="let card of searchService.results;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt" [lost]="!searchFound" [data]="card" [maxCards]="searchService.results.length"></dog-card> 
   </section>
-  <!-- <section title="paginacion"  class="row pagination" [ngClass]="{'blur-filter': dogCardService.open}"></section> -->
+  <section title="paginacion"  *ngIf="searchService.totalPages && searchService.totalPages!==1" class="row pagination" [ngClass]="{'blur-filter': dogCardService.open}">
+    <div class="col l12">
+      <div *ngFor="let val of window.Array(totalPages);let i= index" >{{i}}</div>
+    </div>
+  </section>
 </div>
