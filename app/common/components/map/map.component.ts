@@ -26,7 +26,8 @@ public custom: CustomMarker;
 
   constructor(public el: ElementRef, public userService: UserService) {}
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void {
+  }
 
   public ngAfterViewInit(): void {
     let initlocation: any;
@@ -80,6 +81,11 @@ public custom: CustomMarker;
       this.mapDef.panTo(userLocation);
       this.mapDef.setZoom(15);
     }
+    $('document').ready(() => {
+      if (google && google.maps) {
+        google.maps.event.trigger(map, 'resize');
+      }
+    });
   }
 
   public getZoomFromRange(range: number): number {
