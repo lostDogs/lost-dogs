@@ -83,7 +83,8 @@ public custom: CustomMarker;
     }
     $('document').ready(() => {
       if (google && google.maps) {
-        google.maps.event.trigger(map, 'resize');
+        google.maps.event.trigger(this.mapDef, 'resize');
+        this.location && this.mapDef.panTo(this.location);
       }
     });
   }
