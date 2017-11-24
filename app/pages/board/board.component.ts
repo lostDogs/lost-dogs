@@ -243,8 +243,10 @@ export class boardComponent {
 
   public multipleBlockRemove(componentName: string, index: number): void {
     let disabledAmount: number = 0;
-    this.filterElements[componentName].answer.splice(index, 1);
     this.filterElements[componentName].answer = JSON.parse(JSON.stringify(this.filterElements[componentName].answer));
+    this.filterElements[componentName].answer[index].disabled = false;
+    this.filterElements[componentName].answer.splice(index, 1);
+    //setTimeout(() => {this.filterElements[componentName].answer.splice(index, 1);}, 5);
     if (!this.filterElements[componentName].answer.length) {
       this.filterElements[componentName].asnwerExtraWidth = 0;
       this.filterElements[componentName].width = this.widthPerFilter + 'px';

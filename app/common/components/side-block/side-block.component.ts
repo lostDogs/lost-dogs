@@ -49,6 +49,14 @@ public patternType: boolean;
 @Input()
 public colors: string[];
 public colorOptions: any;
+/*
+* SplicedAnswer is a temp solution, because board splice elements from the array and in lost/ found not.
+* when removing elements only lost/found went in the condition and spliced elements didnt, so splicedAnswer will tell 
+* that elements will be removed so it can go inside the and change values.
+* TODO: Refacto! -> lost/found should work as board. removing the elements from the array instead of change a disabled var.
+*/
+@Input()
+public splicedAnswer: boolean;
 
   @ViewChild('ScollSection') public scrolling: ElementRef;
   constructor() {
@@ -218,7 +226,7 @@ public colorOptions: any;
       if (Array.isArray(elements)) {
         const disabled = elements.filter((value: any, index: number) => {return value.disabled});
         const notDisabled = elements.filter((value: any, index: number) => {return !value.disabled});
-        if (!changes.removedElement.isFirstChange() && notDisabled.length && elements[elements.length - 1] !== 'retrieve') {
+        if (!changes.removedElement.isFirstChange() && (notDisabled.length || this.splicedAnswer) && elements[elements.length - 1] !== 'retrieve') {
           // setting
           this.elements.forEach((value: Ielement, index: number) => {
             this.elements[index].disabled = false;

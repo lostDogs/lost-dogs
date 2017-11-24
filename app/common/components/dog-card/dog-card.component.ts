@@ -37,7 +37,6 @@ export class DogCardComponent {
 
   public ngOnInit(): void {
     this.mappedData = this.dogCardService.mapData(this.data);
-    console.log('creating dog card', this.cardIndex);
   }
 
   public toogleViewMore (): void {
