@@ -22,10 +22,12 @@ export class lostComponent {
   public displayIntro: boolean;
   @ViewChild('Progress')
   public progressDom: ElementRef;
+  public window: Window;
 
   constructor (public dogCardService: DogCardService, public lostService: LostFoundService, public router: Router, public userService: UserService, public domEl: ElementRef, public globalService: GlobalFunctionService) {
     this.dogCards = [];
     this.progress = 0;
+    this.window = window;
     for (let i = 0; i < 13; ++i) {
       this.dogCards.push(i);
     }
@@ -69,6 +71,7 @@ export class lostComponent {
     // sequence could change according to the action Lost/ Found.
     const lost: boolean = this.lostService.parentPage === 'lost';
     this.lostService.searchService.addQuery('lost', !lost);
+    this.lostService.searchService.addQuery('pageSize', this.lostService.searchService._pageSize);
     if (lost) {
       this.lostService.sequence = this.lostService.defualtSequence;
       this.lostService.displayedSequence = this.lostService.defaultDisplayedSequence;
@@ -115,6 +118,7 @@ export class lostComponent {
   public start(): void {
     this.displayIntro=false;
     this.dogCardService.open=false;
+    this.lostService.searchService.resetResults();
     this.lostService.searchService.search();
   }
 

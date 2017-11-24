@@ -135,23 +135,18 @@ export class SearchService {
 
   public changePageTo(pageNumber: number): void {
     this.atPage = pageNumber;
-    console.log('pageat',  this.atPage);
     if (this.pagesCalled[pageNumber] === pageNumber) {
       // means we already call this so we just the value in the array
       this.pagedResults = this.results.slice(pageNumber * this._pageSize , (pageNumber + 1)  * this._pageSize);
-      console.log('pagedResults', this.pagedResults);
     } else {
       // means we dont have this page yet so we need to call the service.
       this.pagesCalled.push( this.atPage);
       this.pagesCalled.sort((a, b) => {return a-b});
       this.addQuery('page', this.atPage);
-      console.log('pagesCalled & calling', this.pagesCalled);
       this.search().add(() => {
         this.pagedResults = this.results.slice(pageNumber * this._pageSize , (pageNumber + 1)  * this._pageSize);
-        console.log('pagesCalled & called', this.pagedResults);
       });
     }
-    $('html, body').animate({ scrollTop: 10 }, 600);
   }
 
   public resetResults(): void {
@@ -165,16 +160,20 @@ export class SearchService {
     const filteredDate: Date = new Date(value);
     let filteredResults: any[];
     filteredResults = this.results && this.results.length && this.results.filter((value: any, index: number) => {
-      const date: Date = new Date(value.found_date.split('T')[0].replace(/-/g, '/'))
+      const date: Date = new Date(value.found_date.split('T')[0].replace(/-/g, '/'));
       if (this.queryObj.lost) {
-        // If I lost a dog  bring all found from the date I lost it until todays day
+        // If I have lost a dog  bring all found from the date I lost it until todays day
        return date <= filteredDate;
      } else {
-       // if I found a dog bring all lost dog from n until todays day.
+       // if I have found a dog bring all lost dog from that day until todays day.
        return date >= filteredDate;
      }
     });
     this.results = filteredResults;
+    this.pagedResults = this.results.slice(this.atPage * this._pageSize , (this.atPage + 1)  * this._pageSize);
+    if (this.pagedResults.length < this._pageSize && this.results.length <= this.totalResults) {
+
+    }
   } 
 
   public setLocationFilter(name: string, value: any): void {
@@ -233,6 +232,7 @@ export class SearchService {
       return patConverted;
     }
   }
+
   public parseDogData(dogData: any): IdogData {
     dogData.patternColors = this.patternConvertion(dogData);
     dogData.pattern_id = dogData.pattern_id.replace(/\s/g, '').replace(/,/g, ' ');

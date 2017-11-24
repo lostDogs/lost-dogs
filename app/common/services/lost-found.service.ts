@@ -95,6 +95,7 @@ export class LostFoundService {
     this.searchFilter();
     if (this.defualtSequence[this.pagePosition] === 'location') {
       // location has its own search logic see location.component
+      this.searchService.resetResults();
       this.matchService.extendRange(this.searchService);
     } else if (this.defualtSequence[this.pagePosition] !== 'date' && !stopCall) {
       // date is being handled with inner filters once we call the addQuery method.
@@ -103,6 +104,7 @@ export class LostFoundService {
         totalRes: this.searchService.totalResults,
         beforeFilter: this.searchService.beforeFilterResults
       };
+      this.searchService.resetResults();
       this.searchService.search().add(() => {
        if (this.pagePosition > 2 && !this.searchService.totalResults) {
            //if we are here means there were values on the prev call 'stopCall'  but not on the new one 'searchService.totalResults'.
