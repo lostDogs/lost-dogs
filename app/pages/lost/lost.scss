@@ -21,6 +21,21 @@ lost, found {
       padding-top: 100px;
     }    
   }
+  #location-search  {
+    margin-top: 14px;
+    margin-left: 150px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 47px;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin: 0;
+      margin-left: 44px;
+      height: 60px;
+      .material-icons {
+        vertical-align: middle;
+      }
+    }
+  }
   .row.intro {
     text-align: center;
     position: fixed;

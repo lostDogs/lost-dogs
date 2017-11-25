@@ -10,9 +10,9 @@
     <form #addressSearch="ngForm" (ngSubmit)="lostService.locationAdressInput=lostService.address" [hidden]="!(lostService.inputField && lostService.inputField.type==='address')">
       <div class="input-field col l3  s10 push-s1 push-l3">
             <input type="text" name="addresss" id="address" [(ngModel)]="lostService.address" (focus)="onFocusAddres()">
-            <i class="material-icons right" (click)="lostService.locationAdressInput=lostService.address">search</i>
             <!-- <label for="question">{{inputField.label}}</label> -->
       </div> 
+    <button class="btn waves-effect info"  id="location-search" (click)="lostService.locationAdressInput=lostService.address" *ngIf="(lostService.inputField && lostService.inputField.type==='address')"><i class="material-icons">search</i></button>
     </form>
     <div class="input-field col l2  s10 push-l3 push-s1 img-output" *ngIf="lostService.inputField && lostService.inputField.type==='image'">
       <div style="height: 45px;"></div>
