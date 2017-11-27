@@ -1,8 +1,8 @@
 <section class="page">
   <div class="row title-question"  [ngClass]="{'blur-filter': dogCardService.open}">
-    <h5 class="col l4  s4" *ngIf="lostService.question2">{{lostService.question2}}</h5>
-    <h5 class="col l4 push-l4 s12" [ngClass]="{'push-l4 s12': !(lostService.question2&&lostService.question3), 's4': (lostService.question2&&lostService.question3)}">{{lostService.question}}</h5>
-    <h5 class="col l4  s4" *ngIf="lostService.question3">{{lostService.question3}}</h5>
+    <h5 class="col l4  s4"  [ngClass]="{'push-l2 push-m2 push-s2': lostService.question2 && !lostService.question}" *ngIf="lostService.question2">{{lostService.question2}}</h5>
+    <h5 class="col l4 push-l4 s12" [ngClass]="{'push-l4 s12': !(lostService.question2&&lostService.question3), 's4': (lostService.question2&&lostService.question3)}" *ngIf="lostService.question">{{lostService.question}}</h5>
+    <h5 class="col l4  s4" *ngIf="lostService.question3" [ngClass]="{'push-l2 push-m2 push-s2': lostService.question3 && !lostService.question}">{{lostService.question3}}</h5>
     <div class="input-field col l2  s4 push-s4 push-l3" [hidden]="!(lostService.inputField && lostService.inputField.type==='date')">
           <input type="text" name="question" id="question" [(ngModel)]="lostService.answer" (focus)="lostService.answer=undefined">
           <!-- <label for="question">{{inputField.label}}</label> -->

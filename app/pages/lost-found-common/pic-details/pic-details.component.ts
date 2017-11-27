@@ -10,6 +10,7 @@ const imgCompress = require('@xkeshi/image-compressor');
 export class DetailsComponent { 
   public errorImg: string;
   public clearComments: boolean;
+  public hideReward: boolean;
 
   constructor(public LostService: LostFoundService) {
     this.LostService.question2 = 'sube una foto del perro';
@@ -25,6 +26,11 @@ export class DetailsComponent {
  
 public ngAfterViewInit(): void {
   $('#money-input').mask('000,000.00', {reverse: true});
+  this.hideReward = this.LostService.parentPage !== 'lost';
+  console.log('hideReward', this.hideReward);
+  if (this.hideReward) {
+    this.LostService.question = undefined;
+  }
 }
   public filePicChange(ev: any): void {
     const file: File = ev.target.files[0];
