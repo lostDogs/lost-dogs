@@ -101,6 +101,18 @@ div.select-wrapper  {
 }
 
 board {
+  .scroll-botttom {
+    position: fixed;
+    right: 35px;
+    left: inherit;
+    margin: inherit;
+    z-index: 5;
+    animation: blurAppear 1s ease, float 3s ease-in-out infinite;
+     .material-icons {
+      color: white;
+      transform: rotate(270deg);
+     }
+  }
   .page.board {
     background-color: $lightGrey;
     date-picker section.row.date {

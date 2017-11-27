@@ -1,4 +1,5 @@
-import {Component, ViewChildren, QueryList, ElementRef, ViewChild} from '@angular/core';
+import {Component, ViewChildren, QueryList, ElementRef, ViewChild, Inject, HostListener} from '@angular/core';
+import { DOCUMENT } from '@angular/platform-browser';
 import {DogCardService} from '../../common/services/dog-card.service';
 import {SearchService, IdogData} from '../../common/services/search.service';
 import {LostFoundService} from '../../common/services/lost-found.service';
@@ -36,6 +37,9 @@ export class boardComponent {
   public ComponentsDom: ElementRef;
   @ViewChildren('AnswerBlock')
   public answersDom: QueryList<any>;
+  @ViewChild('Results')
+  public resultsDom: ElementRef;
+  public dom: ElementRef;
   public widthPerFilter: number;
   public extraWidth: number = 0;
   
@@ -56,7 +60,9 @@ export class boardComponent {
   public rangeDiameter: number = 1;
   public radioInMap: number = 0.5;
 
-  constructor(public dogCardService: DogCardService, public lostService: LostFoundService, public searchService: SearchService) {
+  public showArrowUp: boolean;
+
+  constructor(@Inject(DOCUMENT) private document:  Document, public dogCardService: DogCardService, public lostService: LostFoundService, public searchService: SearchService) {
     this.filtersKey = [];
     this.window = window;
     this.mobile = window.screen.width <= 767;
@@ -89,6 +95,13 @@ export class boardComponent {
       this.filterElements[this.lostService.defualtSequence[index]].width = this.widthPerFilter + 'px';
     });
   }
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(event: any) {
+    const scrollTop: number = this.document && this.document.documentElement.scrollTop;
+    const scrollToResults: number =  this.resultsDom && this.resultsDom.nativeElement && this.resultsDom.nativeElement.offsetTop - 170;
+    this.showArrowUp = scrollTop >= scrollToResults;
+    console.log('showArrowUp', this.showArrowUp)
+  }  
 
   public ngDoCheck(): void {
     this.reziseFiltersRow();
@@ -319,4 +332,8 @@ export class boardComponent {
     this.radioInMap =  this.rangeDiameter * 0.5;
     this.queryAndSearch('location', this.location);
  }
+
+ public scrollTop(): void {
+   $('html, body').animate({ scrollTop: 0 }, 600);
+ } 
 };
