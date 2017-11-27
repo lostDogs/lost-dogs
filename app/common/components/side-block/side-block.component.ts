@@ -36,19 +36,20 @@ export class SideBlockComponent {
   public showArrows: boolean;
   public repeatedIds: number;
   public inPatternType: number;
+  @Input()
   public maxElments: number = 3;
-@Output()
-public selectedEmitter: EventEmitter<any> = new EventEmitter<any>();
-@Input()
-public removedElement: any;
-@Input()
-public multiple: boolean;
-public multipleElements: Ielement[];
-@Input()
-public patternType: boolean;
-@Input()
-public colors: string[];
-public colorOptions: any;
+  @Output()
+  public selectedEmitter: EventEmitter<any> = new EventEmitter<any>();
+  @Input()
+  public removedElement: any;
+  @Input()
+  public multiple: boolean;
+  public multipleElements: Ielement[];
+  @Input()
+  public patternType: boolean;
+  @Input()
+  public colors: string[];
+  public colorOptions: any;
 /*
 * SplicedAnswer is a temp solution, because board splice elements from the array and in lost/ found not.
 * when removing elements only lost/found went in the condition and spliced elements didnt, so splicedAnswer will tell 
@@ -275,6 +276,10 @@ public splicedAnswer: boolean;
   // The blockSelected function was disable when it is  paterType.
   // PatternType = dog-figure.
   public dogClicked(indexed: any): void {
+    if(indexed === 0) {
+      // means it is back-color, that should always be selected.
+      return;
+    }
     this.blockSelected(null, null, indexed);
     this.inPatternType = indexed;
     // checking if color is selected
@@ -305,6 +310,5 @@ public splicedAnswer: boolean;
       }
     });
     this.selectedEmitter.emit(this.multipleElements);
-  }
-  
+  }  
 }
