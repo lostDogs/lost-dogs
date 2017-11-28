@@ -66,7 +66,7 @@
       <map (locationAdressEmiter)="locationReciver($event)" (locationEmiter)="locationReciver($event);locationQuery($event);"  [locationAdress]="locationSubmit" [rangeRadius]="radioInMap"></map>
     </div>
   </section>
-  <section class="row centered options">
+  <section class="row centered options" [ngClass]="{'blur-filter': dogCardService.open}">
     <h3 *ngIf="!searchFound">
       <i class="medium material-icons circle-white">search</i>
       Perdidos
@@ -100,7 +100,7 @@
   <section title="resultados" #Results  class="row results" *ngIf="searchService.results && searchService.results.length && !searchService.loading">
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
       <dog-card *ngFor="let card of searchService.pagedResults;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt" [lost]="!searchFound" [data]="card" [maxCards]="searchService.results.length"></dog-card> 
-      <div class="scroll-botttom" *ngIf="showArrowUp" (click)="scrollTop()"><i class="medium material-icons">play_arrow</i></div>
+      <div class="scroll-botttom" *ngIf="showArrowUp" (click)="scrollTop()" [ngClass]="{'blur-filter': dogCardService.open}"><i class="medium material-icons">play_arrow</i></div>
   </section>
   <section title="pagination"  class="row pagination"  *ngIf="searchService.totalPages && searchService.totalPages!==1" [ngClass]="{'blur-filter': dogCardService.open}">
     <div class="col l12 m12 s12 centered">

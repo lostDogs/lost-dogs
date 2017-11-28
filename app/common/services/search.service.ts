@@ -170,10 +170,7 @@ export class SearchService {
      }
     });
     this.results = filteredResults;
-    this.pagedResults = this.results.slice(this.atPage * this._pageSize , (this.atPage + 1)  * this._pageSize);
-    if (this.pagedResults.length < this._pageSize && this.results.length <= this.totalResults) {
-
-    }
+    this.pagedResults = this.results && this.results.slice(this.atPage * this._pageSize , (this.atPage + 1)  * this._pageSize);
   } 
 
   public setLocationFilter(name: string, value: any): void {

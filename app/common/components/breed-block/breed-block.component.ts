@@ -48,7 +48,6 @@ export class BreedBlockComponent {
         return true;
       }
     });
-    console.log("ISINDEXCERO", isIndexCero);
     if (isIndexCero) {
         this.maxSelection = 3;
         if (this.router.url.split('/')[1] === 'lost') {
@@ -71,7 +70,6 @@ export class BreedBlockComponent {
       }
 
     const filteredEvents: any[] = event.length && event.filter((value: any, index: number)=>{return value.id});
-    console.log('filtered events', filteredEvents);
     this.selectedEmitter.emit(filteredEvents);
   }
 
