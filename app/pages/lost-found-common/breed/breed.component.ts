@@ -33,7 +33,7 @@ export class BreedComponent {
     } else {
       this.LostService.multipleImgAnswers = [];
     }
-    console.log('event', this.LostService.multipleImgAnswers);
+    this.LostService.setAnwer();
   }
 
   public fillData(pageAnswer: any, lostService: any): void {

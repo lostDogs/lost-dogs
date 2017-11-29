@@ -104,6 +104,7 @@ export class lostComponent {
     // making angular copy in order for the ngChange to detecte it;
     this.lostService.imgAnswer = JSON.parse(JSON.stringify(this.lostService.imgAnswer));
     this.lostService.imgAnswer.disabled = false;
+    this.lostService.setAnwer();
   }
 
    public multipleBlockRemove(index: number): void {
@@ -113,13 +114,17 @@ export class lostComponent {
     // json parse so that Onchanges can detect the change.
     this.lostService.multipleImgAnswers = JSON.parse(JSON.stringify(this.lostService.multipleImgAnswers));
     this.lostService.multipleImgAnswers[index].disabled = false;
+    this.lostService.setAnwer();
   } 
 
   public start(): void {
     this.displayIntro=false;
     this.dogCardService.open=false;
+     this.lostService.start = true;
     this.lostService.searchService.resetResults();
-    this.lostService.searchService.search();
+    this.lostService.searchService.search().add(() => {
+      this.lostService.setAnwer();
+    });
   }
 
   public showReview(): boolean {

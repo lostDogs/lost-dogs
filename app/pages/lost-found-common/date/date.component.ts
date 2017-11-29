@@ -12,6 +12,7 @@ export class DateComponent {
     this.LostService.question2 = undefined;
     this.LostService.question3 = undefined;
     this.LostService.optional = false;
+    this.LostService.searchService.timer = undefined;    
   }
 
   public ngOnInit(): void {
@@ -25,10 +26,19 @@ export class DateComponent {
     }
   }
 
+  public ngAfterViewInit(): void {
+    $('.clickable').click(() => {
+      this.LostService.searchService.callByTimer(this.LostService.setAnwer, this.LostService);
+    });
+  }
+
   public fillData(pageAnswer: any, lostService: any): void {
     if (pageAnswer) {
       lostService.answer = pageAnswer;
       lostService.rechangeDate = pageAnswer;
     }
-  }  
+  }
+  public changeElement(event: any): void {
+    this.LostService.answer = event;
+  }
 }

@@ -44,6 +44,7 @@ public ngAfterViewInit(): void {
           reader.onload = (event: any) => {
             this.LostService.dogPicture = event.target.result;
             this.errorImg = undefined;
+            this.LostService.setAnwer();
           };
           reader.readAsDataURL(file);
         }catch (error) {

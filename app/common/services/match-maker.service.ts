@@ -25,7 +25,7 @@ export class MatchMakerService {
   private _increaseByMap: number = 2;
   private _maxTimesIn: number = 3;  
   
-  constructor() {
+  constructor(public searchService: SearchService) {
     this.rangeRadius = this.defaultRangeRadius;
   }
 
@@ -36,16 +36,17 @@ export class MatchMakerService {
     return false;
   }
 
-   public extendRange(searchService: SearchService): void {
-      searchService.search().add(() => {
-        if (!searchService.totalResults && this.timesIncreased < this._maxTimesIn) {
+   public extendRange(): void {
+      this.searchService.search().add(() => {
+        if (!this.searchService.totalResults && this.timesIncreased < this._maxTimesIn) {
           this.timesIncreased++;
           console.log('increasing range!!!! >.<!', this.timesIncreased);
-          const maxditance: number = searchService.queryObj.maxDistance;
-          searchService.queryObj.maxDistance = maxditance * this._increaseByMap;
-          searchService.maxDistance = maxditance * this._increaseByMap;
+          const maxditance: number = this.searchService.queryObj.maxDistance;
+          this.searchService.queryObj.maxDistance = maxditance * this._increaseByMap;
+          this.searchService.maxDistance = maxditance * this._increaseByMap;
           this.rangeRadius = this.rangeRadius * this._increaseByMap;
-          this.extendRange(searchService);
+          this.searchService.resetResults();
+          this.extendRange();
         }
       });
   }
@@ -55,7 +56,7 @@ export class MatchMakerService {
     // keyword per dogObj array
     filterValue = filterValue ||  typeof filterValue === 'boolean' ? filterValue : null;
     const regex: RegExp = new RegExp(filterValue, 'g');
-    const found: string[] = result.match(regex);
+    const found: string[] = result && result.match(regex);
     return (found && found.length);
   }
 

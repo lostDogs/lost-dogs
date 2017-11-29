@@ -30,6 +30,6 @@ export class ColorComponent {
 
   public changeElement(event: any): void {
     this.LostService.multipleImgAnswers = event.filter((value: any, index: number)=>{return value.disabled});
-
+    this.LostService.setAnwer();
   }
 }

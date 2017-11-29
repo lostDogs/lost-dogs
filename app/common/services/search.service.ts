@@ -48,6 +48,8 @@ export class SearchService {
   public pagedResults: IdogData[];
   public window: Window;
 
+  public timer: any;
+
   constructor(public api: ApiService, public userService: UserService) {
     this.queryObj = {};
     this.innerFiltes = {};
@@ -101,13 +103,12 @@ export class SearchService {
     this.loading = true;
     return this.api.get(this._endpointUrl + '&', this.queryObj, headers).subscribe(data => {
       console.log('sucessss', data);
+      this.totalResults = data['hits'];
       const results = data['results'] && data['results'].length ? data['results'] : undefined;
       results && results.forEach((res: IdogData, resIndex: number) => {
         results[resIndex] = this.parseDogData(res);
         this.results.push(results[resIndex]);
       });
-      this.totalResults = data['hits'];
-      console.log('results', this.results);
       this.beforeFilterResults = this.results && JSON.parse(JSON.stringify(this.results));
       const innerKeys: string[] = Object.keys(this.innerFiltes);
       // one a call is made the inner filters will be overwritten by the new call. so we need to apply them again.
@@ -201,7 +202,7 @@ export class SearchService {
 
   public answerToApi(answer: any, toString: boolean): string {
     let answerParsed: any;
-    if (answer.latLng) {
+    if (answer && answer.latLng) {
       answerParsed = answer.latLng.lng + ',' + answer.latLng.lat;
     } else if (answer && answer.name) {
       answerParsed = answer.apiVal || typeof answer.apiVal === 'boolean' ? answer.apiVal : answer.name;
@@ -240,4 +241,14 @@ export class SearchService {
     dogData.matchValHist = [];
     return dogData;
   }
+
+  public callByTimer(funct: any, service: any): void {
+      this.timer && clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        funct(service);
+        alert('api called! by timer! ⏰ ⏰>>');
+        this.timer = undefined;
+      }, 2000);
+  }
+
 }
