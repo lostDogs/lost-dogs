@@ -21,7 +21,7 @@ lost, found {
       padding-top: 100px;
     }    
   }
-  #location-search  {
+  #location-search, #date-input  {
     margin-top: 14px;
     margin-left: 150px;
     border-bottom-right-radius: 10px;
@@ -35,6 +35,9 @@ lost, found {
         vertical-align: middle;
       }
     }
+  }
+  #date-input {
+    margin-left: 40px;
   }
   .row.intro {
     text-align: center;
@@ -185,12 +188,14 @@ lost, found {
         }
       }
     }
+
     .title-question  {
       color: white;
       text-align: center;
       background-color: $pink;
       margin-top: 99px;
       padding: 20px 0 20px 0;
+      text-align:  center;
       @media screen and (max-device-width: $screen-mobile-max) {
         padding: 40px 0 40px 0;
       }

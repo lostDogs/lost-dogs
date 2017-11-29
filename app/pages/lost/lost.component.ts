@@ -137,5 +137,37 @@ export class lostComponent {
     const inColor: boolean = this.lostService.defualtSequence[this.lostService.pagePosition]==='color';
     return inColor && values.length > 1;
   }
+
+  public setDate(): void {
+    if (this.lostService.answer.length === 10) {
+      this.lostService.answer
+      const dateInput: Date = new Date(this.lostService.answer);
+      const minDate: Date = new Date('2011'); 
+      if (!dateInput.getDate()) {
+       this.globalService.clearErroMessages();
+       this.globalService.setErrorMEssage('la fecha es invalida');
+       this.globalService.openErrorModal();
+       this.lostService.answer = undefined;
+       return;
+      }
+      if (dateInput >= new Date()) {
+       this.globalService.clearErroMessages();
+       this.globalService.setErrorMEssage('la fecha es mayor q la presente');
+       this.globalService.openErrorModal();
+       return;
+      }
+      if (dateInput <= minDate) {
+       this.globalService.clearErroMessages();
+       this.globalService.setErrorMEssage('la fecha es menor q Viernes 31 de Dic del 2010');
+       this.globalService.openErrorModal();
+       return;        
+      }
+      this.lostService.setAnwer();
+    } else {
+       this.globalService.clearErroMessages();
+       this.globalService.setErrorMEssage('faltan valores');
+       this.globalService.openErrorModal();
+    }
+  }
   
 }
