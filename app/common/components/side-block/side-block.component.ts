@@ -225,9 +225,9 @@ public splicedAnswer: boolean;
     if (changes.removedElement && changes.removedElement.currentValue) {
       const elements: Ielement = changes.removedElement.currentValue;
       if (Array.isArray(elements)) {
-        const disabled = elements.filter((value: any, index: number) => {return value.disabled});
-        const notDisabled = elements.filter((value: any, index: number) => {return !value.disabled});;
-        if (!changes.removedElement.isFirstChange() && (notDisabled.length || this.splicedAnswer) && elements[elements.length - 1] !== 'retrieve') {
+        const disabled: any[] = elements.filter((value: any, index: number) => {return value.disabled});
+        const notDisabled: any[] = elements.filter((value: any, index: number) => {return !value.disabled});
+        if (!changes.removedElement.isFirstChange() && (notDisabled.length || this.splicedAnswer) && elements[elements.length - 1] !== 'retrieve') {  
           // setting
           this.elements.forEach((value: Ielement, index: number) => {
             this.elements[index].disabled = false;

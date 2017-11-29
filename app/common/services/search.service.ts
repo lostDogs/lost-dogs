@@ -246,7 +246,7 @@ export class SearchService {
       this.timer && clearTimeout(this.timer);
       this.timer = setTimeout(() => {
         funct(service);
-        alert('api called! by timer! ⏰ ⏰>>');
+        console.log('api called! by timer! ⏰ ⏰>>');
         this.timer = undefined;
       }, 2000);
   }

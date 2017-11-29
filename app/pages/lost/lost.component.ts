@@ -108,9 +108,13 @@ export class lostComponent {
   }
 
    public multipleBlockRemove(index: number): void {
-    if (this.lostService.multipleImgAnswers[index].name === 'Placa Id') {
+     const name: string = this.lostService.multipleImgAnswers[index].name;
+    if (name === 'Placa Id') {
       this.lostService.openNameInput = false; 
     }
+    if (name && name.match(/back-color/g)) {
+      return;
+    }    
     // json parse so that Onchanges can detect the change.
     this.lostService.multipleImgAnswers = JSON.parse(JSON.stringify(this.lostService.multipleImgAnswers));
     this.lostService.multipleImgAnswers[index].disabled = false;
