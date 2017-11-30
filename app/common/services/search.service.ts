@@ -244,6 +244,7 @@ export class SearchService {
 
   public callByTimer(funct: any, service: any): void {
       this.timer && clearTimeout(this.timer);
+      console.log('calling by timer ');
       this.timer = setTimeout(() => {
         funct(service);
         console.log('api called! by timer! ⏰ ⏰>>');

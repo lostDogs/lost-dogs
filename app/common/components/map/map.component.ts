@@ -78,7 +78,7 @@ public custom: CustomMarker;
        this.mapDef.setZoom(15);
     } else if (this.location) {
       this.addMarker(this.location, this.mapDef, ctrl, {animation: google.maps.Animation.DROP});
-      this.mapDef.panTo(userLocation);
+      this.mapDef.panTo(this.location);
       this.mapDef.setZoom(15);
     }
     $('document').ready(() => {

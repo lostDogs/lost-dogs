@@ -14,23 +14,23 @@ require('../../common/plugins/nodoubletapzoom.js');
   styles: [ require('./lost.scss')]
 })
 export class lostComponent {
-  public dogCards: number[];
   public generalAnswer: any;
   public goBack: boolean;
   public fullWidth: number;
   public progress: number;
   public displayIntro: boolean;
+  public screenWidth: number;
+  public mapWidth: number;
+  public startMap: boolean;
   @ViewChild('Progress')
   public progressDom: ElementRef;
   public window: Window;
 
   constructor (public dogCardService: DogCardService, public lostService: LostFoundService, public router: Router, public userService: UserService, public domEl: ElementRef, public globalService: GlobalFunctionService) {
-    this.dogCards = [];
     this.progress = 0;
     this.window = window;
-    for (let i = 0; i < 13; ++i) {
-      this.dogCards.push(i);
-    }
+    this.screenWidth = document.documentElement.clientWidth;
+    this.mapWidth = this.screenWidth;
     // route change detection
     this.router.events.subscribe(data => {
       if (data instanceof NavigationEnd) {
@@ -38,6 +38,10 @@ export class lostComponent {
         const urlChildLoction = data.url.split('/')[2];
         const Indexlocation = this.lostService.sequence.indexOf(urlChildLoction);
         this.lostService.pagePosition = Indexlocation !== -1 ? Indexlocation : 0;
+        if (urlChildLoction === 'location') {
+          console.log('starting map');
+          this.startMap = true;
+        }
         if (this.lostService.retrieveData) {
           this.lostService.retrieveData(this.lostService.pageAnswers[this.lostService.pagePosition], this.lostService);
           this.lostService.retrieveData = undefined;
@@ -169,5 +173,16 @@ export class lostComponent {
        this.globalService.openErrorModal();
     }
   }
+  public changeMapElement(event: any) {
+    // map event sometimes emit one or twice, setting timmer so we can just set one
+    if (this.lostService.address && !this.lostService.address.match(/Cargando/g) && this.lostService.latLng) {
+        const childRoute =  this.router.url && this.router.url.split('/')[2];
+        console.log('emmiting ---->: ', event);
+        if ( childRoute === 'location') {
+          console.log("callling by timer");
+          this.lostService.searchService.callByTimer(this.lostService.setAnwer, this.lostService);
+        }
+    }
+  }  
   
 }

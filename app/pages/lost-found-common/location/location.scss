@@ -1,1 +1,16 @@
 @import '../../../common/styles/variables.scss';
+
+location {
+  div.map-container {
+    height: 400px;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      height: 820px;
+    }    
+  }
+}
+div.map-block {
+  position: absolute;
+  top: 0;
+  opacity: 1; 
+  z-index: 0;
+}

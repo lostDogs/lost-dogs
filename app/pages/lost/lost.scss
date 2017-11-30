@@ -11,6 +11,17 @@
 }
 
 lost, found {
+  div.map-block {
+    position: absolute;
+    top: 0;
+    opacity: 1;
+    z-index: 0;
+    &.hidden {
+      position: absolute;
+      top: -1000px;
+      opacity: 0;
+    }
+  }
   .disappear {
     opacity: 0;
     cursor: default;    

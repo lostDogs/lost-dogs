@@ -24,22 +24,10 @@ export class LocationComponent {
     }
   }
 
-  // public ngAfterViewInit(): void {
-  //   $('#map').click(() => {
-  //     this.LostService.setAnwer();
-  //   });
-  // }
-
    public fillData(pageAnswer: any, lostService: any): void {
     if (pageAnswer) {
       lostService.address = pageAnswer.address;
       lostService.latLng = pageAnswer.latLng;
-    }
-  }
-
-  public changeElement() {
-    if (this.LostService.address && !this.LostService.address.match(/Cargando/g) && this.LostService.latLng) {
-      this.LostService.setAnwer();
     }
   }
 
