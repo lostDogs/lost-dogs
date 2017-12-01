@@ -50,6 +50,7 @@ export class LostFoundService {
   public savedData: any;
   public savedImgs: boolean;
   
+  public start: boolean;
   public prevResState: {data?: IdogData[], totalRes?: number, beforeFilter?: IdogData[]};
 
   constructor(
@@ -88,53 +89,58 @@ export class LostFoundService {
     this.router.navigate([previous]);
   }
 
-  public setAnwer(): void {
-    const stopCall: boolean = this.matchService.stopCalling(this.searchService.totalResults, this.pagePosition);
-    const apiConst: string = this.defaulApikeys[this.pagePosition];
-    this.pageAnswers[this.pagePosition] = this.copyAnswer(this.getGeneralAnswer());
-    this.searchFilter();
-    if (this.defualtSequence[this.pagePosition] === 'location') {
+  public setAnwer(self?: LostFoundService): void {
+    if (!self) {
+      self = this;
+    }
+    const stopCall: boolean = self.matchService.stopCalling(self.searchService.totalResults, self.pagePosition);
+    const apiConst: string = self.defaulApikeys[self.pagePosition];
+    self.pageAnswers[self.pagePosition] = self.copyAnswer(self.getGeneralAnswer());
+    self.searchFilter();
+    if (self.defualtSequence[self.pagePosition] === 'location') {
       // location has its own search logic see location.component
-      this.matchService.extendRange(this.searchService);
-    } else if (this.defualtSequence[this.pagePosition] !== 'date' && !stopCall) {
+      self.searchService.resetResults();
+      self.matchService.extendRange();
+    } else if (self.defualtSequence[self.pagePosition] !== 'date' && !stopCall) {
       // date is being handled with inner filters once we call the addQuery method.
-      this.prevResState = {
-        data: this.searchService.results,
-        totalRes: this.searchService.totalResults,
-        beforeFilter: this.searchService.beforeFilterResults
+      self.prevResState = {
+        data: self.searchService.results,
+        totalRes: self.searchService.totalResults,
+        beforeFilter: self.searchService.beforeFilterResults
       };
-      this.searchService.search().add(() => {
-       if (this.pagePosition > 2 && !this.searchService.totalResults) {
+      self.searchService.resetResults();
+      self.searchService.search().add(() => {
+       if (self.pagePosition > 2 && !self.searchService.totalResults) {
            //if we are here means there were values on the prev call 'stopCall'  but not on the new one 'searchService.totalResults'.
            // we need to have more than 5 (matchService._minMatch) results on prev call and none on the new one.
           //no more matches with that query, hence droping it and calling again
-          this.searchService.removeQuery(apiConst);
-          console.log(' Cero matches! with that query, hence droping it and calling again >', this.searchService.queryObj);
-          //this.searchService.search(); calling again in order to retrieve prev state.
+          self.searchService.removeQuery(apiConst);
+          console.log(' Cero matches! with that query, hence droping it and calling again >', self.searchService.queryObj);
+          //self.searchService.search(); calling again in order to retrieve prev state.
           // retrieving previous state without calling again.
-          this.searchService.results = this.prevResState.data;
-          this.searchService.totalResults = this.prevResState.totalRes;
-          this.searchService.beforeFilterResults = this.prevResState.beforeFilter;
-          this.prevResState = {};
+          self.searchService.results = self.prevResState.data;
+          self.searchService.totalResults = self.prevResState.totalRes;
+          self.searchService.beforeFilterResults = self.prevResState.beforeFilter;
+          self.prevResState = {};
        }
       });
       // match making logic starts when total results are less than 5.
-    } else if (stopCall && this.pagePosition <= this.defaultDisplayedSequence.length) {
+    } else if (stopCall && self.pagePosition <= self.defaultDisplayedSequence.length) {
       // page position should be greater than 2 because adding-points  start after date(0), loc(1) and gender(2);
-      const answer: string = this.searchService.answerToApi(this.pageAnswers[this.pagePosition], true);
+      const answer: string = self.searchService.answerToApi(self.pageAnswers[self.pagePosition], true);
       const answers = apiConst === 'pattern_id' ? answer.replace(/\s/g, '') : answer;
-      const resWithPoints: IdogData[] = this.matchService.filterByString(this.searchService.results, answers, apiConst);
-      this.searchService.results = resWithPoints;
+      const resWithPoints: IdogData[] = self.matchService.filterByString(self.searchService.results, answers, apiConst);
+      self.searchService.results = resWithPoints;
       // sorting to see who has the highest matching value.
-      this.searchService.results && this.searchService.results.length && this.searchService.sort('match', true);
+      self.searchService.results && self.searchService.results.length && self.searchService.sort('match', true);
       // take the first 3 or 1 and do something
-      console.log('results', this.searchService.results);
+      console.log('results', self.searchService.results);
 
     }
-    if (this.defualtSequence[this.pagePosition] === 'color') {
-      this.multipleImgAnswers && this.changePatternSequence(this.multipleImgAnswers.filter((value: any, index: number)=>{return value.disabled}));
+    if (self.defualtSequence[self.pagePosition] === 'color') {
+      self.multipleImgAnswers && self.changePatternSequence(self.multipleImgAnswers.filter((value: any, index: number)=>{return value.disabled}));
     }
-    console.log('page answers', this.pageAnswers);
+    console.log('page answers', self.pageAnswers);
   }
 
   // answer should not be modifed unless the button aswer is hit.
@@ -299,6 +305,7 @@ export class LostFoundService {
      this.savedSuccess = undefined;
      this.savedData = undefined;
      this.savedImgs = undefined;
+     this.start = undefined;
      this.searchService.maxDistance = this.searchService.maxDistanceDefault;
   }
 

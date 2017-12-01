@@ -30,6 +30,4 @@ export class PatternBlockComponent {
   public changeElement(event: any): void {
     this.selectedEmitter.emit(event);
   }
-  public colorSelection(event: any): void {
-  }
 }

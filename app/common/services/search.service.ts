@@ -40,14 +40,21 @@ export class SearchService {
   public beforeFilterResults: IdogData[];
   public innerFiltes: any;
   public loading: boolean;
+  //pagination
   public _pageSize: number = 12;
   public atPage: number = 0;
   public totalPages: number;
+  public pagesCalled: number[];
+  public pagedResults: IdogData[];
   public window: Window;
+
+  public timer: any;
 
   constructor(public api: ApiService, public userService: UserService) {
     this.queryObj = {};
     this.innerFiltes = {};
+    this.results = [];
+    this.pagesCalled = [];
     this.window = window;
     this.maxDistance = this.maxDistanceDefault;
   }
@@ -96,17 +103,12 @@ export class SearchService {
     this.loading = true;
     return this.api.get(this._endpointUrl + '&', this.queryObj, headers).subscribe(data => {
       console.log('sucessss', data);
-      this.results = data['results'] && data['results'].length ? data['results'] : undefined;
-      this.results && this.results.forEach((res: IdogData, resIndex: number) => {
-        this.results[resIndex].patternColors = this.patternConvertion(res);
-        this.results[resIndex].pattern_id = res.pattern_id.replace(/\s/g, '').replace(/,/g, ' ');
-        this.results[resIndex].name =  res.name && res.name === 'NA/'  ? undefined : res.name;
-        this.results[resIndex].color =  res.color && res.color.split(',');
-        this.results[resIndex].kind = res.kind && res.kind.split(',');
-        this.results[resIndex].matchAtHist = [];
-        this.results[resIndex].matchValHist = [];
-      });
       this.totalResults = data['hits'];
+      const results = data['results'] && data['results'].length ? data['results'] : undefined;
+      results && results.forEach((res: IdogData, resIndex: number) => {
+        results[resIndex] = this.parseDogData(res);
+        this.results.push(results[resIndex]);
+      });
       this.beforeFilterResults = this.results && JSON.parse(JSON.stringify(this.results));
       const innerKeys: string[] = Object.keys(this.innerFiltes);
       // one a call is made the inner filters will be overwritten by the new call. so we need to apply them again.
@@ -116,8 +118,12 @@ export class SearchService {
         });
       }
       this.loading = false;
-      this.totalPages = this.totalResults / this._pageSize;
+      this.totalPages = Math.ceil(this.totalResults / this._pageSize);
       console.log('total pages', this.totalPages);
+      if (this.atPage === 0) {
+        this.pagedResults = this.results;
+        this.pagesCalled.push( this.atPage);
+      }
     });
   }
 
@@ -128,20 +134,44 @@ export class SearchService {
     return 'yes';
   }
 
+  public changePageTo(pageNumber: number): void {
+    this.atPage = pageNumber;
+    if (this.pagesCalled[pageNumber] === pageNumber) {
+      // means we already call this so we just the value in the array
+      this.pagedResults = this.results.slice(pageNumber * this._pageSize , (pageNumber + 1)  * this._pageSize);
+    } else {
+      // means we dont have this page yet so we need to call the service.
+      this.pagesCalled.push( this.atPage);
+      this.pagesCalled.sort((a, b) => {return a-b});
+      this.addQuery('page', this.atPage);
+      this.search().add(() => {
+        this.pagedResults = this.results.slice(pageNumber * this._pageSize , (pageNumber + 1)  * this._pageSize);
+      });
+    }
+  }
+
+  public resetResults(): void {
+    this.results = [];
+    this.pagedResults = [];
+    this.atPage = 0;
+    this.addQuery('page', 0);
+  }
+
   public setDateFilter(value: string): void {
     const filteredDate: Date = new Date(value);
     let filteredResults: any[];
     filteredResults = this.results && this.results.length && this.results.filter((value: any, index: number) => {
-      const date: Date = new Date(value.found_date.split('T')[0].replace(/-/g, '/'))
+      const date: Date = new Date(value.found_date.split('T')[0].replace(/-/g, '/'));
       if (this.queryObj.lost) {
-        // If I lost a dog  bring all found from the date I lost it until todays day
+        // If I have lost a dog  bring all found from the date I lost it until todays day
        return date <= filteredDate;
      } else {
-       // if I found a dog bring all lost dog from n until todays day.
+       // if I have found a dog bring all lost dog from that day until todays day.
        return date >= filteredDate;
      }
     });
     this.results = filteredResults;
+    this.pagedResults = this.results && this.results.slice(this.atPage * this._pageSize , (this.atPage + 1)  * this._pageSize);
   } 
 
   public setLocationFilter(name: string, value: any): void {
@@ -172,7 +202,7 @@ export class SearchService {
 
   public answerToApi(answer: any, toString: boolean): string {
     let answerParsed: any;
-    if (answer.latLng) {
+    if (answer && answer.latLng) {
       answerParsed = answer.latLng.lng + ',' + answer.latLng.lat;
     } else if (answer && answer.name) {
       answerParsed = answer.apiVal || typeof answer.apiVal === 'boolean' ? answer.apiVal : answer.name;
@@ -200,4 +230,26 @@ export class SearchService {
       return patConverted;
     }
   }
+
+  public parseDogData(dogData: any): IdogData {
+    dogData.patternColors = this.patternConvertion(dogData);
+    dogData.pattern_id = dogData.pattern_id.replace(/\s/g, '').replace(/,/g, ' ');
+    dogData.name =  dogData.name && dogData.name === 'NA/'  ? undefined : dogData.name;
+    dogData.color =  dogData.color && dogData.color.split(',');
+    dogData.kind = dogData.kind && dogData.kind.split(',');
+    dogData.matchAtHist = [];
+    dogData.matchValHist = [];
+    return dogData;
+  }
+
+  public callByTimer(funct: any, service: any): void {
+      this.timer && clearTimeout(this.timer);
+      console.log('calling by timer ');
+      this.timer = setTimeout(() => {
+        funct(service);
+        console.log('api called! by timer! ⏰ ⏰>>');
+        this.timer = undefined;
+      }, 2000);
+  }
+
 }

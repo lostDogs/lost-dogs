@@ -36,19 +36,28 @@ export class SideBlockComponent {
   public showArrows: boolean;
   public repeatedIds: number;
   public inPatternType: number;
+  @Input()
   public maxElments: number = 3;
-@Output()
-public selectedEmitter: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  public selectedEmitter: EventEmitter<any> = new EventEmitter<any>();
+  @Input()
+  public removedElement: any;
+  @Input()
+  public multiple: boolean;
+  public multipleElements: Ielement[];
+  @Input()
+  public patternType: boolean;
+  @Input()
+  public colors: string[];
+  public colorOptions: any;
+/*
+* SplicedAnswer is a temp solution, because board splice elements from the array and in lost/ found not.
+* when removing elements only lost/found went in the condition and spliced elements didnt, so splicedAnswer will tell 
+* that elements will be removed so it can go inside the and change values.
+* TODO: Refacto! -> lost/found should work as board. removing the elements from the array instead of change a disabled var.
+*/
 @Input()
-public removedElement: any;
-@Input()
-public multiple: boolean;
-public multipleElements: Ielement[];
-@Input()
-public patternType: boolean;
-@Input()
-public colors: string[];
-public colorOptions: any;
+public splicedAnswer: boolean;
 
   @ViewChild('ScollSection') public scrolling: ElementRef;
   constructor() {
@@ -216,9 +225,9 @@ public colorOptions: any;
     if (changes.removedElement && changes.removedElement.currentValue) {
       const elements: Ielement = changes.removedElement.currentValue;
       if (Array.isArray(elements)) {
-        const disabled = elements.filter((value: any, index: number) => {return value.disabled});
-        const notDisabled = elements.filter((value: any, index: number) => {return !value.disabled});
-        if (!changes.removedElement.isFirstChange() && notDisabled.length && elements[elements.length - 1] !== 'retrieve') {
+        const disabled: any[] = elements.filter((value: any, index: number) => {return value.disabled});
+        const notDisabled: any[] = elements.filter((value: any, index: number) => {return !value.disabled});
+        if (!changes.removedElement.isFirstChange() && (notDisabled.length || this.splicedAnswer) && elements[elements.length - 1] !== 'retrieve') {  
           // setting
           this.elements.forEach((value: Ielement, index: number) => {
             this.elements[index].disabled = false;
@@ -265,6 +274,10 @@ public colorOptions: any;
   // The blockSelected function was disable when it is  paterType.
   // PatternType = dog-figure.
   public dogClicked(indexed: any): void {
+    if(indexed === 0) {
+      // means it is back-color, that should always be selected.
+      return;
+    }
     this.blockSelected(null, null, indexed);
     this.inPatternType = indexed;
     // checking if color is selected
@@ -295,6 +308,5 @@ public colorOptions: any;
       }
     });
     this.selectedEmitter.emit(this.multipleElements);
-  }
-  
+  }  
 }

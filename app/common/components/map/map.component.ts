@@ -26,7 +26,8 @@ public custom: CustomMarker;
 
   constructor(public el: ElementRef, public userService: UserService) {}
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void {
+  }
 
   public ngAfterViewInit(): void {
     let initlocation: any;
@@ -77,9 +78,15 @@ public custom: CustomMarker;
        this.mapDef.setZoom(15);
     } else if (this.location) {
       this.addMarker(this.location, this.mapDef, ctrl, {animation: google.maps.Animation.DROP});
-      this.mapDef.panTo(userLocation);
+      this.mapDef.panTo(this.location);
       this.mapDef.setZoom(15);
     }
+    $('document').ready(() => {
+      if (google && google.maps) {
+        google.maps.event.trigger(this.mapDef, 'resize');
+        this.location && this.mapDef.panTo(this.location);
+      }
+    });
   }
 
   public getZoomFromRange(range: number): number {

@@ -32,10 +32,10 @@
     <gender-block (selectedEmitter)="selectionReciver('gender', $event)" [removedElement]="filterElements.gender.answer" [hidden]="!filterElements.gender.enable"></gender-block>
     <breed-block (selectedEmitter)="selectionReciver('breed', $event)" [removedElement]="filterElements.breed.answer" [hidden]="!filterElements.breed.enable"></breed-block>
     <size-block (selectedEmitter)="selectionReciver('size', $event)" [removedElement]="filterElements.size.answer" [hidden]="!filterElements.size.enable"></size-block>
-    <color-block (selectedEmitter)="selectionReciver('color', $event)" [removedElement]="filterElements.color.answer" [hidden]="!filterElements.color.enable"></color-block>
+    <color-block (selectedEmitter)="selectionReciver('color', $event)" [removedElement]="filterElements.color.answer" [hidden]="!filterElements.color.enable" [splicedAnswer]="true"></color-block>
     <!-- <pattern-block (selectedEmitter)="selectionReciver('pattern', $event)" [removedElement]="filterElements.pattern.answer" [colors]="colorsSelected" [hidden]="!(filterElements.pattern.enable && colorsSelected && colorsSelected.length > 1)"></pattern-block> -->
     <div class="extra-name-block" [hidden]="!filterElements.extras.enable">
-      <extras-block (selectedEmitter)="selectionReciver('extras', $event)" [removedElement]="filterElements.extras.answer"></extras-block>
+      <extras-block (selectedEmitter)="selectionReciver('extras', $event)" [removedElement]="filterElements.extras.answer" [splicedAnswer]="true"></extras-block>
       <div class="row form centered" [hidden]="!showNameInput || !(filterElements.extras && filterElements.extras.answer)">
         <form #NameFrom="ngForm" (ngSubmit)="nameInput=nameModel" class="input-field col l4">
            <h5>Nombre: </h5>
@@ -66,7 +66,7 @@
       <map (locationAdressEmiter)="locationReciver($event)" (locationEmiter)="locationReciver($event);locationQuery($event);"  [locationAdress]="locationSubmit" [rangeRadius]="radioInMap"></map>
     </div>
   </section>
-  <section class="row centered options">
+  <section class="row centered options" [ngClass]="{'blur-filter': dogCardService.open}">
     <h3 *ngIf="!searchFound">
       <i class="medium material-icons circle-white">search</i>
       Perdidos
@@ -97,13 +97,18 @@
   <div class="no-results-block" *ngIf="!(searchService.results && searchService.results.length) && !searchService.loading">
     <h4><b>No</b> hay resultados para esta busqueda!</h4>
   </div>
-  <section title="resultados"  class="row results" *ngIf="searchService.results && searchService.results.length && !searchService.loading">
+  <section title="resultados" #Results  class="row results" *ngIf="searchService.results && searchService.results.length && !searchService.loading">
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
-      <dog-card *ngFor="let card of searchService.results;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt" [lost]="!searchFound" [data]="card" [maxCards]="searchService.results.length"></dog-card> 
+      <dog-card *ngFor="let card of searchService.pagedResults;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt" [lost]="!searchFound" [data]="card" [maxCards]="searchService.results.length"></dog-card> 
+      <div class="scroll-botttom" *ngIf="showArrowUp" (click)="scrollTop()" [ngClass]="{'blur-filter': dogCardService.open}"><i class="medium material-icons">play_arrow</i></div>
   </section>
-<!--   <section title="paginacion"  *ngIf="searchService.totalPages && searchService.totalPages!==1" class="row pagination" [ngClass]="{'blur-filter': dogCardService.open}">
-    <div class="col l12">
-      <div *ngFor="let val of window.Array(totalPages);let i= index" >{{i}}</div>
+  <section title="pagination"  class="row pagination"  *ngIf="searchService.totalPages && searchService.totalPages!==1" [ngClass]="{'blur-filter': dogCardService.open}">
+    <div class="col l12 m12 s12 centered">
+      <div>
+          <h5 class="number" *ngFor="let val of window.Array(searchService.totalPages);let i= index" (click)="searchService.changePageTo(i)">
+            <a [ngClass]="{'pag-at':searchService.atPage===i}">{{i+1}}</a>|
+          </h5>
+      </div>
     </div>
-  </section> -->
+  </section>
 </div>

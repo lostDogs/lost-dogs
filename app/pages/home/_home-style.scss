@@ -30,38 +30,38 @@
     overflow: hidden;
   }
 }
+.scroll-botttom {
+  position: absolute;
+  cursor: pointer;
+  bottom: 20px;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background-color: $buttonInfo;
+  opacity: 0.8;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  animation: blurAppear 2s ease, float 3s ease-in-out infinite;
+  &:hover {
+    opacity: 1 !important;
+  }
+  .material-icons {
+    transform: rotate(90deg);
+  }
+  @media screen and (max-device-width: $screen-mobile-max) {
+    width: 140px;
+    height: 140px;
+   .material-icons {
+    font-size: 8rem;
+   }
+  }
+}
 
 #home-dogs{
   background: url(/static/dogsBlur1.png) repeat fixed center;
   background-position: 0px 98px;
   color: white;
-  .scroll-botttom {
-    position: absolute;
-    cursor: pointer;
-    bottom: 20px;
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    background-color: $buttonInfo;
-    opacity: 0.8;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
-    animation: blurAppear 2s ease, float 3s ease-in-out infinite;
-    &:hover {
-      opacity: 1 !important;
-    }
-    .material-icons {
-      transform: rotate(90deg);
-    }
-    @media screen and (max-device-width: $screen-mobile-max) {
-      width: 140px;
-      height: 140px;
-     .material-icons {
-      font-size: 8rem;
-     }
-    }
-  }
   .logo-huge {
     display: flex;
     //height: 700px;

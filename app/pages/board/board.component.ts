@@ -1,4 +1,5 @@
-import {Component, ViewChildren, QueryList, ElementRef, ViewChild} from '@angular/core';
+import {Component, ViewChildren, QueryList, ElementRef, ViewChild, Inject, HostListener} from '@angular/core';
+import { DOCUMENT } from '@angular/platform-browser';
 import {DogCardService} from '../../common/services/dog-card.service';
 import {SearchService, IdogData} from '../../common/services/search.service';
 import {LostFoundService} from '../../common/services/lost-found.service';
@@ -36,6 +37,9 @@ export class boardComponent {
   public ComponentsDom: ElementRef;
   @ViewChildren('AnswerBlock')
   public answersDom: QueryList<any>;
+  @ViewChild('Results')
+  public resultsDom: ElementRef;
+  public dom: ElementRef;
   public widthPerFilter: number;
   public extraWidth: number = 0;
   
@@ -56,7 +60,9 @@ export class boardComponent {
   public rangeDiameter: number = 1;
   public radioInMap: number = 0.5;
 
-  constructor(public dogCardService: DogCardService, public lostService: LostFoundService, public searchService: SearchService) {
+  public showArrowUp: boolean;
+
+  constructor(@Inject(DOCUMENT) private document:  Document, public dogCardService: DogCardService, public lostService: LostFoundService, public searchService: SearchService) {
     this.filtersKey = [];
     this.window = window;
     this.mobile = window.screen.width <= 767;
@@ -89,6 +95,13 @@ export class boardComponent {
       this.filterElements[this.lostService.defualtSequence[index]].width = this.widthPerFilter + 'px';
     });
   }
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(event: any) {
+    const scrollTop: number = this.document && this.document.documentElement.scrollTop;
+    const scrollToResults: number =  this.resultsDom && this.resultsDom.nativeElement && this.resultsDom.nativeElement.offsetTop - 170;
+    this.showArrowUp = scrollTop >= scrollToResults;
+    console.log('showArrowUp', this.showArrowUp)
+  }  
 
   public ngDoCheck(): void {
     this.reziseFiltersRow();
@@ -96,7 +109,9 @@ export class boardComponent {
 
   public ngOnInit(): void {
     $('#date-input').mask('0000/00/00');
+    this.searchService.resetResults();
     this.searchService.addQuery('lost', !this.searchFound);
+    this.searchService.addQuery('pageSize', this.searchService._pageSize);
     this.searchService.search();
   }
 
@@ -117,7 +132,7 @@ export class boardComponent {
       } else {
         replacedBlock.replaceWith(replaceBlock);
       }
-      const sortVal: string = (input.val()).split(':');
+      const sortVal: string = input.val() && (input.val()).split(':');
       self.searchService.sort(sortVal[0], !!sortVal[1]);
     });    
   }
@@ -241,8 +256,10 @@ export class boardComponent {
 
   public multipleBlockRemove(componentName: string, index: number): void {
     let disabledAmount: number = 0;
-    this.filterElements[componentName].answer.splice(index, 1);
     this.filterElements[componentName].answer = JSON.parse(JSON.stringify(this.filterElements[componentName].answer));
+    this.filterElements[componentName].answer[index].disabled = false;
+    this.filterElements[componentName].answer.splice(index, 1);
+    //setTimeout(() => {this.filterElements[componentName].answer.splice(index, 1);}, 5);
     if (!this.filterElements[componentName].answer.length) {
       this.filterElements[componentName].asnwerExtraWidth = 0;
       this.filterElements[componentName].width = this.widthPerFilter + 'px';
@@ -255,11 +272,11 @@ export class boardComponent {
   }
 
   public queryAndSearch(compName: string, answer: any): void {
-    console.log('compname ', compName);
     const apiName: string = this.getApiName(compName);
     const answerToApi: string = this.searchService.answerToApi(answer, true);
     this.searchService.addQuery(apiName, answerToApi);
     if (compName !== 'date') {
+      this.searchService.resetResults();
       this.searchService.search();
     }
   }
@@ -267,12 +284,14 @@ export class boardComponent {
   public delQueryAndSearch(compName: string): void {
     const apiName: string = this.getApiName(compName);
     this.searchService.removeQuery(apiName);
+    this.searchService.resetResults();
     this.searchService.search();
   }
 
   public toogleLost(): void {
     this.searchFound = !this.searchFound;
     this.searchService.addQuery('lost', !this.searchFound);
+    this.searchService.resetResults();
     this.searchService.search();
   }
 
@@ -312,5 +331,9 @@ export class boardComponent {
     this.searchService.maxDistance =  this.rangeDiameter * this.searchService.maxDistanceDefault;
     this.radioInMap =  this.rangeDiameter * 0.5;
     this.queryAndSearch('location', this.location);
+ }
+
+ public scrollTop(): void {
+   $('html, body').animate({ scrollTop: 0 }, 600);
  }
 };

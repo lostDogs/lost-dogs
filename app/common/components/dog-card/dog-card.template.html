@@ -3,7 +3,7 @@
   <h6 class="breed-title" *ngIf="!viewMore && !data.name">{{mappedData.breed}}</h6>
   <h5 *ngIf="viewMore && !data.name">{{mappedData.breed}}</h5>
   <h6 *ngIf="viewMore && data.name">{{mappedData.breed}}</h6>
-  <h6 class="reward" *ngIf="viewMore && data.reward"> $ {{data.reward}} MXN</h6>
+  <h6 class="reward" *ngIf="viewMore && data.reward && data.lost"> $ {{data.reward}} MXN</h6>
   <figure>
     <div class="main-image" [ngStyle]="{'background-image': 'url(' + (data.images && data.images.length && data.images[0].image_url) ||  '/static/temp-profile-dog.jpg' + ')' }">
       <div class="dog-properties" [hidden]="!(!mobile || viewMore)">
@@ -36,10 +36,10 @@
   </figure>  
   <div class="location" [hidden]="!data.address">
     <i class="material-icons left location">location_on</i>
-    <p *ngIf="!mobile || viewMore">{{data.address}}</p>
+    <p *ngIf="!mobile || viewMore" (click)="viewMore && openMaps()">{{data.address}}</p>
     <p class="mobile truncate" *ngIf="!(!mobile || viewMore)">{{data.address}}</p>
   </div>
-  <div class="accessories row" [hidden]="!(viewMore && mappedData.accessories)">
+  <div class="accessories row" [hidden]="!(viewMore && mappedData.accessories && mappedData.accessories.length)">
     <div class="accessory tooltipped" data-position="top" data-tooltip="collar" *ngFor="let access of mappedData.accessories;let i= index" [ngStyle]="{'background-image': 'url(' + access.imgUrl + ')'}"> </div>
   </div>
   <div class="row extras-comments" *ngIf="viewMore && data.description">

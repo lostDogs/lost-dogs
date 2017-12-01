@@ -12,7 +12,9 @@ export class ColorBlockComponent {
   @Output()
   public selectedEmitter: EventEmitter<any> = new EventEmitter<any>();  
   @Input()
-  public removedElement: any;  
+  public removedElement: any;
+  @Input()
+  public splicedAnswer: boolean;
   constructor() {
     const colorValues: string[] = Object.values(colors)
     for (let i = 0; i < colorValues.length; ++i) {

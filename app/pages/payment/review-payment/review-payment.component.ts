@@ -14,9 +14,10 @@ export class ReviewPaymentComponent {
   @ViewChild('DogCard')
   public dogCardDom: any;
   public lost:boolean;
-  public dogId: string;
+  public dogIndex: string;
   public ShowSendEmail: boolean;
   public dogData: any;
+  public dogID: string;
   constructor (
     public userService: UserService,
     public router: Router,
@@ -27,13 +28,20 @@ export class ReviewPaymentComponent {
   ) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.lost = params.Lt === 'true';
-      this.dogId = params.iD;
+      this.dogIndex = params.iD;
+      this.dogID = params.cID;
     });
 
   }
 
   public ngOnInit(): void {
-    this.dogData =  this.dogId && this.searchService.results[this.dogId];
+    if (this.dogIndex && this.searchService.results && this.searchService.results[this.dogIndex] && this.searchService.results[this.dogIndex]._id === this.dogID) {
+      this.dogData = this.searchService.results[this.dogIndex];
+    }else if (this.dogID) {
+      this.dogCardService.getDog(this.dogID).add(() => {
+        this.dogData = this.dogCardService.dogData;
+      });
+    }
   }
 
   public ngAfterViewInit(): void {

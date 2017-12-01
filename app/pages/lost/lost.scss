@@ -11,6 +11,17 @@
 }
 
 lost, found {
+  div.map-block {
+    position: absolute;
+    top: 0;
+    opacity: 1;
+    z-index: 0;
+    &.hidden {
+      position: absolute;
+      top: -1000px;
+      opacity: 0;
+    }
+  }
   .disappear {
     opacity: 0;
     cursor: default;    
@@ -20,6 +31,24 @@ lost, found {
     @media screen and (max-device-width: $screen-mobile-max) {
       padding-top: 100px;
     }    
+  }
+  #location-search, #date-input  {
+    margin-top: 14px;
+    margin-left: 150px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 47px;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin: 0;
+      margin-left: 44px;
+      height: 60px;
+      .material-icons {
+        vertical-align: middle;
+      }
+    }
+  }
+  #date-input {
+    margin-left: 40px;
   }
   .row.intro {
     text-align: center;
@@ -170,12 +199,14 @@ lost, found {
         }
       }
     }
+
     .title-question  {
       color: white;
       text-align: center;
       background-color: $pink;
       margin-top: 99px;
       padding: 20px 0 20px 0;
+      text-align:  center;
       @media screen and (max-device-width: $screen-mobile-max) {
         padding: 40px 0 40px 0;
       }

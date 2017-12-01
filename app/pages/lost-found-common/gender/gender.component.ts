@@ -29,5 +29,6 @@ export class GenderComponent {
 
   public changeElement(event: any): void {
     this.LostService.imgAnswer = event;
+    this.LostService.setAnwer();
   }
 }

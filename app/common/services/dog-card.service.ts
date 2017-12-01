@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
+import {Subscription} from 'rxjs/Rx';
 import * as breedContent from '../content/breeds.json';
 import * as colorsContent from '../content/colors.json';
 import * as sizesContent from '../content/sizes.json';
 import * as gendersContent from '../content/genders.json';
 import * as accessories from  '../content/accessories.json';
 import {IdogData} from './search.service';
+import {ApiService} from './api.service';
+import {UserService} from './user.service';
+import {GlobalFunctionService} from './global-function.service';
+import {SearchService} from'./search.service';
 
 export interface ImappedData {
   gender: {name: string, imgUrl: string};
@@ -28,8 +33,9 @@ export class DogCardService {
   public sizes: any;
   public genders: any;
   public accessories: any;
+  public dogData: any;
 
-  constructor() {
+  constructor(public api: ApiService, public userService: UserService, public globalService: GlobalFunctionService, private searchService: SearchService) {
     this.shortMonths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
     this.months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     this.breeds = breedContent;
@@ -39,7 +45,22 @@ export class DogCardService {
     this.accessories = accessories;
   }
 
-  public getDog() {}
+  public getDog(dogID: string): Subscription {
+    const headers: any = {
+      'Content-Type': 'application/json',
+      'Authorization': 'token ' + this.userService.token
+    };
+    return this.api.get('https://fierce-falls-25549.herokuapp.com/api/dogs',dogID, headers).subscribe(
+      data => {
+        this.dogData = this.searchService.parseDogData(data);
+      },
+      error => {
+       this.globalService.clearErroMessages();
+       this.globalService.setErrorMEssage('Ops! no se pudo obtener la info. del perro');
+       this.globalService.openErrorModal();             
+      }
+      );
+  }
 
   public mapData(dogData: IdogData): ImappedData {
     let mappedData: ImappedData = {

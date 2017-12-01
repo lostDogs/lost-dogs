@@ -29,5 +29,6 @@ export class LocationComponent {
       lostService.address = pageAnswer.address;
       lostService.latLng = pageAnswer.latLng;
     }
-  } 
+  }
+
 }

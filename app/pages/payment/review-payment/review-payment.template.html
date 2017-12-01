@@ -1,6 +1,6 @@
 <div class="page review-payment"> 
   <div class="row" [hidden]="ShowSendEmail">
-    <div class="col push-l1 l5 m12 s12 dog-card" *ngIf=" dogId">
+    <div class="col push-l1 l5 m12 s12 dog-card" *ngIf="dogData">
       <h5 class="subtitle" [hidden]="!lost">Revisa tu perro</h5>
       <h5 class="subtitle" [hidden]="lost">Revisa el perro que encontraste </h5>
       <dog-card  #DogCard [atReviewPage]="true"  [data]="dogData"></dog-card>

@@ -37,6 +37,22 @@
     padding: 80px;
   }  
 }
+.row.pagination {
+  margin: 0;
+  padding: 20px 0;
+  .number {
+    display: inline-block;
+    color: $notSoGrey;
+    cursor: pointer;
+    a {
+      padding: 0 5px;
+    }
+  }
+  .pag-at {
+    color: $aVisited;
+    text-decoration: underline;
+  }
+}
 
 div.select-wrapper  {
   .invisible {
@@ -85,6 +101,18 @@ div.select-wrapper  {
 }
 
 board {
+  .scroll-botttom {
+    position: fixed;
+    right: 35px;
+    left: inherit;
+    margin: inherit;
+    z-index: 5;
+    animation: blurAppear 1s ease, float 3s ease-in-out infinite;
+     .material-icons {
+      color: white;
+      transform: rotate(270deg);
+     }
+  }
   .page.board {
     background-color: $lightGrey;
     date-picker section.row.date {

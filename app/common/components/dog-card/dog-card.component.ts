@@ -37,7 +37,6 @@ export class DogCardComponent {
 
   public ngOnInit(): void {
     this.mappedData = this.dogCardService.mapData(this.data);
-    console.log('creating dog card', this.cardIndex);
   }
 
   public toogleViewMore (): void {
@@ -96,6 +95,11 @@ export class DogCardComponent {
   }
 
   public myDog(): void {
-    this.router.navigate(['/payment/review'], {queryParams: {Lt: this.lost, iD: this.cardIndex}});
+    this.router.navigate(['/payment/review'], {queryParams: {Lt: this.lost, iD: this.cardIndex, cID: this.data._id}});
+  }
+
+  public openMaps(): void {
+    const route: string = 'https://www.google.com/maps/?q=' + this.data.location.coordinates[1] + ',' + this.data.location.coordinates[0];
+    window.open(route);
   }
 }

@@ -1,5 +1,5 @@
 <div class="row details">
-  <div class="col l4 s4 file-field">
+  <div class="col l4 s4 file-field" [ngClass]="{'push-l2 push-m2 push-s2': hideReward}">
     <div class="ext-cont draw account-completed"  [ngClass]="{'action': LostService.dogPicture!==LostService.defaultDogPic}">
       <div alt="image de perro" class="centered size" id="dog-pic" [ngStyle]="{'background-image': 'url(' + LostService.dogPicture + ')' }">
         <div  class="description" *ngIf="LostService.dogPicture===LostService.defaultDogPic">
@@ -10,7 +10,7 @@
       <input type="file"  name="image del perro" (change)="filePicChange($event)" >
     </div>
   </div>
-  <div class="col l4 s4">
+  <div class="col l4 s4" *ngIf="!hideReward">
     <div class="ext-cont draw account-completed action" (mouseover)="setFocusOnMoney()" (mouseleave)="clearInput()">
       <div class="size centered" title="recompoenza">
         <div class="money">
@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-  <div class="col l4 s4">
+  <div class="col l4 s4" [ngClass]="{'push-l2 push-m2 push-s2': hideReward}">
     <div class="ext-cont draw account-completed"  [ngClass]="{'action': true}" (mouseover)="setFocusOnComments()" (mouseleave)="clearComments=false">
       <div class="description abs" *ngIf="!clearComments && !LostService.comments">
         <h2>agrega un comentario <br> extra</h2>

@@ -13,6 +13,8 @@ export class ExtrasBlockComponent {
   public selectedEmitter: EventEmitter<any> = new EventEmitter<any>();
   @Input()
   public removedElement: any;
+  @Input()
+  public splicedAnswer: boolean;
 
   constructor() {
     this.setElement();

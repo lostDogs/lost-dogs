@@ -15,8 +15,9 @@ export class BreedComponent {
   }
   
   public ngOnInit(): void {
-    this.LostService.inputField = {type: 'image', label: 'raza'};
+    this.LostService.inputField = {type: 'multiple', label: 'raza'};
     this.LostService.imgAnswer = undefined;
+    this.LostService.multipleImgAnswers = undefined;
     this.LostService.retrieveData = this.fillData;
     
     if (this.LostService.parentPage === 'lost') { 
@@ -26,13 +27,27 @@ export class BreedComponent {
     }
   }
 
-  public changeElement(event: any): void {
-    this.LostService.imgAnswer = event;
+  public changeElement(event: any[]): void {
+    if (event.length) {
+      this.LostService.multipleImgAnswers = event.filter((value: any, index: number)=>{return value.disabled});
+    } else {
+      this.LostService.multipleImgAnswers = [];
+    }
+    this.LostService.setAnwer();
   }
 
   public fillData(pageAnswer: any, lostService: any): void {
     if (pageAnswer) {
-      lostService.imgAnswer = pageAnswer;
+      pageAnswer.push('retrieve');
+      lostService.multipleImgAnswers = lostService.copyAnswer(pageAnswer);
+    }
+  }
+
+  public changeTitle(event: any) {
+    if (event) {
+      this.LostService.question = 'A cual se parece?';
+    }else  {
+      this.LostService.question = 'Que raza es?';
     }
   }
 }

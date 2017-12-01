@@ -17,7 +17,9 @@ export class ApiService {
     let headers: Headers = new Headers(headersObj);
     let options: RequestOptions = new RequestOptions({ headers: headers });
     let queryParams: URLSearchParams =  new URLSearchParams();
-    if (queryObj) {
+    if (typeof queryObj === 'string') {
+      url = url + '/' + queryObj;
+    } else if (queryObj) {
       for (let key in queryObj) {
         queryParams.set(key, queryObj[key]);
       }

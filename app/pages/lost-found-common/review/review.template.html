@@ -7,7 +7,7 @@
     </div> 
     <ul class="collection with-header">
       <li class="collection-header avatar"  *ngIf="LostService.dogName"><h5>{{LostService.dogName}}</h5><a  class="secondary-content" (click)="LostService.goTo(LostService.sequence.length-3)">Editar</a></li>
-      <li class="collection-item avatar centered">
+      <li class="collection-item avatar centered" *ngIf="LostService.parentPage==='lost'">
         <div class="circle material-icons location"><i class="medium material-icons">attach_money</i></div>
         <span class="title"><b>Recompenza:</b> $ {{LostService.reward}} MXN</span>
         <a class="secondary-content" (click)="LostService.goTo(LostService.sequence.length-2)">Editar</a>
