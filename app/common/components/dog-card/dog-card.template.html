@@ -36,7 +36,7 @@
   </figure>  
   <div class="location" [hidden]="!data.address">
     <i class="material-icons left location">location_on</i>
-    <p *ngIf="!mobile || viewMore">{{data.address}}</p>
+    <p *ngIf="!mobile || viewMore" (click)="viewMore && openMaps()">{{data.address}}</p>
     <p class="mobile truncate" *ngIf="!(!mobile || viewMore)">{{data.address}}</p>
   </div>
   <div class="accessories row" [hidden]="!(viewMore && mappedData.accessories && mappedData.accessories.length)">

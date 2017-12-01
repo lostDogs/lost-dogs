@@ -106,8 +106,13 @@ dog-card {
           left: -30px;
         }
       }
-
+      .location p {
+        color: $aNotVisited;
+        text-decoration: underline;
+        cursor: pointer;
+      }
     }
+    //End of expanded
     a.close {
       display: none;
       line-height: 36px;
