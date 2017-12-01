@@ -3,17 +3,13 @@ map {
   section.row {
     margin-bottom: 0;
     .loading {
-      margin: 0;
-      text-align: center;
-      padding-top: 20px;
-      padding-bottom: 55px;
+      margin-top: 5%;
       img {
         width: 250px;
         height: 187px;
       }
       @media screen and (max-device-width: $screen-mobile-max) { 
-        padding-top: 75px;
-        padding-bottom: 120px;
+        margin-top: 15%;
         img {
           width: 500px;
           height: 374px;

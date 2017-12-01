@@ -40,6 +40,10 @@ export class lostComponent {
         this.lostService.pagePosition = Indexlocation !== -1 ? Indexlocation : 0;
         if (urlChildLoction === 'location') {
           console.log('starting map');
+          if (this.startMap && !this.lostService.searchService.timer && !this.lostService.pageAnswers[this.lostService.pagePosition]) {
+            console.log('setting answwer in map in route subscription');
+            this.lostService.searchService.callByTimer(this.lostService.setAnwer, this.lostService);
+          }
           this.startMap = true;
         }
         if (this.lostService.retrieveData) {
@@ -177,9 +181,8 @@ export class lostComponent {
     // map event sometimes emit one or twice, setting timmer so we can just set one
     if (this.lostService.address && !this.lostService.address.match(/Cargando/g) && this.lostService.latLng) {
         const childRoute =  this.router.url && this.router.url.split('/')[2];
-        console.log('emmiting ---->: ', event);
         if ( childRoute === 'location') {
-          console.log("callling by timer");
+        console.log('setting answer in timer by event in map');
           this.lostService.searchService.callByTimer(this.lostService.setAnwer, this.lostService);
         }
     }

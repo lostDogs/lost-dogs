@@ -33,7 +33,7 @@ export class BreedBlockComponent {
     if (onPage === 'lost') {
       this.elements.unshift({name: 'sin raza', imgUrl: this.dogImgUrl + 'noRace.jpg', apiVal: 0, id: 0 });
     } else  {
-      this.elements.unshift({name: 'sin raza', imgUrl: this.dogImgUrl + 'mix.jpg', apiVal: 0, id: 0 });
+      this.elements.unshift({name: 'mezcla', imgUrl: this.dogImgUrl + 'mix.jpg', apiVal: 0, id: 0 });
     }
   }
 
@@ -43,8 +43,9 @@ export class BreedBlockComponent {
 
   public changeElement(event: any[]): void {
     const lastIndex: number = event.length && event.length - 1;
+    const disabledElements: any[] = event.filter((value: any)=>{return value.disabled});
     const isIndexCero: boolean = event.length && event.some((val: any, valIndex: number) => {
-      if (val.id === 0) {
+      if (val.id === 0 && val.disabled) {
         return true;
       }
     });
@@ -58,7 +59,8 @@ export class BreedBlockComponent {
         if (this.router.url.split('/')[1] === 'lost') {
           this.changeTitle.emit(false);
         }
-        if (event.length > 1) {
+
+        if (disabledElements.length > 1) {
           event[lastIndex].disabled = false;
         }
       }
@@ -67,10 +69,9 @@ export class BreedBlockComponent {
         event[lastIndex].apiVal = event[lastIndex].id;
         event[lastIndex].apiVal += ' ' + alike;
         event[lastIndex].apiVal = event[lastIndex].apiVal && event[lastIndex].apiVal.trim().replace(/\s/g, ',');
-      }
-
-    const filteredEvents: any[] = event.length && event.filter((value: any, index: number)=>{return value.id});
-    this.selectedEmitter.emit(filteredEvents);
+      }      
+      const filteredEvents: any[] = event.length && event.filter((value: any, index: number)=>{return value.id});
+      this.selectedEmitter.emit(filteredEvents);
   }
 
   public findAlike(id: string): string {
