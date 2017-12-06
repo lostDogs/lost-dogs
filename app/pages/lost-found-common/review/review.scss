@@ -161,4 +161,10 @@ review {
     }
   }
   }
+    @media screen and (max-device-width : $screen-desktop-min) {
+      .review-page h6.reward {
+        display: block;
+        margin-top: 10px;
+      }
+    }
 }

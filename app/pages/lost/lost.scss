@@ -287,4 +287,22 @@ lost, found {
       }
     }
   }
+  @media screen 
+  and (min-device-width : $screen-tablet-min) 
+  and (max-device-width : $screen-desktop-min) {
+    button#location-search {
+          margin-left: 0;
+    }
+    input[type="text"] {
+      text-align: center;
+    }
+  }
+  @media screen and (max-device-width : $screen-desktop-min) {
+    .input-field.img-output.mult {
+      display: flex;
+      .multiple {
+        margin: auto;
+      }
+    }
+  }
 }

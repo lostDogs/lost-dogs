@@ -24,7 +24,7 @@
           <p>{{lostService.imgAnswer.name}}</p>
         </div>
     </div>
-    <div class="input-field col l3  s10 push-s1 push-l3 img-output" *ngIf="lostService.inputField && lostService.inputField.type==='multiple'">
+    <div class="input-field col l3  s10 push-s1 push-l3 img-output mult" *ngIf="lostService.inputField && lostService.inputField.type==='multiple'">
       <div style="height: 45px;"></div>
       <div *ngFor="let block of lostService.multipleImgAnswers;let i= index" class="multiple"  title="caracteristicas selecionadas">
         <div class="img-block" data-position="top" id="{{block.key}}"  *ngIf="block.disabled">
