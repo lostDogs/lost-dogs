@@ -84,7 +84,7 @@ pic-details {
   }
   @media screen 
   and (min-device-width : $screen-tablet-min) 
-  and (max-device-width : $screen-desktop-min) {
+  and (max-device-width : $screen-ipadpro-min) {
     #money-input {
       width: 85%;
     }

@@ -23,6 +23,7 @@ $aNotVisited: #039be5;
 //  screen breakpoints
 $screen-mobile-min: 375px;
 $screen-tablet-min: 768px;
+$screen-ipadpro-min: 1024px;
 $screen-desktop-min: 992px;
 
 $screen-mobile-max: ($screen-tablet-min - 1); //767px

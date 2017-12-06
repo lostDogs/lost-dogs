@@ -241,8 +241,19 @@
         font-size: 1.8rem;
       }
     }
-
   }
+  @media screen 
+  and (min-device-width : $screen-desktop-min) 
+  and (max-device-width : $screen-ipadpro-min) {
+    .home-description figure {
+      :nth-child(2) {
+        display: none;
+      }
+    }
+    p {
+      font-size: 1.7 rem !important;
+    }
+  }  
   @media screen and (max-device-width: $screen-mobile-max) {
     background: url(/static/mobileFullHome1.jpg) repeat fixed;
     background-position: 0px 111px;
