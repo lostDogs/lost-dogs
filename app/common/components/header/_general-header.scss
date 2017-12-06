@@ -154,8 +154,17 @@ z-index: 1;
     background: $buttonActionHover;
   }
 }
-
-@media screen and (max-device-width: $screen-mobile-max) {
+@media screen 
+and (min-device-width : $screen-tablet-min) 
+and (max-device-width : $screen-desktop-min) {
+  #nav-header #slide-out a {
+    font-size: 1.8rem;
+  }
+ #nav-header #slide-out .user-profile .user-background a {
+  font-size: 2rem;
+ }
+}  
+@media screen and (max-device-width : $screen-desktop-min) {
   header {
     #slide-out {
       .user-profile {
