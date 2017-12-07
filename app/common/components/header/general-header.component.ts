@@ -16,8 +16,10 @@ export class generalHeaderComponent implements OnInit  {
   public newUser: boolean;
   public userName: string;
   public password: string;
+  public displayNavOpts: boolean;
 
   constructor (public renderer: Renderer, public elRef: ElementRef, public globalService: GlobalFunctionService, public activatedRoute: ActivatedRoute, public userService: UserService, public router: Router, public lostService: LostFoundService) {
+    setTimeout(()=>{this.displayNavOpts = true}, 3500);
     this.renderer.listenGlobal('document', 'click', (event: any) => {
       const loginDom: any = this.elRef.nativeElement.childNodes[0].childNodes[5].childNodes[1].childNodes[2];
       const UserDom: any = this.elRef.nativeElement.childNodes[0].childNodes[5].childNodes[1].childNodes[4];

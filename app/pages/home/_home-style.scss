@@ -199,6 +199,61 @@
       margin: auto;
     }
   }
+
+  @media screen 
+  and (min-device-width : $screen-tablet-min) 
+  and (max-device-width : $screen-desktop-min) {
+    .home-description  {
+      div.title h4 {
+        font-size: 3rem;
+      }
+      article {
+        margin: 0;
+        margin-bottom: 40px;
+        p {
+          font-size: 1.8rem;
+          padding: 0 25px;
+        }
+      }
+      figure {
+        display: flex;
+        img {
+          margin: auto;
+          padding: 0;
+          width: 250px;
+        }
+      }
+    }
+    article.options .option .info {
+        h5 {
+          font-size: 2.64rem;
+        }
+        button.btn {
+          width: 200px;
+          height: 40px;
+        }
+      }
+    .home-payment {
+      h4 {
+        font-size: 3.28rem;
+      }
+     article p {
+        font-size: 1.8rem;
+      }
+    }
+  }
+  @media screen 
+  and (min-device-width : $screen-desktop-min) 
+  and (max-device-width : $screen-ipadpro-min) {
+    .home-description figure {
+      :nth-child(2) {
+        display: none;
+      }
+    }
+    p {
+      font-size: 1.7 rem !important;
+    }
+  }  
   @media screen and (max-device-width: $screen-mobile-max) {
     background: url(/static/mobileFullHome1.jpg) repeat fixed;
     background-position: 0px 111px;

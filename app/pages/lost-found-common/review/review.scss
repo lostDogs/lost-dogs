@@ -161,4 +161,18 @@ review {
     }
   }
   }
+    @media screen and (max-device-width : $screen-desktop-min) {
+      .review-page h6.reward {
+        display: block;
+        margin-top: 10px;
+      }
+    }
+  @media screen 
+  and (min-device-width : $screen-desktop-min) 
+  and (max-device-width : $screen-ipadpro-min) {
+    div.review-page div.col.l6 {
+    width: 70%;
+    left: 15%;
+    }
+  }    
 }

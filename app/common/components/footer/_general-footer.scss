@@ -39,6 +39,11 @@ footer {
       padding-right:10px; 
     }
   }
+  @media screen 
+  and (min-device-width : $screen-tablet-min) 
+  and (max-device-width : $screen-desktop-min) {
+    text-align: center;
+  }  
   @media screen and (max-device-width: $screen-mobile-max) { 
     text-align: center;
     h5 {

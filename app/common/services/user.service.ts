@@ -25,6 +25,10 @@ export class UserService {
       this.user = userCookie;
       this.isAuth = true;
       this.isAvatarSet = true;
+    } else {
+      console.log('else login with no values auth');
+      this.login(undefined, undefined, true);
+      this.isAvatarSet = false;
     }
     if (userToken) {
       this.token = userToken.authToken;
@@ -32,19 +36,22 @@ export class UserService {
   }
 
   public setUser(response: any): void {
-    this.user.name = response.name || response.username;
-    this.user.lastName = response.surname;
-    this.user.avatar = response.avatar_url;
-    this.user.email = response.email;
-    this.user.lastName2 = response.lastname;
-    this.user.address = response.address;
-    this.user.phoneNumber = response.phone_number;
-    this.user.username = response.username;
-    this.isAuth = true;
-    this.CookieService.setCookie(this.userCookieName, this.user);
     if (response.token) {
       this.token = response.token;
       this.CookieService.setCookie('authToken', {authToken: this.token});
+    }
+    if (response.surname) {
+      this.user.name = response.name || response.username;
+      this.user.lastName = response.surname;
+      this.user.avatar = response.avatar_url;
+      this.user.email = response.email;
+      this.user.lastName2 = response.lastname;
+      this.user.address = response.address;
+      this.user.phoneNumber = response.phone_number;
+      this.user.username = response.username;
+      this.isAuth = true;
+      this.CookieService.setCookie(this.userCookieName, this.user);
+      
     }
   }
 
@@ -110,8 +117,8 @@ export class UserService {
     this.errors.invalidUser = true;
   }
 
-  public login(username: string, password: string): void {
-    if( password && username) {
+  public login(username?: string, password?: string, noAuth?: boolean): void {
+    if( password && username || noAuth) {
       const user:any = {password: password, username: username};
       this.loading = true;
       this.api.post('https://fierce-falls-25549.herokuapp.com/api/users/login', user).subscribe(
