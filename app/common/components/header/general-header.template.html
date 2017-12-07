@@ -13,11 +13,11 @@
     </div> 
     <div class="menu-options col l3 m2" *ngIf="displayNavOpts">
       <div class="profile">
-        <a href="javascript:void(0)" (click)="toggleLoginFrom($event)"  *ngIf="!userService.isAuth">
+        <a #LoginDom href="javascript:void(0)" (click)="toggleLoginFrom($event)"  *ngIf="!userService.isAuth">
           Iniciar sesión
           <img  id="profile-arrow" src="static/dropdown.png" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">
       </a>
-      <a href="javascript:void(0)"  *ngIf="userService.isAuth" (click)="toggleLoginFrom($event)">
+      <a #UserDom href="javascript:void(0)"  *ngIf="userService.isAuth" (click)="toggleLoginFrom($event)">
         <img *ngIf="userService.isAvatarSet" src="{{userService.user.avatar}}" class="avatar" alt="profile picture">
         <p class="profile-name">{{userService.user.name}}</p>
         <img  id="profile-arrow" src="static/dropdown.png" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">
