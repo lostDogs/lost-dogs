@@ -20,14 +20,14 @@ export class generalHeaderComponent implements OnInit  {
   @ViewChild('LoginDom')
   public loginDom: ElementRef;
   @ViewChild('UserDom')
-  public UserDom: ElementRef;
+  public userDom: ElementRef;
 
   constructor (public renderer: Renderer, public elRef: ElementRef, public globalService: GlobalFunctionService, public activatedRoute: ActivatedRoute, public userService: UserService, public router: Router, public lostService: LostFoundService) {
     setTimeout(()=>{this.displayNavOpts = true}, 3500);
     this.renderer.listenGlobal('document', 'click', (event: any) => {
       const loginDom: any = this.loginDom && this.loginDom.nativeElement;
-      const UserDom: any = this.UserDom && this.UserDom.nativeElement;
-      if (this.showLoginFrom && !(this.elRef.nativeElement.lastChild.contains(event.target) || loginDom && loginDom.contains(event.target) || UserDom && UserDom.contains(event.target) )) {
+      const userDom: any = this.userDom && this.userDom.nativeElement;
+      if (this.showLoginFrom && !(this.elRef.nativeElement.lastChild.contains(event.target) || loginDom && loginDom.contains(event.target) || userDom && userDom.contains(event.target) )) {
         this.showLoginFrom = false;
       }
     });
