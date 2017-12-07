@@ -15,6 +15,9 @@ header {
     animation: scaleDown 1s forwards 1.5s, hideImg 1s forwards 2.4s;
     position: relative;
   }
+  .hidden {
+    display: none !important;
+  }
   .avatar {
     border: 3px solid white;
     border-radius: 50%;
