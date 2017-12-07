@@ -1,4 +1,4 @@
-import {ElementRef, Renderer, Component, OnInit} from '@angular/core';
+import {ElementRef, Renderer, Component, OnInit, ViewChild} from '@angular/core';
 import {GlobalFunctionService} from '../../services/global-function.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../services/user.service';
@@ -17,13 +17,17 @@ export class generalHeaderComponent implements OnInit  {
   public userName: string;
   public password: string;
   public displayNavOpts: boolean;
+  @ViewChild('LoginDom')
+  public loginDom: ElementRef;
+  @ViewChild('UserDom')
+  public userDom: ElementRef;
 
   constructor (public renderer: Renderer, public elRef: ElementRef, public globalService: GlobalFunctionService, public activatedRoute: ActivatedRoute, public userService: UserService, public router: Router, public lostService: LostFoundService) {
     setTimeout(()=>{this.displayNavOpts = true}, 3500);
     this.renderer.listenGlobal('document', 'click', (event: any) => {
-      const loginDom: any = this.elRef.nativeElement.childNodes[0].childNodes[5].childNodes[1].childNodes[2];
-      const UserDom: any = this.elRef.nativeElement.childNodes[0].childNodes[5].childNodes[1].childNodes[4];
-      if (this.showLoginFrom && !(this.elRef.nativeElement.lastChild.contains(event.target) || loginDom.contains(event.target) || UserDom.contains(event.target) )) {
+      const loginDom: any = this.loginDom && this.loginDom.nativeElement;
+      const userDom: any = this.userDom && this.userDom.nativeElement;
+      if (this.showLoginFrom && !(this.elRef.nativeElement.lastChild.contains(event.target) || loginDom && loginDom.contains(event.target) || userDom && userDom.contains(event.target) )) {
         this.showLoginFrom = false;
       }
     });
