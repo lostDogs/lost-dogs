@@ -174,6 +174,7 @@ and (max-device-width : $screen-desktop-min) {
 }  
 @media screen and (max-device-width : $screen-desktop-min) {
   header {
+    animation: initHeaderMobile 1s forwards 2s;
     #slide-out {
       .user-profile {
         .user-background {
@@ -201,7 +202,6 @@ and (max-device-width : $screen-desktop-min) {
           line-height: 100px;
       }
     }
-    height: 120px;
     .menu-options  {
       .profile {
         display: none;
@@ -229,6 +229,12 @@ and (max-device-width : $screen-desktop-min) {
     height: 100px;
   }
 }
+@keyframes initHeaderMobile { 
+  to {
+    height: 150px;
+  }
+}
+
 @keyframes scaleDown { 
   from {
     transform: none;
@@ -238,6 +244,14 @@ and (max-device-width : $screen-desktop-min) {
   }
 }
 
+@keyframes scaleDownMobile { 
+  from {
+    transform: none;
+  }
+  to {
+    transform: scale(0.3) translateY(-90px);
+  }
+}
 
 @keyframes hideImg { 
   0% {
