@@ -34,6 +34,10 @@ export class DogCardService {
   public genders: any;
   public accessories: any;
   public dogData: any;
+  public loadingApi: boolean;
+  // used on main profile template only
+   public lostDogs: IdogData[];
+  public foundDogs: IdogData[]; 
 
   constructor(public api: ApiService, public userService: UserService, public globalService: GlobalFunctionService, private searchService: SearchService) {
     this.shortMonths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
@@ -50,7 +54,7 @@ export class DogCardService {
       'Content-Type': 'application/json',
       'Authorization': 'token ' + this.userService.token
     };
-    return this.api.get('https://fierce-falls-25549.herokuapp.com/api/dogs',dogID, headers).subscribe(
+    return this.api.get('https://fierce-falls-25549.herokuapp.com/api/dogs', dogID, headers).subscribe(
       data => {
         this.dogData = this.searchService.parseDogData(data);
       },
@@ -61,6 +65,48 @@ export class DogCardService {
       }
       );
   }
+
+  public deleteDog(dogID: string): Subscription {
+    let index: number;
+    const headers: any = {
+      'Content-Type': 'application/json',
+      'Authorization': 'token ' + this.userService.token
+    };
+    this.loadingApi = true;
+    this.searchService.results.some((dog:IdogData, dogIndex: number) => {
+      if(dog._id === dogID) {
+        index = dogIndex;
+        return true;
+      }
+    });
+    return this.api.delete('https://fierce-falls-25549.herokuapp.com/api/dogs', dogID, headers).subscribe(
+      data => {
+        this.loadingApi = false;
+        this.open = false;
+        this.searchService.results.splice(index, 1);
+        this.setFoundDogs();
+        this.setLostDogs();
+      },
+      error => {
+       this.loadingApi = false;
+       this.globalService.clearErroMessages();
+       this.globalService.setErrorMEssage('Ops! no se pudo remover por el momento');
+       this.globalService.openErrorModal();             
+      }
+      );
+  }
+
+  public setLostDogs(): void {
+   this.lostDogs =  this.searchService.results.filter((dog: IdogData) => {
+     return dog.lost;
+   });    
+  }
+
+public setFoundDogs(): void {
+   this.foundDogs =  this.searchService.results.filter((dog: IdogData) => {
+     return !dog.lost;
+   });  
+}
 
   public mapData(dogData: IdogData): ImappedData {
     let mappedData: ImappedData = {

@@ -1,8 +1,13 @@
 @import '../../styles/variables.scss';
 side-block-dog {
-  section .clickable {
-    top: 0;
-    background-color: rgba(217, 217, 217,0.5);
-    z-index: 3;
+  section {
+    .clickable {
+      top: 0;
+      background-color: rgba(217, 217, 217,0.5);
+      z-index: 3;
+    }
+    .scroll-section {
+      overflow-y: hidden;
+    }
   }
 }

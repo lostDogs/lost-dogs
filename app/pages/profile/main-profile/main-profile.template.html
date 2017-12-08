@@ -29,20 +29,20 @@
       </div>
     </div>
   </div>
-  <div class="sub-title row text-centered"  [ngClass]="{'blur-filter': dogCardService.open}">
+  <div class="sub-title row text-centered"  [ngClass]="{'blur-filter': dogCardService.open}" *ngIf="dogCardService.lostDogs && dogCardService.lostDogs.length">
     <h3  class="col l10 s12 offset-l1"> <i class="small material-icons circle-white">search</i>Mis perdidos</h3>
   </div>
-  <div class="row info my-losts">
+  <div class="row info my-losts" *ngIf="dogCardService.lostDogs && dogCardService.lostDogs.length">
     <div class="col l10 s12 offset-l1" [ngClass]="{'no-border': dogCardService.open}">
-      <side-block-dog [dogData]="[1,2,3,4,5,6]"></side-block-dog>
+      <side-block-dog [dogData]="dogCardService.lostDogs" [totalResults]="searchService.totalResults"></side-block-dog>
     </div>
   </div>
-  <div class="sub-title row text-centered"  [ngClass]="{'blur-filter': dogCardService.open}">
+  <div class="sub-title row text-centered"  [ngClass]="{'blur-filter': dogCardService.open}" *ngIf="dogCardService.foundDogs && dogCardService.foundDogs.length">
     <h3  class="col l10 s12 offset-l1"> <i class="small material-icons circle-white">pets</i>Mis Encontrados</h3>
   </div>
-  <div class="row info my-founds">
+  <div class="row info my-founds" *ngIf="dogCardService.foundDogs && dogCardService.foundDogs.length">
     <div class="col l10 s12 offset-l1" [ngClass]="{'no-border': dogCardService.open}">
-      <side-block-dog [dogData]="[1,2,3,4,5,6]"></side-block-dog>
+      <side-block-dog [dogData]="dogCardService.foundDogs"  [totalResults]="searchService.totalResults"></side-block-dog>
     </div>
   </div>
 </div>

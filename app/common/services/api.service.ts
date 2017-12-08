@@ -61,5 +61,30 @@ export class ApiService {
       .map((res: Response) =>  res)
       .catch((error: any) => Observable.throw(error || 'Server error'));
   }
+
+  public delete(url: string, queryObj?: any, header?: any): Observable<Response> {
+    console.log('calling delete! >');
+    let headersObj: any;
+    if ( !header) {
+      headersObj = {'Content-Type': 'application/json'};
+    } else {
+      headersObj = header;
+    }
+    let headers: Headers = new Headers(headersObj);
+    let options: RequestOptions = new RequestOptions({ headers: headers });
+    let queryParams: URLSearchParams =  new URLSearchParams();
+    if (typeof queryObj === 'string') {
+      url = url + '/' + queryObj;
+    } else if (queryObj) {
+      for (let key in queryObj) {
+        queryParams.set(key, queryObj[key]);
+      }
+      url = url + queryParams;
+    }
+    return this.http.delete(url, options)
+      .map((res: Response) =>  res.json())
+      .catch((error: any) => Observable.throw(error || 'Server error'));
+  }
+
   
 }

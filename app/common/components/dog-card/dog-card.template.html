@@ -47,8 +47,11 @@
   </div>
   <a class="close" (click)="toogleViewMore()">cerrar</a>
   <a class="row waves-effect btn info" (click)="toogleViewMore()" *ngIf="!viewMore">Ver mas</a>
-  <a class="row waves-effect btn action"  *ngIf="viewMore" (click)="myDog()">
+  <a class="row waves-effect btn action"  *ngIf="viewMore && !deleteBtn" (click)="myDog()">
     <div [hidden]="data.lost">Mi perro</div>
     <div [hidden]="!data.lost">Lo encontré </div>
   </a>
+  <button class="row waves-effect btn danger" [disabled]="dogCardService.loadingApi" *ngIf="viewMore && deleteBtn"  (click)="del()">
+    Eliminar
+  </button>
 </article>

@@ -24,6 +24,8 @@ export class DogCardComponent {
   public mappedData: ImappedData;
   @Input()
   public maxCards: number = 3;
+  @Input()
+  public deleteBtn: boolean;
 
   constructor(public dogCardService: DogCardService, public renderer: Renderer, public elRef: ElementRef, public router: Router)  {
     this.mobile = window.screen.width <= 767;
@@ -101,5 +103,11 @@ export class DogCardComponent {
   public openMaps(): void {
     const route: string = 'https://www.google.com/maps/?q=' + this.data.location.coordinates[1] + ',' + this.data.location.coordinates[0];
     window.open(route);
+  }
+
+  public del() {
+    this.dogCardService.deleteDog(this.data._id).add(() => {
+      this.viewMore = false;
+    });
   }
 }
