@@ -21,6 +21,8 @@ export class SideBlockDogComponent {
   public showArrows: boolean;
   @Input()
   public dogData: any[];
+@Input()
+  public totalResults: number;
   @ViewChild('ScollSection')
   public scrolling: ElementRef;
 
@@ -48,7 +50,7 @@ export class SideBlockDogComponent {
   }
 
   public ngDoCheck(): void {
-    if (this.dogCard.width) {
+    if (this.dogCard.width && this.dogData) {
       this.rowWidth = this.dogData.length * this.blockWidth + 25 + 'px';
       this.showArrows = this.scrolling.nativeElement.clientWidth < +this.rowWidth.split('px')[0];
       this.rowWidth = this.showArrows ? this.rowWidth : this.scrolling.nativeElement.clientWidth + 'px';
@@ -60,7 +62,6 @@ export class SideBlockDogComponent {
   public ngAfterViewInit(): void {
     $('.sideblock').nodoubletapzoom();
     this.blockWidth = this.dogCard.width;
-    this.rowWidth = this.dogData.length * this.blockWidth + 25 + 'px';
   }
 
   public goLeft():void {
@@ -80,6 +81,10 @@ export class SideBlockDogComponent {
     }    
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {}
+  public ngOnChanges(changes: SimpleChanges): void {
+    if(changes.dogData && changes.dogData.currentValue) {
+      this.rowWidth = this.dogData.length * this.blockWidth + 25 + 'px';
+    }
+  }
   
 }

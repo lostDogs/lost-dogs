@@ -3,11 +3,16 @@ import { Injectable } from '@angular/core';
 export class CookieManagerService {
   constructor() {}
 
- public setCookie(name: string, value: any): void {
+ public setCookie(name: string, value: any, expDate?: string): void {
     if(value instanceof Object) {
       value = JSON.stringify(value);
     }
-    window.document.cookie =  name + '=' + value + '; path=/';
+    let cookieVal: string = name + '=' + value;
+    if (expDate) {
+      console.log('expdate', expDate);
+      cookieVal += ';expires=' + expDate;
+    }
+    window.document.cookie = cookieVal + '; path=/';
   }
 
   public deleteCookie(name: string): void {

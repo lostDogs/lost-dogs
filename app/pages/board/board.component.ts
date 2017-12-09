@@ -100,7 +100,6 @@ export class boardComponent {
     const scrollTop: number = this.document && this.document.documentElement.scrollTop;
     const scrollToResults: number =  this.resultsDom && this.resultsDom.nativeElement && this.resultsDom.nativeElement.offsetTop - 170;
     this.showArrowUp = scrollTop >= scrollToResults;
-    console.log('showArrowUp', this.showArrowUp)
   }  
 
   public ngDoCheck(): void {

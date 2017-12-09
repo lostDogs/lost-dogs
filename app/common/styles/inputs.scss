@@ -76,6 +76,9 @@ button.btn {
   &.action {
     background: $buttonAction;
   }
+  &.danger {
+    background: $redAccent2;
+  }
   &:hover {
     &.info {
       background-color: $butttonInfoHover;
@@ -85,7 +88,10 @@ button.btn {
     }
     &.action{
       background: $buttonActionHover;
-    }    
+    }
+    &.danger {
+      background: $redAccent;
+    }
   }
 }
 
