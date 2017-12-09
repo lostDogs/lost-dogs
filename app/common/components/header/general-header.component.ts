@@ -3,6 +3,7 @@ import {GlobalFunctionService} from '../../services/global-function.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../services/user.service';
 import {LostFoundService} from '../../services/lost-found.service';
+import {CookieManagerService} from '../../services/cookie-manager.service';
 
 @Component({
   selector: 'general-header',
@@ -21,9 +22,18 @@ export class generalHeaderComponent implements OnInit  {
   public loginDom: ElementRef;
   @ViewChild('UserDom')
   public userDom: ElementRef;
+  public initHeader: boolean;
 
-  constructor (public renderer: Renderer, public elRef: ElementRef, public globalService: GlobalFunctionService, public activatedRoute: ActivatedRoute, public userService: UserService, public router: Router, public lostService: LostFoundService) {
-    setTimeout(()=>{this.displayNavOpts = true}, 3500);
+  constructor (
+    public renderer: Renderer,
+    public elRef: ElementRef,
+    public globalService: GlobalFunctionService,
+    public activatedRoute: ActivatedRoute,
+    public userService: UserService,
+    public router: Router,
+    public lostService: LostFoundService,
+    public cookieService: CookieManagerService
+  ) {
     this.renderer.listenGlobal('document', 'click', (event: any) => {
       const loginDom: any = this.loginDom && this.loginDom.nativeElement;
       const userDom: any = this.userDom && this.userDom.nativeElement;
@@ -31,8 +41,7 @@ export class generalHeaderComponent implements OnInit  {
         this.showLoginFrom = false;
       }
     });
-
-  }
+  } 
   public toggleLoginFrom(event: any) {
     this.showLoginFrom = !this.showLoginFrom;
     this.userName = undefined;
@@ -40,6 +49,11 @@ export class generalHeaderComponent implements OnInit  {
   }
 
   public ngOnInit(): void {
+    // part 1: this code makes that the initial nav animation just appear once every day
+/*    this.initHeader = this.cookieService.getCookie('initHeader');
+    const tomorrow: any = new Date();*/
+    const TimeNavOpts: number = this.initHeader || this.newUser ? 0 : 3500;
+    setTimeout(()=>{this.displayNavOpts = true}, TimeNavOpts);
     $('.home-mobile').sideNav({
       menuWidth: 700,
       closeOnClick: true,
@@ -48,5 +62,10 @@ export class generalHeaderComponent implements OnInit  {
     this.activatedRoute.queryParams.subscribe(
       data => this.newUser = data.nU ? true : false
     );
+    // part 2: this code makes that the initial nav animation just appear once every day
+/*    if (typeof this.initHeader !== 'boolean') {
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      this.cookieService.setCookie('initHeader','true',  tomorrow.toGMTString());
+    }*/
   }
 };

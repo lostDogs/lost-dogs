@@ -108,6 +108,8 @@ export class DogCardComponent {
   public del() {
     this.dogCardService.deleteDog(this.data._id).add(() => {
       this.viewMore = false;
+      this.dogCardService.setFoundDogs();
+      this.dogCardService.setLostDogs();      
     });
   }
 }

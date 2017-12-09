@@ -84,8 +84,6 @@ export class DogCardService {
         this.loadingApi = false;
         this.open = false;
         this.searchService.results.splice(index, 1);
-        this.setFoundDogs();
-        this.setLostDogs();
       },
       error => {
        this.loadingApi = false;

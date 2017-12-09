@@ -1,15 +1,27 @@
 @import '../../styles/variables.scss';
 //@import '../../styles/inputs.scss';
+$headerHeight: 100px;
+$headerHeightMobile: 150px;
+$headerFullScreen: 100vh;
+
 header {
   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   background: $lightBlue;
   display: flex;
-  height: 100vh;
+  height: $headerFullScreen;
   flex-direction: row;
   position: fixed;
   border-bottom: 6px solid white;
   z-index: 1000;
-  animation: initHeader 1s forwards 2s;
+  &.bottom-top-anim {
+    animation: initHeader 1s forwards 2s;
+  }
+  &.size-no-anim {
+    height: $headerHeight;
+    @media screen and (max-device-width : $screen-desktop-min) {
+      height: $headerHeightMobile;
+    }
+  }
   .hide-anim {
     margin: auto;
     animation: scaleDown 1s forwards 1.5s, hideImg 1s forwards 2.4s;
@@ -177,7 +189,9 @@ and (max-device-width : $screen-desktop-min) {
 }  
 @media screen and (max-device-width : $screen-desktop-min) {
   header {
-    animation: initHeaderMobile 1s forwards 2s;
+    &.bottom-top-anim {
+      animation: initHeaderMobile 1s forwards 2s;
+    }
     #slide-out {
       .user-profile {
         .user-background {
@@ -229,12 +243,12 @@ and (max-device-width : $screen-desktop-min) {
 
 @keyframes initHeader { 
   to {
-    height: 100px;
+    height: $headerHeight;
   }
 }
 @keyframes initHeaderMobile { 
   to {
-    height: 150px;
+    height: $headerHeightMobile;
   }
 }
 
