@@ -117,6 +117,7 @@ export class lostComponent {
 
    public multipleBlockRemove(index: number): void {
      const name: string = this.lostService.multipleImgAnswers[index].name;
+     const disabled = this.lostService.multipleImgAnswers.filter((el: any) => {return el.disabled});
     if (name === 'Placa Id') {
       this.lostService.openNameInput = false; 
     }
@@ -126,7 +127,15 @@ export class lostComponent {
     // json parse so that Onchanges can detect the change.
     this.lostService.multipleImgAnswers = JSON.parse(JSON.stringify(this.lostService.multipleImgAnswers));
     this.lostService.multipleImgAnswers[index].disabled = false;
+    // last item on the list didnt disapeared, so I had to add = undefined inside a timer 
+    if (disabled.length === 1) {
+      setTimeout(() => {
+        this.lostService.multipleImgAnswers = undefined;
+        this.lostService.setAnwer();
+      }, 5);
+    } else {
     this.lostService.setAnwer();
+    }
   } 
 
   public start(): void {
