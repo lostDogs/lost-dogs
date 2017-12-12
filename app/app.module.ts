@@ -29,6 +29,7 @@ import {DogFigureComponent} from './common/components/dog-figure/dog-figure.comp
 import {PatternBlockComponent} from './common/components/pattern-block/pattern-block.component';
 import {SearchService} from './common/services/search.service';
 import {MatchMakerService} from './common/services/match-maker.service';
+import {MailingRewardService} from './common/services/mailing-reward.service';
 @NgModule({
   imports: [BrowserModule, AppRouterModule, FormsModule, HttpModule],
   declarations: [
@@ -59,7 +60,8 @@ import {MatchMakerService} from './common/services/match-maker.service';
     {provide: LostFoundService, useClass: LostFoundService},
     {provide: CookieManagerService, useClass: CookieManagerService},
     {provide: SearchService, useClass: SearchService},
-    {provide: MatchMakerService, useClass: MatchMakerService}
+    {provide: MatchMakerService, useClass: MatchMakerService},
+    {provide: MailingRewardService, useClass: MailingRewardService}
   ],
   bootstrap: [appComponent]
 })

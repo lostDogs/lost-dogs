@@ -128,6 +128,9 @@ export class SearchService {
         self.pagesCalled.push( self.atPage);
       }
       console.log('total pages', self.totalPages);
+    },
+    error => {
+      self.loading = false;
     });
   }
 

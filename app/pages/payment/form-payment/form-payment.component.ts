@@ -1,10 +1,11 @@
 import { Component, ViewChild, ElementRef} from '@angular/core';
 import {UserService} from '../../../common/services/user.service';
 import {ValidationService} from '../../../common/services/validation.service';
-import {Router} from '@angular/router';
 import {formObj} from '../../create-account/account.component';
 import {GlobalFunctionService} from '../../../common/services/global-function.service';
-
+import {MailingRewardService} from '../../../common/services/mailing-reward.service';
+import {DogCardService} from '../../../common/services/dog-card.service';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 @Component({
   selector: 'form-payment',
   template: require('./form-payment.template.html'),
@@ -29,8 +30,17 @@ export class FormPaymentComponent {
   public cardSpin: boolean;
   public loading: boolean;
   public sucess: boolean;
+  public dogId: string;
 
-  constructor (public userService: UserService, public router: Router, public validate: ValidationService, public globalService: GlobalFunctionService) {
+  constructor (
+    public userService: UserService,
+    public router: Router,
+    public validate: ValidationService,
+    public globalService: GlobalFunctionService,
+    public malingService: MailingRewardService,
+    public dogService: DogCardService,
+    public activeRoute: ActivatedRoute
+  ) {
     this.creaditCard = {
       method: {valid: true, value: undefined, required: false, label: 'Metodo de pago'},
       number: {valid: true, value: undefined, required: true, label: 'Numero de tarjeta'},
@@ -67,6 +77,12 @@ export class FormPaymentComponent {
     yearSelect.change(() => {
       this.creaditCard.expYear.value = yearSelect.val().substring(2, 4);
       this.creaditCard.expYear.valid = true;
+    });
+    this.activeRoute.queryParams.subscribe((params: Params) => {
+      this.dogId = params.cID;
+      if (!this.dogService.dogData && this.dogId) {
+        this.dogService.getDog(this.dogId);
+      }
     });
   }
 
@@ -111,9 +127,11 @@ export class FormPaymentComponent {
   }
 
   public proccedTransaction(): void {
-    this.loading = false;
-    this.sucess = true;
-    this.globalService.paymentRewardSucess = true;
+    this.malingService.sendEmailsToUsers(false, this.userService.token, this.dogService.dogData._id).add(() => {
+      this.loading = false;
+      this.sucess = true;
+      this.globalService.paymentRewardSucess = true;
+    });
   }
 
 };
