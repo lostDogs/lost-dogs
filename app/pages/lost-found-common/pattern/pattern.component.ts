@@ -34,9 +34,6 @@ export class PatternComponent {
   }
   
   public ngAfterViewInit(): void {
-    $('pattern-block .element').click(() => {
-      this.LostService.searchService.callByTimer(this.LostService.setAnwer, this.LostService);
-    });
   }
 
   public retrieveData(): void {
@@ -52,7 +49,7 @@ export class PatternComponent {
   }
 
   public changeElement(event: any): void {
-    console.log('changing elements in pattern ', event);
     this.LostService.multipleImgAnswers = event.filter((value: any, index: number)=>{return value.disabled});
+    this.LostService.searchService.callByTimer(this.LostService.setAnwer, this.LostService);
   }
 }
