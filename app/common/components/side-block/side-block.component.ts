@@ -110,9 +110,6 @@ public splicedAnswer: boolean;
 
   public ngAfterViewInit(): void {
     if (this.elements.length && this.elements[0].name) {
-      for ( let i = 0; i < this.elements.length; ++i) {
-        $('#data-' + i + this.repeatedIds).attr('data-tooltip', this.elements[i].name);
-      } 
       if (!this.mobile) {
         $('.tooltipped').tooltip({delay: 50});
       }
