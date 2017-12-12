@@ -60,10 +60,11 @@ export class DogCardService {
         this.dogData = this.searchService.parseDogData(data);
       },
       error => {
-       this.globalService.clearErroMessages();
-       this.globalService.setErrorMEssage('Ops! no se pudo obtener la info. del perro');
-       this.globalService.openErrorModal();
-       this.router.navigateByUrl('/home');
+        if ( this.userService.isAuth) {
+         this.globalService.clearErroMessages();
+         this.globalService.setErrorMEssage('Ops! no se pudo obtener la info. del perro');
+         this.globalService.openErrorModal();
+        }
       }
       );
   }
