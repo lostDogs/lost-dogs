@@ -27,7 +27,7 @@ export class boardComponent {
   public activeIndex: number;
   public filtersKey: string[];
   public previousElementSelected: string;
-  public resetDate: any;
+  public rechangeDate: any;
   public location:  {latLng?: any, address?: string} = {};
   public window: Window;
   public screenWidth: number;
@@ -180,14 +180,16 @@ export class boardComponent {
     this.previousElementSelected = componentName;
 
     if (this.filterElements.location.enable) {
-       !this.initMapAnswer && this.queryAndSearch(componentName, this.tempMapAnswer);
        this.initMapAnswer = true;
        this.filterElements[componentName].answer = this.tempMapAnswer;
+       this.queryAndSearch(componentName, this.tempMapAnswer);
     }
     if (this.filterElements.date.enable) {
-      !this.initMapAnswer && this.queryAndSearch(componentName, this.tempDateAnswer);
+      /// se for query and search add console log and see why is not being added in the first call.
       this.initDateAnswer = true;
       this.filterElements[componentName].answer = this.tempDateAnswer;
+      this.rechangeDate = JSON.parse(JSON.stringify( this.filterElements[componentName].answer));
+      this.queryAndSearch(componentName, this.tempDateAnswer);
     }
   }
 
@@ -216,8 +218,6 @@ export class boardComponent {
    if (event) {
      this.queryAndSearch(componentName, event);
    }
-
-   this.resetDate = false;
    if (componentName =  'color') {
      this.colorsSelected = this.getOnlyNames(event);
    }
@@ -247,7 +247,6 @@ export class boardComponent {
 
   public imgBlockRemove(componentName: string): void {
     this.filterElements[componentName].answer = undefined;
-    this.resetDate = !this.filterElements.date.answer;
     this.filterElements[componentName].asnwerExtraWidth = 0;
     this.filterElements[componentName].width = this.widthPerFilter + 'px';
     this.delQueryAndSearch(componentName);
@@ -274,8 +273,11 @@ export class boardComponent {
     const apiName: string = this.getApiName(compName);
     const answerToApi: string = this.searchService.answerToApi(answer, true);
     this.searchService.addQuery(apiName, answerToApi);
-    if (compName !== 'date') {
       this.searchService.resetResults();
+    if (compName === 'date') {
+      this.searchService.loading = true;
+      this.searchService.callByTimer(this.searchService.search, this.searchService);
+    } else  {
       this.searchService.search();
     }
   }
@@ -290,6 +292,9 @@ export class boardComponent {
   public toogleLost(): void {
     this.searchFound = !this.searchFound;
     this.searchService.addQuery('lost', !this.searchFound);
+    if (this.initDateAnswer && (this.searchService.queryObj[this.searchService.apiDate.fromDate] || this.searchService.queryObj[this.searchService.apiDate.toDate])) {
+      this.searchService.setDateFilter(this.tempDateAnswer);
+    }
     this.searchService.resetResults();
     this.searchService.search();
   }

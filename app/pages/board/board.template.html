@@ -45,7 +45,7 @@
       </div>      
     </div>
     <div class="date-block" [ngClass]="{'far-away': !filterElements.date.enable}">
-      <date-picker  (seletedDateEmitter)="selectionReciver('date', $event)" [reset]="resetDate"  [seletedDate]="dateModel"></date-picker>
+      <date-picker  (seletedDateEmitter)="selectionReciver('date', $event)" [rechangeDate]="rechangeDate"  [seletedDate]="dateModel"></date-picker>
       <div class="row form centered">
         <form #DateFrom="ngForm" (ngSubmit)="filterElements.date.answer=dateModel" class="input-field col l3 s6 text-centered">
            <input class="text-centered" type="text" name="dateInput" id="date-input" [(ngModel)]="dateModel">

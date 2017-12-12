@@ -20,8 +20,6 @@ export class DatePickerComponent {
   public seletedDateEmitter: EventEmitter<string> = new EventEmitter<string>();
   @Input()
   public rechangeDate: string;
-  @Input()
-  public reset: boolean;
 
   constructor()  {
     const currentTime = new Date();
@@ -70,12 +68,6 @@ export class DatePickerComponent {
           this.selectedIndexDate.day = day - 1;
         }
       }
-    }
-    if (changes.reset && changes.reset.currentValue) {
-     const indexedYear: number = this.years.indexOf(this.todaysYear);
-     this.selectedIndexDate.year = indexedYear;
-     this.selectedIndexDate.month = this.todaysMonth - 1;
-     this.selectedIndexDate.day = this.todaysDay - 1;
     }
   }
   // will generate year arround +-range of todays date

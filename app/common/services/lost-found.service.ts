@@ -101,8 +101,7 @@ export class LostFoundService {
       // location has its own search logic see location.component
       self.searchService.resetResults();
       self.matchService.extendRange();
-    } else if (self.defualtSequence[self.pagePosition] !== 'date' && !stopCall) {
-      // date is being handled with inner filters once we call the addQuery method.
+    } else if (!stopCall) {
       self.prevResState = {
         data: self.searchService.results,
         totalRes: self.searchService.totalResults,
