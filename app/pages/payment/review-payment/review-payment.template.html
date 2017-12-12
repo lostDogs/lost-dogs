@@ -3,7 +3,7 @@
     <div class="col push-l1 l5 m12 s12 dog-card" *ngIf="dogData">
       <h5 class="subtitle" [hidden]="!lost">Revisa tu perro</h5>
       <h5 class="subtitle" [hidden]="lost">Revisa el perro que encontraste </h5>
-      <dog-card  #DogCard [atReviewPage]="true"  [data]="dogData" [maxCards]="1"></dog-card>
+      <dog-card  #DogCard [atReviewPage]="true"  [data]="dogData" [maxCards]="1" [cardIndex]="0"></dog-card>
     </div>
     <div class="col push-l2 l4 m12 s12 steps-block">
       <h5 class="subtitle">Pasos</h5>
