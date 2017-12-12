@@ -123,11 +123,11 @@ export class SearchService {
       }
       self.loading = false;
       self.totalPages = Math.ceil(self.totalResults / self._pageSize);
-      console.log('total pages', self.totalPages);
       if (self.atPage === 0) {
         self.pagedResults = self.results;
         self.pagesCalled.push( self.atPage);
       }
+      console.log('total pages', self.totalPages);
     });
   }
 

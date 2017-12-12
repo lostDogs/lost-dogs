@@ -27,7 +27,6 @@ export class PaymentComponent {
     });
   }
   public ngOnInit(): void {
-    console.log('url', this.router.url)
     if (!this.userService.isAuth) {
       this.userService.previousUrl = this.router.url;
       this.router.navigate(['/login']);

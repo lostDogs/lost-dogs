@@ -27,7 +27,6 @@ export class DetailsComponent {
 public ngAfterViewInit(): void {
   $('#money-input').mask('000,000.00', {reverse: true});
   this.hideReward = this.LostService.parentPage !== 'lost';
-  console.log('hideReward', this.hideReward);
   if (this.hideReward) {
     this.LostService.question = undefined;
   }
