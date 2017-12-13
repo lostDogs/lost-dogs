@@ -19,6 +19,7 @@ export class ReviewPaymentComponent {
   public ShowSendEmail: boolean;
   public dogData: IdogData;
   public dogID: string;
+  public transcationId: string;
   constructor (
     public userService: UserService,
     public router: Router,
@@ -32,6 +33,7 @@ export class ReviewPaymentComponent {
       this.lost = params.Lt === 'true';
       this.dogIndex = params.iD;
       this.dogID = params.cID;
+      this.transcationId = params.transcation;
     });
 
   }
@@ -43,6 +45,12 @@ export class ReviewPaymentComponent {
     }else if (this.dogID) {
       this.dogCardService.getDog(this.dogID).add(() => {
         this.dogData = this.dogCardService.dogData;
+      });
+    }else if (this.transcationId) {
+      this.mailingService.getTransaction(this.userService.token, this.transcationId).add(() => {
+        this.dogCardService.getDog(this.mailingService.transaction.dog_id).add(() => {
+          this.dogData = this.dogCardService.dogData;
+        });
       });
     }
   }

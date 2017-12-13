@@ -31,13 +31,14 @@ export class FormPaymentComponent {
   public loading: boolean;
   public sucess: boolean;
   public dogId: string;
+  public transcationId: string;
 
   constructor (
     public userService: UserService,
     public router: Router,
     public validate: ValidationService,
     public globalService: GlobalFunctionService,
-    public malingService: MailingRewardService,
+    public mailingService: MailingRewardService,
     public dogService: DogCardService,
     public activeRoute: ActivatedRoute
   ) {
@@ -82,7 +83,11 @@ export class FormPaymentComponent {
       this.dogId = params.cID;
       if (!this.dogService.dogData && this.dogId) {
         this.dogService.getDog(this.dogId);
-      }
+      }else if (this.transcationId) {
+      this.mailingService.getTransaction(this.userService.token, this.transcationId).add(() => {
+        this.dogService.getDog(this.mailingService.transaction.dog_id);
+      });
+    }
     });
   }
 
@@ -127,7 +132,7 @@ export class FormPaymentComponent {
   }
 
   public proccedTransaction(): void {
-    this.malingService.sendEmailsToUsers(false, this.userService.token, this.dogService.dogData._id).add(() => {
+    this.mailingService.sendEmailsToUsers(false, this.userService.token, this.dogService.dogData._id).add(() => {
       this.loading = false;
       this.sucess = true;
       this.globalService.paymentRewardSucess = true;
