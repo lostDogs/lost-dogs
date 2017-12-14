@@ -11,6 +11,7 @@ import * as instaCam from 'instascan';
 
 export class RewardPickerComponent {
   public scanner: any;
+  public scannedValue: string;
   constructor() {
   }
   public ngOnInit(): void {
@@ -18,6 +19,7 @@ export class RewardPickerComponent {
     this.scanner.addListener('scan',(content: any) => {
         if (content) {
           console.log(content);
+          this.scannedValue = content;
           this.scanner.stop();
         }
       });
