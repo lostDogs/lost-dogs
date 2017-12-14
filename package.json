@@ -7,7 +7,7 @@
     "build": "webpack --progress",
     "build:prod": "webpack -p --progress",
     "start": "node server.js",
-    "serve": "webpack-dev-server --disable-host-check --inline --hot   --port 8080 --content-base ./public  --progress"
+    "serve": "webpack-dev-server  --inline --hot   --content-base ./public  --progress"
   },
   "dependencies": {
     "@angular/common": "^2.3.0",
@@ -28,6 +28,7 @@
     "es6-shim": "^0.35.2",
     "express": "^4.14.0",
     "hammer-timejs": "^1.1.0",
+    "instascan": "^1.0.0",
     "reflect-metadata": "^0.1.8",
     "rxjs": "^5.0.0-rc.4",
     "systemjs": "^0.19.41",
@@ -54,8 +55,8 @@
     "typescript": "^2.1.4",
     "typings": "^2.0.0",
     "url-loader": "^0.5.7",
-    "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.2",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.2.1",
     "yargs": "^6.5.0"
   },
   "repository": {
