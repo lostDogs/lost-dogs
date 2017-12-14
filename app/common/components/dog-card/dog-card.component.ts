@@ -18,8 +18,6 @@ export class DogCardComponent {
   @Input()
   public atReviewPage: boolean;
   @Input()
-  public lost: boolean;
-  @Input()
   public data: IdogData;
   public mappedData: ImappedData;
   @Input()
@@ -97,7 +95,7 @@ export class DogCardComponent {
   }
 
   public myDog(): void {
-    this.router.navigate(['/payment/review'], {queryParams: {Lt: this.lost, iD: this.cardIndex, cID: this.data._id}});
+    this.router.navigate(['/payment/review'], {queryParams: {Lt: !this.data.lost, iD: this.cardIndex, cID: this.data._id}});
   }
 
   public openMaps(): void {

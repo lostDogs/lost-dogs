@@ -10,6 +10,7 @@ import {ApiService} from './api.service';
 import {UserService} from './user.service';
 import {GlobalFunctionService} from './global-function.service';
 import {SearchService} from'./search.service';
+import {Router} from '@angular/router';
 
 export interface ImappedData {
   gender: {name: string, imgUrl: string};
@@ -39,7 +40,7 @@ export class DogCardService {
    public lostDogs: IdogData[];
   public foundDogs: IdogData[]; 
 
-  constructor(public api: ApiService, public userService: UserService, public globalService: GlobalFunctionService, private searchService: SearchService) {
+  constructor(public api: ApiService, public userService: UserService, public globalService: GlobalFunctionService, private searchService: SearchService, public router: Router) {
     this.shortMonths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
     this.months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     this.breeds = breedContent;
@@ -59,9 +60,11 @@ export class DogCardService {
         this.dogData = this.searchService.parseDogData(data);
       },
       error => {
-       this.globalService.clearErroMessages();
-       this.globalService.setErrorMEssage('Ops! no se pudo obtener la info. del perro');
-       this.globalService.openErrorModal();             
+        if ( this.userService.isAuth) {
+         this.globalService.clearErroMessages();
+         this.globalService.setErrorMEssage('Ops! no se pudo obtener la info. del perro');
+         this.globalService.openErrorModal();
+        }
       }
       );
   }

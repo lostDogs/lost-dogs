@@ -47,6 +47,10 @@ export class SearchService {
   public pagesCalled: number[];
   public pagedResults: IdogData[];
   public window: Window;
+  public apiDate: {fromDate: string, toDate: string} =  {
+    fromDate: 'fromDate',
+    toDate: 'toDate'
+  };
 
   public timer: any;
 
@@ -64,11 +68,8 @@ export class SearchService {
     if (queryName === 'location') {
       this.setLocationFilter(queryName, value);
     }else if(queryName === 'found_date') {
-      // every time filter date change, we need to filter for the orginal data. which is beforeFilterRes
-      // results could have filtered data, that is why is not the original.
-      this.results = this.beforeFilterResults;
+      //this.results = this.beforeFilterResults;
       this.setDateFilter(value);
-      this.addInnerFilter(queryName, value);
     }else {
       this.queryObj[queryName] = value;
     }
@@ -80,8 +81,8 @@ export class SearchService {
       delete this.queryObj.location;
       delete this.queryObj.maxDistance;
     }else if(queryName === 'found_date') {
-      this.results = this.beforeFilterResults;
-      this.removeInnerFilter(queryName);
+      delete this.queryObj[this.apiDate.fromDate];
+      delete this.queryObj[this.apiDate.toDate];
     }else  {
      delete this.queryObj[queryName]; 
     }
@@ -95,35 +96,41 @@ export class SearchService {
     delete this.innerFiltes[compName];
   }
 
-  public search(): Subscription {
+  public search(self?: SearchService): Subscription {
+    if (!self) {
+      self = this;
+    }
     const headers: any = {
       'Content-Type': 'application/json',
-      'Authorization': 'token ' + this.userService.token
+      'Authorization': 'token ' + self.userService.token
     };
-    this.loading = true;
-    return this.api.get(this._endpointUrl + '&', this.queryObj, headers).subscribe(data => {
+    self.loading = true;
+    return self.api.get(self._endpointUrl + '&', self.queryObj, headers).subscribe(data => {
       console.log('sucessss', data);
-      this.totalResults = data['hits'];
+      self.totalResults = data['hits'];
       const results = data['results'] && data['results'].length ? data['results'] : undefined;
       results && results.forEach((res: IdogData, resIndex: number) => {
-        results[resIndex] = this.parseDogData(res);
-        this.results.push(results[resIndex]);
+        results[resIndex] = self.parseDogData(res);
+        self.results.push(results[resIndex]);
       });
-      this.beforeFilterResults = this.results && JSON.parse(JSON.stringify(this.results));
-      const innerKeys: string[] = Object.keys(this.innerFiltes);
+      self.beforeFilterResults = self.results && JSON.parse(JSON.stringify(self.results));
+      const innerKeys: string[] = Object.keys(self.innerFiltes);
       // one a call is made the inner filters will be overwritten by the new call. so we need to apply them again.
       if (innerKeys.length) {
         innerKeys.forEach((name: string, nameIndex: number) => {
-          this.addQuery(name, this.innerFiltes[name]);
+          self.addQuery(name, self.innerFiltes[name]);
         });
       }
-      this.loading = false;
-      this.totalPages = Math.ceil(this.totalResults / this._pageSize);
-      console.log('total pages', this.totalPages);
-      if (this.atPage === 0) {
-        this.pagedResults = this.results;
-        this.pagesCalled.push( this.atPage);
+      self.loading = false;
+      self.totalPages = Math.ceil(self.totalResults / self._pageSize);
+      if (self.atPage === 0) {
+        self.pagedResults = self.results;
+        self.pagesCalled.push( self.atPage);
       }
+      console.log('total pages', self.totalPages);
+    },
+    error => {
+      self.loading = false;
     });
   }
 
@@ -158,20 +165,18 @@ export class SearchService {
   }
 
   public setDateFilter(value: string): void {
-    const filteredDate: Date = new Date(value);
-    let filteredResults: any[];
-    filteredResults = this.results && this.results.length && this.results.filter((value: any, index: number) => {
-      const date: Date = new Date(value.found_date.split('T')[0].replace(/-/g, '/'));
-      if (this.queryObj.lost) {
-        // If I have lost a dog  bring all found from the date I lost it until todays day
-       return date <= filteredDate;
-     } else {
-       // if I have found a dog bring all lost dog from that day until todays day.
-       return date >= filteredDate;
-     }
-    });
-    this.results = filteredResults;
-    this.pagedResults = this.results && this.results.slice(this.atPage * this._pageSize , (this.atPage + 1)  * this._pageSize);
+    const filteredDate: string = (new Date(value)).toISOString().substring(0, 10);
+    const todaysDate: string =  (new Date()).toISOString().substring(0, 10);
+    const pastDate: string =  (new Date('1990/01/01')).toISOString().substring(0, 10);
+    if (this.queryObj.lost) {
+     // if I have found a dog bring all from the a very past date up to the found date
+     this.queryObj[this.apiDate.fromDate] = pastDate;
+     this.queryObj[this.apiDate.toDate] = filteredDate;
+   } else {
+      // If I have lost a dog  bring all  from the reported day up today.
+     this.queryObj[this.apiDate.fromDate] = filteredDate;
+     this.queryObj[this.apiDate.toDate] = todaysDate;
+   }
   } 
 
   public setLocationFilter(name: string, value: any): void {
@@ -243,6 +248,8 @@ export class SearchService {
   }
 
   public callByTimer(funct: any, service: any): void {
+    // seravice like lostService.answer(lostService) only if the funcition needs the service inside 
+    // to be executed;
       this.timer && clearTimeout(this.timer);
       console.log('calling by timer ');
       this.timer = setTimeout(() => {

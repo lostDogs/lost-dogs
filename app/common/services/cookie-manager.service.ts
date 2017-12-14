@@ -9,7 +9,6 @@ export class CookieManagerService {
     }
     let cookieVal: string = name + '=' + value;
     if (expDate) {
-      console.log('expdate', expDate);
       cookieVal += ';expires=' + expDate;
     }
     window.document.cookie = cookieVal + '; path=/';

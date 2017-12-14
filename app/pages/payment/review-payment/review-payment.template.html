@@ -3,7 +3,7 @@
     <div class="col push-l1 l5 m12 s12 dog-card" *ngIf="dogData">
       <h5 class="subtitle" [hidden]="!lost">Revisa tu perro</h5>
       <h5 class="subtitle" [hidden]="lost">Revisa el perro que encontraste </h5>
-      <dog-card  #DogCard [atReviewPage]="true"  [data]="dogData" [maxCards]="1"></dog-card>
+      <dog-card  #DogCard [atReviewPage]="true"  [data]="dogData" [maxCards]="1" [cardIndex]="0"></dog-card>
     </div>
     <div class="col push-l2 l4 m12 s12 steps-block">
       <h5 class="subtitle">Pasos</h5>
@@ -27,7 +27,7 @@
     <div class="col l10 push-l1 m12 s12 todo"> <i class="medium material-icons">email</i></div>
     <div class="col l10 push-l1 m12 s12 todo">
       <h5>Te hemos enviado un correo con los datos del reporte.</h5>
-      <h5>Pronto Juan se pondra en contacto contigo.</h5>
+      <h5>Pronto el dueño se pondra en contacto contigo.</h5>
     </div>    
   </div>
 </div>

@@ -8,7 +8,7 @@ module.exports = {
         app: ['./app/main.ts']
   },
   output: { 
-    path: './public',
+    path: '/public',
     filename: 'app.bundle.js'
   },
   // Configure the ts-load module that helps compile ts
@@ -33,25 +33,42 @@ module.exports = {
         ]
     }
   ],
-    loaders: [
+    rules: [
       // Any files that end with ts should be loadd with the ts loader
-      {test: /.*\.ts$/, loader: 'ts-loader', exclude: /node_modules/},
+      {
+        test: /.*\.ts$/,
+        use: [{loader: 'ts-loader'}],
+        exclude: /node_modules/
+      },
       //any files that with html will be loaded as plan text with the raw loader
-      {test: /\.html$/, loader: 'raw'},
+      {
+        test: /\.html$/,
+        use: [{loader: 'raw-loader'}]
+      },
       //Fonts and images will be loaded with the URL-loader only if  the size of the file  is under 700
-      { test: /\.(jpg|fig|png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=7000' },
+      { 
+        test: /\.(jpg|fig|png|woff|woff2|eot|ttf|svg)$/,
+        use: [{
+          loader: 'url-loader',
+          options: {limit: 7000}
+        }]
+      },
       //in chain loader for sass  ssas to css to style
-      {test: /\.scss$/, loaders: ['to-string', 'style-loader', 'css-loader', 'sass-loader']},
-      {test: /\.css$/, loaders: [ 'style-loader', 'css-loader']},
-      {test: /\.json$/, loader: 'json-loader', exclude: /node_modules/}
+      {
+        test: /\.scss$/,
+        use: ['to-string-loader', 'style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader']
+      }
     ]
   }, 
   resolve: {
     // List all the extensions that should be process by webpack
     //  '' empty string are for folders
-    extensions: ['', '.js', '.ts']
+    extensions: [ '.js', '.ts']
   },
-  
   plugins: [
     new HtmlwebpackPlugin({
       template: './app/index.html'
@@ -63,6 +80,8 @@ module.exports = {
         'window.jQuery' : 'jquery',
          Hammer: 'hammerjs/hammer'
     })
-  ]
-
+  ],
+  node: {
+    fs: 'empty'
+  }
 };

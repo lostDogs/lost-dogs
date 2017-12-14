@@ -47,7 +47,7 @@
       <map (locationAdressEmiter)="lostService.address=$event;changeMapElement($event)" (locationEmiter)="lostService.latLng=$event;" [locationAdress]="lostService.locationAdressInput" [location]="lostService.latLong" [rangeRadius]="lostService.matchService.rangeRadius"></map>
     </div>    
     <div class="buttons row" *ngIf="lostService.pagePosition !== lostService.sequence.length - 1">
-      <button class="waves-effect btn warning" (click)="lostService.back()" [ngClass]="{'disappear': lostService.pagePosition === 0 || lostService.inReviewPage}">Atras <i class="material-icons left">chevron_left</i></button>
+      <button class="waves-effect btn warning" (click)="lostService.back()" [disabled]="lostService.searchService.timer || lostService.searchService.loading" [ngClass]="{'disappear': lostService.pagePosition === 0 || lostService.inReviewPage}">Atras <i class="material-icons left">chevron_left</i></button>
       <!-- <button class="waves-effect btn info" (click)="lostService.setAnwer()"  [disabled]="!lostService.getGeneralAnswer()">responder <i class="material-icons right">send</i></button> -->
       <button class="waves-effect btn action" *ngIf="!lostService.inReviewPage || showReview()" (click)="lostService.next()"  [disabled]="!lostService.pageAnswers[lostService.pagePosition] && lostService.defualtSequence[lostService.pagePosition]!=='extras' || lostService.searchService.timer || lostService.searchService.loading">Siguiente <i class="material-icons right">chevron_right</i></button>
       <button class="waves-effect btn action" *ngIf="lostService.inReviewPage && !showReview()" (click)="lostService.goToReview()" [disabled]="!lostService.pageAnswers[lostService.pagePosition]  || lostService.searchService.timer || lostService.searchService.loading">A revision <i class="material-icons right">chevron_right</i></button>
@@ -63,7 +63,7 @@
   </div>
   <div class="row results" *ngIf="(lostService.pagePosition !== lostService.sequence.length - 1) && lostService.searchService.results && !lostService.searchService.loading">
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
-    <dog-card *ngFor="let card of lostService.searchService.pagedResults;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt" [lost]="lostService.parentPage === 'lost'" [data]="card" [maxCards]="lostService.searchService.results.length"></dog-card>
+    <dog-card *ngFor="let card of lostService.searchService.pagedResults;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt"  [data]="card" [maxCards]="lostService.searchService.pagedResults.length"></dog-card>
   </div>
   <section title="pagination"  class="row pagination"  *ngIf="lostService.searchService.totalPages && lostService.searchService.totalPages!==1" [ngClass]="{'blur-filter': dogCardService.open}">
     <div class="col l12 m12 s12 centered">
