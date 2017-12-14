@@ -23,7 +23,7 @@ export class RewardPickerComponent {
           this.scanner.stop();
         }
       });
-    instaCam.Camera.getCameras().then((cameras: instaCam.Camera[]) => {
+    instaCam.Camera.getCameras().then((cameras: any[]) => {
         if (cameras.length > 0) {
           this.scanner.start(cameras[0]);
         } else {

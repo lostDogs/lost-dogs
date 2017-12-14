@@ -8,7 +8,7 @@ module.exports = {
         app: ['./app/main.ts']
   },
   output: { 
-    path: '/public',
+    path: 'public',
     filename: 'app.bundle.js'
   },
   // Configure the ts-load module that helps compile ts
@@ -34,6 +34,15 @@ module.exports = {
     }
   ],
     rules: [
+    {
+      test: /\.es6.js$/,
+      loader: 'babel-loader',
+      options: {
+        presets: ["es2015"],
+        plugins: ['transform-async-to-generator']
+
+      }
+    },
       // Any files that end with ts should be loadd with the ts loader
       {
         test: /.*\.ts$/,
