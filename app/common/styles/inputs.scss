@@ -65,7 +65,7 @@
   }
 }
 
-button.btn {
+button.btn, div.btn {
   z-index: 1;
   &.info {
     background-color: $buttonInfo;
@@ -114,4 +114,8 @@ button.btn {
     border-width: 4px;
     border-radius: 2px;
   }
+}
+
+[hidden], template {
+      display: none !important;
 }

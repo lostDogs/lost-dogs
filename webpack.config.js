@@ -8,7 +8,7 @@ module.exports = {
         app: ['./app/main.ts']
   },
   output: { 
-    path: 'public',
+    path: '/public',
     filename: 'app.bundle.js'
   },
   // Configure the ts-load module that helps compile ts

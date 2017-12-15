@@ -30,6 +30,8 @@ import {PatternBlockComponent} from './common/components/pattern-block/pattern-b
 import {SearchService} from './common/services/search.service';
 import {MatchMakerService} from './common/services/match-maker.service';
 import {MailingRewardService} from './common/services/mailing-reward.service';
+import {QrScannerComponent} from './common/components/qr-scanner/qr-scanner.component';
+
 @NgModule({
   imports: [BrowserModule, AppRouterModule, FormsModule, HttpModule],
   declarations: [
@@ -49,7 +51,8 @@ import {MailingRewardService} from './common/services/mailing-reward.service';
   ExtrasBlockComponent,
   SideBlockDogComponent,
   DogFigureComponent,
-  PatternBlockComponent
+  PatternBlockComponent,
+  QrScannerComponent
   ],
   providers: [
     {provide: GlobalFunctionService, useClass: GlobalFunctionService},

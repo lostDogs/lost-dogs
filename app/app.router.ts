@@ -70,7 +70,7 @@ export const router: Routes = [
       {path: '**', redirectTo: 'review'}
     ]
   },
-  {path: 'reward-picker', component: RewardPickerComponent},
+  {path: 'reward', component: RewardPickerComponent},
   {path: 'info/:param', component: InformationComponent},
   { path: '', redirectTo: 'home' , pathMatch: 'full'},
   {path: '**', redirectTo: 'home'}

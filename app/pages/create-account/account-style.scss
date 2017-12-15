@@ -123,13 +123,6 @@
     .material-icons  {
      font-size: 5rem; 
     }
-   .draw {
-    &::before,
-    &::after {
-      border: 10px solid transparent;
-      border-radius: 40px;
-    }    
-   }
    .input-field {
     margin-top: 55px;
     ul {
@@ -201,6 +194,10 @@
     height: 0;
     border: 4px solid transparent;
     border-radius: 12px;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      border: 10px solid transparent;
+      border-radius: 30px;
+    }
   }
 
   // This covers the top & right borders (expands right, then down)

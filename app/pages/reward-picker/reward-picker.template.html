@@ -4,13 +4,21 @@
     <h5>Obten tu recompeza!</h5>
   </div>
   <div class="main-content row text-centered">
-    <p>una vez que hayas <b>entregado</b> el perro y el dueño te haya proporcioando la imagen QR ...</p>
-    <p>Escaneala aqui!</p>
-    <div class="video-container">
-      <video id="preview" autoplay="autoplay"></video>
+    <h5 class="instructions row"><b>Escanea</b> el codigo <b>o sube </b> la imagen </h5>
+    <div class="file-field draw account-completed"  (mouseover)="!img && !mobile && setFocusUpload()" (mouseleave)="!img && !mobile && unFocusUpload()" [ngClass]="{'action': img || mobile }">
+      <div class="text-actions text-centered file-field" [hidden]="!focusUpload">
+        <h6>sube el codigo</h6>
+        <i class="material-icons medium">file_upload</i>
+        <input  [hidden]="scannedValue" type="file" accept="image/*;capture=camera" (change)="fileChange($event)">
+      </div>
+      <div class="video-img-block" [ngClass]="{'blur-filter ': focusUpload}">
+        <div  *ngIf="img || mobile"  class="uploaded-qr" [ngStyle]="{'background-image': 'url(' + img + ')' }"> </div>
+          <qr-scanner [hidden]="img" *ngIf="!mobile" [stopScan]="stopScan" (scannedValue)="getScanned($event)" (cameras)="getCameras($event)"></qr-scanner>
+       </div> 
+        <input  [hidden]="scannedValue" type="file" accept="image/*;capture=camera" (change)="fileChange($event)">
     </div>
     <h4>Value: {{scannedValue}}</h4>
-    <p>o sube la image aqui! <button class="btn info">subir</button></p>
+    <h4>cameras: {{cameras}}</h4>
   </div>
 </div>
 

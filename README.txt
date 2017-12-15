@@ -13,6 +13,9 @@ run: npm run serve to run locally
 remove file: materialize-css/node-modules/jquery
 $ rm -rf node_modules/@types/core-js for all
 
+at instascan add .es6.js on camera and scanner
+add the index.d.ts and algo in de package.json
+
 add  on typings/globals/node/index.d.ts
 declare module "*.json" {
     const value: any;
