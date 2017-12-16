@@ -7,7 +7,9 @@ import {GlobalFunctionService} from  '../services/global-function.service';
 @Injectable()
 export class MailingRewardService {
   private _endpointUrl: string = 'https://fierce-falls-25549.herokuapp.com/api/';
-  public transaction: {lost_id?: string, found_id?: string, dog_id?: string, status?: string, id?: string};
+  // public transaction: {lost_id?: string, found_id?: string, dog_id?: string, status?: string, id?: string};
+  public transaction: any;
+  public invalidTransactionId: boolean;
 
   constructor(private api: ApiService, public router: Router, public globalService: GlobalFunctionService) {}
 
@@ -30,13 +32,17 @@ export class MailingRewardService {
     };
     return this.api.get(this._endpointUrl + 'transaction/' + transactionId , undefined, headers).subscribe(data => {
       console.log('sucess', data);
+      this.transaction = data;
+      this.invalidTransactionId = false;
     },
     error => {
+        // not error.code === 404 then invalid trans else open global error message.
+        this.invalidTransactionId = true;
          this.globalService.clearErroMessages();
          this.globalService.setErrorMEssage('Ops! no se pudo obtener la transaction');
          this.globalService.setSubErrorMessage('Intenta más tarde!');
          this.globalService.openErrorModal();
-         this.router.navigateByUrl('/home');
+         //this.router.navigateByUrl('/home');
     });
   }
 }

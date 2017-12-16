@@ -11,14 +11,41 @@
         <i class="material-icons medium">file_upload</i>
         <input  [hidden]="scannedValue" type="file" accept="image/*;capture=camera" (change)="fileChange($event)">
       </div>
-      <div class="video-img-block" [ngClass]="{'blur-filter ': focusUpload}">
+      <div class="text-actions text-centered file-field wrong" [hidden]="!invalidQr">
+        <h6>Qr invalido</h6>
+        <i class="material-icons medium">add_circle</i>
+        <input  [hidden]="scannedValue" type="file" accept="image/*;capture=camera" (change)="fileChange($event)">
+      </div>
+      <div class="text-actions text-sucess text-centered right" [hidden]="!transacionSucess">
+        <i class="material-icons large">check_circle</i>
+      </div>      
+      <div class="video-img-block" [ngClass]="{'blur-filter ': focusUpload || transacionSucess}">
         <div  *ngIf="img || mobile"  class="uploaded-qr" [ngStyle]="{'background-image': 'url(' + img + ')' }"> </div>
-          <qr-scanner [hidden]="img" *ngIf="!mobile" [stopScan]="stopScan" (scannedValue)="getScanned($event)" (cameras)="getCameras($event)"></qr-scanner>
+          <qr-scanner [hidden]="img" *ngIf="!mobile" [stopScan]="stopScan" [startScan]="startScan" (scannedValue)="getScanned($event)" (cameras)="getCameras($event)"></qr-scanner>
        </div> 
         <input  [hidden]="scannedValue" type="file" accept="image/*;capture=camera" (change)="fileChange($event)">
     </div>
     <h4>Value: {{scannedValue}}</h4>
     <h4>cameras: {{cameras}}</h4>
+    <div #RewardAprox></div>
+    <form name="rewards" #RewardForm="ngForm" (ngSubmit)="rewarded()" *ngIf="transacionSucess">
+      <div class="row input-fields">
+        <div class="input-field  alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': false}">
+          <input type="text" name="account" id="account" [(ngModel)]="accountNumber">
+          <label for="account">Número de cuenta o tarjeta</label>
+        </div>
+        <div class="input-field  alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': false}">
+            <input type="text" name="name" id="name"  [(ngModel)]="name">
+            <label for="name">Nombre</label>
+        </div>
+      </div>
+      <div class="row centered row-extraspace">
+        <button type="submit" class="waves-effect btn action col l2 s8" [disabled]="loading">
+          <div [hidden]="loading">Recompénsame<i class="medium material-icons right">monetization_on</i></div>
+          <div [hidden]="!loading">cargando ...</div>
+        </button>
+      </div>
+    </form>
   </div>
 </div>
 

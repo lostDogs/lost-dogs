@@ -1,5 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild, ElementRef} from '@angular/core';
 import {Router} from '@angular/router';
+import {MailingRewardService} from '../../common/services/mailing-reward.service';
+import {UserService} from '../../common/services/user.service';
 const QCodeDecoder = require('../../common/vendor/qr-img-decoder.js');
 
 @Component({
@@ -14,10 +16,15 @@ export class RewardPickerComponent {
   public QrDecoder: {decodeFromImage?: (img: File, callback: (err: any, res: any) => any) => void};
   public img: any;
   public stopScan: boolean; 
+  public startScan: boolean;
   public focusUpload: boolean;
   public mobile: boolean;
+  public invalidQr: boolean;
+  public transacionSucess: boolean;
+  @ViewChild('RewardAprox')
+  public formDom: ElementRef;
 
-  constructor() {
+  constructor(public rewardService: MailingRewardService, public userService: UserService, public router: Router) {
     const ios: boolean = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform)
     this.mobile = window.screen.width <= 767 || ios;
     if (this.mobile) {
@@ -27,25 +34,38 @@ export class RewardPickerComponent {
   }
 
   public ngOnInit(): void {
+    if (!this.userService.isAuth) {
+      this.userService.previousUrl = this.router.url;
+      this.router.navigate(['/login']);
+    }    
   }
 
-  public ngAfterViewInit(): void {}
+  public ngAfterViewInit(): void {
+    console.log('formDom', this.formDom.nativeElement.offsetTop);
+  }
 
   public getScanned(event: string): void {
     console.log('scanned', event);
     this.scannedValue = event;
+    this.invalidQr = false;
     this.img = 'http://cdn.lostdog.mx/assets/img/temp-qrcode.jpeg';
+    this.getTransaction(this.userService.token, this.scannedValue);
   }
     public getCameras(event: string): void {
     console.log('camaras', event);
     this.cameras = event;
   }
   public setFocusUpload(): void {
+    if (this.invalidQr) {
+      return;
+    }
     this.focusUpload = true;
+
   }
 
   public unFocusUpload(): void {
       this.focusUpload = false;
+      this.invalidQr = false;
   }
 
   public fileChange(ev: any): void {
@@ -58,14 +78,18 @@ export class RewardPickerComponent {
             const pic = event.target.result;
             this.QrDecoder.decodeFromImage(pic, (error: any, ans: any) => {
               if (error) {
+                this.invalidQr = true;
+                this.focusUpload = false;
                 console.error('error decoding qr img', error);
                 return;
               }
               console.log('ans', ans);
               this.scannedValue = ans;
-              this.img = pic;
               this.focusUpload = false;
+              this.img = pic;
+              this.invalidQr = false;
               this.stopScan = true;
+              this.getTransaction(this.userService.token, this.scannedValue);
             });
           };
           reader.readAsDataURL(file);
@@ -75,6 +99,34 @@ export class RewardPickerComponent {
       } else {
         console.error('not an image');
       }    
+  }
+
+  public getTransaction(userToken: string, transactionId: string): void {
+    setTimeout(()=> {
+      this.transacionSucess = true;
+      this.focusUpload = false;
+        const formOffset: number = this.formDom.nativeElement.offsetTop - 120;
+        setTimeout(() => {
+          $('html, body').animate({ scrollTop: formOffset}, 500);
+        }, 500)
+    }, 1000);
+/*    this.rewardService.getTransaction(userToken, transactionId).add(() => {
+      this.invalidQr = this.rewardService.invalidTransactionId;
+      this.transacionSucess = this.rewardService.transaction && this.rewardService.transaction.dog_id;
+      if (this.transacionSucess) {
+        // getReward to user => procced to payment form.
+        const formOffset: number = this.formDom.nativeElement.offsetTop - 120;
+        $('html, body').animate({ scrollTop: formOffset}, 400);
+      } else {
+        this.scannedValue = undefined;
+        this.img = undefined;
+        this.startScan = JSON.parse(JSON.stringify(true));
+        setTimeout(() => {
+          this.startScan = false;
+        }, 500);
+      }
+
+    });*/
   }
 
 }

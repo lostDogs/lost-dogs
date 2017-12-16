@@ -9,6 +9,7 @@ import * as instaCam from 'instascan';
 })
 
 export class QrScannerComponent { 
+  public camer: any;
   public scanner: any;
   @Output()
   public scannedValue: EventEmitter<any> = new EventEmitter<any>();
@@ -16,7 +17,8 @@ export class QrScannerComponent {
   public cameras: EventEmitter<string> = new EventEmitter<string>();
   @Input()
   public stopScan: boolean;
-
+  @Input()
+  public startScan: boolean;
   constructor() {}
   public ngOnInit(): void {
     this.scanner = new instaCam.Scanner({ video: document.getElementById('preview')});
@@ -28,7 +30,7 @@ export class QrScannerComponent {
       });
     instaCam.Camera.getCameras().then((cameras: any[]) => {
         if (cameras.length > 0) {
-          console.log('cameras', cameras);
+          this.camer = cameras;
           this.scanner.start(cameras[0]);
           this.cameras.emit(JSON.stringify(cameras));
         } else {
@@ -42,7 +44,12 @@ export class QrScannerComponent {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.stopScan && changes.stopScan.currentValue) {
+       console.log('stoping scanner');
       this.scanner.stop();
+    } else if (changes.startScan && changes.startScan.currentValue) {
+      console.log('starting scanner again');
+      this.scanner.start(this.camer[0]);
     }
+
   }
 }
