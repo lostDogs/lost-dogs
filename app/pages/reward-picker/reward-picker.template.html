@@ -26,9 +26,8 @@
         <input  [hidden]="scannedValue" type="file" accept="image/*;capture=camera" (change)="fileChange($event)">
     </div>
     <h4>Value: {{scannedValue}}</h4>
-    <h4>cameras: {{cameras}}</h4>
     <div #RewardAprox></div>
-    <form name="rewards" #RewardForm="ngForm" (ngSubmit)="rewarded()" *ngIf="transacionSucess">
+    <form name="rewards" class="create-account" #RewardForm="ngForm" (ngSubmit)="rewarded()" *ngIf="transacionSucess">
       <div class="row input-fields">
         <div class="input-field  alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': false}">
           <input type="text" name="account" id="account" [(ngModel)]="accountNumber">
@@ -37,6 +36,16 @@
         <div class="input-field  alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': false}">
             <input type="text" name="name" id="name"  [(ngModel)]="name">
             <label for="name">Nombre</label>
+        </div>
+      </div>
+      <div class="row money-desc">
+        <div class="col l6 push-l3 s12">
+          <div class="row">
+            <h5 class="description row"> <b> $ 2500.00</b> - 22% = $ 1,950.00 MXN</h5>
+          </div>
+          <div class="row">
+            <h5>Total: </h5> <h4 class="money row"> $ 1,950.00 MXN</h4>
+          </div>
         </div>
       </div>
       <div class="row centered row-extraspace">
