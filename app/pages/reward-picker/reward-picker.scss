@@ -9,7 +9,6 @@ reward-picker {
       margin-bottom: 0;
     }
     .money-desc {
-      text-align: left;
       .description {
         color: grey;
       }
@@ -21,6 +20,11 @@ reward-picker {
       }
       .row {
         margin: 0;
+      }
+      @media screen and (max-device-width: $screen-mobile-max) {
+        h5 {
+          font-size: 3.5rem;
+        }
       }
     }
     .row.extra-top {
