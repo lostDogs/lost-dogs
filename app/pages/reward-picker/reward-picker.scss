@@ -8,6 +8,21 @@ reward-picker {
     .main-content.row {
       margin-bottom: 0;
     }
+    .money-desc {
+      text-align: left;
+      .description {
+        color: grey;
+      }
+      .money {
+        color: $greenMat;
+      }
+      h5,h4  {
+        display: inline-block;
+      }
+      .row {
+        margin: 0;
+      }
+    }
     .row.extra-top {
       margin-top:  20px;
     }
