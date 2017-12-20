@@ -8,6 +8,11 @@ reward-picker {
     .main-content.row {
       margin-bottom: 0;
     }
+    .input-field {
+      @media screen and (max-device-width: $screen-mobile-max) {
+        padding: 0 30px;
+      }
+    }
     .money-desc {
       .description {
         color: grey;

@@ -9,6 +9,7 @@ module.exports = {
   },
   output: { 
     path: '/public',
+    chunkFilename: 'module-chunk.js',
     filename: 'app.bundle.js'
   },
   // Configure the ts-load module that helps compile ts
@@ -46,7 +47,7 @@ module.exports = {
       // Any files that end with ts should be loadd with the ts loader
       {
         test: /.*\.ts$/,
-        use: [{loader: 'ts-loader'}],
+        use: [ 'ts-loader', 'angular-router-loader'],
         exclude: /node_modules/
       },
       //any files that with html will be loaded as plan text with the raw loader
@@ -88,7 +89,8 @@ module.exports = {
         jquery: 'jquery' ,
         'window.jQuery' : 'jquery',
          Hammer: 'hammerjs/hammer'
-    })
+    }),
+    new webpack.ContextReplacementPlugin(/protobufjs/, /^$/)
   ],
   node: {
     fs: 'empty'

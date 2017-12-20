@@ -36,6 +36,7 @@
     "zone.js": "^0.7.2"
   },
   "devDependencies": {
+    "angular-router-loader": "^0.8.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
