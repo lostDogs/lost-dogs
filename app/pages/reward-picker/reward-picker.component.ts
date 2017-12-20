@@ -40,7 +40,9 @@ export class RewardPickerComponent {
     }    
   }
 
-  public ngAfterViewInit(): void {}
+  public ngAfterViewInit(): void {
+    console.log('formDom', this.formDom.nativeElement.offsetTop); 
+  }
 
   public getScanned(event: string): void {
     console.log('scanned', event);
