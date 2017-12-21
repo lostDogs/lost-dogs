@@ -29,6 +29,7 @@ import {ApiService} from './common/services/api.service';
 import {UserService} from './common/services/user.service';
 import {DogCardService} from './common/services/dog-card.service';
 import {MailingRewardService} from './common/services/mailing-reward.service';
+import {OpenSpayService} from './common/services/openspay.service';
 /*
  * BrowserModule boostrap the whole angular app. you just imported it once!
  * for other modules that have  component declarations you need to use CommonModule
@@ -74,7 +75,8 @@ import {MailingRewardService} from './common/services/mailing-reward.service';
     {provide: ApiService, useClass: ApiService},
     {provide: UserService, useClass: UserService},
     {provide: DogCardService, useClass: DogCardService},
-    {provide: MailingRewardService, useClass: MailingRewardService}
+    {provide: MailingRewardService, useClass: MailingRewardService},
+    {provide: OpenSpayService, useClass: OpenSpayService}
   ],
   bootstrap: [appComponent]
 })
