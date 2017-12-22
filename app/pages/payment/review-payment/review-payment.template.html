@@ -5,21 +5,40 @@
       <h5 class="subtitle" [hidden]="lost">Revisa el perro que encontraste </h5>
       <dog-card  #DogCard [atReviewPage]="true"  [data]="dogData" [maxCards]="1" [cardIndex]="0"></dog-card>
     </div>
-    <div class="col push-l2 l4 m12 s12 steps-block">
-      <h5 class="subtitle">Pasos</h5>
-      <div class="steps" [hidden]="!lost">
-        <h6><b>1.</b> primero te haremos el cargo  de la recompenza. No te preocupes si no es tu perro, <b>te regresamos tu dinero.</b></h6>
-        <h6><b>2.</b> te mandaremos el contacto de quien lo econtro para que te pongas de acuerdo donde y a horas verse.</h6>
-        <h6><b>3.</b> una vez que subas el perro asegura de pasarle tu codigo QR al otro usuario para que pudan recoletar la recompenza.</h6>
+    <div class="col push-l2 l4 m12 s12 steps-block" *ngIf="lost && !rewardSetted">
+      <h5 class="subtitle">Agrega una recompenza</h5>
+      <h6 class="subtitle subheader"> ...para agradecer a la persona que lo encontro y lo cuido</h6>
+      <div class="steps money-reward action draw account-completed" (mouseover)="foucusMoney()" (mouseleave)="clearInput()">
+        <h2>$</h2>
+        <input id="money-input" type="text" name="recompoenza"  [(ngModel)]="reward" size="10">
+        <h2 class="currency">MXN</h2>
+        <h6 class="under" [hidden]="reward !== EstimReward">* valor estimada para mantener un perro {{dogSize}} por {{totalDays}} dias</h6>
       </div>
-      <div class="steps" [hidden]="lost">
+      <div class="centered submit">
+        <button class="waves-effect btn info" (click)="setReward()">siguiente<i class="medium material-icons right">chevron_right</i></button>
+      </div>
+    </div>
+    <div class="col push-l2 l4 m12 s12 steps-block" [hidden]="!rewardSetted">
+      <h5 class="subtitle">Que sigue?</h5>
+      <div class="steps">
+        <h6><b>1.</b> primero te haremos el cargo  de la recompenza. No te preocupes si no es tu perro, <b>te regresamos tu dinero.</b></h6>
+        <h6><b>2.</b> te mandaremos el contacto de quien lo econtro para que te pongas de acuerdo donde y a que horas verse.</h6>
+        <h6><b>3.</b> una vez que  recibas el perro asegura de pasarle tu <b>codigo QR</b> que tue fue enviado por correo, al otro usuario para que pudan recoletar la recompenza.</h6>
+      </div>
+      <div class="centered submit">
+        <button class="waves-effect btn action" (click)="next()">aceptar<i class="medium material-icons right">thumb_up</i></button>
+      </div>      
+    </div>    
+    <div class="col push-l2 l4 m12 s12 steps-block" [hidden]="lost">
+      <h5 class="subtitle">Pasos</h5>
+      <div class="steps" >
         <h6><b>1.</b> Le mandaremos tu datos a Juan, si es su perro, El se podra en contanto contigo.</h6>
         <h6><b>2.</b> Agenda una hora y lugar donde entregaras el perro.</h6>
         <h6><b>3.</b> Una vez de lo entregues, recuerda escanear el codigo QR que tiene Juan.</h6>
         <h6><b>4.</b> Subelo en la liga que te llegara por correo, para recibir tu recompenza.</h6>
       </div>      
     <div class="centered submit">
-      <button class="waves-effect btn info" (click)="next()">aceptar<i class="medium material-icons right">thumb_up</i></button>
+      <button class="waves-effect btn action" (click)="next()">aceptar<i class="medium material-icons right">thumb_up</i></button>
     </div>
     </div>    
   </div>

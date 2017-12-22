@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from './api.service';
 import {Subscription} from 'rxjs/Rx';
+import {ICard} from '../../pages/payment/form-payment/form-payment.component'
 
-enum cardNames {
+export enum cardNames {
 Mastercard = 'Mastercard',
 ​Visa = 'Visa',
 Visa_electron = 'Visa Electron',
@@ -14,22 +15,44 @@ JCB = 'JCB'
 
 @Injectable()
 export class OpenSpayService {
-  private openPay: any = Window['OpenPay'];
+  private openPay: any;
   private deviceSession: any;
-  public chargeRequest: any;
+  public init: boolean;
+  public tokenId: any;
+  public sucessPaymentId: string;
+  public MERCHANT_ID: string = 'mrvo5dylz7xeq7pnyoqx';
+  public PUBLIC_KEY: string = 'pk_85e195c76956425d973944d88521d47e';
 
-  constructor (public api: ApiService) {
-    this.openPay.setId('mrvo5dylz7xeq7pnyoqx');
-    this.openPay.setApiKey('pk_85e195c76956425d973944d88521d47e');
-    this.openPay.setSandboxMode(true);
+  constructor (public api: ApiService) {}
+
+  public initOpenPay(): void {
+    if (!this.init) {
+      this.openPay =window['OpenPay'];
+      this.openPay.setId(this.MERCHANT_ID);
+      this.openPay.setApiKey(this.PUBLIC_KEY);
+      this.openPay.setSandboxMode(true);
+      this.init = true;
+    }
 
   }
-  public createToken (form: any): Subscription {
-    return this.api.post('https://sandbox-api.openpay.mx/v1/mrvo5dylz7xeq7pnyoqx/tokens/', form , {}).subscribe(
-      data => {},
-      error => {}
-    )
+
+  public createToken(tokenData: any): Promise<any> {
+    const promise: Promise<any> = new Promise((resolve: any, reject: any) => {
+      this.openPay.token.create(tokenData,
+        (suscess: any) => {
+          this.tokenId = suscess.data.id;
+          console.log('sucess', suscess);
+          resolve(suscess);
+        },
+        (error: any) => {
+          console.log('error', error);
+          this.tokenId = undefined;
+          reject(error);
+        })
+    });
+    return promise;
   }
+
   public validateCardNum(cardNum: string): cardNames {
     if (this.openPay.card.validateCardNumber(cardNum)) {
       return this.openPay.card.cardType(cardNum);
@@ -41,29 +64,74 @@ export class OpenSpayService {
     return this.openPay.card.validateCVC(cvc, cardNum);
   }
 
-  public mapChargeRequest(formObj: any): void {
+  public mapTokenData(card: ICard): object {
+    const tokenData: any = {
+      'card_number': card.number.value.replace(/-/g, ''),
+      'expiration_year':card.expYear.value,
+      'expiration_month': card.expMonth.value,
+      'cvv2': card.ccv.value,
+      'holder_name':card.ownerName
+    }
+    return tokenData;
+  }
+
+  public mapChargeRequest(amount: string, user: any, description: string): object {
+      amount = amount.replace(/,/g, '');
       const chargeRequest = {
-      'source_id' : 'token_id',
+      'source_id' : this.tokenId,
       'method' : 'card',
-      'amount' : 'amount',
+      'amount' : +amount,
        'currency' : 'MXN',
-      'description' : 'description',
+      'description' : description,
       'customer' : {
-        'name' : 'name',
-        'last_name' : 'last_name',
-        'phone_number' : 'phone_number',
-        'email' : 'email'
+        'name' : user.name,
+        'last_name' : user.lastName,
+        'phone_number' : user.phoneNumber,
+        'email' : user.email
        }
      }
      const deviceSession = this.openPay.deviceData.setup(chargeRequest);
      chargeRequest['device_session_id'] = deviceSession;
-     this.chargeRequest = chargeRequest; 
+     console.log('chargeRequest> ', chargeRequest);
+     return chargeRequest;
   }
 
-  public chargeClient(): void {
-    this.openPay.customers.charges.create(this.chargeRequest, (error: any, charged: any) => {
-      console.error('error', error)
-      console.log('charged data sucess', charged);
-    });    
+  public chargeClient(chargeobj: any): Subscription {
+    return this.api.post('/api/transactions/' + 'id' + '/pay', chargeobj).subscribe(
+      data => {
+        console.log('charged data sucess!', data);
+        this.sucessPaymentId = data['id'];
+      },
+      error => {
+        console.error('error making charge to customers', error);
+      });
   }
+
+  public loadOpenPayScript(): any {
+    //  Dynamically inserting payment scirpts on the dom.
+    const scripts: JQuery = $('script');
+    const mainOpenPayPath: string = 'https://openpay.s3.amazonaws.com/';
+    const dynamicScripts: string[] = ['openpay.v1.min.js', 'openpay-data.v1.min.js'];
+    const nodeType: string = 'text/javascript';
+    const charset: string = 'UTF-8';
+    for (let i = 0; i < scripts.length; ++i) {
+        if (scripts[i].getAttribute('src') && scripts[i].getAttribute('src').includes(dynamicScripts[0]) || scripts[i].getAttribute('src').includes(dynamicScripts[1])) {
+            return;
+        }
+    }
+    console.log('dynamically inserting scripts ///');
+    dynamicScripts.forEach((scriptName: string, scriptIndex: number) => {
+      let node = document.createElement('script');
+      node.type = nodeType;
+      node.charset = charset;
+      node.src = mainOpenPayPath + scriptName;
+      node.async = false;
+      document.getElementsByTagName('head')[0].appendChild(node);
+      node.onload = ()=> {
+        if (scriptIndex === dynamicScripts.length - 1) {
+          this.initOpenPay();
+        }
+      };
+    });
+  }  
 }

@@ -18,6 +18,30 @@ review-payment {
       }
     }     
     }
+    .subheader {
+      color: grey;
+    }
+    .under {
+      color: grey;
+      width: 100%;
+      text-align: right;
+      padding-right: 15px;
+    }
+    .money-reward {
+      color: $greenMat;
+      padding: 50px 3px;
+      &:hover {
+        .under {
+          display: none;
+        }
+      }
+      @media screen and (max-device-width: $screen-mobile-max) {
+        input {
+            width: 35%;
+        }
+      }
+    }
+
   .steps {
     margin-top: 80px;
     h6 {
