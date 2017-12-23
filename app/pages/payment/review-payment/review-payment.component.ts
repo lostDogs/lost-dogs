@@ -1,3 +1,4 @@
+import {Location} from '@angular/common';
 import { Component, ViewChild, ElementRef} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {UserService} from '../../../common/services/user.service';
@@ -5,7 +6,6 @@ import {DogCardService} from '../../../common/services/dog-card.service';
 import {GlobalFunctionService} from '../../../common/services/global-function.service';
 import {SearchService, IdogData} from '../../../common/services/search.service';
 import {MailingRewardService} from '../../../common/services/mailing-reward.service';
-import {CookieManagerService} from '../../../common/services/cookie-manager.service';
 import * as estimationsRew from '../../../common/content/rewards-per-day.mx.json';
 import * as dogSizes from '../../../common/content/sizes.json';
 
@@ -37,7 +37,7 @@ export class ReviewPaymentComponent {
     public globalService: GlobalFunctionService,
     public searchService: SearchService,
     public mailingService: MailingRewardService,
-    public cookieService: CookieManagerService
+    public location: Location
   ) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.lost = params.Lt === 'true';
@@ -62,7 +62,7 @@ export class ReviewPaymentComponent {
       this.mailingService.getTransaction(this.userService.token, this.transcationId).add(() => {
         this.dogCardService.getDog(this.mailingService.transaction.dog_id).add(() => {
           this.dogData = this.dogCardService.dogData;
-          this.reward = this.calcEstimatedReward(this.dogData);
+          this.rewardSetted = true;
         });
       });
     }
@@ -74,8 +74,8 @@ export class ReviewPaymentComponent {
   }
 
   public next(): void {
-    if (this.lost) {
-      this.router.navigate(['/payment/form'],  {preserveQueryParams: true});
+    if (this.lost || this.transcationId) {
+      this.router.navigate(['/payment/form'],  {queryParams: {Lt: this.lost, iD: this.dogIndex, cID: this.dogID, transcation: this.transcationId, rW: this.reward}});
     } else {
       this.mailingService.sendEmailsToUsers(!this.lost, this.userService.token, this.dogData._id).add(() => {
         this.ShowSendEmail = this.globalService.emailSendedReview = true;
@@ -97,7 +97,6 @@ export class ReviewPaymentComponent {
     this.rewardSetted = true;
     this.reward = this.reward.replace('.','').replace(',', '');
     this.reward =this.reward.slice(0, this.reward.length - 2) + '.' + this.reward.slice(this.reward.length - 2);
-    this.cookieService.setCookie('LostReward', this.reward);
   }
 
   public calcEstimatedReward(dog: any): string {
@@ -112,7 +111,7 @@ export class ReviewPaymentComponent {
     console.log('days diff', daysDiff);
     const minEstRew: number = +estimationsRew[dog.size_id] * daysDiff;
     console.log('min est rew', minEstRew);
-    const total: number = (minEstRew * gain) / (1 - ourGain);
+    const total: any = ((minEstRew * gain) / (1 - ourGain)).toFixed(2);
     this.totalDays = daysDiff;
     this.dogSize = dogSizes[dog.size_id].name;
     return this.EstimReward = total + '';

@@ -7,7 +7,6 @@ import {MailingRewardService} from '../../../common/services/mailing-reward.serv
 import {DogCardService} from '../../../common/services/dog-card.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {OpenSpayService} from '../../../common/services/openspay.service';
-import {CookieManagerService} from '../../../common/services/cookie-manager.service';
 
 export interface ICard {
   number: formObj;
@@ -38,6 +37,7 @@ export class FormPaymentComponent {
   public dogId: string;
   public transcationId: string;
   public rewardAmount: string;
+  public lostParam: string;
 
   constructor (
     public userService: UserService,
@@ -47,8 +47,7 @@ export class FormPaymentComponent {
     public mailingService: MailingRewardService,
     public dogService: DogCardService,
     public activeRoute: ActivatedRoute,
-    public openSpayService: OpenSpayService,
-    public cookieService: CookieManagerService
+    public openSpayService: OpenSpayService
   ) {
     this.creaditCard = {
       method: {valid: true, value: undefined, required: false, label: 'Metodo de pago'},
@@ -79,7 +78,6 @@ export class FormPaymentComponent {
   public ngOnInit(): void {
     const monthSelect: JQuery = $('#cc-month');
     const yearSelect: JQuery = $('#cc-year');
-
     monthSelect.change(() => {
       this.creaditCard.expMonth.value = monthSelect.val();
       this.creaditCard.expMonth.valid = true;
@@ -88,17 +86,19 @@ export class FormPaymentComponent {
       this.creaditCard.expYear.value = yearSelect.val().substring(2, 4);
       this.creaditCard.expYear.valid = true;
     });
-    this.rewardAmount = this.cookieService.getCookie('LostReward');
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.dogId = params.cID;
+      this.transcationId = params.transcation;
+      this.lostParam = params.Lt;
+      this.rewardAmount = params.rW || (this.dogService.dogData && this.dogService.dogData.reward);
       if (!this.dogService.dogData && this.dogId) {
         this.dogService.getDog(this.dogId).add(() => {
-          this.setReward();
+          this.setReward(params.rW);
         });
-      }else if (this.transcationId) {
+      }else if (!this.dogService.dogData && this.transcationId) {
       this.mailingService.getTransaction(this.userService.token, this.transcationId).add(() => {
         this.dogService.getDog(this.mailingService.transaction.dog_id).add(() => {
-          this.setReward();
+          this.setReward(params.rW);
         });
       });
     }
@@ -114,8 +114,9 @@ export class FormPaymentComponent {
     }
   }
 
-  public setReward(): void  {
-    this.rewardAmount =  this.rewardAmount || this.dogService.dogData.reward || '00.00';
+  public setReward(param: string): void  {
+    this.rewardAmount =  !param ? this.dogService.dogData.reward : param;
+     this.rewardAmount =  this.rewardAmount || '00.00';
   }
 
   public pay(event: Event): void {

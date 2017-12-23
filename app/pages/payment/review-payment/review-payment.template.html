@@ -12,7 +12,7 @@
         <h2>$</h2>
         <input id="money-input" type="text" name="recompoenza"  [(ngModel)]="reward" size="10">
         <h2 class="currency">MXN</h2>
-        <h6 class="under" [hidden]="reward !== EstimReward">* valor estimada para mantener un perro {{dogSize}} por {{totalDays}} dias</h6>
+        <h6 class="under" [ngStyle]="{'opacity': reward !== EstimReward ? 0 : 1}">* valor estimada para mantener un perro {{dogSize}} por {{totalDays}} dias</h6>
       </div>
       <div class="centered submit">
         <button class="waves-effect btn info" (click)="setReward()">siguiente<i class="medium material-icons right">chevron_right</i></button>
@@ -29,7 +29,7 @@
         <button class="waves-effect btn action" (click)="next()">aceptar<i class="medium material-icons right">thumb_up</i></button>
       </div>      
     </div>    
-    <div class="col push-l2 l4 m12 s12 steps-block" [hidden]="lost">
+    <div class="col push-l2 l4 m12 s12 steps-block" [hidden]="lost || transcationId">
       <h5 class="subtitle">Pasos</h5>
       <div class="steps" >
         <h6><b>1.</b> Le mandaremos tu datos a Juan, si es su perro, El se podra en contanto contigo.</h6>

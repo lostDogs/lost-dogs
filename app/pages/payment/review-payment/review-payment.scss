@@ -30,11 +30,6 @@ review-payment {
     .money-reward {
       color: $greenMat;
       padding: 50px 3px;
-      &:hover {
-        .under {
-          display: none;
-        }
-      }
       @media screen and (max-device-width: $screen-mobile-max) {
         input {
             width: 35%;
