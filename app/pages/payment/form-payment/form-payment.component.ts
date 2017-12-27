@@ -157,15 +157,16 @@ export class FormPaymentComponent {
     const tokenData: any = this.openSpayService.mapTokenData(this.creaditCard);
     this.openSpayService.createToken(tokenData).then(() => {
       if (this.openSpayService.tokenId) {
-        const transDesc: string = 'pago de recompenza de ' + this.userService.user.name + 'para el perro >' + this.dogService.dogData.id;
+        const transDesc: string = 'pago de recompenza de ' + this.userService.user.name + ' para el perro >' + this.dogService.dogData._id;
         const chargeObj: any = this.openSpayService.mapChargeRequest(this.rewardAmount, this.userService.user,transDesc);
-        this.openSpayService.chargeClient(chargeObj).add(() => {
+        this.openSpayService.chargeClient(chargeObj, this.userService.token, this.transcationId).add(() => {
         if (this.openSpayService.sucessPaymentId) {
           alert('SUCESS ID: ' + this.openSpayService.sucessPaymentId);
           this.mailingService.sendEmailsToUsers(false, this.userService.token, this.dogService.dogData._id).add(() => {
             this.loading = false;
             this.sucess = true;
             this.globalService.paymentRewardSucess = true;
+            $('html, body').animate({ scrollTop: 0 }, 500);
           });
         }
 

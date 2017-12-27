@@ -86,7 +86,7 @@
           <div class="input-field alt-black col l3 push-l3 s12 countries" [ngClass]="{'wrong-red': !user.adress.country.valid}">
             <select name="country"  id="country" [(ngModel)]="user.adress.country.value" (keyup)="user.adress.country.valid = validate.name(user.adress.country.value);">
               <option value="" disabled selected>Pais</option>
-              <option *ngFor="let co of countries"[value]="co.id"><div class="bfh-flag-{{co.id}}"></div>{{co.name}}</option>
+              <option *ngFor="let co of countries"[value]="co.name"><div class="bfh-flag-{{co.id}}"></div>{{co.name}}</option>
             </select>
                <!--  <label for="country" [ngClass]="{'fadeInDown': user.adress.country.valid && createAccount.controls.country && createAccount.controls.country.dirty}" [hidden]="!user.adress.country.valid">Pais</label>
                 <label for="country" [ngClass]="{'fadeInDown': (!user.adress.country.valid && user.adress.country.value)}" [hidden]="!(!user.adress.country.valid && user.adress.country.value)">{{validate.errors.name}}</label>

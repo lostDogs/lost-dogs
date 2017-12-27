@@ -66,41 +66,45 @@ export class OpenSpayService {
 
   public mapTokenData(card: ICard): object {
     const tokenData: any = {
-      'card_number': card.number.value.replace(/-/g, ''),
-      'expiration_year':card.expYear.value,
-      'expiration_month': card.expMonth.value,
-      'cvv2': card.ccv.value,
-      'holder_name':card.ownerName
+      card_number: card.number.value.replace(/-/g, ''),
+      expiration_year: card.expYear.value,
+      expiration_month: card.expMonth.value,
+      cvv2: card.ccv.value,
+      holder_name: card.ownerName.value   
     }
     return tokenData;
   }
 
   public mapChargeRequest(amount: string, user: any, description: string): object {
       amount = amount.replace(/,/g, '');
-      const chargeRequest = {
-      'source_id' : this.tokenId,
-      'method' : 'card',
-      'amount' : +amount,
-       'currency' : 'MXN',
-      'description' : description,
-      'customer' : {
-        'name' : user.name,
-        'last_name' : user.lastName,
-        'phone_number' : user.phoneNumber,
-        'email' : user.email
-       }
-     }
+      const fullPhone: string = user.phoneNumber.area_code + '' + user.phoneNumber.number;
+      const chargeRequest ={
+        paymentInfo: {
+          method: 'card',
+          source_id: this.tokenId,
+          amount: +amount,
+          currency: 'MXN',
+          description: description,
+          capture: true
+        },
+        saveCard: true
+      }
      const deviceSession = this.openPay.deviceData.setup(chargeRequest);
-     chargeRequest['device_session_id'] = deviceSession;
-     console.log('chargeRequest> ', chargeRequest);
+     chargeRequest.paymentInfo['device_session_id'] = deviceSession;
+     console.log('chargeRequest >> ', chargeRequest);
      return chargeRequest;
   }
 
-  public chargeClient(chargeobj: any): Subscription {
-    return this.api.post('/api/transactions/' + 'id' + '/pay', chargeobj).subscribe(
+  public chargeClient(chargeobj: any, userToken: string, transID?: string): Subscription {
+    const headers: any = {
+      'Content-Type': 'application/json',
+      'Authorization': 'token ' + userToken
+    }; 
+    const url: string = transID ? '/api/transactions/' + transID + '/pay' : '/api/transactions/pay';
+    return this.api.post('https://fierce-falls-25549.herokuapp.com' + url , chargeobj, headers).subscribe(
       data => {
         console.log('charged data sucess!', data);
-        this.sucessPaymentId = data['id'];
+        this.sucessPaymentId = data['paymentResult'].id;
       },
       error => {
         console.error('error making charge to customers', error);
