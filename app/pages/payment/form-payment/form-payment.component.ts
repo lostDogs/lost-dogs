@@ -81,6 +81,8 @@ export class FormPaymentComponent {
   public ngOnInit(): void {
     const monthSelect: JQuery = $('#cc-month');
     const yearSelect: JQuery = $('#cc-year');
+    const un_0: number = 3;
+    const un_1: number = 2;
     monthSelect.change(() => {
       this.creaditCard.expMonth.value = monthSelect.val();
       this.creaditCard.expMonth.valid = true;
@@ -93,7 +95,7 @@ export class FormPaymentComponent {
       this.dogId = params.cID;
       this.transcationId = params.transcation;
       this.lostParam = params.Lt;
-      this.chargeCreate = params.Cr;
+      this.chargeCreate = this.router.url === this.lostService.defualtSequence[this.lostService.defualtSequence.length - 1]
       this.rewardAmount = params.rW || (this.dogService.dogData && this.dogService.dogData.reward);
       if (!this.dogService.dogData && this.dogId) {
         this.dogService.getDog(this.dogId).add(() => {
@@ -106,7 +108,8 @@ export class FormPaymentComponent {
         });
       });
     }else if (this.chargeCreate) {
-      this.rewardAmount = '65.00';
+      const unit: number = un_0 + un_1;
+      this.rewardAmount = ((unit + 1)* unit * 2 + unit).toFixed(2) + '';
     }
     });
   }
