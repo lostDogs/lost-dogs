@@ -35,7 +35,7 @@
       </li>      
     </ul>    
     <button class="waves-effect btn action submit" [disabled]="LostService.loadingSave && !LostService.savedImgs">
-      <div *ngIf="LostService.parentPage==='lost' && !LostService.loadingSave" (click)="LostService.saveToApi()">Si! es mi perro<i class="material-icons right">send</i></div>
+      <div *ngIf="LostService.parentPage==='lost' && !LostService.loadingSave" (click)="toPaymentForm()">Si! es mi perro<i class="material-icons right">send</i></div>
       <div *ngIf="LostService.parentPage==='found' && !LostService.loadingSave" (click)="LostService.saveToApi()">Si!  es el perro<i class="material-icons right">send</i></div>
       <div *ngIf="LostService.loadingSave && !LostService.savedImgs">Carngado ...</div>
     </button>

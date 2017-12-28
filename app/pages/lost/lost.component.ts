@@ -66,6 +66,7 @@ export class lostComponent {
       }
     });
   }
+
   public ngOnInit(): void {
     if (!this.userService.isAuth) {
       this.userService.previousUrl = this.router.url;

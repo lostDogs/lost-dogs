@@ -7,6 +7,7 @@ import {MailingRewardService} from '../../../common/services/mailing-reward.serv
 import {DogCardService} from '../../../common/services/dog-card.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {OpenSpayService} from '../../../common/services/openspay.service';
+import {LostFoundService} from '../../../common/services/lost-found.service';
 
 export interface ICard {
   number: formObj;
@@ -38,6 +39,7 @@ export class FormPaymentComponent {
   public transcationId: string;
   public rewardAmount: string;
   public lostParam: string;
+  public chargeCreate: boolean;
 
   constructor (
     public userService: UserService,
@@ -47,7 +49,8 @@ export class FormPaymentComponent {
     public mailingService: MailingRewardService,
     public dogService: DogCardService,
     public activeRoute: ActivatedRoute,
-    public openSpayService: OpenSpayService
+    public openSpayService: OpenSpayService,
+    public lostService: LostFoundService
   ) {
     this.creaditCard = {
       method: {valid: true, value: undefined, required: false, label: 'Metodo de pago'},
@@ -90,6 +93,7 @@ export class FormPaymentComponent {
       this.dogId = params.cID;
       this.transcationId = params.transcation;
       this.lostParam = params.Lt;
+      this.chargeCreate = params.Cr;
       this.rewardAmount = params.rW || (this.dogService.dogData && this.dogService.dogData.reward);
       if (!this.dogService.dogData && this.dogId) {
         this.dogService.getDog(this.dogId).add(() => {
@@ -101,6 +105,8 @@ export class FormPaymentComponent {
           this.setReward(params.rW);
         });
       });
+    }else if (this.chargeCreate) {
+      this.rewardAmount = '65.00';
     }
     });
   }
@@ -157,17 +163,23 @@ export class FormPaymentComponent {
     const tokenData: any = this.openSpayService.mapTokenData(this.creaditCard);
     this.openSpayService.createToken(tokenData).then(() => {
       if (this.openSpayService.tokenId) {
-        const transDesc: string = 'pago de recompenza de ' + this.userService.user.name + ' para el perro >' + this.dogService.dogData._id;
+        const transDesc: string = this.chargeCreate ? 'pago por reportar perro' : 'pago de recompenza de ' + this.userService.user.name + ' para el perro >' + this.dogService.dogData._id;
         const chargeObj: any = this.openSpayService.mapChargeRequest(this.rewardAmount, this.userService.user,transDesc);
         this.openSpayService.chargeClient(chargeObj, this.userService.token, this.transcationId).add(() => {
         if (this.openSpayService.sucessPaymentId) {
           alert('SUCESS ID: ' + this.openSpayService.sucessPaymentId);
-          this.mailingService.sendEmailsToUsers(false, this.userService.token, this.dogService.dogData._id).add(() => {
-            this.loading = false;
-            this.sucess = true;
-            this.globalService.paymentRewardSucess = true;
-            $('html, body').animate({ scrollTop: 0 }, 500);
-          });
+          if (!this.chargeCreate) {
+            this.mailingService.sendEmailsToUsers(false, this.userService.token, this.dogService.dogData._id).add(() => {
+              this.loading = false;
+              this.sucess = true;
+              this.globalService.paymentRewardSucess = true;
+              $('html, body').animate({ scrollTop: 0 }, 500);
+            });
+          } else {
+            this.lostService.saveToApi().add(() => {
+              this.router.navigateByUrl('/lost/review');
+            });
+          }
         }
 
         })

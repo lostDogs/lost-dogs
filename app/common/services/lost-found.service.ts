@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Ielement} from '../components/side-block/side-block.component';
 import {Router} from '@angular/router';
-import {CookieManagerService} from './cookie-manager.service';
+import {Subscription} from 'rxjs/Rx';
+import {Ielement} from '../components/side-block/side-block.component';
 import { DecimalPipe } from '@angular/common';
 import {ApiService} from '../services/api.service';
 import {UserService} from '../services/user.service';
@@ -38,8 +38,7 @@ export class LostFoundService {
 
   public openNameInput: boolean;
   public dogName: string;
-  public binaryDogImg: any;
-    public dogPicture: string;
+  public dogPicture: any;
   public reward: string;
   public comments: string;
   public defaultReward: string = '000,000.00';
@@ -55,7 +54,6 @@ export class LostFoundService {
 
   constructor(
     public router: Router,
-    public cookieService: CookieManagerService,
     public api: ApiService,
     public userService: UserService,
     public searchService: SearchService, 
@@ -155,44 +153,60 @@ export class LostFoundService {
     }
   }
 
-  public saveToApi(): void {
-    const dog: any = this.objDogBuilder();
-    const headers: any = {
-      'Content-Type': 'application/json',
-      'Authorization': 'token ' + this.userService.token
-    };
-    this.loadingSave = true;
-    this.api.post('https://fierce-falls-25549.herokuapp.com/api/dogs',dog, headers).subscribe(data => {
-      console.log('sucessss', data);
-      this.loadingSave = false;
-      this.savedSuccess = true;
-      this.question = 'Perro creado con exito!';
-      this.savedData = this.trasnfromDogData(data);
-      console.log("saved data >>>", this.savedData);
-      this.setImgToBucket(data['images'][0].uploadImageUrl);
-    },
-    e => {
-      this.loadingSave = false;
-       this.globalService.clearErroMessages();
-       this.globalService.setErrorMEssage('Ops! tuvimos un problema y no se pudo guardar');
-       this.globalService.setSubErrorMessage('intenta mas tarde!');
-       this.globalService.openErrorModal();      
-    });
+  public saveToApi(): Subscription {
+    const dog: string = localStorage.getItem('reported-dog-data');
+    if (dog) {
+      const dogObj: Object = JSON.parse(dog);
+      const headers: any = {
+        'Content-Type': 'application/json',
+        'Authorization': 'token ' + this.userService.token
+      };
+      this.loadingSave = true;
+      return this.api.post('https://fierce-falls-25549.herokuapp.com/api/dogs',dogObj, headers).subscribe(data => {
+        console.log('sucessss', data);
+        this.loadingSave = false;
+        this.savedSuccess = true;
+        this.question = 'Perro creado con exito!';
+        this.savedData = this.trasnfromDogData(data);
+        console.log("saved data >>>", this.savedData);
+        localStorage.removeItem('reported-dog-data');
+        this.deleteReviewLocalStorage();
+        this.setImgToBucket(data['images'][0].uploadImageUrl);
+      },
+      e => {
+        this.loadingSave = false;
+         this.globalService.clearErroMessages();
+         this.globalService.setErrorMEssage('Ops! tuvimos un problema y no se pudo guardar');
+         this.globalService.setSubErrorMessage('intenta mas tarde!');
+         this.globalService.openErrorModal();      
+      });
+    } else {
+      this.globalService.clearErroMessages();
+      this.globalService.setErrorMEssage('no hay objeto guardado en local');
+      this.globalService.openErrorModal();
+    }
   }
 
   public setImgToBucket(url: string): void {
-    this.api.put(url, this.binaryDogImg, {'Content-Type': 'image/jpeg', 'Content-encoding': 'base64'}).subscribe(
-      data => {
-        this.savedImgs = true;
-        console.log('sucess', data);
+    const dogImg: string = localStorage.getItem('reported-dog-img-0');
+    fetch(dogImg)
+    .then(res => res.blob())
+    .then(blob => {
+      this.api.put(url, blob, {'Content-Type': 'image/jpeg', 'Content-encoding': 'base64'}).subscribe(
+        data => {
+          this.savedImgs = true;
+          localStorage.removeItem('reported-dog-img-0');
+          console.log('sucess', data);
 
-      },
-      e => {
-       this.globalService.clearErroMessages();
-       this.globalService.setErrorMEssage('No pudimos agregar las imagenes');
-       this.globalService.openErrorModal();
-      }
-    );
+        },
+        e => {
+         this.globalService.clearErroMessages();
+         this.globalService.setErrorMEssage('No pudimos agregar las imagenes');
+         this.globalService.openErrorModal();
+        }
+      );
+      
+    });    
   }
 
   public trasnfromDogData(data: any): any {
@@ -267,7 +281,7 @@ export class LostFoundService {
     } else if (this.multipleImgAnswers && this.multipleImgAnswers.length) {
       return this.multipleImgAnswers;
     }else if (this.inputField && this.inputField.type === 'binary') {
-      return this.binaryDogImg;
+      return {};
     }
     return undefined;
   }
@@ -291,7 +305,7 @@ export class LostFoundService {
      this.retrieveData = undefined;
      this.openNameInput = undefined;
      this.dogName = undefined;
-     this.binaryDogImg = undefined;
+
      this.dogPicture = this.defaultDogPic;
      this.reward = this.defaultReward;
      this.comments = undefined;
@@ -309,21 +323,48 @@ export class LostFoundService {
      this.searchService.maxDistance = this.searchService.maxDistanceDefault;
   }
 
-  public changePatternSequence(notDisabled: any[]) {
+  public changePatternSequence(notDisabled: any[], noSpliceAnswer?: boolean) {
     const patternString: string = 'pattern';
     const patternName: string = 'Patron';
     const patternIndex: number = this.defualtSequence.indexOf(patternString);
     if (notDisabled.length > 1 && !(~patternIndex)) {
-      this.pageAnswers.splice(this.pagePosition + 1, 0, undefined);
+      !noSpliceAnswer && this.pageAnswers.splice(this.pagePosition + 1, 0, undefined);
       this.defualtSequence.splice( this.pagePosition + 1, 0, patternString);
       this.defaultDisplayedSequence.splice(this.pagePosition + 1, 0, patternName);
       this.defaulApikeys.splice(this.pagePosition + 1, 0, patternString + '_id');
     }
     if (notDisabled.length && notDisabled.length <= 1 && ~patternIndex) {
-      this.pageAnswers.splice(patternIndex, 1);
+      !noSpliceAnswer && this.pageAnswers.splice(patternIndex, 1);
       this.defualtSequence.splice(patternIndex, 1);
       this.defaultDisplayedSequence.splice(patternIndex, 1);
       this.defaulApikeys.splice(patternIndex, 1);
     }
+  }
+  public getReviewFromLocalStorage(): void {
+    const pageAnswers = localStorage.getItem('temp-anwers');
+    const reward = localStorage.getItem('temp-reward');
+    const comments = localStorage.getItem('temp-comments');
+    const dogImg = localStorage.getItem('reported-dog-img-0');
+    if (pageAnswers) {
+      this.pageAnswers = JSON.parse(pageAnswers);
+     const indexColor: number = this.defualtSequence.indexOf('color');
+     const colorAnswer: any[] = this.pageAnswers[indexColor].filter((value: any, index: number) => {return value.disabled});
+     this.changePatternSequence(colorAnswer, true);
+    }
+    if (reward) {
+      this.reward = JSON.parse(reward);
+    }
+    if (comments) {
+      this.comments = JSON.parse(comments);
+    }
+    if (dogImg) {
+      this.dogPicture = dogImg;
+    }
+  }
+
+  public deleteReviewLocalStorage(): void {
+    localStorage.removeItem('temp-anwers');
+    localStorage.removeItem('temp-reward');
+    localStorage.removeItem('temp-comments');
   }
 }

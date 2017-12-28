@@ -77,7 +77,6 @@ export class OpenSpayService {
 
   public mapChargeRequest(amount: string, user: any, description: string): object {
       amount = amount.replace(/,/g, '');
-      const fullPhone: string = user.phoneNumber.area_code + '' + user.phoneNumber.number;
       const chargeRequest ={
         paymentInfo: {
           method: 'card',
