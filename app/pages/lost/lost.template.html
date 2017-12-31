@@ -85,4 +85,7 @@
     </div>
     <button class="waves-effect btn info" (click)="start()">comenzar!<i class="medium material-icons left">thumb_up</i></button>
   </div>
+  <div class="row payment" *ngIf="lostService.openPayment">
+    <form-payment ></form-payment>
+  </div> 
 </section>

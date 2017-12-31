@@ -95,7 +95,7 @@ export class FormPaymentComponent {
       this.dogId = params.cID;
       this.transcationId = params.transcation;
       this.lostParam = params.Lt;
-      this.chargeCreate = this.router.url === this.lostService.defualtSequence[this.lostService.defualtSequence.length - 1]
+      this.chargeCreate = !!~this.router.url.indexOf(this.lostService.defualtSequence[this.lostService.defualtSequence.length - 1]);
       this.rewardAmount = params.rW || (this.dogService.dogData && this.dogService.dogData.reward);
       if (!this.dogService.dogData && this.dogId) {
         this.dogService.getDog(this.dogId).add(() => {

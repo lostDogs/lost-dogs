@@ -1,5 +1,5 @@
-<div class="review-page row">
-  <div class="col l6 push-l3 s12" [hidden]="LostService.savedSuccess && LostService.savedImgs">
+<div class="review-page row" [ngClass]="{'remove-extra': LostService.openPayment}">
+  <div class="col l6 push-l3 s12" [hidden]="LostService.savedSuccess && LostService.savedImgs" *ngIf="!LostService.openPayment">
     <div class="centered zise" *ngIf="LostService.dogPicture" (click)="LostService.goTo(LostService.sequence.length-2)">
       <div  class="profile-dog" [ngStyle]="{'background-image': 'url(' + LostService.dogPicture + ')' }">
         <div class="overlay"><a>Editar</a></div>
@@ -42,5 +42,17 @@
   </div>
   <div class="col l12 m12 s12 centered" *ngIf="LostService.savedSuccess && LostService.savedImgs">
       <dog-card  [atReviewPage]="true"  [data]="LostService.savedData"  [maxCards]="1" [cardIndex]="0"></dog-card>
+  </div>
+  <div class="col l6 push-l3 s12" *ngIf="LostService.openPayment">
+    <ul class="collection with-header" #Description>
+      <li class="collection-item avatar centered" >
+        <div class="circle" [ngStyle]="{'background-image': 'url(' + LostService.dogPicture + ')' }" ></div>
+        <span class="title title-money">
+          <b>{{paymentDesc}}</b>
+          <span style="color:#26a69a">$ 65.00 MXN</span>
+        </span>
+        <a  class="secondary-content" (click)="LostService.openPayment=false">Editar</a>
+      </li>
+    </ul> 
   </div>
 </div>

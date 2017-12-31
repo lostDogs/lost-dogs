@@ -52,6 +52,8 @@ export class LostFoundService {
   public start: boolean;
   public prevResState: {data?: IdogData[], totalRes?: number, beforeFilter?: IdogData[]};
 
+  public openPayment: boolean;
+
   constructor(
     public router: Router,
     public api: ApiService,

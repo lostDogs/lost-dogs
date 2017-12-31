@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component,ElementRef, ViewChild} from '@angular/core';
 import {LostFoundService} from '../../../common/services/lost-found.service';
 import {Router} from '@angular/router';
 import {DogCardService} from '../../../common/services/dog-card.service';
@@ -13,6 +13,11 @@ export class ReviewComponent {
   public imgwidth: number = 80 / 2;
   public window: Window;
   public pageAnswersCopy: any[];
+  public openPayment: boolean;
+  @ViewChild('Description')
+  public descriptionDom: ElementRef;
+
+  public paymentDesc: string;
 
   constructor(public LostService: LostFoundService, public router: Router, public dogCardService: DogCardService) {
     this.window = window;
@@ -55,7 +60,15 @@ export class ReviewComponent {
   }
 
   public toPaymentForm(): void {
-    this.router.navigate(['payment/form'], {queryParams:{Cr: true}});
+    const breed: string = this.getName('breed');
+    this.paymentDesc = this.LostService.dogName ? 'Reportar a ' + this.LostService.dogName :   'Reportar un ' + breed;
+    this.paymentDesc += '.... ';
+    this.LostService.openPayment = true;
+    setTimeout(() => {
+      const scrollTo: number = this.descriptionDom.nativeElement.offsetTop + 120 ;
+      console.log('scrooll to ', scrollTo);
+        $('html, body').animate({ scrollTop: scrollTo }, 600);
+    }, 5);
   }
 
   public setFinalToLocalStorage(): void {
@@ -82,5 +95,11 @@ export class ReviewComponent {
     if (this.LostService.dogPicture && this.LostService.dogPicture !== this.LostService.defaultDogPic) {
       localStorage.setItem('reported-dog-img-0', this.LostService.dogPicture);
     }    
+  }
+
+  public getName(valueName: string): string {
+    const index: number = this.LostService.defualtSequence.indexOf(valueName);
+    return ~index && this.pageAnswersCopy[index][0].names;
+
   }
 }
