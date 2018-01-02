@@ -140,7 +140,7 @@ public splicedAnswer: boolean;
       this.pressedRight = true;
       this.scrolling.nativeElement.scrollLeft = this.scrolling.nativeElement.scrollLeft + this.scrollleftSteeps;
       setTimeout(() => {this.pressedRight = false;}, 300);
-    }    
+    }
   }
 
   public blockSelected(row: number, column: number, indexed?: number) {
@@ -149,17 +149,18 @@ public splicedAnswer: boolean;
     }
     // saving the original index into the object so we can emit it and latter deleted if selected.
     this.elements[indexed].orginalIndex = indexed;
-    if (!this.multiple) {
+    if (!this.multiple || this.maxElments === 1) {
       // removing previous elemet, index saved in a varaible 'previousSelected' to avoid using a loop. 
       this.elements[ this.previousSelected].disabled = false;
+      this.multipleElements = [];
     }
     //getting all disable elements, if there are more than the limit at maxElments then the will not be set to true
     const disabled = this.elements.filter((value: any, index: number) => {return value.disabled});
     // this variable adds the class of disable in an img.
     this.elements[indexed].disabled = disabled.length < this.maxElments ? !this.elements[indexed].disabled : false;
+    this.previousSelected = indexed;
     if (!this.multiple) {
     this.selectedEmitter.emit(this.elements[indexed]);
-    this.previousSelected = indexed;
     } else {
       let removeIndex: number;
       //this.multipleElements = this.removedElement && this.removedElement.length ? this.removedElement : this.multipleElements;
@@ -172,11 +173,12 @@ public splicedAnswer: boolean;
       });
       if (removeIndex !== undefined && ~removeIndex) {
         this.multipleElements.splice(removeIndex, 1);
+        this.selectedEmitter.emit(this.multipleElements);
       }
       if(disabled.length < this.maxElments) {
         this.multipleElements.push(this.elements[indexed]);
+        this.selectedEmitter.emit(this.multipleElements);
       }
-      this.selectedEmitter.emit(this.multipleElements);
     }
   }
 
