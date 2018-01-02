@@ -32,12 +32,12 @@ public ngAfterViewInit(): void {
   }
 }
   public filePicChange(ev: any): void {
-    const file: File = ev.target.files[0];
-    this.LostService.binaryDogImg = file;
+    let file: File = ev.target.files[0];
+    console.log('ev', ev);
      if (ev.target && ev.target.files && file && file.type.match('image.*')) {
         try {
           if (file.size > 3 * 1024 * 1024) {
-            this.minifyImgFile(file);
+            file = this.minifyImgFile(file);
           }
           const reader = new FileReader();
           reader.onload = (event: any) => {
@@ -56,13 +56,13 @@ public ngAfterViewInit(): void {
       }    
   }
 
-  public minifyImgFile(file: File) {    
+  public minifyImgFile(file: File): any {
     const self:DetailsComponent = this;
     new imgCompress(file, {
-      quality: .8,
+      quality: .7,
        success(result: any) {
         console.log('reducing file zise', result);
-        self.LostService.binaryDogImg = result;
+        return result;
        }
     })
   }

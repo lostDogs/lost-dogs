@@ -102,21 +102,16 @@ export class RewardPickerComponent {
   }
 
   public getTransaction(userToken: string, transactionId: string): void {
-    setTimeout(()=> {
-      this.transacionSucess = true;
+    this.rewardService.getTransaction(userToken, transactionId).add(() => {
+      this.invalidQr = this.rewardService.invalidTransactionId;
+      this.transacionSucess = this.rewardService.transaction && this.rewardService.transaction.dog_id;
       this.focusUpload = false;
+      if (this.transacionSucess) {
+        // getReward to user => procced to payment form.
         const formOffset: number = this.formDom.nativeElement.offsetTop - 120;
         setTimeout(() => {
           $('html, body').animate({ scrollTop: formOffset}, 500);
         }, 500)
-    }, 1000);
-/*    this.rewardService.getTransaction(userToken, transactionId).add(() => {
-      this.invalidQr = this.rewardService.invalidTransactionId;
-      this.transacionSucess = this.rewardService.transaction && this.rewardService.transaction.dog_id;
-      if (this.transacionSucess) {
-        // getReward to user => procced to payment form.
-        const formOffset: number = this.formDom.nativeElement.offsetTop - 120;
-        $('html, body').animate({ scrollTop: formOffset}, 400);
       } else {
         this.scannedValue = undefined;
         this.img = undefined;
@@ -125,8 +120,7 @@ export class RewardPickerComponent {
           this.startScan = false;
         }, 500);
       }
-
-    });*/
+    });
   }
 
 }

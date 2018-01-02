@@ -6,6 +6,7 @@ export class ValidationService {
   public cardType: string;
   public VISA: string = 'visa';
   public MASTER: string = 'MasterCard';
+  public AMEX: string = 'Amex';
   constructor(){
     this.errors.onlyNumbers = {};
   };
@@ -125,6 +126,9 @@ export class ValidationService {
     } else if (firstTwoDigits >= 22 && firstTwoDigits <= 27 ) {
       this.cardType = this.MASTER;
       return true;
+    } else if (firstTwoDigits === 34 || firstTwoDigits === 37) {
+      this.cardType = this.AMEX;
+      return true;
     } else {
       this.cardType = undefined;
       this.errors.creditcard = 'tarjeta no valida';
@@ -139,7 +143,9 @@ export class ValidationService {
       if ( cardDetector && this.cardType === this.VISA) {
         cardLenght = this.cardLength(cardNumber, 13);
       }else if (cardDetector && this.cardType === this.MASTER) {
-        cardLenght = this.cardLength(cardNumber, 16)
+        cardLenght = this.cardLength(cardNumber, 16);
+      }else if (cardDetector && this.cardType === this.AMEX) {
+      cardLenght = this.cardLength(cardNumber, 15);
       }
       return cardDetector && cardLenght;
     }

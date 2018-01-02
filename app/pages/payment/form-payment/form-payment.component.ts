@@ -6,21 +6,26 @@ import {GlobalFunctionService} from '../../../common/services/global-function.se
 import {MailingRewardService} from '../../../common/services/mailing-reward.service';
 import {DogCardService} from '../../../common/services/dog-card.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
+import {OpenSpayService} from '../../../common/services/openspay.service';
+import {LostFoundService} from '../../../common/services/lost-found.service';
+
+export interface ICard {
+  number: formObj;
+  ownerName: formObj;
+  expMonth: formObj;
+  expYear: formObj;
+  ccv: formObj;
+  method: formObj;
+  type: formObj;
+}
+
 @Component({
   selector: 'form-payment',
   template: require('./form-payment.template.html'),
   styles: [ require('./form-payment.scss')]
 })
 export class FormPaymentComponent {
-  public creaditCard: {
-    number: formObj,
-    ownerName: formObj,
-    expMonth: formObj,
-    expYear: formObj,
-    ccv: formObj,
-    method: formObj,
-    type: formObj
-  };
+  public creaditCard: ICard;
   public extra: {
     terms: formObj,
     noPersonalData: formObj
@@ -32,6 +37,9 @@ export class FormPaymentComponent {
   public sucess: boolean;
   public dogId: string;
   public transcationId: string;
+  public rewardAmount: string;
+  public lostParam: string;
+  public chargeCreate: boolean;
 
   constructor (
     public userService: UserService,
@@ -40,7 +48,9 @@ export class FormPaymentComponent {
     public globalService: GlobalFunctionService,
     public mailingService: MailingRewardService,
     public dogService: DogCardService,
-    public activeRoute: ActivatedRoute
+    public activeRoute: ActivatedRoute,
+    public openSpayService: OpenSpayService,
+    public lostService: LostFoundService
   ) {
     this.creaditCard = {
       method: {valid: true, value: undefined, required: false, label: 'Metodo de pago'},
@@ -53,7 +63,7 @@ export class FormPaymentComponent {
     };
     this.extra = {
       terms: {valid: true, value: undefined, required: true , label: 'Terminos & condiciones'},
-      noPersonalData: {valid: true, value: undefined, required: true, label: 'No proporcional domicilio'}
+      noPersonalData: {valid: true, value: undefined, required: true, label: 'No proporciones tu domicilio'}
     };
     this.months = [];
     this.years = [];
@@ -65,12 +75,14 @@ export class FormPaymentComponent {
     for (let i = todaysYear; i <= todaysYear + 10; i++) {
       this.years.push('' + i);
     }
+    this.openSpayService.loadOpenPayScript();
   }
 
   public ngOnInit(): void {
     const monthSelect: JQuery = $('#cc-month');
     const yearSelect: JQuery = $('#cc-year');
-
+    const un_0: number = 3;
+    const un_1: number = 2;
     monthSelect.change(() => {
       this.creaditCard.expMonth.value = monthSelect.val();
       this.creaditCard.expMonth.valid = true;
@@ -81,12 +93,23 @@ export class FormPaymentComponent {
     });
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.dogId = params.cID;
+      this.transcationId = params.transcation;
+      this.lostParam = params.Lt;
+      this.chargeCreate = !!~this.router.url.indexOf(this.lostService.defualtSequence[this.lostService.defualtSequence.length - 1]);
+      this.rewardAmount = params.rW || (this.dogService.dogData && this.dogService.dogData.reward);
       if (!this.dogService.dogData && this.dogId) {
-        this.dogService.getDog(this.dogId);
-      }else if (this.transcationId) {
+        this.dogService.getDog(this.dogId).add(() => {
+          this.setReward(params.rW);
+        });
+      }else if (!this.dogService.dogData && this.transcationId) {
       this.mailingService.getTransaction(this.userService.token, this.transcationId).add(() => {
-        this.dogService.getDog(this.mailingService.transaction.dog_id);
+        this.dogService.getDog(this.mailingService.transaction.dog_id).add(() => {
+          this.setReward(params.rW);
+        });
       });
+    }else if (this.chargeCreate) {
+      const unit: number = un_0 + un_1;
+      this.rewardAmount = ((unit + 1)* unit * 2 + unit).toFixed(2) + '';
     }
     });
   }
@@ -99,17 +122,23 @@ export class FormPaymentComponent {
       this.creaditCard.ownerName.value = this.userService.user.name + ' ' + this.userService.user.lastName + ' ' + this.userService.user.lastName2;
     }
   }
-  public pay(): void {
+
+  public setReward(param: string): void  {
+    this.rewardAmount =  !param ? this.dogService.dogData.reward : param;
+     this.rewardAmount =  this.rewardAmount || '00.00';
+  }
+
+  public pay(event: Event): void {
+    event.preventDefault();
     this.creaditCard.type.value = this.validate.cardType;
     this.globalService.clearErroMessages();
     const card: boolean = this.validation(this.creaditCard);
     const extras: boolean = this.validation(this.extra);
-    if (card && extras) {
+    const openPayValidation: any = this.openSpayService.validateCardNum(this.creaditCard.number.value) && this.openSpayService.validateCvc(this.creaditCard.number.value, this.creaditCard.ccv.value);
+    if (card && extras && openPayValidation) {
       this.cardSpin = true;
       this.loading = true;
-      setTimeout(() => {
-        this.proccedTransaction();
-      }, 1020);
+      this.proccedTransaction();
     } else  {
       this.globalService.openErrorModal();
     }
@@ -134,10 +163,30 @@ export class FormPaymentComponent {
   }
 
   public proccedTransaction(): void {
-    this.mailingService.sendEmailsToUsers(false, this.userService.token, this.dogService.dogData._id).add(() => {
-      this.loading = false;
-      this.sucess = true;
-      this.globalService.paymentRewardSucess = true;
+    const tokenData: any = this.openSpayService.mapTokenData(this.creaditCard);
+    this.openSpayService.createToken(tokenData).then(() => {
+      if (this.openSpayService.tokenId) {
+        const transDesc: string = this.chargeCreate ? 'pago por reportar perro' : 'pago de recompenza de ' + this.userService.user.name + ' para el perro >' + this.dogService.dogData._id;
+        const chargeObj: any = this.openSpayService.mapChargeRequest(this.rewardAmount, this.userService.user,transDesc);
+        this.openSpayService.chargeClient(chargeObj, this.userService.token, this.transcationId).add(() => {
+        if (this.openSpayService.sucessPaymentId) {
+          alert('SUCESS ID: ' + this.openSpayService.sucessPaymentId);
+          if (!this.chargeCreate) {
+            this.mailingService.sendEmailsToUsers(false, this.userService.token, this.dogService.dogData._id).add(() => {
+              this.loading = false;
+              this.sucess = true;
+              this.globalService.paymentRewardSucess = true;
+              $('html, body').animate({ scrollTop: 0 }, 500);
+            });
+          } else {
+            this.lostService.saveToApi().add(() => {
+              this.router.navigateByUrl('/lost/review');
+            });
+          }
+        }
+
+        })
+      }
     });
   }
 

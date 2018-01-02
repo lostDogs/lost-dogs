@@ -24,7 +24,7 @@ import {PaymentComponent} from './pages/payment/payment.component';
 import {ReviewPaymentComponent} from './pages/payment/review-payment/review-payment.component';
 import {FormPaymentComponent} from './pages/payment/form-payment/form-payment.component';
 import {PatternComponent} from './pages/lost-found-common/pattern/pattern.component';
-import {RewardPickerComponent} from './pages/reward-picker/reward-picker.component';
+// import {RewardPickerComponent} from './pages/reward-picker/reward-picker.component';
 
 const self = this;
 self.pathBuild = (pathName: string): any => {
@@ -70,7 +70,12 @@ export const router: Routes = [
       {path: '**', redirectTo: 'review'}
     ]
   },
-  {path: 'reward', component: RewardPickerComponent},
+  {path: 'reward', loadChildren: () => new Promise(resolve => {
+      (require as any).ensure([], require => {
+          resolve(require('./pages/reward-picker/reward-picker.module').rewardPickerModule);
+      })
+    })
+  },
   {path: 'info/:param', component: InformationComponent},
   { path: '', redirectTo: 'home' , pathMatch: 'full'},
   {path: '**', redirectTo: 'home'}
@@ -107,6 +112,5 @@ export const routerComponents = [
   PaymentComponent,
   ReviewPaymentComponent,
   FormPaymentComponent,
-  PatternComponent,
-  RewardPickerComponent
+  PatternComponent
 ];

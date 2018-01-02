@@ -5,6 +5,11 @@ review {
   .review-page.row {
     color: black;
     padding: 40px 0;
+    transition: 1s;
+    &.remove-extra {
+      padding: 20px 0;
+      margin: 0;
+    }
     .hoverable.dog-card.expanded {
       position: relative;
     max-height: unset;
@@ -139,6 +144,9 @@ review {
         width: 70%;
         text-align: center;
         line-height: 3.4rem;
+        &.title-money {
+          font-size: 2rem;
+        }
       }
       .secondary-content {
         top: 70px;

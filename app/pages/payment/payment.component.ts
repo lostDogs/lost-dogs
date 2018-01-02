@@ -3,6 +3,7 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Router, NavigationEnd} from '@angular/router';
 import {GlobalFunctionService} from '../../common/services/global-function.service';
 import {UserService} from  '../../common/services/user.service';
+import {CookieManagerService} from  '../../common/services/cookie-manager.service';
 require('../../common/plugins/masks.js');
 
 @Component({
@@ -13,7 +14,7 @@ require('../../common/plugins/masks.js');
 
 export class PaymentComponent {
   public title: string;
-  constructor(public globalService: GlobalFunctionService, public router: Router, public userService: UserService) {
+  constructor(public globalService: GlobalFunctionService, public router: Router, public userService: UserService, public cookieService: CookieManagerService) {
     this.router.events.subscribe(data => {
       if (data instanceof NavigationEnd && data.url.length) {
         const urlLoction = data.url && data.url.split('/')[2];

@@ -36,6 +36,7 @@ export class homeComponent {
 
   public ngOnInit(): void {
     window.scroll(0,0);
+    localStorage.clear();
     this.activatedRoute.queryParams.subscribe(
       data => this.newUser = data.nU ? true : false
     );

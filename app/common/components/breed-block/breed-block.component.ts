@@ -42,6 +42,9 @@ export class BreedBlockComponent {
   }
 
   public changeElement(event: any[]): void {
+    if (!Array.isArray(event)) {
+      event = [event];
+    }
     const lastIndex: number = event.length && event.length - 1;
     const disabledElements: any[] = event.filter((value: any)=>{return value.disabled});
     const isIndexCero: boolean = event.length && event.some((val: any, valIndex: number) => {

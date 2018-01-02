@@ -1,20 +1,40 @@
 @import '../../../common/styles/variables.scss';
+.card-types {
+  text-align: right;
+  color: grey;
+  margin-bottom: 10px;
+  h6 {
+  display: inline-block;
+  vertical-align: top;
+  }
+  @media screen and (max-device-width: $screen-mobile-max) {
+    font-weight: 400;
+    text-align: center;
+    img {
+      width: 350px;
+    }
+  }
+  &.long img {
+    width: 400px;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      width: 800px;
+    }
+  }
+}
+
 .card-container {
   perspective: 1000px;
   width: 550px;
   height: 350px;
   position: relative;
-  &.mobile {
-    display: none;
+  .card-types {
+    width: 85%;
   }
   @media screen and (max-device-width: $screen-mobile-max) {
     width: 800px;
     height: 536px;
     margin-top: 90px;
     display: none;
-    &.mobile {
-      display: block;
-    }
   }
   .credit-card {
     font-family: $cardFont, cursive;
@@ -118,16 +138,66 @@
       position: absolute;
       right: 15px;
       top: 30px;
+      &.amex {
+        width: 65px;
+      }
       @media screen and (max-device-width: $screen-mobile-max) {
         width: 200px;
         right: 40px;
         top: 45px;
+        &.amex {
+        width: 120px;
+      }
       }
       }
     }
   }  
 }
 form-payment {
+  .open-pay {
+    margin-top: 80px;
+    color: grey;
+    .open-pay-logo {
+      display: inline-block;
+      padding-right: 20px;
+      border-right: 1px solid;
+    }
+    .open-pay-secure {
+      display: inline-block;
+      vertical-align: top;
+      padding-left: 10px;
+      img {
+        width: 38px;        
+      }
+      h6 {
+      display: inline-block;
+      padding-left: 10px;        
+      }
+    }
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin-left: 20px;
+      .open-pay-logo {
+        img {
+          margin-left: 50%;
+        }
+      }
+      * {
+        h6 {
+          font-size: 2rem;
+        }
+      }
+    }
+  }
+  .mobile {
+    display: none;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      display: block;
+      &.types {
+        margin-top: 50px;
+        margin-bottom: 20px;
+      }
+    }
+  }  
   .submit {
     margin-top: 40px;
     width: 100%;

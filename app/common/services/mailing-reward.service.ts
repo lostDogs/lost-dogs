@@ -30,7 +30,7 @@ export class MailingRewardService {
       'Content-Type': 'application/json',
       'Authorization': 'token ' + userToken
     };
-    return this.api.get(this._endpointUrl + 'transaction/' + transactionId , undefined, headers).subscribe(data => {
+    return this.api.get(this._endpointUrl + 'transactions/' + transactionId , undefined, headers).subscribe(data => {
       console.log('sucess', data);
       this.transaction = data;
       this.invalidTransactionId = false;

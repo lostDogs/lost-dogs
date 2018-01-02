@@ -74,7 +74,7 @@
       </div>
     </div>
   </section>  
-  <div class="row intro" *ngIf="displayIntro">
+  <div class="row intro" *ngIf="displayIntro && !lostService.inReviewPage">
     <div class="lost col l12 s12 m12" *ngIf="lostService.parentPage==='lost'">
       <h3>No te preocupes, lo vamos econtrar<i class="medium material-icons">sentiment_very_satisfied</i></h3>
       <h5>solo responde las siguentes {{lostService.displayedSequence.length}} preguntas</h5>
@@ -85,4 +85,7 @@
     </div>
     <button class="waves-effect btn info" (click)="start()">comenzar!<i class="medium material-icons left">thumb_up</i></button>
   </div>
+  <div class="row payment" *ngIf="lostService.openPayment">
+    <form-payment ></form-payment>
+  </div> 
 </section>

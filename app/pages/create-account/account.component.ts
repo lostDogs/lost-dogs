@@ -209,7 +209,8 @@ export class accountComponent {
         'neighborhood': user.adress.adressName.value,
         'zip_code': user.adress.postalCode.value,
         'city': user.adress.city.value,
-        'country': user.adress.country.value
+        'country': user.adress.country.value,
+        'street': 'ads'
       },
       'phone_number': {
         'number': user.contact.phone.value,

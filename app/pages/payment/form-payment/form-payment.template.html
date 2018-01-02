@@ -1,7 +1,12 @@
 <div class="page form-payment create-account"> 
   <div class="row" [hidden]="sucess">
     <div class="col push-l1 l4 m12 s12">
-      <form  class="row" name="payment form" #paymentDog="ngForm" (ngSubmit)="pay() ">
+      <div class="col m12 s12 mobile types">
+      <div class="card-types">
+        <img src="http://cdn.lostdog.mx/assets/img/cards1.png">
+      </div>
+      </div>
+      <form  class="row" name="payment form" #paymentDog="ngForm" (ngSubmit)="pay($event) ">
         <div class="input-field alt-black  col l12 s12 m12" [ngClass]="{'wrong-red': !creaditCard.number.valid}">
           <input type="text" name="ccNumber" id="cc-number" [(ngModel)]="creaditCard.number.value" (keyup)="creaditCard.number.valid = validate.creditcard(creaditCard.number.value);"  (change)="creaditCard.number.valid = validate.creditcard(creaditCard.number.value);">
           <label for="cc-number" class="centered">
@@ -37,8 +42,8 @@
             <div  [hidden]="!(!creaditCard.ccv.valid && !creaditCard.ccv.value)" [ngClass]="{'fadeInDown2': !creaditCard.ccv.valid && !creaditCard.ccv.value}">{{creaditCard.ccv.label}} requerido</div>
           </label>
         </div>
-        <div class="input-field alt-black col l12 s12 m12 total" *ngIf="dogService.dogData && dogService.dogData.reward">
-          <h5>Total: </h5> <h4 class="money"> $ {{dogService.dogData.reward}} MXN</h4>
+        <div class="input-field alt-black col l12 s12 m12 total">
+          <h5>Total: </h5> <h4 class="money"> $ {{rewardAmount}} MXN</h4>
         </div>
         <div class="input-field alt-black col l12 s12 m12 mobile-left" [ngClass]="{'wrong-red': !extra.terms.valid}">
           <input type="checkbox" name="termsCond" id="terms" [(ngModel)]="extra.terms.value" (change)="extra.terms.valid = extra.terms.value ? true : false">
@@ -55,6 +60,7 @@
               <div class="card-type">
                <img class="logo" src="http://cdn.lostdog.mx/assets/img/visa-logo.png" alt="Visa logo" [hidden]="!(validate.cardType === validate.VISA)">
                <img class="logo" src="http://cdn.lostdog.mx/assets/img/mastercard-logo.png" alt="Mastercard logo"  [hidden]="!(validate.cardType === validate.MASTER)">
+               <img class="logo amex" src="http://cdn.lostdog.mx/assets/img/amex-logo.png" alt="Amex logo"  [hidden]="!(validate.cardType === validate.AMEX)">
              </div>
               <div class="number">{{creaditCard.number.value}}</div>
               <div class="exp-date">{{creaditCard.expMonth.value}} / {{creaditCard.expYear.value}}</div>
@@ -75,11 +81,18 @@
       </form>
     </div>
     <div class="col push-l2 l5 push-s1 push-m1 card-container">
+    <div class="card-types">
+      <h6>Crédito |</h6><img src="http://cdn.lostdog.mx/assets/img/cards1.png">
+    </div>
+    <div class="card-types long">
+      <h6>Débito |</h6><img src="http://cdn.lostdog.mx/assets/img/cards2.png">
+    </div>
       <div class="credit-card"  [ngClass]="{'flipped': flipped, 'full-rotate': cardSpin}">
         <div class="card-bg card-front" (click)="flipped=!flipped;">
           <div class="card-type">
            <img class="logo" src="http://cdn.lostdog.mx/assets/img/visa-logo.png" alt="Visa logo" [hidden]="!(validate.cardType === validate.VISA)">
            <img class="logo" src="http://cdn.lostdog.mx/assets/img/mastercard-logo.png" alt="Mastercard logo"  [hidden]="!(validate.cardType === validate.MASTER)">
+           <img class="logo amex" src="http://cdn.lostdog.mx/assets/img/amex-logo.png" alt="Amex logo"  [hidden]="!(validate.cardType === validate.AMEX)">
          </div>
           <div class="number">{{creaditCard.number.value}}</div>
           <div class="exp-date">{{creaditCard.expMonth.value}} / {{creaditCard.expYear.value}}</div>
@@ -88,6 +101,14 @@
         <div class="card-bg card-back" (click)="flipped=!flipped;">
           <div class="ccv">{{creaditCard.ccv.value}}</div>
         </div>      
+      </div>
+    </div>
+    <div class="col push-l2 l5 open-pay">
+      <div class="open-pay-logo">
+        <h6>Transacciones realizadas vía</h6> <img src="http://cdn.lostdog.mx/assets/img/openpay.png">
+      </div>
+      <div class="open-pay-secure">
+        <img src="http://cdn.lostdog.mx/assets/img/security.png"> <h6>Tu pagos se realizan de forma segura  <br> con encriptación de 256 bits</h6>
       </div>
     </div>
   </div>

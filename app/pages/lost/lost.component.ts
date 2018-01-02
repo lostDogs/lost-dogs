@@ -38,6 +38,7 @@ export class lostComponent {
         const urlChildLoction = data.url.split('/')[2];
         const Indexlocation = this.lostService.sequence.indexOf(urlChildLoction);
         this.lostService.pagePosition = Indexlocation !== -1 ? Indexlocation : 0;
+        console.log('parent page in router event', data.url.split('/')[1]);
         if (urlChildLoction === 'location') {
           console.log('starting map');
           if (this.startMap && !this.lostService.searchService.timer && !this.lostService.pageAnswers[this.lostService.pagePosition]) {
@@ -66,14 +67,17 @@ export class lostComponent {
       }
     });
   }
+
   public ngOnInit(): void {
     if (!this.userService.isAuth) {
       this.userService.previousUrl = this.router.url;
       this.router.navigate(['/login']);
     }
     this.lostService.resetService();
+    localStorage.clear();
     this.displayIntro = true;
     this.dogCardService.open = true;
+    console.log('parent page in ngoninit', this.router.url.split('/')[1]);
     this.lostService.parentPage = this.router.url.split('/')[1];
     this.fullWidth = this.progressDom.nativeElement.clientWidth;
     // sequence could change according to the action Lost/ Found.
