@@ -1,1 +1,8 @@
-<side-block (selectedEmitter)="changeElement($event)" [removedElement]="removedElement" [elements]="elements" [numberOfRows]="2"  [multiple]="true"  [maxElments]="maxSelection"></side-block>
+<side-block (selectedEmitter)="changeElement($event)" [removedElement]="removedElement" [elements]="elements" [numberOfRows]="2"  [multiple]="true"  [maxElments]="maxSelection" [forceSelection]="forceSelection"></side-block>
+
+<div class="row breed-searcher">
+  <div class="input-field col alt-black l4 push-l4">
+    <input type="text" name="breed" id="breed-autocomp" class="autocomplete" placeholder="Pastor Aleman">
+    <label for="breed-autocomp" >buscar</label>
+  </div>
+</div>

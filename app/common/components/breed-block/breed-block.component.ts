@@ -14,6 +14,8 @@ export class BreedBlockComponent {
   public breeds: any = breedContent;
   public dogImgUrl: string = 'http://cdn.lostdog.mx/assets/img/dogs/';
   public maxSelection: number = 1;
+  public forceSelection: number;
+
   @Output()
   public selectedEmitter: EventEmitter<any> = new EventEmitter<any>();  
   @Input()
@@ -38,7 +40,31 @@ export class BreedBlockComponent {
   }
 
   public ngAfterViewInit(): void {
-
+    const data: any = {};
+    this.elements.forEach((val: any, valIndex: number) => {
+      data[val.name] = val.imgUrl;
+    });
+    $(document).ready(() => {
+      $('#breed-autocomp').autocomplete({
+        data: data,
+        limit: 10,
+        onAutocomplete: (selectedName: string) => {
+          this.elements.some((val: any, valIndex: number) => {
+            if (val.name.trim() === selectedName.trim()) {
+              this.forceSelection = valIndex;
+              return true;
+            }
+          });
+          if (this.forceSelection) {
+            const left: number =  $('#' + this.elements[this.forceSelection].key).offset().left;
+            const screenWidth: number = document.documentElement.clientWidth;
+            $('breed-block .scroll-section').animate({ scrollLeft: left - screenWidth / 2 + 20}, 2000);
+            setTimeout(() => {this.forceSelection = undefined}, 5);
+          }
+        },
+        minLength: 1, 
+      });
+    });
   }
 
   public changeElement(event: any[]): void {
