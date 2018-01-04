@@ -49,6 +49,8 @@ export class BreedBlockComponent {
         data: data,
         limit: 10,
         onAutocomplete: (selectedName: string) => {
+          const prevOffset: number = $('breed-block .scroll-section .row').offset().left;
+          const screenWidth: number = document.documentElement.clientWidth;
           this.elements.some((val: any, valIndex: number) => {
             if (val.name.trim() === selectedName.trim()) {
               this.forceSelection = valIndex;
@@ -56,9 +58,14 @@ export class BreedBlockComponent {
             }
           });
           if (this.forceSelection) {
-            const left: number =  $('#' + this.elements[this.forceSelection].key).offset().left;
-            const screenWidth: number = document.documentElement.clientWidth;
-            $('breed-block .scroll-section').animate({ scrollLeft: left - screenWidth / 2 + 20}, 2000);
+            //to scroll frist need to find where we are at. <prevOffset>
+            // then we need to figure if scroll left or right <left - prevOffset> the sign will take care.
+
+            let left: number =  $('#' + this.elements[this.forceSelection].key).offset().left;
+            if (prevOffset) {
+               left = left - prevOffset;
+            }
+            $('breed-block .scroll-section').animate({ scrollLeft: left - screenWidth / 2 + 100}, 2000);
             setTimeout(() => {this.forceSelection = undefined}, 5);
           }
         },
