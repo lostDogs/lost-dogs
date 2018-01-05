@@ -22,6 +22,9 @@ export class BreedBlockComponent {
   public removedElement: any;
   @Output()
   public changeTitle: EventEmitter<boolean> = new EventEmitter<boolean>();  
+  @Input()
+  public openBreedSearch: boolean;
+
   constructor(public router: Router) {
     this.elements = [];
     this.breeds.forEach((value: any, valueIndex: number) => {
@@ -53,6 +56,7 @@ export class BreedBlockComponent {
           const screenWidth: number = document.documentElement.clientWidth;
           this.elements.some((val: any, valIndex: number) => {
             if (val.name.trim() === selectedName.trim()) {
+              this.openBreedSearch = false;
               this.forceSelection = valIndex;
               return true;
             }

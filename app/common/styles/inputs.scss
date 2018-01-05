@@ -119,3 +119,22 @@ button.btn, div.btn {
 [hidden], template {
       display: none !important;
 }
+
+ul.autocomplete-content.dropdown-content {
+  border-radius: 5px;
+  @media screen and (max-device-width: $screen-mobile-max) {
+    border-radius: 10px;
+    li > a, li > span {
+      font-size: 3rem;
+      line-height:4rem;
+      padding-top: 40px;
+      padding-bottom: 40px;
+      border-bottom: 2px solid grey;
+    }
+    img {
+      margin-top: 20px;
+      width: 100px;
+      height: 100px;
+    }
+  }
+}
