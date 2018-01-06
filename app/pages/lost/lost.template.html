@@ -33,8 +33,9 @@
           </div>
           <p [ngStyle]="{'background-color': block.name.charAt(0)==='#' && block.name}">{{block.name}}</p>
         </div>
-    </div>        
       </div>
+    </div>
+    <button [hidden]="!(childPage==='breed')" class="btn info breed-search breed" (click)="lostService.openBreedSearch=true" #ButtonBreedSearch><i  class="material-icons">search</i></button>
   </div>
   <div class="progress-bar col l12 s12 m12" #Progress  [ngClass]="{'blur-filter': dogCardService.open}">
     <div class="progression" [ngStyle]="{'width':  progress*fullWidth + 'px' }" [ngClass]="{'completed': progress === 1}">

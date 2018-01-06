@@ -21,7 +21,7 @@
           <div class="answerSelected" *ngIf="nameInput && showNameInput" (click)="enableComponent(filter, i)">
             <div title="cerrar" class="close-icon" (click)="nameInput=undefined;nameModel=''">
               <i class="tiny material-icons">close</i>
-            </div>
+          </div>
             <p class="answer-text">{{nameInput}}</p>
           </div>
           <button *ngIf="filter === 'breed' && filterElements.breed && filterElements.breed.enable && filterElements.breed.answer && filterElements.breed.answer && filterElements.breed.answer.length < 2" class="btn info breed-search" (click)="openBreedSearch=true" #ButtonBreedSearch><i  class="material-icons">search</i></button>

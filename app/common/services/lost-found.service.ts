@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, ElementRef} from '@angular/core';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs/Rx';
 import {Ielement} from '../components/side-block/side-block.component';
@@ -53,6 +53,8 @@ export class LostFoundService {
   public prevResState: {data?: IdogData[], totalRes?: number, beforeFilter?: IdogData[]};
 
   public openPayment: boolean;
+  public openBreedSearch: boolean;
+  public btnBreedSearchDom: ElementRef;
 
   constructor(
     public router: Router,

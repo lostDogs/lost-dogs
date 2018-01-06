@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import {LostFoundService} from '../../../common/services/lost-found.service';
 @Component({
   selector: 'breed',

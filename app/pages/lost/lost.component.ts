@@ -22,9 +22,12 @@ export class lostComponent {
   public screenWidth: number;
   public mapWidth: number;
   public startMap: boolean;
+  public childPage: string;
   @ViewChild('Progress')
   public progressDom: ElementRef;
   public window: Window;
+  @ViewChild('ButtonBreedSearch')
+  public buttonBreedSearch: ElementRef;
 
   constructor (public dogCardService: DogCardService, public lostService: LostFoundService, public router: Router, public userService: UserService, public domEl: ElementRef, public globalService: GlobalFunctionService) {
     this.progress = 0;
@@ -36,9 +39,9 @@ export class lostComponent {
       if (data instanceof NavigationEnd) {
          window.scroll(0,0);
         const urlChildLoction = data.url.split('/')[2];
+        this.childPage = urlChildLoction;
         const Indexlocation = this.lostService.sequence.indexOf(urlChildLoction);
         this.lostService.pagePosition = Indexlocation !== -1 ? Indexlocation : 0;
-        console.log('parent page in router event', data.url.split('/')[1]);
         if (urlChildLoction === 'location') {
           console.log('starting map');
           if (this.startMap && !this.lostService.searchService.timer && !this.lostService.pageAnswers[this.lostService.pagePosition]) {
@@ -46,6 +49,8 @@ export class lostComponent {
             this.lostService.searchService.callByTimer(this.lostService.setAnwer, this.lostService);
           }
           this.startMap = true;
+        }else if (urlChildLoction === 'breed') {
+          this.lostService.btnBreedSearchDom = this.buttonBreedSearch;
         }
         if (this.lostService.retrieveData) {
           this.lostService.retrieveData(this.lostService.pageAnswers[this.lostService.pagePosition], this.lostService);

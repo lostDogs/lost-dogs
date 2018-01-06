@@ -38,7 +38,7 @@ export class BreedBlockComponent {
     this.elements.push({name: value.name, imgUrl: this.dogImgUrl + value.id + '.jpg', apiVal: value.id, id: value.id});
     });
     this.renderer.listenGlobal('document', 'click', (event: any) => {
-      if (this.openBreedSearch && this.breedSearchDom.nativeElement  && this.btnDom.nativeElement && !this.btnDom.nativeElement.contains(event.target) && !this.breedSearchDom.nativeElement.contains(event.target)) {
+      if (this.openBreedSearch  && !this.btnDom.nativeElement.contains(event.target) && !this.breedSearchDom.nativeElement.contains(event.target)) {
          this.openBreedSearch = false;
          this.openSearchemiter.emit(this.openBreedSearch);
       }
@@ -131,4 +131,10 @@ export class BreedBlockComponent {
     const selectedBreed: any = this.breeds[+id - 1];
     return selectedBreed && selectedBreed.looksLike;
   }
+
+/*  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.btnDom && changes.btnDom.currentValue) {
+      console.log('breeed block dom', this.btnDom);
+    }
+  }*/
 }
