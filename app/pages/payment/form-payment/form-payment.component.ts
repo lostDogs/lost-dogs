@@ -168,24 +168,25 @@ export class FormPaymentComponent {
       if (this.openSpayService.tokenId) {
         const transDesc: string = this.chargeCreate ? 'pago por reportar perro' : 'pago de recompenza de ' + this.userService.user.name + ' para el perro >' + this.dogService.dogData._id;
         const chargeObj: any = this.openSpayService.mapChargeRequest(this.rewardAmount, this.userService.user,transDesc);
-        this.openSpayService.chargeClient(chargeObj, this.userService.token, this.transcationId).add(() => {
-        if (this.openSpayService.sucessPaymentId) {
-          alert('SUCESS ID: ' + this.openSpayService.sucessPaymentId);
-          if (!this.chargeCreate) {
-            this.mailingService.sendEmailsToUsers(false, this.userService.token, this.dogService.dogData._id).add(() => {
+        if (!this.chargeCreate) {
+          this.mailingService.sendEmailsToUsers(false, this.userService.token, this.dogService.dogData._id, chargeObj).add(() => {
+            if (!this.mailingService.errorInEmails) {
               this.loading = false;
               this.sucess = true;
               this.globalService.paymentRewardSucess = true;
               $('html, body').animate({ scrollTop: 0 }, 500);
-            });
-          } else {
-            this.lostService.saveToApi().add(() => {
-              this.router.navigateByUrl('/lost/review');
-            });
-          }
-        }
-
-        })
+            }
+          });
+        } else {
+          this.openSpayService.chargeClient(chargeObj, this.userService.token, this.transcationId).add(() => {
+            if (this.openSpayService.sucessPaymentId) {
+              this.lostService.saveToApi().add(() => {
+                this.router.navigateByUrl('/lost/review');
+              });
+              alert('SUCESS ID: ' + this.openSpayService.sucessPaymentId);
+            }
+          });
+        }        
       }
     });
   }

@@ -1,7 +1,7 @@
 <side-block (selectedEmitter)="changeElement($event)" [removedElement]="removedElement" [elements]="elements" [numberOfRows]="2"  [multiple]="true"  [maxElments]="maxSelection" [forceSelection]="forceSelection" [ngClass]="{'blur-section': openBreedSearch}"></side-block>
 <div class="breed-searcher-container" [hidden]="!openBreedSearch">
-  <div class="row breed-searcher"  [ngClass]="{'search-top': searchDog}">
-    <div class="input-field col alt-black l4 s6 m6 push-l4 push-s3 push-m3">
+  <div class="row breed-searcher"  #BreedSearcher [ngClass]="{'search-top': searchDog}">
+    <div class="input-field col alt-black l4 s8 m8 push-l4 push-s2 push-m2">
       <input type="text" name="breed"  [(ngModel)]="searchDog" id="breed-autocomp" class="autocomplete" placeholder="Buscar">
     </div>
   </div>

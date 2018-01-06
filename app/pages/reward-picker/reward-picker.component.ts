@@ -2,6 +2,7 @@ import {Component, ViewChild, ElementRef} from '@angular/core';
 import {Router} from '@angular/router';
 import {MailingRewardService} from '../../common/services/mailing-reward.service';
 import {UserService} from '../../common/services/user.service';
+import {OpenSpayService} from '../../common/services/openspay.service';
 const QCodeDecoder = require('../../common/vendor/qr-img-decoder.js');
 
 @Component({
@@ -21,10 +22,11 @@ export class RewardPickerComponent {
   public mobile: boolean;
   public invalidQr: boolean;
   public transacionSucess: boolean;
+  public transObj: {identifier: string, transactionId: string};
   @ViewChild('RewardAprox')
   public formDom: ElementRef;
 
-  constructor(public rewardService: MailingRewardService, public userService: UserService, public router: Router) {
+  constructor(public rewardService: MailingRewardService, public userService: UserService, public router: Router, public openPay: OpenSpayService) {
     const ios: boolean = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform)
     this.mobile = window.screen.width <= 767 || ios;
     if (this.mobile) {
@@ -102,7 +104,8 @@ export class RewardPickerComponent {
   }
 
   public getTransaction(userToken: string, transactionId: string): void {
-    this.rewardService.getTransaction(userToken, transactionId).add(() => {
+    this.transObj = JSON.parse(transactionId);
+    this.rewardService.getTransaction(userToken, this.transObj.transactionId).add(() => {
       this.invalidQr = this.rewardService.invalidTransactionId;
       this.transacionSucess = this.rewardService.transaction && this.rewardService.transaction.dog_id;
       this.focusUpload = false;
@@ -121,6 +124,18 @@ export class RewardPickerComponent {
         }, 500);
       }
     });
+  }
+
+  public rewardMe(event: Event): void {
+    event.preventDefault();
+    const formObj = {
+      bank_account: {
+        clabe: '012298026516924616',
+        holder_name: 'chris Tupper'
+      },
+      description: 'recompenza para Chris de transID > ' + this.transObj.transactionId      
+    };
+    this.openPay.transfer(this.transObj, formObj, this.userService.token);
   }
 
 }

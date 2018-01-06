@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, Input} from '@angular/core';
+import {Component, EventEmitter, Output, Input, ViewChild, ElementRef, Renderer, SimpleChanges} from '@angular/core';
 import {Router} from '@angular/router';
 import * as breedContent from '../../content/breeds.json';
 
@@ -17,19 +17,31 @@ export class BreedBlockComponent {
   public forceSelection: number;
 
   @Output()
-  public selectedEmitter: EventEmitter<any> = new EventEmitter<any>();  
+  public selectedEmitter: EventEmitter<any> = new EventEmitter<any>();
   @Input()
   public removedElement: any;
   @Output()
-  public changeTitle: EventEmitter<boolean> = new EventEmitter<boolean>();  
+  public changeTitle: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input()
   public openBreedSearch: boolean;
+  @Output()
+  public openSearchemiter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @ViewChild('BreedSearcher')
+  public breedSearchDom: ElementRef;
+  @Input()
+  public btnDom: ElementRef;
 
-  constructor(public router: Router) {
+  constructor(public router: Router, public renderer: Renderer) {
     this.elements = [];
     this.breeds.forEach((value: any, valueIndex: number) => {
       // api val is adding the look alike,  and id value is the clean val.
     this.elements.push({name: value.name, imgUrl: this.dogImgUrl + value.id + '.jpg', apiVal: value.id, id: value.id});
+    });
+    this.renderer.listenGlobal('document', 'click', (event: any) => {
+      if (this.openBreedSearch && this.breedSearchDom.nativeElement  && this.btnDom.nativeElement && !this.btnDom.nativeElement.contains(event.target) && !this.breedSearchDom.nativeElement.contains(event.target)) {
+         this.openBreedSearch = false;
+         this.openSearchemiter.emit(this.openBreedSearch);
+      }
     });
   }
 
@@ -57,6 +69,7 @@ export class BreedBlockComponent {
           this.elements.some((val: any, valIndex: number) => {
             if (val.name.trim() === selectedName.trim()) {
               this.openBreedSearch = false;
+              this.openSearchemiter.emit(this.openBreedSearch);
               this.forceSelection = valIndex;
               return true;
             }

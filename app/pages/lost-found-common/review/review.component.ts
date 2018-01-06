@@ -90,7 +90,7 @@ export class ReviewComponent {
       localStorage.setItem('temp-name', JSON.stringify(this.LostService.dogName)); 
     }
     if (this.LostService.comments) {
-      localStorage.setItem('temp-comments', JSON.stringify(this.LostService.dogName)); 
+      localStorage.setItem('temp-comments', JSON.stringify(this.LostService.comments)); 
     }
     if (this.LostService.dogPicture && this.LostService.dogPicture !== this.LostService.defaultDogPic) {
       localStorage.setItem('reported-dog-img-0', this.LostService.dogPicture);

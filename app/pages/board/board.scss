@@ -131,34 +131,45 @@ board {
       height: 100vh;
       width: 100%;
       top: 0;
-      padding-top: 100px;
-      @media screen and (max-device-width:$screen-desktop-min) {
-        padding-top: 350px;
+      margin-top: 200px;
+      @media screen and (max-device-width: $screen-desktop-min) {
+        margin-top: 350px;
       }       
     }
     breed-block .breed-searcher {
       position: absolute;
-      top: 40%;
+      top: 15%;
       width: 100%;
       z-index: 30;
       transition: 1s;
       &.search-top {
-        top: 25%;
+        top: 2%;
       }
       .input-field input {
         width: 100%;
         background: white;
         border-radius: 5px;
+        padding-left: 5px;
       }
       @media screen and (max-device-width: $screen-mobile-max) {
-        top: 30%;
+        top: 10%;
         .input-field input {
           border-radius: 10px;
+          padding: 15px;
+          line-height: 3rem;          
         }
         &.search-top {
-          top: 15%;
+          top: 2%;
         }
       }
+      @media screen 
+      and (min-device-width: $screen-tablet-min) 
+      and (max-device-width: $screen-tablet-max) {
+        top: 2%;
+        &.search-top {
+          top: -10%;
+        }
+      }   
     }
     date-picker section.row.date {
       margin-bottom: 0px;

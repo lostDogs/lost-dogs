@@ -24,6 +24,7 @@ export class QrScannerComponent {
     this.scanner = new instaCam.Scanner({ video: document.getElementById('preview')});
     this.scanner.addListener('scan', (content: any) => {
         if (content) {
+          console.log('content scanned', content);
           this.scannedValue.emit(content);
           this.scanner.stop();
         }

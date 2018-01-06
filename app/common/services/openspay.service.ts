@@ -110,6 +110,22 @@ export class OpenSpayService {
       });
   }
 
+  public transfer(qrObj: {identifier: string, transactionId: string}, transferData: any, userToken: string): Subscription {
+    const headers: any = {
+      'Content-Type': 'application/json',
+      'Authorization': 'token ' + userToken
+    };
+    console.log('qrObj identifier', qrObj.identifier);
+    const url: string = '/api/transactions/' + qrObj.transactionId + '/reward/' + qrObj.identifier;
+    return this.api.post('https://fierce-falls-25549.herokuapp.com' + url , transferData, headers).subscribe(
+      data => {
+        console.log('transfer sucess!', data);
+      },
+      error => {
+        console.error('error making a transfer', error);
+      });
+  }
+
   public loadOpenPayScript(): any {
     //  Dynamically inserting payment scirpts on the dom.
     const scripts: JQuery = $('script');
@@ -136,5 +152,6 @@ export class OpenSpayService {
         }
       };
     });
-  }  
+  }
+  
 }
