@@ -177,10 +177,11 @@
         <div *ngIf="!loading">Crear cuenta <i class="material-icons right">perm_identity</i></div>
         <div *ngIf="loading">Cargando ...</div>
         </button>
-      </div>
+      </div>    
       <div class="row centered" [hidden]="profilePage">
         <div class="privacy-policy">
-          <p>Te prometemos que no vamos a <b>compartir</b> tu informacion con nadie mas.Ve nuetras <a href="javascript:void(0)" title="privacy policy"> politicas de privacidad</a>.</p>
+          <p style="text-align: center;margin-bottom: 10px">Al crear tu cuenta estas aceptando nuestros <a (click)="toTerms()" title="Terms & conditions"> Terminos & Condiciones</a>.</p>
+          <p>Te prometemos que no vamos a <b>compartir</b> tu informacion con nadie más.Ve nuetras <a (click)="toPrivacy()" title="privacy policy"> Politicas de Privacidad</a>.</p>
         </div>
       </div>
     </form>

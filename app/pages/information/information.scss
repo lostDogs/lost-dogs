@@ -4,9 +4,16 @@ information {
     background-color: $lightGrey;
     .main-content {
       margin-bottom: 0;
+      ul.bullets{
+        padding-left: 40px;
+        list-style-type: square;
+        li {
+          list-style-type: square;
+        }
+      }
       .subtitle {
         text-align: center;
-        padding-top: 50px;
+        padding-top: 30px;
       }
       .data {
         margin-bottom: 0;
