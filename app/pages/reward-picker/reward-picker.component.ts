@@ -72,16 +72,18 @@ export class RewardPickerComponent {
 
   public fileChange(ev: any): void {
     const file: File = ev.target.files[0];
-    console.log('file change!!', file);
      if (ev.target && ev.target.files && file && file.type.match('image.*')) {
         try {
           const reader = new FileReader();
           reader.onload = (event: any) => {
             const pic = event.target.result;
+                console.log('file on looad!!');
             this.QrDecoder.decodeFromImage(pic, (error: any, ans: any) => {
+              console.log("coooming insde the deocide form image component")
               if (error) {
                 this.invalidQr = true;
                 this.focusUpload = false;
+                this.img = undefined;
                 console.error('error decoding qr img', error);
                 return;
               }

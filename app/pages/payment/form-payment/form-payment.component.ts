@@ -75,6 +75,7 @@ export class FormPaymentComponent {
     for (let i = todaysYear; i <= todaysYear + 10; i++) {
       this.years.push('' + i);
     }
+    this.lostService.resetService();
     this.openSpayService.loadOpenPayScript();
   }
 
@@ -95,7 +96,8 @@ export class FormPaymentComponent {
       this.dogId = params.cID;
       this.transcationId = params.transcation;
       this.lostParam = params.Lt;
-      this.chargeCreate = !!~this.router.url.indexOf(this.lostService.defualtSequence[this.lostService.defualtSequence.length - 1]);
+      const value: string = this.lostService.defualtSequence[this.lostService.defualtSequence.length - 1]
+      this.chargeCreate = !!~this.router.url.indexOf(value);
       this.rewardAmount = params.rW || (this.dogService.dogData && this.dogService.dogData.reward);
       if (!this.dogService.dogData && this.dogId) {
         this.dogService.getDog(this.dogId).add(() => {
@@ -110,6 +112,8 @@ export class FormPaymentComponent {
     }else if (this.chargeCreate) {
       const unit: number = un_0 + un_1;
       this.rewardAmount = ((unit + 1)* unit * 2 + unit).toFixed(2) + '';
+    } else {
+      this.router.navigateByUrl('/home');
     }
     });
   }
