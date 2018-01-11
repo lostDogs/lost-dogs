@@ -113,7 +113,7 @@ export class FormPaymentComponent {
       const unit: number = un_0 + un_1;
       this.rewardAmount = ((unit + 1)* unit * 2 + unit).toFixed(2) + '';
     } else {
-      this.router.navigateByUrl('/home');
+      //this.router.navigateByUrl('/home');
     }
     });
   }
@@ -172,7 +172,18 @@ export class FormPaymentComponent {
       if (this.openSpayService.tokenId) {
         const transDesc: string = this.chargeCreate ? 'pago por reportar perro' : 'pago de recompenza de ' + this.userService.user.name + ' para el perro >' + this.dogService.dogData._id;
         const chargeObj: any = this.openSpayService.mapChargeRequest(this.rewardAmount, this.userService.user,transDesc);
-        if (!this.chargeCreate) {
+        if (this.transcationId) {
+          console.log('paying for lost with chargeClient');
+          this.openSpayService.chargeClient(chargeObj, this.userService.token, this.transcationId).add(() => {
+            if (this.openSpayService.sucessPaymentId) {
+              this.loading = false;
+              this.sucess = true;
+              this.globalService.paymentRewardSucess = true;
+              $('html, body').animate({ scrollTop: 0 }, 500);
+            }
+          });
+        } else if (this.dogId) {
+          console.log('paying for found with email service');
           this.mailingService.sendEmailsToUsers(false, this.userService.token, this.dogService.dogData._id, chargeObj).add(() => {
             if (!this.mailingService.errorInEmails) {
               this.loading = false;
@@ -181,8 +192,8 @@ export class FormPaymentComponent {
               $('html, body').animate({ scrollTop: 0 }, 500);
             }
           });
-        } else {
-          this.openSpayService.chargeClient(chargeObj, this.userService.token, this.transcationId).add(() => {
+        } else if (this.chargeCreate) {
+          this.openSpayService.chargeClient(chargeObj, this.userService.token).add(() => {
             if (this.openSpayService.sucessPaymentId) {
               this.lostService.saveToApi().add(() => {
                 this.router.navigateByUrl('/lost/review');

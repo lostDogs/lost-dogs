@@ -75,6 +75,7 @@ export class ReviewPaymentComponent {
 
   public next(): void {
     if (this.lost || this.transcationId) {
+      console.log('to paymetns')
       this.router.navigate(['/payment/form'],  {queryParams: {Lt: this.lost, iD: this.dogIndex, cID: this.dogID, transcation: this.transcationId, rW: this.reward}});
     } else {
       this.mailingService.sendEmailsToUsers(!this.lost, this.userService.token, this.dogData._id).add(() => {
