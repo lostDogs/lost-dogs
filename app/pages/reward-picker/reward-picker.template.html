@@ -27,13 +27,17 @@
     <div #RewardAprox></div>
     <form name="rewards" class="create-account" #RewardForm="ngForm" (ngSubmit)="rewarded()" *ngIf="transacionSucess && dogService.dogData">
       <div class="row input-fields">
-        <div class="input-field  alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': false}">
-          <input type="text" name="account" id="account" [(ngModel)]="accountNumber">
-          <label for="account">Número de cuenta o tarjeta</label>
+        <div class="input-field  alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': !rewardForm.accountNumber.valid}" (keyup)="rewardForm.accountNumber.valid = validate.onlyNumbers(rewardForm.accountNumber.value);"  (change)="rewardForm.accountNumber.valid = validate.onlyNumbers(rewardForm.accountNumber.value)">
+          <input type="text" name="account" id="account" [(ngModel)]="rewardForm.accountNumber.value">
+          <label for="account">Número de cuenta o tarjeta
+            <span for="account" [hidden]="rewardForm.accountNumber.valid">incorrecto</span>
+          </label>
         </div>
-        <div class="input-field  alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': false}">
-            <input type="text" name="name" id="name"  [(ngModel)]="holderName">
-            <label for="name">Nombre</label>
+        <div class="input-field  alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': !rewardForm.holderName.valid}" (keyup)="rewardForm.holderName.valid = validate.name(rewardForm.holderName.value);"  (change)="rewardForm.holderName.valid = validate.name(rewardForm.holderName.value)">
+            <input type="text" name="name" id="name"  [(ngModel)]="rewardForm.holderName.value">
+            <label for="name">Nombre
+              <span for="name"[hidden]="rewardForm.holderName.valid">incorrecto</span>
+            </label>
         </div>
       </div>
       <div class="row money-desc">
