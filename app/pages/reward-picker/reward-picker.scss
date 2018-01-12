@@ -9,6 +9,16 @@ reward-picker {
       margin-bottom: 0;
       padding-bottom: 50px;
     }
+    .transfer-sucess {
+      text-align: center;
+      padding-bottom: 50px;
+      h5 {
+        font-weight: 900;
+      }
+      i.material-icons {
+        color: $greenMat;
+      }
+    }
     .input-field {
       @media screen and (max-device-width: $screen-mobile-max) {
         padding: 0 30px;

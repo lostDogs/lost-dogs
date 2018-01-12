@@ -173,6 +173,9 @@ export class RewardPickerComponent {
         if (this.openPay.trasnferData && this.openPay.trasnferData.id) {
           const self = this;
           this.dogService.deleteDog(this.dogService.dogData._id);
+          console.log('this.openPay.trasnferData.id,', this.openPay.trasnferData.id);
+          console.log('this.openPay.trasnferData.id,', this.openPay.trasnferData);
+          console.log('this', this);
           setTimeout(() => {
             console.log('self.transSucessDom.nativeElement.offsetTop', self.transSucessDom.nativeElement.offsetTop);
             const sucessDomTop: number = self.transSucessDom.nativeElement.offsetTop - 120;

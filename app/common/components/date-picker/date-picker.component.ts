@@ -78,7 +78,7 @@ export class DatePickerComponent {
         this.years.push(i);
       }
     } else  {
-      for (let i = this.todaysYear; i > this.todaysYear -  4; i--) {
+      for (let i = this.todaysYear - 3; i <= this.todaysYear; i++) {
         this.years.push(i);
       }
     }

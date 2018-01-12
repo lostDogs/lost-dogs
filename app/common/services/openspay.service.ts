@@ -24,6 +24,7 @@ export class OpenSpayService {
   public MERCHANT_ID: string = 'mrvo5dylz7xeq7pnyoqx';
   public PUBLIC_KEY: string = 'pk_85e195c76956425d973944d88521d47e';
   public trasnferData: any;
+  public loadingTrasnfer: boolean;
 
   constructor (public api: ApiService, public globalService: GlobalFunctionService) {}
 
@@ -123,12 +124,15 @@ export class OpenSpayService {
     };
     console.log('qrObj identifier', qrObj.identifier);
     const url: string = '/api/transactions/' + qrObj.transactionId + '/reward/' + qrObj.identifier;
+    this.loadingTrasnfer = true;
     return this.api.post('https://fierce-falls-25549.herokuapp.com' + url , transferData, headers).subscribe(
       data => {
         console.log('transfer sucess!', data);
         this.trasnferData = data;
+        this.loadingTrasnfer = false;
       },
       error => {
+       this.loadingTrasnfer = false;
        this.globalService.clearErroMessages();
        this.globalService.setErrorMEssage('Ops! no hacer el cargo por el momento');
        if (error._body && error._body.code) {

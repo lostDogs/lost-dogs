@@ -51,15 +51,17 @@
         </div>
       </div>
       <div class="row centered row-extraspace">
-        <button type="submit" class="waves-effect btn action col l2 s8" [disabled]="loading || (openPay.trasnferData && trasnferData.id)" (click)="rewardMe($event)">
+        <button type="submit" class="waves-effect btn action col l2 s8" [disabled]="loading || (openPay.trasnferData && openPay.trasnferData.id)" (click)="rewardMe($event)">
           <div [hidden]="loading && !dogService.dogData">Recompénsame<i class="medium material-icons right">monetization_on</i></div>
           <div [hidden]="!loading && dogService.dogData">cargando ...</div>
         </button>
       </div>
     </form>
   </div>
-  <div class="transfer-sucess" *ngIf="openPay.trasnferData && trasnferData.id" #TransSucess>
-    <h5>Se ha realizado exitosamente el deposito en tu cuenta. Esperalo en X horas</h5>
+  <div class="transfer-sucess" *ngIf="openPay.trasnferData && openPay.trasnferData.id" #TransSucess>
+    <i class="material-icons medium">done_all</i>
+    <h5>Se ha realizado exitosamente el deposito en tu cuenta!</h5>
+    <h5>Esperalo en X horas</h5>
   </div>
 </div>
 
