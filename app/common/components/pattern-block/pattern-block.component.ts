@@ -21,8 +21,8 @@ export class PatternBlockComponent {
   
   public ngOnInit(): void {
     let els: any[] = [];
-    this.dogCard.patterns.forEach((value: string, index: number) => {
-      els.push({name: value});
+    Object.keys(this.dogCard.patterns).forEach((value: string, index: number) => {
+      els.push({name: value, label: this.dogCard.patterns[value].label});
     });
     this.elements = els;
   }

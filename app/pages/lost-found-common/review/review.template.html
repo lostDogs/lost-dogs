@@ -25,7 +25,7 @@
         <span class="title" *ngIf="LostService.sequence[i]==='date'"><b>{{description}}:</b>  {{pageAnswersCopy[i]}}</span>
         <span class="title" *ngIf="pageAnswersCopy[i] && LostService.sequence[i]==='location'"><b>{{description}}:</b>  {{pageAnswersCopy[i].address}}</span>
         <span class="title" *ngIf="pageAnswersCopy[i] && LostService.sequence[i]!=='location' && LostService.sequence[i]!=='date' && !window.Array.isArray(pageAnswersCopy[i])"><b>{{description}}:</b>  {{pageAnswersCopy[i].name}}</span>
-        <span class="title" *ngIf="pageAnswersCopy[i] && window.Array.isArray(pageAnswersCopy[i]) && pageAnswersCopy[i][0]"><b>{{description}}:</b>  {{ ''+ pageAnswersCopy[i][0].names}}</span>
+        <span class="title" *ngIf="pageAnswersCopy[i] && window.Array.isArray(pageAnswersCopy[i]) && pageAnswersCopy[i][0]"><b>{{description}}:</b>  {{ '' + pageAnswersCopy[i][0].labels}}</span>
         <a class="secondary-content" (click)="LostService.goTo(i)">Editar</a>
       </li>
       <li class="collection-item avatar centered" *ngIf="LostService.comments">

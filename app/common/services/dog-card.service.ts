@@ -26,7 +26,7 @@ export class DogCardService {
   public open: boolean;
   public width: number;
   // filled in dog-figure component;
-  public patterns: string[];
+  public patterns: {[dogPart: string]: {label: string, visible: boolean}};
   public breeds: any;
   public colors: any;
   public shortMonths: string[];

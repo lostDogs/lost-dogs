@@ -35,24 +35,31 @@ export class ReviewComponent {
     this.LostService.getReviewFromLocalStorage();
     this.dogCardService.open = false;
     if (this.LostService.reward) {
-      const newVal: string = (' ' + this.LostService.reward).replace('.','');
-      const rewardNewDecimal: string = newVal.substr(0, newVal.length - 2) + '.' + newVal.substr(newVal.length - 2);
+      const newVal: string = ('' + this.LostService.reward).replace('.','').replace(',', '');
+      let rewardNewDecimal: string = newVal.substr(0, newVal.length - 2) + '.' + newVal.substr(newVal.length - 2);
+      if (rewardNewDecimal.length > 6) {
+        rewardNewDecimal = rewardNewDecimal.substr(0, rewardNewDecimal.length - 6) + ',' + rewardNewDecimal.substr(rewardNewDecimal.length - 6);
+      }
       this.LostService.reward = rewardNewDecimal;
     }
     this.pageAnswersCopy =  JSON.parse(JSON.stringify(this.LostService.pageAnswers));
     this.pageAnswersCopy.forEach((answer: any, index: number) => {
       let names: string[] = [];
       let imgUrls: string[] = [];
-      let originalIndexs: number[] = []
+      let originalIndexs: number[] = [];
+      let labels: string[] = [];
       if(Array.isArray(answer)) {
         answer.forEach((innerAns: any, innerIndex: number) => {
           if (innerAns.disabled) {
             names.push(innerAns.name);
             imgUrls.push(innerAns.imgUrl);
             originalIndexs.push(innerAns.orginalIndex);
+            if (innerAns.label) {
+              labels.push(innerAns.label);
+            }
           }
         });
-        this.pageAnswersCopy[index] = [{names: names, imgUrls: imgUrls, Indexs: originalIndexs}];
+        this.pageAnswersCopy[index] = [{names: names, imgUrls: imgUrls, Indexs: originalIndexs, labels: labels.length ? labels : names}];
       }
     });
     this.LostService.inReviewPage = true;

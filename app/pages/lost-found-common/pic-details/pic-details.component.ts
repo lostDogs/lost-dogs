@@ -24,13 +24,14 @@ export class DetailsComponent {
   public ngOnInit(): void {
   }
  
-public ngAfterViewInit(): void {
-  $('#money-input').mask('000,000.00', {reverse: true});
-  this.hideReward = this.LostService.parentPage !== 'lost';
-  if (this.hideReward) {
-    this.LostService.question = undefined;
+  public ngAfterViewInit(): void {
+    $('#money-input').mask('000,000.00', {reverse: true});
+    this.hideReward = this.LostService.parentPage !== 'lost';
+    if (this.hideReward) {
+      this.LostService.question = undefined;
+    }
   }
-}
+
   public filePicChange(ev: any): void {
     let file: File = ev.target.files[0];
     console.log('ev', ev);
@@ -71,9 +72,11 @@ public ngAfterViewInit(): void {
     this.LostService.reward = this.LostService.reward === this.LostService.defaultReward ? '' : this.LostService.reward;
     $('#money-input').focus();
   }
+
   public clearInput(): void {
     this.LostService.reward = this.LostService.reward === '' ? this.LostService.defaultReward : this.LostService.reward;
   }
+
   public setFocusOnComments(): void {
     this.clearComments = true;
     $('#textarea1').focus(); 
