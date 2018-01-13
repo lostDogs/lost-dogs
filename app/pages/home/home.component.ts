@@ -37,6 +37,7 @@ export class homeComponent {
   public ngOnInit(): void {
     window.scroll(0,0);
     localStorage.clear();
+    this.userService.timesTrying = 0;
     this.activatedRoute.queryParams.subscribe(
       data => this.newUser = data.nU ? true : false
     );
@@ -47,6 +48,7 @@ export class homeComponent {
       }, 6000);
     }
   }
+
   public ngAfterViewInit(): void {
     const scrollTo: number = this.descriptionDom.nativeElement.offsetTop - 100;
     $('.scroll-botttom').click(function(){

@@ -15,7 +15,6 @@ export class generalHeaderComponent implements OnInit  {
   public showLoginFrom : boolean;
   public offsetY: string;
   public newUser: boolean;
-  public userName: string;
   public password: string;
   public displayNavOpts: boolean;
   @ViewChild('LoginDom')
@@ -44,7 +43,6 @@ export class generalHeaderComponent implements OnInit  {
   } 
   public toggleLoginFrom(event: any) {
     this.showLoginFrom = !this.showLoginFrom;
-    this.userName = undefined;
     this.password = undefined;
   }
 

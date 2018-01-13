@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from './api.service';
 import {Router} from '@angular/router';
+import {Subscription} from 'rxjs/Rx';
 import {GlobalFunctionService} from './global-function.service';
 import {CookieManagerService} from './cookie-manager.service';
 
@@ -15,6 +16,10 @@ export class UserService {
   public errors: {passwordReq: boolean, userReq: boolean, invalidUser: boolean};
   public mapsApi: any;
   public previousUrl: string;
+  public timesTrying: number = 0;
+  public forgotloading: boolean;
+  public forgotSucess: boolean;
+  public tempUserName: any;
 
   constructor (public api: ApiService, public router: Router, public globalService: GlobalFunctionService, public CookieService: CookieManagerService) {
     this.user = {};
@@ -98,23 +103,51 @@ export class UserService {
 
 
   public loginSucess(data: any): void {
+    this.tempUserName = undefined;
     this.loading = false;
-      this.setUser(data);
-      this.isAvatarSet = true;
-      this.errors.invalidUser = false;
-      if (this.previousUrl) {
-      this.router.navigateByUrl(this.previousUrl);
-      this.previousUrl = undefined;
-      } else  {
-        this.router.navigate(['/home']);
+    this.timesTrying = 0;
+    this.setUser(data);
+    this.isAvatarSet = true;
+    this.errors.invalidUser = false;
+    if (this.previousUrl) {
+    this.router.navigateByUrl(this.previousUrl);
+    this.previousUrl = undefined;
+    } else  {
+      this.router.navigate(['/home']);
+    }
+    window.scroll(0,0);
+  }
+
+  public forgot(userName: string): Subscription {
+    const url: string = 'https://fierce-falls-25549.herokuapp.com/api/' + userName + '/forgotPassword';
+    this.forgotloading = true;
+    return this.api.post(url, {}).subscribe(
+      data => {
+        this.forgotSucess = true;
+        this.forgotloading = false;
+        this.tempUserName = undefined;
+      },
+      error => {
+        let messsage: string;
+        this.forgotloading = false;
+        this.forgotSucess = false;
+        if (error.status === 404) {
+          messsage = 'Usuario no encontrado';
+        }else {
+          messsage = 'hubo un problema al enviar el correo';
+        }
+        this.globalService.clearErroMessages();
+        this.globalService.setErrorMEssage(messsage);
+        this.globalService.openErrorModal();        
       }
-      window.scroll(0,0);
+    );
   }
 
   public loginNotSuccess(e: any): void {
-    console.error('error in login', e);
     this.loading = false;
     this.errors.invalidUser = true;
+    this.timesTrying++;
+    console.error('error in login', e);
   }
 
   public login(username?: string, password?: string, noAuth?: boolean): void {

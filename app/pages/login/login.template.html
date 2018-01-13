@@ -1,27 +1,27 @@
-<content class="login-page">
+<div class="login-page">
   <div class="main-title row">
     <h4>Inicia sesión</h4>
   </div>
-  <form class="create-account" name="page-login" #loginPage="ngForm" (ngSubmit)="userService.login(userName, password)" novalidate>
+  <form class="create-account"  name="page-login" #loginPage="ngForm" (ngSubmit)="userService.login(userService.tempUserName, password)" novalidate>
     <div class="row login-fields">
       <div class="input-field  alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': userService.errors.userReq || userService.errors.invalidUser}">
-        <input type="text" name="userName" id="user-name" [(ngModel)]="userName" (keyup)="userService.errors.userReq = false;userService.errors.invalidUser = false;">
-        <label for="user-name">Nombre usuario <b *ngIf="userService.errors.invalidUser"> incorrecto ó</b></label>
+        <input type="text" name="user-name" id="user-name-2" [(ngModel)]="userService.tempUserName" (keyup)="userService.errors.userReq = false;userService.errors.invalidUser = false;">
+        <label for="user-name-2" [ngClass]="{'active': userService.tempUserName}">Nombre usuario <b *ngIf="userService.errors.invalidUser"> incorrecto ó</b></label>
       </div>
       <div class="input-field  alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': userService.errors.passwordReq || userService.errors.invalidUser}">
-          <input type="password" name="password" id="user-password"  [(ngModel)]="password" (keyup)="userService.errors.passwordReq = false;userService.errors.invalidUser = false;">
-          <label for="user-password">Contraseña <b *ngIf="userService.errors.invalidUser"> incorrecta</b></label>
+          <input type="password" name="password" [(ngModel)]="password" (keyup)="userService.errors.passwordReq = false;userService.errors.invalidUser = false;">
+          <label for="password">Contraseña <b *ngIf="userService.errors.invalidUser"> incorrecta</b></label>
       </div>
     </div>
     <div class="row centered row-extraspace">
-      <button class="btn waves-effect col l2 s8 action" type="submit"  [disabled]="userService.loading">
+      <button class="btn waves-effect col l2 s8 action" type="submit"  [disabled]="userService.loading || forgot">
         <div *ngIf="!userService.loading">Iniciar sesión <i class="material-icons right">send</i></div>
         <div *ngIf="userService.loading">Cargando ...</div>
       </button>
     </div>
     <div class="row row-extraspace">
       <div class="col l2 s8 login-link centered push-s2 push-l4">
-        <a routerLink="" title="lost password"> Olvide mi contraseña
+        <a title="lost password" (click)="forgot=true;scrollTo(forgotDom)"> Olvide mi contraseña
          <i class="material-icons right">lock_outline</i>
         </a>
       </div>
@@ -32,4 +32,23 @@
       </div>
     </div>
   </form>
-</content>
+  <div #Forgot></div>
+  <div class="forgot" [hidden]="!forgot" >
+    <h4>Se te enviará una contraseña al correo de tu usuario</h4>
+    <div class="row">
+      <div  class="input-field alt-black col l4 s12 push-l4" [ngClass]="{'wrong-red': false}">
+        <input type="text" name="user-name" id="user-name-3" [(ngModel)]="userService.tempUserName" (keyup)="false">
+        <label for="user-name-3" [ngClass]="{'active': userService.tempUserName}">Nombre usuario <b *ngIf="false"> incorrecto ó</b></label>
+      </div>
+    </div>
+    <button class="btn waves-effect col l2 s8 action" [disabled]="userService.forgotloading || userService.forgotSucess" (click)="callForgot();">
+      <div *ngIf="!userService.forgotloading">Aceptar <i class="material-icons right">send</i></div>
+      <div *ngIf="userService.forgotloading">Cargando ...</div>
+    </button>
+    <div #ForgotSucess></div>
+    <div [hidden]="!userService.forgotSucess" class="forgot-sucess">
+      <i class="material-icons medium">done_all</i>
+      <h4>Se ha enviado con éxito tu nueva contraña</h4>
+    </div>
+  </div>
+</div>
