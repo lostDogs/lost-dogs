@@ -152,19 +152,23 @@
           </div>
         </div>
         <div class="row">
-          <div class="input-field alt-black col l4  push-l4 s12" [ngClass]="{'wrong-red': !user.access.password.valid}">
+          <div class="input-field alt-black col l4 s12" *ngIf="profilePage" [ngClass]="{'push-l4 ': !profilePage}">
+                <input type="password" name="old password" id="old-password" [(ngModel)]="oldPassword">
+                <label for="old-password">Contraseña vieja</label>
+          </div>
+          <div class="input-field alt-black col l4 s12" [ngClass]="{'wrong-red': !user.access.password.valid, 'push-l4 ': !profilePage}">
                 <input type="password" name="password" id="password"  [(ngModel)]="user.access.password.value" (keyup)="user.access.password.valid = validate.password(user.access.password.value);"  (change)="user.access.password.valid = validate.password(user.access.password.value);">
-                <label for="password" [ngClass]="{'fadeInDown': user.access.password.valid && createAccount.controls.password && createAccount.controls.password.dirty}" [hidden]="!user.access.password.valid">Contrasenia</label>
+                <label for="password" [ngClass]="{'fadeInDown': user.access.password.valid && createAccount.controls.password && createAccount.controls.password.dirty}" [hidden]="!user.access.password.valid">Contraseña <span *ngIf="profilePage">nueva</span></label>
                 <label for="password" [ngClass]="{'fadeInDown': (!user.access.password.valid && user.access.password.value)}" [hidden]="!(!user.access.password.valid && user.access.password.value)">{{validate.errors.password}}</label>
-                <label for="password" [ngClass]="{'fadeInDown': !user.access.password.valid && !user.access.password.value}" [hidden]="!(!user.access.password.valid && !user.access.password.value)">Contrasenia es requerido</label>
+                <label for="password" [ngClass]="{'fadeInDown': !user.access.password.valid && !user.access.password.value}" [hidden]="!(!user.access.password.valid && !user.access.password.value)">Contraseña es requerido</label>
           </div>
-          <div class="input-field alt-black  col l4 push-l4 s12" [ngClass]="{'wrong-red': !user.access.password2.valid}">
+          <div class="input-field alt-black  col l4 s12" [ngClass]="{'wrong-red': !user.access.password2.valid, 'push-l4 ': !profilePage}">
                 <input type="password" name="password2" id="password2" [(ngModel)]="user.access.password2.value" (keyup)="user.access.password2.valid = validate.passMatch(user.access.password2.value,user.access.password.value);"  (change)="user.access.password2.valid = validate.passMatch(user.access.password2.value,user.access.password.value);">
-                <label for="password2" [ngClass]="{'fadeInDown': user.access.password2.valid && createAccount.controls.password2 && createAccount.controls.password2.dirty}" [hidden]="!user.access.password2.valid">Repite tu contrasenia</label>
+                <label for="password2" [ngClass]="{'fadeInDown': user.access.password2.valid && createAccount.controls.password2 && createAccount.controls.password2.dirty}" [hidden]="!user.access.password2.valid">Repite tu <span *ngIf="profilePage">nueva </span>contraseña</label>
                 <label for="password2" [ngClass]="{'fadeInDown': (!user.access.password2.valid && user.access.password2.value)}" [hidden]="!(!user.access.password2.valid && user.access.password2.value)">{{validate.errors.passMatch}}</label>
-                <label for="password2" [ngClass]="{'fadeInDown': !user.access.password2.valid && !user.access.password2.value}" [hidden]="!(!user.access.password2.valid && !user.access.password2.value)">repetirla es requerido</label>              
+                <label for="password2" [ngClass]="{'fadeInDown': !user.access.password2.valid && !user.access.password2.value}" [hidden]="!(!user.access.password2.valid && !user.access.password2.value)">repetirla es requerido</label>
           </div>
-        </div>      
+        </div>
         <div class="row centered profile-row" *ngIf="profilePage && disableButton">
           <button class="btn waves-effect col l4 s8 action" type="button" (click)="actionToEdit(user.access)" [disabled]="!disableButton(user.access, orginalUser.access) || loading">
             <div *ngIf="!loading">Cambiar <i class="material-icons right">loop</i></div>

@@ -119,9 +119,13 @@ export class UserService {
   }
 
   public forgot(userName: string): Subscription {
-    const url: string = 'https://fierce-falls-25549.herokuapp.com/api/' + userName + '/forgotPassword';
+    const url: string = 'https://fierce-falls-25549.herokuapp.com/api/users/' + userName + '/forgotPassword';
     this.forgotloading = true;
-    return this.api.post(url, {}).subscribe(
+    const headers: any = {
+      'Content-Type': 'application/json',
+      'Authorization': 'token ' + this.token
+    };
+    return this.api.post(url, {}, headers).subscribe(
       data => {
         this.forgotSucess = true;
         this.forgotloading = false;

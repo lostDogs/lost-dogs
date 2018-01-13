@@ -16,6 +16,7 @@ export class LoginComponent {
   public forgotSucessDom: ElementRef;
 
   constructor (public userService: UserService, public activeRoute: ActivatedRoute) {
+    this.userService.forgotSucess = false;
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.forgot = params.fG === 'true';
     });    
