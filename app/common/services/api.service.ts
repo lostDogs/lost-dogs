@@ -85,6 +85,4 @@ export class ApiService {
       .map((res: Response) =>  res.json())
       .catch((error: any) => Observable.throw(error || 'Server error'));
   }
-
-  
 }

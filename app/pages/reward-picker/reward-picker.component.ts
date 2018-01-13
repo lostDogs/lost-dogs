@@ -35,6 +35,9 @@ export class RewardPickerComponent {
   constructor(public rewardService: MailingRewardService, public userService: UserService, public router: Router, public openPay: OpenSpayService, public dogService: DogCardService, public validate: ValidationService) {
     const ios: boolean = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform)
     this.mobile = window.screen.width <= 767 || ios;
+    this.rewardService.transaction = undefined;
+    this.dogService.dogData = undefined;
+    this.openPay.trasnferData = undefined;
     if (this.mobile) {
       this.focusUpload = true;
     }

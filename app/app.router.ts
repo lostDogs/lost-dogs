@@ -24,6 +24,7 @@ import {PaymentComponent} from './pages/payment/payment.component';
 import {ReviewPaymentComponent} from './pages/payment/review-payment/review-payment.component';
 import {FormPaymentComponent} from './pages/payment/form-payment/form-payment.component';
 import {PatternComponent} from './pages/lost-found-common/pattern/pattern.component';
+import {RefundComponent} from './pages/refund/refund.component';
 // import {RewardPickerComponent} from './pages/reward-picker/reward-picker.component';
 
 const self = this;
@@ -77,6 +78,7 @@ export const router: Routes = [
     })
   },
   {path: 'info/:param', component: InformationComponent},
+  {path: 'refund/:param', component: RefundComponent},
   { path: '', redirectTo: 'home' , pathMatch: 'full'},
   {path: '**', redirectTo: 'home'}
 ];
@@ -112,5 +114,6 @@ export const routerComponents = [
   PaymentComponent,
   ReviewPaymentComponent,
   FormPaymentComponent,
-  PatternComponent
+  PatternComponent, 
+  RefundComponent
 ];

@@ -1,0 +1,26 @@
+<div class="refund-page">
+  <div class="main-title row">
+    <h4>Reembolso</h4>
+  </div>  
+  <div class="main-content text-centered">
+    <div class="refund-block row">
+      <h5>¿Estás seguro de que quieres el <b>reembolso</b>?</h5>
+      <h5 class="extra-padding-top" *ngIf="dogService.dogData && dogService.dogData.reward">Cantidad: <span class="money"> $ {{dogService.dogData.reward}} MXN</span></h5>
+      <button class="btn waves-effect action" [disabled]="nextSure || !(dogService.dogData && dogService.dogData.reward)" (click)="nextStep()">si</button>
+    </div>
+    <div class="refund-block" [hidden]="!nextSure" #RefundReason>
+      <h5>¿Cuál es la razón?</h5>
+      <div class="row">
+        <div  class="input-field alt-black col l4 s12 push-l4" [ngClass]="{'wrong-red': false}">
+          <textarea type="text" name="refund reason" class="materialize-textarea" id="refund-reason" (keyup)="resize()"></textarea>
+        </div>
+      </div>
+        <button class="btn waves-effect action" (click)="refundme()">Aceptar<i class="material-icons right">send</i></button>
+    </div>
+    <div class="refund-block row sucess" [hidden]="!openPay.refundData" #RefundSucess>
+      <i class="material-icons medium">done_all</i>
+      <h4>Tu rembolso se ha realizado con éxito!</h4>
+      <h5>En unas horas podras verlo en tu cuenta</h5>
+    </div>
+  </div>
+</div>
