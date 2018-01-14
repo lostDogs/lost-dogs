@@ -63,27 +63,33 @@
                 <label for="number-int" [ngClass]="{'fadeInDown': user.adress.numberInt.valid && createAccount.controls.numberInt && createAccount.controls.numberInt.dirty}" [hidden]="!user.adress.numberInt.valid">Numero Interior</label>
                 <label for="number-int" [ngClass]="{'fadeInDown': (!user.adress.numberInt.valid && user.adress.numberInt.value)}" [hidden]="!(!user.adress.numberInt.valid && user.adress.numberInt.value)">{{validate.errors.onlyNumbers.default}}</label>        
           </div>        
-          <div class="input-field alt-black col l6 s12" [ngClass]="{'wrong-red': !user.adress.adressName.valid}">
-              <input type="text" name="adresss" id="adresss" [(ngModel)]="user.adress.adressName.value" (keyup)="user.adress.adressName.valid = validate.stringHipens(user.adress.adressName.value);"  (change)="user.adress.adressName.valid = validate.stringHipens(user.adress.adressName.value);">
-                <label for="adresss" [ngClass]="{'fadeInDown': user.adress.adressName.valid && createAccount.controls.adresss && createAccount.controls.adresss.dirty}" [hidden]="!user.adress.adressName.valid">Colonia</label>
-                <label for="adresss" [ngClass]="{'fadeInDown': (!user.adress.adressName.valid && user.adress.adressName.value)}" [hidden]="!(!user.adress.adressName.valid && user.adress.adressName.value)">{{validate.errors.stringHipens}}</label>
-                <label for="adresss" [ngClass]="{'fadeInDown': !user.adress.adressName.valid && !user.adress.adressName.value}" [hidden]="!(!user.adress.adressName.valid && !user.adress.adressName.value)">Colonia es Requerido</label>
+          <div class="input-field alt-black col l6 s12" [ngClass]="{'wrong-red': !user.adress.street.valid}">
+              <input type="text" name="street" id="street" [(ngModel)]="user.adress.street.value" (keyup)="user.adress.street.valid = validate.stringHipens(user.adress.street.value);"  (change)="user.adress.street.valid = validate.stringHipens(user.adress.street.value);">
+                <label for="street" [ngClass]="{'fadeInDown': user.adress.street.valid && createAccount.controls.adresss && createAccount.controls.adresss.dirty}" [hidden]="!user.adress.street.valid">Calle</label>
+                <label for="street" [ngClass]="{'fadeInDown': (!user.adress.street.valid && user.adress.street.value)}" [hidden]="!(!user.adress.street.valid && user.adress.street.value)">{{validate.errors.stringHipens}}</label>
+                <label for="street" [ngClass]="{'fadeInDown': !user.adress.street.valid && !user.adress.street.value}" [hidden]="!(!user.adress.street.valid && !user.adress.street.value)">Colonia es Requerido</label>
           </div>
         </div>
         <div class="row">
-          <div class="input-field alt-black col l3 push-l3 s12" [ngClass]="{'wrong-red': !user.adress.postalCode.valid}">
+          <div class="input-field alt-black col l3 s12" [ngClass]="{'wrong-red': !user.adress.postalCode.valid}">
                 <input type="text" name="postalCode" id="postal-code" [(ngModel)]="user.adress.postalCode.value" (keyup)="user.adress.postalCode.valid = validate.postalCode(user.adress.postalCode.value);"  (change)="user.adress.postalCode.valid = validate.postalCode(user.adress.postalCode.value);">
                 <label for="postal-code" [ngClass]="{'fadeInDown': user.adress.postalCode.valid && createAccount.controls.postalCode && createAccount.controls.postalCode.dirty}" [hidden]="!user.adress.postalCode.valid">codigo postal</label>
                 <label for="postal-code" [ngClass]="{'fadeInDown': (!user.adress.postalCode.valid && user.adress.postalCode.value)}" [hidden]="!(!user.adress.postalCode.valid && user.adress.postalCode.value)">{{validate.errors.postalCode}}</label>
                 <label for="postal-code" [ngClass]="{'fadeInDown': !user.adress.postalCode.valid && !user.adress.postalCode.value}" [hidden]="!(!user.adress.postalCode.valid && !user.adress.postalCode.value)">codigo postal es requerido</label>
           </div>
-          <div class="input-field alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': !user.adress.city.valid}">
+          <div class="input-field alt-black col l3 s12" [ngClass]="{'wrong-red': !user.adress.adressName.valid}">
+              <input type="text" name="adresss" id="adresss" [(ngModel)]="user.adress.adressName.value" (keyup)="user.adress.adressName.valid = validate.stringHipens(user.adress.adressName.value);"  (change)="user.adress.adressName.valid = validate.stringHipens(user.adress.adressName.value);">
+                <label for="adresss" [ngClass]="{'fadeInDown': user.adress.adressName.valid && createAccount.controls.adresss && createAccount.controls.adresss.dirty}" [hidden]="!user.adress.adressName.valid">Colonia</label>
+                <label for="adresss" [ngClass]="{'fadeInDown': (!user.adress.adressName.valid && user.adress.adressName.value)}" [hidden]="!(!user.adress.adressName.valid && user.adress.adressName.value)">{{validate.errors.stringHipens}}</label>
+                <label for="adresss" [ngClass]="{'fadeInDown': !user.adress.adressName.valid && !user.adress.adressName.value}" [hidden]="!(!user.adress.adressName.valid && !user.adress.adressName.value)">Colonia es Requerido</label>
+          </div>          
+          <div class="input-field alt-black  col l3 s12" [ngClass]="{'wrong-red': !user.adress.city.valid}">
                 <input type="text" name="city" id="city" [(ngModel)]="user.adress.city.value" (keyup)="user.adress.city.valid = validate.name(user.adress.city.value);"  (change)="user.adress.city.valid = validate.name(user.adress.city.value);">
                 <label for="city" [ngClass]="{'fadeInDown': user.adress.city.valid && createAccount.controls.city && createAccount.controls.city.dirty}" [hidden]="!user.adress.city.valid">ciudad</label>
                 <label for="city" [ngClass]="{'fadeInDown': (!user.adress.city.valid && user.adress.city.value)}" [hidden]="!(!user.adress.city.valid && user.adress.city.value)">{{validate.errors.name}}</label>
                 <label for="city" [ngClass]="{'fadeInDown': !user.adress.city.valid && !user.adress.city.value}" [hidden]="!(!user.adress.city.valid && !user.adress.city.value)">ciudad es requerido</label>
           </div>
-          <div class="input-field alt-black col l3 push-l3 s12 countries" [ngClass]="{'wrong-red': !user.adress.country.valid}">
+          <div class="input-field alt-black col l3 s12 countries" [ngClass]="{'wrong-red': !user.adress.country.valid}">
             <select name="country"  id="country" [(ngModel)]="user.adress.country.value" (keyup)="user.adress.country.valid = validate.name(user.adress.country.value);">
               <option value="" disabled selected>Pais</option>
               <option *ngFor="let co of countries"[value]="co.name"><div class="bfh-flag-{{co.id}}"></div>{{co.name}}</option>
@@ -184,8 +190,8 @@
       </div>    
       <div class="row centered" [hidden]="profilePage">
         <div class="privacy-policy">
-          <p style="text-align: center;margin-bottom: 10px">Al crear tu cuenta estas aceptando nuestros <a (click)="toTerms()" title="Terms & conditions"> Terminos & Condiciones</a>.</p>
-          <p>Te prometemos que no vamos a <b>compartir</b> tu informacion con nadie más.Ve nuetras <a (click)="toPrivacy()" title="privacy policy"> Politicas de Privacidad</a>.</p>
+          <p style="text-align: center;margin-bottom: 15px">Al crear tu cuenta estas aceptando nuestros <a (click)="toTerms()" title="Terms & conditions"> Terminos & Condiciones</a>.</p>
+          <p>Te prometemos que no vamos a <b>compartir</b> tu informacion con nadie más. <span> Ve nuetras <a (click)="toPrivacy()" title="privacy policy"> Politicas de Privacidad</a>.</span></p>
         </div>
       </div>
     </form>

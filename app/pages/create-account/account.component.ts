@@ -16,7 +16,7 @@ export interface formObj {
 export interface Iuser {
   pic: formObj;
   name: {first: formObj, last1: formObj, last2: formObj};
-  adress: {adressName: formObj, postalCode: formObj, city: formObj, numberExt: formObj, numberInt: formObj, country: formObj};
+  adress: {adressName: formObj, postalCode: formObj, city: formObj, numberExt: formObj, numberInt: formObj, country: formObj, street: formObj};
   contact: {areaCode: formObj, phone: formObj, email: formObj};
   access: {userName: formObj, password: formObj, password2: formObj};
 }
@@ -61,7 +61,8 @@ export class accountComponent {
         city: {valid: true, value: undefined, required: true},
         numberExt: {valid: true, value: undefined, required: true},
         numberInt: {valid: true, value: undefined, required: false},
-        country: {valid: true, value: undefined, required: true}
+        country: {valid: true, value: undefined, required: true},
+        street: {valid: true, value: undefined, required: true}
       },
       contact: {
         areaCode: {valid: true, value: undefined, required: true},
@@ -212,7 +213,7 @@ export class accountComponent {
         'zip_code': user.adress.postalCode.value,
         'city': user.adress.city.value,
         'country': user.adress.country.value,
-        'street': 'ads'
+        'street': user.adress.street.value
       },
       'phone_number': {
         'number': user.contact.phone.value,
