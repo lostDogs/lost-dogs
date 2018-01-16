@@ -17,6 +17,8 @@ export class RefundComponent {
   public RefundReasonDom: ElementRef;
   @ViewChild('RefundSucess')
   public RefundSucessDom: ElementRef;
+  public reasonVal: string;
+  public reason: JQuery;
 
   constructor (
     public userService: UserService,
@@ -51,16 +53,19 @@ export class RefundComponent {
   public nextStep(): void {
     this.nextSure = true;
     this.scrollTo(this.RefundReasonDom);
+    setTimeout(() => {
+      this.reason =  $('#refund-reason');
+    }, 10)
   }
 
   public resize(): void {
-    $('#refund-reason').trigger('autoresize');
+    this.reason.trigger('autoresize');
+    this.reasonVal =this.reason.val();
   }
 
   public scrollTo(domEl: ElementRef): void {
     if (domEl.nativeElement) {
       setTimeout(() => {
-        console.log('domEl')
         const offset = domEl.nativeElement.offsetTop + 120;
         $('html, body').animate({ scrollTop: offset}, 700);
       }, 300);

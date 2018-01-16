@@ -145,7 +145,7 @@ export class OpenSpayService {
     const reasonObj = reason ? {reason: reason} : {};
     return this.api.delete('https://fierce-falls-25549.herokuapp.com' + url , reasonObj, headers).subscribe(
       data => {
-        this.refundData = data;
+        this.refundData = true;
       },
       error => {
         this.refundData = undefined;

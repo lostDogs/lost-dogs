@@ -82,7 +82,7 @@ export class ApiService {
       url = url + queryParams;
     }
     return this.http.delete(url, options)
-      .map((res: Response) =>  res.json())
+      .map((res: Response) =>  res.status)
       .catch((error: any) => Observable.throw(error || 'Server error'));
   }
 }

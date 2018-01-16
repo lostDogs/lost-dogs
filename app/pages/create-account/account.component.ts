@@ -259,7 +259,7 @@ export class accountComponent {
       let userToEdit: any = this.userBuilder(this.user);
       let url: string = 'https://fierce-falls-25549.herokuapp.com/api/users/' + this.userService.user.username;
       if (userBlock.password) {
-        url = url + '/forgotPassword';
+        url = url + '/changePassword';
         userToEdit = {
           new_password: userBlock.password.value,
           confirm_password: userBlock.password2.value,

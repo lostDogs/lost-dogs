@@ -143,6 +143,7 @@ export class SearchService {
 
   public changePageTo(pageNumber: number): void {
     this.atPage = pageNumber;
+    // console.log('pages called', this.pagesCalled);
     if (this.pagesCalled[pageNumber] === pageNumber) {
       // means we already call this so we just the value in the array
       this.pagedResults = this.results.slice(pageNumber * this._pageSize , (pageNumber + 1)  * this._pageSize);
@@ -185,7 +186,7 @@ export class SearchService {
   }
 
   public sort(type: string, dsc: boolean) {
-    this.results.sort((a: IdogData, b: IdogData) => {
+    this.pagedResults.sort((a: IdogData, b: IdogData) => {
       let aParse: any;
       let bParse: any;
       if (type === 'date') {
@@ -201,7 +202,7 @@ export class SearchService {
       return aParse - bParse;
     });
     if(dsc) {
-      this.results.reverse();
+      this.pagedResults.reverse();
     }
   }
 

@@ -102,7 +102,7 @@ export class UserService {
   }
 
 
-  public loginSucess(data: any): void {
+  public loginSucess(data: any, userName?: string): void {
     this.tempUserName = undefined;
     this.loading = false;
     this.timesTrying = 0;
@@ -112,7 +112,7 @@ export class UserService {
     if (this.previousUrl) {
     this.router.navigateByUrl(this.previousUrl);
     this.previousUrl = undefined;
-    } else  {
+    } else if (userName) {
       this.router.navigate(['/home']);
     }
     window.scroll(0,0);
@@ -159,7 +159,7 @@ export class UserService {
       const user:any = {password: password, username: username};
       this.loading = true;
       this.api.post('https://fierce-falls-25549.herokuapp.com/api/users/login', user).subscribe(
-        data => this.loginSucess(data),
+        data => this.loginSucess(data, username),
         e => this.loginNotSuccess(e),
       );
     } else {
