@@ -1,0 +1,25 @@
+<general-header class="row" *ngIf="show"></general-header>
+<global-error></global-error>
+<router-outlet *ngIf="show"></router-outlet>
+<general-footer *ngIf="show"></general-footer>
+<div style="text-align: center;" *ngIf="!show">
+  <h4 style="margin-top: 10%" class="row">Acceso temporal a la App</h4>
+    <form class="create-account"  name="app login" #loginApp="ngForm" (ngSubmit)="showApp(username, password)" novalidate>
+    <div class="row login-fields">
+      <div class="input-field  alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': errors}">
+        <input type="text" name="user-name" id="user-name-2" [(ngModel)]="username">
+        <label for="user-name-2">Usuario <b *ngIf="errors"> incorrecto ó</b></label>
+      </div>
+      <div class="input-field  alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': errors}">
+          <input type="password" name="password2" [(ngModel)]="password">
+          <label for="password2">Contraseña <b *ngIf="errors"> incorrecta</b></label>
+      </div>
+    </div>
+    <div class="row centered row-extraspace" [ngClass]="{'wrong-red': errors}">
+      <button class="btn waves-effect col l2 s8 action" type="submit"  [disabled]="loading">
+        <div *ngIf="!loading">Accesar <i class="material-icons right">send</i></div>
+        <div *ngIf="loading">Cargando ...</div>
+      </button>
+    </div>
+  </form>
+</div>

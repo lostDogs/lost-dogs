@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import {ModuleWithProviders} from '@angular/core';
-import {Routes, RouterModule,} from '@angular/router';
+import {Routes, RouterModule, Router} from '@angular/router';
 import {homeComponent} from './pages/home/home.component';
 import {boardComponent} from './pages/board/board.component';
 import {accountComponent} from './pages/create-account/account.component';
@@ -47,6 +47,12 @@ self.pathBuild = (pathName: string): any => {
     return pathObj;
 };
 
+// TODO: remove in prod only for temp access.
+export function resetConfing(router: Router) {
+  self.routing.push({ path: '', redirectTo: 'home' , pathMatch: 'full'}, {path: '**', redirectTo: 'home'});
+  router.resetConfig(self.routing);
+}
+
 export const router: Routes = [
   { path:'home', component: homeComponent},
   {path: 'board', component: boardComponent},
@@ -78,10 +84,10 @@ export const router: Routes = [
     })
   },
   {path: 'info/:param', component: InformationComponent},
-  {path: 'refund/:param', component: RefundComponent},
-  { path: '', redirectTo: 'home' , pathMatch: 'full'},
-  {path: '**', redirectTo: 'home'}
-];
+  {path: 'refund/:param', component: RefundComponent}
+ ];
+ // TODO: remove in prod only for temp access.
+self.routing = router;
 
 // TODO: check why routing is not working without the hash.
 // TODO: read full file https://angular.io/docs/ts/latest/guide/router.html.
