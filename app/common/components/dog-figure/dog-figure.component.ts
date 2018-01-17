@@ -25,13 +25,13 @@ export class DogFigureComponent {
       'huge-dots-dog': {label: 'Manchas grandes' , visible: false},
       'chest-dog': {label: 'Pecho', visible: false},
       'tuxedo-dog': {label: 'Esmoquin' , visible: false},
-      'small-dots-dog': {label: 'Manchas pequenias' , visible: false},
+      'small-dots-dog': {label: 'Manchas pequeñas' , visible: false},
       'front-legs-dog': {label: 'Piernas delanteras' , visible: false},
       'back-legs-dog': {label: 'Piernas traceras' , visible: false},
       'paws-dog': {label: 'Patas' , visible: false},
-      'tigger-dog': {label: 'Tigre' , visible: false}
+      'tigger-dog': {label: 'Atigrado' , visible: false}
     };
-    this.dogCard.patterns = Object.keys(this.partLabels);
+    this.dogCard.patterns = this.partLabels;
   }
 
   public ngOnInit(): void {

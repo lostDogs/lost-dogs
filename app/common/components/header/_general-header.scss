@@ -121,7 +121,13 @@ header {
   border: 6px solid white;
   border-radius: 10px;
   z-index: 1010;
-
+  #forgot-pass {
+   padding: 0;
+     i.material-icons {
+       margin-left: 10px;
+       font-size: 1.5rem;
+     }
+  } 
   a {
     font-family: $primaryFont, sans-serif;
     color: white;

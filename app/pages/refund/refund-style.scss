@@ -1,0 +1,30 @@
+@import '../../common/styles/variables.scss';
+.refund-page {
+    background: $lightGrey;
+    margin-bottom: 0;  
+  .text-centered {
+    text-align: center;
+  }
+  .extra-padding-top {
+    padding-top: 20px;
+  }
+ .refund-block  {
+  margin: 0;
+  padding: 100px 0;
+  button {
+    margin-top: 20px;
+  }
+  h6 {
+    margin-top: 30px;
+  }
+  .money {
+    color: $greenMat;
+    font-weight: 600;
+  }
+  &.sucess {
+    i.material-icons {
+      color: $greenMat;
+    }
+  }
+ }
+}

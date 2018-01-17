@@ -344,4 +344,4 @@ export class boardComponent {
  public scrollTop(): void {
    $('html, body').animate({ scrollTop: 0 }, 600);
  }
-};
+}

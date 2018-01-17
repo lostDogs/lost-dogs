@@ -16,7 +16,7 @@ export interface formObj {
 export interface Iuser {
   pic: formObj;
   name: {first: formObj, last1: formObj, last2: formObj};
-  adress: {adressName: formObj, postalCode: formObj, city: formObj, numberExt: formObj, numberInt: formObj, country: formObj};
+  adress: {adressName: formObj, postalCode: formObj, city: formObj, numberExt: formObj, numberInt: formObj, country: formObj, street: formObj};
   contact: {areaCode: formObj, phone: formObj, email: formObj};
   access: {userName: formObj, password: formObj, password2: formObj};
 }
@@ -42,6 +42,8 @@ export class accountComponent {
   public disableButton: (userBlock: any, originalUserBlock: any) => void;
   @Input()
   public hoverRetainState: () => void;
+  //only used in profile/edit
+  public oldPassword: string;
 
   constructor (public validate: ValidationService, public api: ApiService, public router: Router, public userService: UserService, public globalService: GlobalFunctionService) {
     this.countries = countryData;
@@ -59,7 +61,8 @@ export class accountComponent {
         city: {valid: true, value: undefined, required: true},
         numberExt: {valid: true, value: undefined, required: true},
         numberInt: {valid: true, value: undefined, required: false},
-        country: {valid: true, value: undefined, required: true}
+        country: {valid: true, value: undefined, required: true},
+        street: {valid: true, value: undefined, required: true}
       },
       contact: {
         areaCode: {valid: true, value: undefined, required: true},
@@ -210,7 +213,7 @@ export class accountComponent {
         'zip_code': user.adress.postalCode.value,
         'city': user.adress.city.value,
         'country': user.adress.country.value,
-        'street': 'ads'
+        'street': user.adress.street.value
       },
       'phone_number': {
         'number': user.contact.phone.value,
@@ -247,16 +250,22 @@ export class accountComponent {
     // this function is being executed on the create-account.template.html that is why i am passing the accountCtrl.
     this.loading = true;
     const objKeys: string[] = Object.keys(userBlock);
-    
     const valid: boolean = !objKeys.some((userElement: string, userElIndex: number) => {
       if (!userBlock[userElement].valid) {
         return true;
       }
     });
-    
     if (valid) {
-      const userToEdit: any = this.userBuilder(this.user);
-      const url: string = 'https://fierce-falls-25549.herokuapp.com/api/users/' + this.userService.user.username;
+      let userToEdit: any = this.userBuilder(this.user);
+      let url: string = 'https://fierce-falls-25549.herokuapp.com/api/users/' + this.userService.user.username;
+      if (userBlock.password) {
+        url = url + '/changePassword';
+        userToEdit = {
+          new_password: userBlock.password.value,
+          confirm_password: userBlock.password2.value,
+          old_password: this.oldPassword
+        }
+      }
       const headers: any = {
         'Content-Type': 'application/json',
         'Authorization': 'token ' + this.userService.token

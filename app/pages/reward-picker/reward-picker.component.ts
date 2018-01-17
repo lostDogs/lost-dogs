@@ -4,6 +4,7 @@ import {MailingRewardService} from '../../common/services/mailing-reward.service
 import {UserService} from '../../common/services/user.service';
 import {DogCardService} from '../../common/services/dog-card.service';
 import {OpenSpayService} from '../../common/services/openspay.service';
+import {ValidationService} from '../../common/services/validation.service';
 const QCodeDecoder = require('../../common/vendor/qr-img-decoder.js');
 
 @Component({
@@ -27,18 +28,24 @@ export class RewardPickerComponent {
   @ViewChild('RewardAprox')
   public formDom: ElementRef;
   public toBeRewarded: string;
-  public accountNumber: string;
-  public holderName: string;
+  public rewardForm: {accountNumber: {value: string, valid: boolean}, holderName: {value: string, valid: boolean}};
   @ViewChild('TransSucess')
   public transSucessDom: ElementRef;
 
-  constructor(public rewardService: MailingRewardService, public userService: UserService, public router: Router, public openPay: OpenSpayService, public dogService: DogCardService) {
+  constructor(public rewardService: MailingRewardService, public userService: UserService, public router: Router, public openPay: OpenSpayService, public dogService: DogCardService, public validate: ValidationService) {
     const ios: boolean = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform)
     this.mobile = window.screen.width <= 767 || ios;
+    this.rewardService.transaction = undefined;
+    this.dogService.dogData = undefined;
+    this.openPay.trasnferData = undefined;
     if (this.mobile) {
       this.focusUpload = true;
     }
     this.QrDecoder = new QCodeDecoder();
+    this.rewardForm = {
+      accountNumber: {value: undefined, valid: true},
+      holderName: {value: undefined, valid: true}
+    };
   }
 
   public ngOnInit(): void {
@@ -142,25 +149,44 @@ export class RewardPickerComponent {
 
   public rewardMe(event: Event): void {
     event.preventDefault();
-    const formObj = {
+/*    const formObj = {
       bank_account: {
-        clabe: this.accountNumber,
-        holder_name: this.holderName
+        clabe: '012298026516924616',
+        holder_name: 'chris Tupper'
       },
-      description: 'recompenza para ' + this.userService.user.name + ' de transactionID > ' + this.transObj.transactionId
-    };
-    this.openPay.trasnferData = undefined;
-    this.openPay.transfer(this.transObj, formObj, this.userService.token).add(() => {
-      if (this.openPay.trasnferData && this.openPay.trasnferData.id) {
-        const self = this;
-        this.dogService.deleteDog(this.dogService.dogData._id);
-        setTimeout(() => {
-          console.log('self.transSucessDom.nativeElement.offsetTop', self.transSucessDom.nativeElement.offsetTop);
-          const sucessDomTop: number = self.transSucessDom.nativeElement.offsetTop - 120;
-          $('html, body').animate({scrollTop: sucessDomTop}, 500);
-        }, 100);
-      }
-    });
+      description: 'recompenza para Chris de transID > ' + this.transObj.transactionId      
+    };   
+    this.rewardForm.accountNumber.value && this.rewardForm.holderName.value
+     */
+     if (!this.rewardForm.holderName.value || !this.rewardForm.accountNumber.value) {
+       this.rewardForm.accountNumber.valid = false;
+       this.rewardForm.holderName.valid = false;
+       return;
+     }
+    if (this.rewardForm.accountNumber.valid && this.rewardForm.holderName.valid) {
+      const formObj = {
+        bank_account: {
+          clabe: this.rewardForm.accountNumber.value,
+          holder_name: this.rewardForm.holderName.value
+        },
+        description: 'recompenza para ' + this.userService.user.name + ' de transactionID > ' + this.transObj.transactionId
+      };
+      this.openPay.trasnferData = undefined;
+      this.openPay.transfer(this.transObj, formObj, this.userService.token).add(() => {
+        if (this.openPay.trasnferData && this.openPay.trasnferData.id) {
+          const self = this;
+          this.dogService.deleteDog(this.dogService.dogData._id);
+          console.log('this.openPay.trasnferData.id,', this.openPay.trasnferData.id);
+          console.log('this.openPay.trasnferData.id,', this.openPay.trasnferData);
+          console.log('this', this);
+          setTimeout(() => {
+            console.log('self.transSucessDom.nativeElement.offsetTop', self.transSucessDom.nativeElement.offsetTop);
+            const sucessDomTop: number = self.transSucessDom.nativeElement.offsetTop - 120;
+            $('html, body').animate({scrollTop: sucessDomTop}, 500);
+          }, 100);
+        }
+      });
+    }
   }
 
 }

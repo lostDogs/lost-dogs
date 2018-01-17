@@ -30,7 +30,7 @@ export class DatePickerComponent {
     this.months = [];
     this.days = [];
     this.selectedIndexDate ={year: 0, month: 0, day: 0};
-    this.generateYears(10);
+    this.generateYears();
     this.generateMonths();    
   }
 
@@ -70,11 +70,17 @@ export class DatePickerComponent {
       }
     }
   }
-  // will generate year arround +-range of todays date
-  public generateYears(range: number): void{
+  // will generate year arround +-range of todays date or if not range, will generate from todays to back.
+  public generateYears(range?: number): void{
     this.years = [];
-    for (let i = (this.todaysYear - range); i < (this.todaysYear + range); ++i) {
-      this.years.push(i);
+    if (range) {
+      for (let i = (this.todaysYear - range); i < (this.todaysYear + range); ++i) {
+        this.years.push(i);
+      }
+    } else  {
+      for (let i = this.todaysYear - 3; i <= this.todaysYear; i++) {
+        this.years.push(i);
+      }
     }
   }
   public generateMonths(): void {
@@ -91,17 +97,45 @@ export class DatePickerComponent {
     for (let i = 1; i <= maxDay; ++i) {
       this.days.push(i);
     }
+    this.days = JSON.parse(JSON.stringify(this.days));
   }
 
   public getSeletedYearIndex(event: any): void {
     this.selectedIndexDate.year = event;
-    this.generateDays(this.years[this.selectedIndexDate.year-1], this.selectedIndexDate.month+1);
+    this.generateDays(this.years[this.selectedIndexDate.year], this.selectedIndexDate.month + 1);
+    this.adjustMonths();
+    this.adjustDays();
     this.generateDate();
+  }
+
+  public adjustMonths(): void {
+    const selectedYear = this.years[this.selectedIndexDate.year];
+    const todaysMonth = this.todaysMonth;
+    if (selectedYear === this.todaysYear) {
+      this.months.splice(todaysMonth, this.months.length);
+      this.months = JSON.parse(JSON.stringify(this.months));
+    }else {
+      this.generateMonths();
+    }
+  }
+
+  public adjustDays(): void {
+    // generate days should be call firts.
+    const selectedYear = this.years[this.selectedIndexDate.year];
+    const todaysMonth = this.todaysMonth;
+    const selectedMonth = this.selectedIndexDate.month + 1;
+    if (selectedMonth === todaysMonth && selectedYear === this.todaysYear) {
+      this.days.splice(this.todaysDay, this.days.length);
+      this.days = JSON.parse(JSON.stringify(this.days));
+    }else {
+      this.generateDays(this.years[this.selectedIndexDate.year], this.selectedIndexDate.month + 1);
+    }
   }
 
   public getSelectedMonthIndex(event: any): void {
     this.selectedIndexDate.month = event;
-     this.generateDays(this.years[this.selectedIndexDate.year-1], this.selectedIndexDate.month+1);
+     this.generateDays(this.years[this.selectedIndexDate.year], this.selectedIndexDate.month + 1);
+     this.adjustDays();
      this.generateDate();
   }
 

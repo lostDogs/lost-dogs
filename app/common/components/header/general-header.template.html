@@ -54,14 +54,14 @@
 </header>
 
 <article id="popover-login" *ngIf="showLoginFrom" class="hoverable">
-  <form class="row" title="form-login" #loginForm="ngForm" (ngSubmit)="userService.login(userName, password)"   *ngIf="!userService.isAuth" novalidate>
+  <form class="row" title="form-login" #loginForm="ngForm" (ngSubmit)="userService.login(userService.tempUserName, password)"   *ngIf="!userService.isAuth" novalidate>
       <div class="input-field main-white col l12 s12" [ngClass]="{'wrong-red': userService.errors.userReq || userService.errors.invalidUser}">
-        <input type="text" name="userName" id="user-name" [(ngModel)]="userName" (keyup)="userService.errors.userReq = false;userService.errors.invalidUser = false;">
-        <label for="user-name">nombre usuario <b *ngIf="userService.errors.invalidUser"> incorrecto ó</b></label>
+        <input type="text" name="user name" id="user-name" [(ngModel)]="userService.tempUserName" (keyup)="userService.errors.userReq = false;userService.errors.invalidUser = false;">
+        <label for="user-name" [ngClass]="{'active': userService.tempUserName}">nombre usuario <b *ngIf="userService.errors.invalidUser"> incorrecto ó</b></label>
       </div>
       <div class="input-field main-white col l12 s12" [ngClass]="{'wrong-red': userService.errors.passwordReq || userService.errors.invalidUser}">
           <input type="password" name="password" id="user-password"  [(ngModel)]="password" (keyup)="userService.errors.passwordReq = false;userService.errors.invalidUser = false;">
-          <label for="user-password">contrasenia <b *ngIf="userService.errors.invalidUser"> incorrecta</b></label>
+          <label for="user-password">contraseña <b *ngIf="userService.errors.invalidUser"> incorrecta</b></label>
       </div>
       <button class="btn waves-effect col l12 action" type="submit" [disabled]="userService.loading">
         <div *ngIf="!userService.loading">Iniciar sesión<i class="material-icons right">send</i></div>
@@ -72,6 +72,11 @@
          <i class="material-icons right">person_pin</i>
         </a>        
       </div>
+      <div class="col l12 account-link" *ngIf="userService.timesTrying >= 1" id="forgot-pass">
+        <a [routerLink]="['/login']" [queryParams]="{fG:'true'}" title="" class="waves-effect">olvide mi contraseña
+         <i class="material-icons right">lock</i>
+        </a>        
+      </div>      
     </form>
     <div  *ngIf="userService.isAuth">
       <ul class="logged-opts">

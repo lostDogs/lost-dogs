@@ -24,6 +24,8 @@ export class OpenSpayService {
   public MERCHANT_ID: string = 'mrvo5dylz7xeq7pnyoqx';
   public PUBLIC_KEY: string = 'pk_85e195c76956425d973944d88521d47e';
   public trasnferData: any;
+  public loadingTrasnfer: boolean;
+  public refundData: any;
 
   constructor (public api: ApiService, public globalService: GlobalFunctionService) {}
 
@@ -97,10 +99,7 @@ export class OpenSpayService {
   }
 
   public chargeClient(chargeobj: any, userToken: string, transID?: string): Subscription {
-    const headers: any = {
-      'Content-Type': 'application/json',
-      'Authorization': 'token ' + userToken
-    }; 
+    const headers: any = this.setheards(userToken);
     const url: string = transID ? '/api/transactions/' + transID + '/pay' : '/api/transactions/pay';
     return this.api.post('https://fierce-falls-25549.herokuapp.com' + url , chargeobj, headers).subscribe(
       data => {
@@ -108,6 +107,7 @@ export class OpenSpayService {
         this.sucessPaymentId = data['paymentResult'].id;
       },
       error => {
+        this.sucessPaymentId = undefined;
        this.globalService.clearErroMessages();
        this.globalService.setErrorMEssage('Ops! no hacer el cargo por el momento');
        this.globalService.setSubErrorMessage(error._body && error._body.code);
@@ -117,27 +117,55 @@ export class OpenSpayService {
   }
 
   public transfer(qrObj: {identifier: string, transactionId: string}, transferData: any, userToken: string): Subscription {
-    const headers: any = {
-      'Content-Type': 'application/json',
-      'Authorization': 'token ' + userToken
-    };
+    const headers: any = this.setheards(userToken);
     console.log('qrObj identifier', qrObj.identifier);
     const url: string = '/api/transactions/' + qrObj.transactionId + '/reward/' + qrObj.identifier;
+    this.loadingTrasnfer = true;
     return this.api.post('https://fierce-falls-25549.herokuapp.com' + url , transferData, headers).subscribe(
       data => {
         console.log('transfer sucess!', data);
         this.trasnferData = data;
+        this.loadingTrasnfer = false;
       },
       error => {
+       this.loadingTrasnfer = false;
        this.globalService.clearErroMessages();
        this.globalService.setErrorMEssage('Ops! no hacer el cargo por el momento');
        if (error._body && error._body.code) {
          this.globalService.setSubErrorMessage(error._body.code);
        }
-       this.globalService.openErrorModal();        
+       this.globalService.openErrorModal();
         console.error('error making a transfer', error);
       });
   }
+
+  public refund(userToken: string, transactionId: string, reason?: string): Subscription {
+    const headers: any = this.setheards(userToken);
+    const url: string = '/api/transactions/' + transactionId + '/refund';
+    const reasonObj = reason ? {reason: reason} : {};
+    return this.api.delete('https://fierce-falls-25549.herokuapp.com' + url , reasonObj, headers).subscribe(
+      data => {
+        this.refundData = true;
+      },
+      error => {
+        this.refundData = undefined;
+       this.globalService.clearErroMessages();
+       this.globalService.setErrorMEssage('Ops! no hacer el cargo por el momento');
+       this.globalService.openErrorModal();
+       console.error('error at refund call', error);
+      }
+    );
+  }
+
+  public setheards(userToken: string, configObj?: any): any {
+    configObj = configObj || {};
+    const headers: any = {
+      'Content-Type': 'application/json',
+      'Authorization': 'token ' + userToken
+    };
+    Object.assign(headers, configObj);
+    return headers;
+  }  
 
   public loadOpenPayScript(): any {
     //  Dynamically inserting payment scirpts on the dom.
@@ -151,7 +179,6 @@ export class OpenSpayService {
             return;
         }
     }
-    console.log('dynamically inserting scripts ///');
     dynamicScripts.forEach((scriptName: string, scriptIndex: number) => {
       let node = document.createElement('script');
       node.type = nodeType;

@@ -52,6 +52,9 @@ export class lostComponent {
         }else if (urlChildLoction === 'breed') {
           this.lostService.btnBreedSearchDom = this.buttonBreedSearch;
         }
+        if (urlChildLoction !== 'review') {
+          localStorage.clear();
+        }
         if (this.lostService.retrieveData) {
           this.lostService.retrieveData(this.lostService.pageAnswers[this.lostService.pagePosition], this.lostService);
           this.lostService.retrieveData = undefined;
@@ -79,7 +82,6 @@ export class lostComponent {
       this.router.navigate(['/login']);
     }
     this.lostService.resetService();
-    localStorage.clear();
     this.displayIntro = true;
     this.dogCardService.open = true;
     console.log('parent page in ngoninit', this.router.url.split('/')[1]);

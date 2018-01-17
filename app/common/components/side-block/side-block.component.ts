@@ -300,12 +300,14 @@ public splicedAnswer: boolean;
 
   public colorEmit(indexed: number, colorIndex: number, addColor: boolean): void {
     const name: string = this.elements[indexed].name.split(':')[0];
+    const label: string = this.elements[indexed]['label'].split(': ')[0];
     const color: string = this.colors[colorIndex];
     this.multipleElements.some((el: any, elIndex: number) => {
       const elName: string = el.name.split(':')[0];
       if (elName === name) {
         if (addColor) {
           this.multipleElements[elIndex].name = name + ': ' + color;
+          this.multipleElements[elIndex]['label'] = label + ': ' + color;
         } else {
           this.multipleElements[elIndex].name = name;
         }
