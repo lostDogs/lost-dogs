@@ -46,7 +46,7 @@ export class accountComponent {
   public oldPassword: string;
 
   constructor (public validate: ValidationService, public api: ApiService, public router: Router, public userService: UserService, public globalService: GlobalFunctionService) {
-    this.countries = countryData;
+    this.countries = [{"id": "MX", "name": "Mexico"}];
     // define the user object before
     this.user = {
       pic: {value:'./static/profile-undef.png', valid: true, required: true, label: 'imagen de perfil'},

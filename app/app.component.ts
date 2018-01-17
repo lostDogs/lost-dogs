@@ -38,10 +38,7 @@ export class appComponent {
     if (prevAccess) {
       this.show = true;
       window.scroll(0,0);
-      setTimeout(()=> {
       resetConfing(this.routing);
-      this.routing.navigateByUrl('/home');
-      }, 20);
     }
   }
 // TODO: remove in prod only for temp access.

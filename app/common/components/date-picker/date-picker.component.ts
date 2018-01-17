@@ -105,6 +105,10 @@ export class DatePickerComponent {
     this.generateDays(this.years[this.selectedIndexDate.year], this.selectedIndexDate.month + 1);
     this.adjustMonths();
     this.adjustDays();
+    this.setSelectedDate();
+    if (new Date(this.seletedDate) > new Date()) {
+      this.selectedIndexDate.month = this.todaysMonth - 1;
+    }
     this.generateDate();
   }
 
@@ -145,12 +149,16 @@ export class DatePickerComponent {
   }
 
   public generateDate(): void {
+    this.setSelectedDate();
+    this.seletedDateEmitter.emit(this.seletedDate);
+  }
+
+  public setSelectedDate(): void {
     const month: string = String(this.selectedIndexDate.month + 1);
     const day: string = String(this.selectedIndexDate.day + 1);
     const monthTwoDigit: string = month.length < 2 ? '0' + month : month;
     const dayTwoDigit: string = day.length < 2 ? '0' + day : day;
     this.seletedDate = this.years[this.selectedIndexDate.year] + '/' +monthTwoDigit + '/' + dayTwoDigit;
-    this.seletedDateEmitter.emit(this.seletedDate);
   }
 
 }
