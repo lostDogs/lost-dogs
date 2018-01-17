@@ -50,6 +50,8 @@ export class SideBlockComponent {
   @Input()
   public colors: string[];
   public colorOptions: any;
+  @Input()
+  public forceSelection: number;
 /*
 * SplicedAnswer is a temp solution, because board splice elements from the array and in lost/ found not.
 * when removing elements only lost/found went in the condition and spliced elements didnt, so splicedAnswer will tell 
@@ -250,6 +252,10 @@ public splicedAnswer: boolean;
       if(prevElment.key && !Array.isArray(prevElment)) {
       this.elements[prevElment.orginalIndex].disabled = false;
       this.previousSelected = prevElment.orginalIndex;
+      }
+    }else if (changes.forceSelection && changes.forceSelection.currentValue) {
+      if ( typeof this.forceSelection === 'number') {
+        this.blockSelected(undefined, undefined, this.forceSelection);
       }
     }
   }

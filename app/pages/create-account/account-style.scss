@@ -32,7 +32,10 @@
    .privacy-policy {
      font-size: 0.7rem;
      padding-bottom: 50px;
-     padding-top: 20px;    
+     padding-top: 20px;
+     a {
+      cursor: pointer;
+     }
    }
   .main-create-account {
     margin-bottom: 0;

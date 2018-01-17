@@ -1,1 +1,66 @@
 @import '../../../common/styles/variables.scss';
+button.btn.info.breed-search {
+  padding: 0 1rem;
+  vertical-align: baseline;
+  margin-left: 5px;
+  border-radius: 5px;
+  @media screen and (max-device-width: $screen-mobile-max) {
+    padding: 20px 50px;
+    padding-bottom: 55px;
+    border-radius: 10px;
+  }
+}
+board .page breed-block .breed-searcher-container {
+  margin-top: 200px;
+  @media screen and (max-device-width: $screen-desktop-min) {
+    margin-top: 350px;
+  }
+}
+
+board,lost {
+ .page {
+    breed-block {
+      .breed-searcher-container {
+        position: absolute;
+        height: 100vh;
+        width: 100%;
+        top: 0;
+      }
+      .breed-searcher {
+        position: absolute;
+        top: 15%;
+        width: 100%;
+        z-index: 30;
+        transition: 1s;
+        &.search-top {
+          top: 2%;
+        }
+        .input-field input {
+          width: 100%;
+          background: white;
+          border-radius: 5px;
+          padding-left: 5px;
+        }
+        @media screen and (max-device-width: $screen-mobile-max) {
+          top: 10%;
+          .input-field input {
+            border-radius: 10px;
+            padding: 15px;
+            line-height: 3rem;          
+          }
+          &.search-top {
+            top: 2%;
+          }
+        }
+        @media screen 
+        and (min-device-width: $screen-tablet-min) 
+        and (max-device-width: $screen-tablet-max) {
+          top: 2%;
+          &.search-top {
+            top: -10%;
+          }
+        }   
+      }
+    }
+ } 
+}

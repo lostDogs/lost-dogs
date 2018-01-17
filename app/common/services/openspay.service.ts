@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from './api.service';
 import {Subscription} from 'rxjs/Rx';
-import {ICard} from '../../pages/payment/form-payment/form-payment.component'
+import {ICard} from '../../pages/payment/form-payment/form-payment.component';
+import {GlobalFunctionService} from '../../common/services/global-function.service';
 
 export enum cardNames {
 Mastercard = 'Mastercard',
@@ -22,8 +23,9 @@ export class OpenSpayService {
   public sucessPaymentId: string;
   public MERCHANT_ID: string = 'mrvo5dylz7xeq7pnyoqx';
   public PUBLIC_KEY: string = 'pk_85e195c76956425d973944d88521d47e';
+  public trasnferData: any;
 
-  constructor (public api: ApiService) {}
+  constructor (public api: ApiService, public globalService: GlobalFunctionService) {}
 
   public initOpenPay(): void {
     if (!this.init) {
@@ -106,7 +108,34 @@ export class OpenSpayService {
         this.sucessPaymentId = data['paymentResult'].id;
       },
       error => {
+       this.globalService.clearErroMessages();
+       this.globalService.setErrorMEssage('Ops! no hacer el cargo por el momento');
+       this.globalService.setSubErrorMessage(error._body && error._body.code);
+       this.globalService.openErrorModal();
         console.error('error making charge to customers', error);
+      });
+  }
+
+  public transfer(qrObj: {identifier: string, transactionId: string}, transferData: any, userToken: string): Subscription {
+    const headers: any = {
+      'Content-Type': 'application/json',
+      'Authorization': 'token ' + userToken
+    };
+    console.log('qrObj identifier', qrObj.identifier);
+    const url: string = '/api/transactions/' + qrObj.transactionId + '/reward/' + qrObj.identifier;
+    return this.api.post('https://fierce-falls-25549.herokuapp.com' + url , transferData, headers).subscribe(
+      data => {
+        console.log('transfer sucess!', data);
+        this.trasnferData = data;
+      },
+      error => {
+       this.globalService.clearErroMessages();
+       this.globalService.setErrorMEssage('Ops! no hacer el cargo por el momento');
+       if (error._body && error._body.code) {
+         this.globalService.setSubErrorMessage(error._body.code);
+       }
+       this.globalService.openErrorModal();        
+        console.error('error making a transfer', error);
       });
   }
 
@@ -136,5 +165,6 @@ export class OpenSpayService {
         }
       };
     });
-  }  
+  }
+  
 }

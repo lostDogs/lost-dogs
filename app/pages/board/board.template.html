@@ -21,16 +21,18 @@
           <div class="answerSelected" *ngIf="nameInput && showNameInput" (click)="enableComponent(filter, i)">
             <div title="cerrar" class="close-icon" (click)="nameInput=undefined;nameModel=''">
               <i class="tiny material-icons">close</i>
-            </div>
+          </div>
             <p class="answer-text">{{nameInput}}</p>
           </div>
-        </div>      
+          <button *ngIf="filter === 'breed' && filterElements.breed && filterElements.breed.enable && filterElements.breed.answer && filterElements.breed.answer && filterElements.breed.answer.length < 2" class="btn info breed-search" (click)="openBreedSearch=true" #ButtonBreedSearch><i  class="material-icons">search</i></button>
+        </div>
+          <button *ngIf="filter === 'breed' && filterElements.breed && filterElements.breed.enable && !filterElements.breed.answer" class="btn info breed-search" (click)="openBreedSearch=true" #ButtonBreedSearch><i  class="material-icons">search</i></button>
     </div>
     </section>
   </div>
   <section class="row component-filter" #Components [ngStyle]="{'border-bottom': !ComponentsDom.nativeElement.clientHeight ? 'none' : '6px solid white'}"  [ngClass]="{'blur-filter': dogCardService.open}">
     <gender-block (selectedEmitter)="selectionReciver('gender', $event)" [removedElement]="filterElements.gender.answer" [hidden]="!filterElements.gender.enable"></gender-block>
-    <breed-block (selectedEmitter)="selectionReciver('breed', $event)" [removedElement]="filterElements.breed.answer" [hidden]="!filterElements.breed.enable"></breed-block>
+    <breed-block (selectedEmitter)="selectionReciver('breed', $event)" [removedElement]="filterElements.breed.answer" [openBreedSearch]="openBreedSearch" [hidden]="!filterElements.breed.enable" [btnDom]="buttonBreedSearchDom" (openSearchemiter)="openBreedSearch=$event"></breed-block>
     <size-block (selectedEmitter)="selectionReciver('size', $event)" [removedElement]="filterElements.size.answer" [hidden]="!filterElements.size.enable"></size-block>
     <color-block (selectedEmitter)="selectionReciver('color', $event)" [removedElement]="filterElements.color.answer" [hidden]="!filterElements.color.enable" [splicedAnswer]="true"></color-block>
     <!-- <pattern-block (selectedEmitter)="selectionReciver('pattern', $event)" [removedElement]="filterElements.pattern.answer" [colors]="colorsSelected" [hidden]="!(filterElements.pattern.enable && colorsSelected && colorsSelected.length > 1)"></pattern-block> -->

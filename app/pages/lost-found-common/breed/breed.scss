@@ -1,1 +1,10 @@
 @import '../../../common/styles/variables.scss';
+breed {
+  .breed-searcher-container {
+    position: absolute;
+  }
+}
+button.btn.info.breed-search.breed {
+    position: absolute;
+    bottom: 30px;    
+  }

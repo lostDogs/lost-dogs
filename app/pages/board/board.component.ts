@@ -61,6 +61,9 @@ export class boardComponent {
   public radioInMap: number = 0.5;
 
   public showArrowUp: boolean;
+  
+  @ViewChild('ButtonBreedSearch')
+  public buttonBreedSearchDom: ElementRef;
 
   constructor(@Inject(DOCUMENT) private document:  Document, public dogCardService: DogCardService, public lostService: LostFoundService, public searchService: SearchService) {
     this.filtersKey = [];

@@ -2,6 +2,8 @@ import {Component, ViewChild, ElementRef} from '@angular/core';
 import {Router} from '@angular/router';
 import {MailingRewardService} from '../../common/services/mailing-reward.service';
 import {UserService} from '../../common/services/user.service';
+import {DogCardService} from '../../common/services/dog-card.service';
+import {OpenSpayService} from '../../common/services/openspay.service';
 const QCodeDecoder = require('../../common/vendor/qr-img-decoder.js');
 
 @Component({
@@ -21,10 +23,16 @@ export class RewardPickerComponent {
   public mobile: boolean;
   public invalidQr: boolean;
   public transacionSucess: boolean;
+  public transObj: {identifier: string, transactionId: string};
   @ViewChild('RewardAprox')
   public formDom: ElementRef;
+  public toBeRewarded: string;
+  public accountNumber: string;
+  public holderName: string;
+  @ViewChild('TransSucess')
+  public transSucessDom: ElementRef;
 
-  constructor(public rewardService: MailingRewardService, public userService: UserService, public router: Router) {
+  constructor(public rewardService: MailingRewardService, public userService: UserService, public router: Router, public openPay: OpenSpayService, public dogService: DogCardService) {
     const ios: boolean = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform)
     this.mobile = window.screen.width <= 767 || ios;
     if (this.mobile) {
@@ -70,16 +78,18 @@ export class RewardPickerComponent {
 
   public fileChange(ev: any): void {
     const file: File = ev.target.files[0];
-    console.log('file change!!', file);
      if (ev.target && ev.target.files && file && file.type.match('image.*')) {
         try {
           const reader = new FileReader();
           reader.onload = (event: any) => {
             const pic = event.target.result;
+                console.log('file on looad!!');
             this.QrDecoder.decodeFromImage(pic, (error: any, ans: any) => {
+              console.log("coooming insde the deocide form image component")
               if (error) {
                 this.invalidQr = true;
                 this.focusUpload = false;
+                this.img = undefined;
                 console.error('error decoding qr img', error);
                 return;
               }
@@ -102,16 +112,23 @@ export class RewardPickerComponent {
   }
 
   public getTransaction(userToken: string, transactionId: string): void {
-    this.rewardService.getTransaction(userToken, transactionId).add(() => {
+    this.transObj = JSON.parse(transactionId);
+    this.rewardService.getTransaction(userToken, this.transObj.transactionId).add(() => {
       this.invalidQr = this.rewardService.invalidTransactionId;
       this.transacionSucess = this.rewardService.transaction && this.rewardService.transaction.dog_id;
       this.focusUpload = false;
       if (this.transacionSucess) {
-        // getReward to user => procced to payment form.
-        const formOffset: number = this.formDom.nativeElement.offsetTop - 120;
-        setTimeout(() => {
-          $('html, body').animate({ scrollTop: formOffset}, 500);
-        }, 500)
+        this.dogService.getDog(this.rewardService.transaction.dog_id).add(() => {
+          if (!this.dogService.dogData) {
+            console.error('unable to get data');
+          } else {
+            this.toBeRewarded = (+this.dogService.dogData.reward * 0.80).toFixed(2);
+          const formOffset: number = this.formDom.nativeElement.offsetTop - 120;
+          setTimeout(() => {
+            $('html, body').animate({ scrollTop: formOffset}, 500);
+          }, 500);
+          }
+        });
       } else {
         this.scannedValue = undefined;
         this.img = undefined;
@@ -119,6 +136,29 @@ export class RewardPickerComponent {
         setTimeout(() => {
           this.startScan = false;
         }, 500);
+      }
+    });
+  }
+
+  public rewardMe(event: Event): void {
+    event.preventDefault();
+    const formObj = {
+      bank_account: {
+        clabe: this.accountNumber,
+        holder_name: this.holderName
+      },
+      description: 'recompenza para ' + this.userService.user.name + ' de transactionID > ' + this.transObj.transactionId
+    };
+    this.openPay.trasnferData = undefined;
+    this.openPay.transfer(this.transObj, formObj, this.userService.token).add(() => {
+      if (this.openPay.trasnferData && this.openPay.trasnferData.id) {
+        const self = this;
+        this.dogService.deleteDog(this.dogService.dogData._id);
+        setTimeout(() => {
+          console.log('self.transSucessDom.nativeElement.offsetTop', self.transSucessDom.nativeElement.offsetTop);
+          const sucessDomTop: number = self.transSucessDom.nativeElement.offsetTop - 120;
+          $('html, body').animate({scrollTop: sucessDomTop}, 500);
+        }, 100);
       }
     });
   }

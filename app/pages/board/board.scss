@@ -300,6 +300,9 @@ board {
       text-align: center;
       background-color: $pink;
       border-bottom: 6px solid white;
+      @media screen and (max-device-width:$screen-desktop-min) {
+        padding-top: 170px;
+      } 
       .filter {
         display: inline-block;
         cursor: pointer;
@@ -309,6 +312,7 @@ board {
         .filter-title {
           color: $lightGrey;
           font-weight: 500;
+          display: inline-block;
           &.active {
             color: white;
           }

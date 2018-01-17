@@ -7,6 +7,7 @@ reward-picker {
     background: $lightGrey;
     .main-content.row {
       margin-bottom: 0;
+      padding-bottom: 50px;
     }
     .input-field {
       @media screen and (max-device-width: $screen-mobile-max) {

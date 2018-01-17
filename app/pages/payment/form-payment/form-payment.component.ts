@@ -75,6 +75,7 @@ export class FormPaymentComponent {
     for (let i = todaysYear; i <= todaysYear + 10; i++) {
       this.years.push('' + i);
     }
+    this.lostService.resetService();
     this.openSpayService.loadOpenPayScript();
   }
 
@@ -95,7 +96,8 @@ export class FormPaymentComponent {
       this.dogId = params.cID;
       this.transcationId = params.transcation;
       this.lostParam = params.Lt;
-      this.chargeCreate = !!~this.router.url.indexOf(this.lostService.defualtSequence[this.lostService.defualtSequence.length - 1]);
+      const value: string = this.lostService.defualtSequence[this.lostService.defualtSequence.length - 1]
+      this.chargeCreate = !!~this.router.url.indexOf(value);
       this.rewardAmount = params.rW || (this.dogService.dogData && this.dogService.dogData.reward);
       if (!this.dogService.dogData && this.dogId) {
         this.dogService.getDog(this.dogId).add(() => {
@@ -110,6 +112,8 @@ export class FormPaymentComponent {
     }else if (this.chargeCreate) {
       const unit: number = un_0 + un_1;
       this.rewardAmount = ((unit + 1)* unit * 2 + unit).toFixed(2) + '';
+    } else {
+      //this.router.navigateByUrl('/home');
     }
     });
   }
@@ -168,24 +172,36 @@ export class FormPaymentComponent {
       if (this.openSpayService.tokenId) {
         const transDesc: string = this.chargeCreate ? 'pago por reportar perro' : 'pago de recompenza de ' + this.userService.user.name + ' para el perro >' + this.dogService.dogData._id;
         const chargeObj: any = this.openSpayService.mapChargeRequest(this.rewardAmount, this.userService.user,transDesc);
-        this.openSpayService.chargeClient(chargeObj, this.userService.token, this.transcationId).add(() => {
-        if (this.openSpayService.sucessPaymentId) {
-          alert('SUCESS ID: ' + this.openSpayService.sucessPaymentId);
-          if (!this.chargeCreate) {
-            this.mailingService.sendEmailsToUsers(false, this.userService.token, this.dogService.dogData._id).add(() => {
+        if (this.transcationId) {
+          console.log('paying for lost with chargeClient');
+          this.openSpayService.chargeClient(chargeObj, this.userService.token, this.transcationId).add(() => {
+            if (this.openSpayService.sucessPaymentId) {
               this.loading = false;
               this.sucess = true;
               this.globalService.paymentRewardSucess = true;
               $('html, body').animate({ scrollTop: 0 }, 500);
-            });
-          } else {
-            this.lostService.saveToApi().add(() => {
-              this.router.navigateByUrl('/lost/review');
-            });
-          }
-        }
-
-        })
+            }
+          });
+        } else if (this.dogId) {
+          console.log('paying for found with email service');
+          this.mailingService.sendEmailsToUsers(false, this.userService.token, this.dogService.dogData._id, chargeObj).add(() => {
+            if (!this.mailingService.errorInEmails) {
+              this.loading = false;
+              this.sucess = true;
+              this.globalService.paymentRewardSucess = true;
+              $('html, body').animate({ scrollTop: 0 }, 500);
+            }
+          });
+        } else if (this.chargeCreate) {
+          this.openSpayService.chargeClient(chargeObj, this.userService.token).add(() => {
+            if (this.openSpayService.sucessPaymentId) {
+              this.lostService.saveToApi().add(() => {
+                this.router.navigateByUrl('/lost/review');
+              });
+              alert('SUCESS ID: ' + this.openSpayService.sucessPaymentId);
+            }
+          });
+        }        
       }
     });
   }

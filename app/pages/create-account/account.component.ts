@@ -225,6 +225,14 @@ export class accountComponent {
     return userPost;
   }
 
+  public toTerms(): void {
+    this.router.navigateByUrl('/info/terms');
+  }
+
+  public toPrivacy(): void {
+    this.router.navigateByUrl('/info/privacy');
+  }
+
   public postUser(): void {
     const userPost: any = this.userBuilder(this.user);
     this.loading = true;

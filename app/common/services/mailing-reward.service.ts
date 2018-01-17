@@ -10,19 +10,29 @@ export class MailingRewardService {
   // public transaction: {lost_id?: string, found_id?: string, dog_id?: string, status?: string, id?: string};
   public transaction: any;
   public invalidTransactionId: boolean;
+  public errorInEmails: boolean;
 
   constructor(private api: ApiService, public router: Router, public globalService: GlobalFunctionService) {}
 
-  public sendEmailsToUsers(lost: boolean, userToken: string, dogId: string): Subscription {
+  public sendEmailsToUsers(lost: boolean, userToken: string, dogId: string, paymentInfo?: any): Subscription {
     const headers: any = {
       'Content-Type': 'application/json',
       'Authorization': 'token ' + userToken
     };
     const lostFound: string = lost ? 'lost' : 'found';
+    paymentInfo = paymentInfo || {};
     const url: string = this._endpointUrl + 'dogs/' + dogId + '/' + lostFound;
-    return this.api.post(url , {}, headers).subscribe(data => {
-      console.log('sucess', data);
-    });
+    return this.api.post(url , paymentInfo, headers).subscribe(
+      data => {
+        console.log('sucess', data);
+        this.errorInEmails = false;
+      }, error => {
+          this.errorInEmails = true;
+         this.globalService.clearErroMessages();
+         this.globalService.setErrorMEssage('Ops! hubo un error en la peticion');
+         this.globalService.setSubErrorMessage('Intenta más tarde!');
+         this.globalService.openErrorModal();        
+      });
   }
 
   public getTransaction(userToken: string, transactionId: string): Subscription {
