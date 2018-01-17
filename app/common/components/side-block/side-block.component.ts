@@ -160,9 +160,11 @@ public splicedAnswer: boolean;
     const disabled = this.elements.filter((value: any, index: number) => {return value.disabled});
     // this variable adds the class of disable in an img.
     this.elements[indexed].disabled = disabled.length < this.maxElments ? !this.elements[indexed].disabled : false;
-    this.previousSelected = indexed;
-    if (!this.multiple) {
-    this.selectedEmitter.emit(this.elements[indexed]);
+    
+    if (!this.multiple) {  
+        if (indexed !== this.previousSelected) {
+          this.selectedEmitter.emit(this.elements[indexed]);
+        }
     } else {
       let removeIndex: number;
       //this.multipleElements = this.removedElement && this.removedElement.length ? this.removedElement : this.multipleElements;
@@ -182,6 +184,7 @@ public splicedAnswer: boolean;
         this.selectedEmitter.emit(this.multipleElements);
       }
     }
+    this.previousSelected = indexed;
   }
 
   public colorSelected(row: number, column: number, colorNum: number, indexed?: number) {

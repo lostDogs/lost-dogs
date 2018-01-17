@@ -112,8 +112,6 @@ export class UserService {
     if (this.previousUrl) {
     this.router.navigateByUrl(this.previousUrl);
     this.previousUrl = undefined;
-    } else if (userName) {
-      this.router.navigate(['/home']);
     }
     window.scroll(0,0);
   }
