@@ -141,7 +141,7 @@ export class SearchService {
     const queryPage: string = 'page';
     this.atPage = pageNumber;
     const pageQuery: string = queryPage + '=' + this.atPage;
-    const newQuery: string = this.api.queryParams.match(/page=\d+/g).length ? this.api.queryParams.replace(/page=\d+/g, pageQuery) : undefined;
+    const newQuery: string = /page=\d+/g.test(this.api.queryParams)? this.api.queryParams.replace(/page=\d+/g, pageQuery) : undefined;
     if (this.tempStorage[newQuery] && this.tempStorage[newQuery].length) {
       this.results = this.tempStorage[newQuery];
     } else {
