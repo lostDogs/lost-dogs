@@ -32,6 +32,7 @@ export class lostComponent {
   constructor (public dogCardService: DogCardService, public lostService: LostFoundService, public router: Router, public userService: UserService, public domEl: ElementRef, public globalService: GlobalFunctionService) {
     this.progress = 0;
     this.window = window;
+    this.lostService.api.queryParams = undefined;
     this.screenWidth = document.documentElement.clientWidth;
     this.mapWidth = this.screenWidth;
     // route change detection

@@ -44,8 +44,6 @@ export class SearchService {
   public _pageSize: number = 12;
   public atPage: number = 0;
   public totalPages: number;
-  public pagesCalled: number[];
-  public pagedResults: IdogData[];
   public window: Window;
   public apiDate: {fromDate: string, toDate: string} =  {
     fromDate: 'fromDate',
@@ -53,12 +51,12 @@ export class SearchService {
   };
 
   public timer: any;
+  public tempStorage: any = {};
 
   constructor(public api: ApiService, public userService: UserService) {
     this.queryObj = {};
     this.innerFiltes = {};
     this.results = [];
-    this.pagesCalled = [];
     this.window = window;
     this.maxDistance = this.maxDistanceDefault;
   }
@@ -113,7 +111,9 @@ export class SearchService {
         results[resIndex] = self.parseDogData(res);
         self.results.push(results[resIndex]);
       });
+      self.results = results;
       self.beforeFilterResults = self.results && JSON.parse(JSON.stringify(self.results));
+      self.tempStorage[self.api.queryParams] = self.beforeFilterResults;
       const innerKeys: string[] = Object.keys(self.innerFiltes);
       // one a call is made the inner filters will be overwritten by the new call. so we need to apply them again.
       if (innerKeys.length) {
@@ -123,10 +123,6 @@ export class SearchService {
       }
       self.loading = false;
       self.totalPages = Math.ceil(self.totalResults / self._pageSize);
-      if (self.atPage === 0) {
-        self.pagedResults = self.results;
-        self.pagesCalled.push( self.atPage);
-      }
       console.log('total pages', self.totalPages);
     },
     error => {
@@ -142,25 +138,21 @@ export class SearchService {
   }
 
   public changePageTo(pageNumber: number): void {
+    const queryPage: string = 'page';
     this.atPage = pageNumber;
-    // console.log('pages called', this.pagesCalled);
-    if (this.pagesCalled[pageNumber] === pageNumber) {
-      // means we already call this so we just the value in the array
-      this.pagedResults = this.results.slice(pageNumber * this._pageSize , (pageNumber + 1)  * this._pageSize);
+    const pageQuery: string = queryPage + '=' + this.atPage;
+    const newQuery: string = this.api.queryParams.match(/page=\d+/g).length ? this.api.queryParams.replace(/page=\d+/g, pageQuery) : undefined;
+    if (this.tempStorage[newQuery] && this.tempStorage[newQuery].length) {
+      this.results = this.tempStorage[newQuery];
     } else {
       // means we dont have this page yet so we need to call the service.
-      this.pagesCalled.push( this.atPage);
-      this.pagesCalled.sort((a, b) => {return a-b});
       this.addQuery('page', this.atPage);
-      this.search().add(() => {
-        this.pagedResults = this.results.slice(pageNumber * this._pageSize , (pageNumber + 1)  * this._pageSize);
-      });
+      this.search()
     }
   }
 
   public resetResults(): void {
     this.results = [];
-    this.pagedResults = [];
     this.atPage = 0;
     this.addQuery('page', 0);
   }
@@ -186,7 +178,7 @@ export class SearchService {
   }
 
   public sort(type: string, dsc: boolean) {
-    this.pagedResults.sort((a: IdogData, b: IdogData) => {
+    this.results.sort((a: IdogData, b: IdogData) => {
       let aParse: any;
       let bParse: any;
       if (type === 'date') {
@@ -202,7 +194,7 @@ export class SearchService {
       return aParse - bParse;
     });
     if(dsc) {
-      this.pagedResults.reverse();
+      this.results.reverse();
     }
   }
 
