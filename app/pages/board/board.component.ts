@@ -261,7 +261,6 @@ export class boardComponent {
     this.filterElements[componentName].answer = JSON.parse(JSON.stringify(this.filterElements[componentName].answer));
     this.filterElements[componentName].answer[index].disabled = false;
     // this.filterElements[componentName].answer.splice(index, 1);
-    console.log('answer', this.filterElements[componentName].answer[index]);
     setTimeout(() => {
       this.filterElements[componentName].answer.splice(index, 1);
       if (!this.filterElements[componentName].answer.length) {
@@ -270,7 +269,7 @@ export class boardComponent {
         this.filterElements[componentName].answer = undefined;
       }
     }, 2);
-    this.queryAndSearch(componentName, this.filterElements[componentName].answer);
+    this.delQueryAndSearch(componentName);
     this.searchForName(componentName);
   }
 
