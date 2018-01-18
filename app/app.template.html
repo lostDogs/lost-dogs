@@ -3,7 +3,7 @@
 <router-outlet *ngIf="show"></router-outlet>
 <general-footer *ngIf="show"></general-footer>
 <div style="text-align: center;height: 100vh; background-color: #4392ca;color: white" *ngIf="!show">
-  <h4 style="padding-top: 10%; margin-top:0" class="row">Acceso temporal a la App</h4>
+  <h4 style="padding-top: 10%; margin-top:0" class="row">Acceso externo a LostDog</h4>
     <form class="create-account"  name="app login" #loginApp="ngForm" (ngSubmit)="showApp(username, password)" novalidate>
     <div class="row login-fields">
       <div class="input-field col l3 push-l3 s12" [ngClass]="{'wrong-red': errors}">

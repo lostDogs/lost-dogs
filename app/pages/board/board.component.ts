@@ -68,6 +68,7 @@ export class boardComponent {
   constructor(@Inject(DOCUMENT) private document:  Document, public dogCardService: DogCardService, public lostService: LostFoundService, public searchService: SearchService) {
     this.filtersKey = [];
     this.window = window;
+    this.searchService.api.queryParams = undefined;
     this.mobile = window.screen.width <= 767;
     this.screenWidth = document.documentElement.clientWidth;
     this.mapWidth = this.screenWidth;

@@ -55,9 +55,7 @@ export class RewardPickerComponent {
     }    
   }
 
-  public ngAfterViewInit(): void {
-    console.log('formDom', this.formDom.nativeElement.offsetTop);
-  }
+  public ngAfterViewInit(): void {}
 
   public getScanned(event: string): void {
     console.log('scanned', event);
@@ -83,6 +81,24 @@ export class RewardPickerComponent {
       this.invalidQr = false;
   }
 
+  public decoAndRotate(base64: File, times: number, callback?: (response: any) => any):  any {
+      this.QrDecoder.decodeFromImage(base64, (error: any, ans: any) => {
+        if (error) {
+          if (times <= 3) {
+          const newFile = this.rotateBase64img(base64, true);
+           this.decoAndRotate(newFile, times++, callback);
+          } else {
+            console.error('error decoding img at', times);
+            console.error('error >', error);
+            callback(false);
+          }
+        }
+        if (ans) {
+          callback(ans);
+        }
+      });
+  }
+
   public fileChange(ev: any): void {
     const file: File = ev.target.files[0];
      if (ev.target && ev.target.files && file && file.type.match('image.*')) {
@@ -90,23 +106,20 @@ export class RewardPickerComponent {
           const reader = new FileReader();
           reader.onload = (event: any) => {
             const pic = event.target.result;
-                console.log('file on looad!!');
-            this.QrDecoder.decodeFromImage(pic, (error: any, ans: any) => {
-              console.log("coooming insde the deocide form image component")
-              if (error) {
+            console.log('file on looad!!');
+            this.decoAndRotate(pic, 0, (answer: any)=>{
+              if (answer) {
+                this.scannedValue = answer;
+                this.focusUpload = false;
+                this.img = pic;
+                this.invalidQr = false;
+                this.stopScan = true;
+                this.getTransaction(this.userService.token, this.scannedValue);
+              }else {
+                this.img =  undefined;
                 this.invalidQr = true;
                 this.focusUpload = false;
-                this.img = undefined;
-                console.error('error decoding qr img', error);
-                return;
               }
-              console.log('ans', ans);
-              this.scannedValue = ans;
-              this.focusUpload = false;
-              this.img = pic;
-              this.invalidQr = false;
-              this.stopScan = true;
-              this.getTransaction(this.userService.token, this.scannedValue);
             });
           };
           reader.readAsDataURL(file);
@@ -116,6 +129,24 @@ export class RewardPickerComponent {
       } else {
         console.error('not an image');
       }    
+  }
+
+  public rotateBase64img(base64data: any, isClockwise: boolean): any {
+    const canvas = <HTMLCanvasElement>document.getElementById('img-rotation');
+    const ctx: CanvasRenderingContext2D = canvas.getContext('2d');
+    const img = new Image();
+    img.src = base64data;
+    canvas.height = img.width;
+    canvas.width = img.height;
+    if (isClockwise) { 
+        ctx.rotate(90 * Math.PI / 180);
+        ctx.translate(0, -canvas.width);
+    } else {
+        ctx.rotate(-90 * Math.PI / 180);
+        ctx.translate(-canvas.height, 0);
+    }    
+    ctx.drawImage(img, 0, 0);
+    return canvas.toDataURL("image/jpeg", 100);
   }
 
   public getTransaction(userToken: string, transactionId: string): void {
@@ -176,11 +207,7 @@ export class RewardPickerComponent {
         if (this.openPay.trasnferData && this.openPay.trasnferData.id) {
           const self = this;
           this.dogService.deleteDog(this.dogService.dogData._id);
-          console.log('this.openPay.trasnferData.id,', this.openPay.trasnferData.id);
-          console.log('this.openPay.trasnferData.id,', this.openPay.trasnferData);
-          console.log('this', this);
           setTimeout(() => {
-            console.log('self.transSucessDom.nativeElement.offsetTop', self.transSucessDom.nativeElement.offsetTop);
             const sucessDomTop: number = self.transSucessDom.nativeElement.offsetTop - 120;
             $('html, body').animate({scrollTop: sucessDomTop}, 500);
           }, 100);

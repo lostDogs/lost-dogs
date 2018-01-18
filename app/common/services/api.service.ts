@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/Rx';
 @Injectable()
 export class ApiService {
   constructor (public http: Http) { }
+  public queryParams: string;
 
   public get(url: string, queryObj?: any, header?: any): Observable<Response> {
     console.log('calling GET! >');
@@ -24,6 +25,7 @@ export class ApiService {
         queryParams.set(key, queryObj[key]);
       }
       url = url + queryParams;
+      this.queryParams = queryParams + '';
     }
     return this.http.get(url, options)
       .map((res: Response) =>  res.json())
