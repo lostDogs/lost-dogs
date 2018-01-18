@@ -3,6 +3,11 @@ reward-picker {
   .text-centered {
     text-align: center;
   }
+  .invisible {
+    opacity: 0;
+    position: absolute;
+    left: 100000px;
+  }
   .page {
     background: $lightGrey;
     .main-content.row {
