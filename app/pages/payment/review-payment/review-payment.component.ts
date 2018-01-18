@@ -28,6 +28,7 @@ export class ReviewPaymentComponent {
   public EstimReward: string;
   public dogSize: string = '';
   public totalDays: number;
+  public fixedReward: string;
 
   constructor (
     public userService: UserService,
@@ -62,7 +63,11 @@ export class ReviewPaymentComponent {
       this.mailingService.getTransaction(this.userService.token, this.transcationId).add(() => {
         this.dogCardService.getDog(this.mailingService.transaction.dog_id).add(() => {
           this.dogData = this.dogCardService.dogData;
-          this.rewardSetted = true;
+          this.rewardSetted = this.dogData.reward > this.calcEstimatedReward(this.dogData);
+          if (!this.rewardSetted) {
+            this.fixedReward = this.dogData.reward;
+            this.reward = this.calcEstimatedReward(this.dogData);
+          }
         });
       });
     }
@@ -75,7 +80,6 @@ export class ReviewPaymentComponent {
 
   public next(): void {
     if (this.lost || this.transcationId) {
-      console.log('to paymetns')
       this.router.navigate(['/payment/form'],  {queryParams: {Lt: this.lost, iD: this.dogIndex, cID: this.dogID, transcation: this.transcationId, rW: this.reward}});
     } else {
       this.mailingService.sendEmailsToUsers(!this.lost, this.userService.token, this.dogData._id).add(() => {
