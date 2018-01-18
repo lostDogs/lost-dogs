@@ -34,7 +34,8 @@ export class appComponent {
 
   // TODO: remove in prod only for temp access.
   public ngOnInit(): void {
-    const prevAccess: boolean = this.cookieService.getCookie('appAccesss');
+    this.cookieService.deleteCookie('appAccesss');
+    const prevAccess: boolean = this.cookieService.getCookie('appAccesssa');
     if (prevAccess) {
       this.show = true;
       window.scroll(0,0);
@@ -52,7 +53,7 @@ export class appComponent {
           this.loading = false;
           this.errors = false;
           window.scroll(0,0);
-          this.cookieService.setCookie('appAccesss', true);
+          this.cookieService.setCookie('appAccesssa', true);
           setTimeout(()=> {
           resetConfing(this.routing);
           this.routing.navigateByUrl('/home');
