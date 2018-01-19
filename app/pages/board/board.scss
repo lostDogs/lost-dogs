@@ -101,6 +101,10 @@ div.select-wrapper  {
 }
 
 board {
+  .hiddeen {
+    opacity: 0;
+    display: none;
+  }
   .scroll-botttom {
     position: fixed;
     right: 35px;

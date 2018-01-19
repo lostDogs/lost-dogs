@@ -19,7 +19,7 @@
             <p class="answer-text">{{answerSelected.name}}</p>
           </div>
           <div class="answerSelected" *ngIf="nameInput && showNameInput" (click)="enableComponent(filter, i)">
-            <div title="cerrar" class="close-icon" (click)="nameInput=undefined;nameModel=''">
+            <div title="cerrar" class="close-icon" (click)="apiSearchDogName();nameModel='';">
               <i class="tiny material-icons">close</i>
           </div>
             <p class="answer-text">{{nameInput}}</p>
@@ -38,8 +38,8 @@
     <!-- <pattern-block (selectedEmitter)="selectionReciver('pattern', $event)" [removedElement]="filterElements.pattern.answer" [colors]="colorsSelected" [hidden]="!(filterElements.pattern.enable && colorsSelected && colorsSelected.length > 1)"></pattern-block> -->
     <div class="extra-name-block" [hidden]="!filterElements.extras.enable">
       <extras-block (selectedEmitter)="selectionReciver('extras', $event)" [removedElement]="filterElements.extras.answer" [splicedAnswer]="true"></extras-block>
-      <div class="row form centered" [hidden]="!showNameInput || !(filterElements.extras && filterElements.extras.answer)">
-        <form #NameFrom="ngForm" (ngSubmit)="nameInput=nameModel" class="input-field col l4">
+      <div class="row form centered" [ngClass]="{'hiddeen': !(filterElements.extras && filterElements.extras.answer && showNameInput)}">
+        <form #NameFrom="ngForm" (ngSubmit)="apiSearchDogName(nameModel)" class="input-field col l4">
            <h5>Nombre: </h5>
            <input class="text-centered" type="text" name="nameInput" id="name-input" [(ngModel)]="nameModel">
            <button class="btn waves-effect info" type="submit"><i class="material-icons">send</i></button>

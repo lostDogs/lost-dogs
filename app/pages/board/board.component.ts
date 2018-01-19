@@ -228,7 +228,7 @@ export class boardComponent {
    if (componentName =  'color') {
      this.colorsSelected = this.getOnlyNames(event);
    }
-   this.searchForName(componentName);
+   this.searchForName();
   }
 
   public locationReciver(event: any): void {
@@ -264,6 +264,10 @@ export class boardComponent {
     this.filterElements[componentName].answer = JSON.parse(JSON.stringify(this.filterElements[componentName].answer));
     this.filterElements[componentName].answer[index].disabled = false;
     // this.filterElements[componentName].answer.splice(index, 1);
+    this.searchForName();
+    if ((!this.nameInput || !this.showNameInput) && ~this.searchService.api.queryParams.indexOf('name')) {
+       this.searchService.removeQuery('name');
+    }
     setTimeout(() => {
       this.filterElements[componentName].answer.splice(index, 1);
       if (!this.filterElements[componentName].answer.length) {
@@ -271,16 +275,15 @@ export class boardComponent {
         this.filterElements[componentName].width = this.widthPerFilter + 'px';
         this.filterElements[componentName].answer = undefined;
       }
+      this.delQueryAndSearch(componentName, this.filterElements[componentName].answer);
     }, 2);
-    this.delQueryAndSearch(componentName);
-    this.searchForName(componentName);
   }
 
   public queryAndSearch(compName: string, answer: any): void {
     const apiName: string = this.getApiName(compName);
     const answerToApi: string = this.searchService.answerToApi(answer, true);
     this.searchService.addQuery(apiName, answerToApi);
-    this.searchService.results = [];
+    this.searchService.resetResults();
     if (compName === 'date') {
       this.searchService.loading = true;
       this.searchService.callByTimer(this.searchService.search, this.searchService);
@@ -289,10 +292,14 @@ export class boardComponent {
     }
   }
 
-  public delQueryAndSearch(compName: string): void {
+  public delQueryAndSearch(compName: string, answer?: any): void {
     const apiName: string = this.getApiName(compName);
-    this.searchService.removeQuery(apiName);
-    this.searchService.results = [];
+    if (!answer)  {
+      this.searchService.removeQuery(apiName);
+    }else {
+      this.queryAndSearch(compName, answer);
+    }
+    this.searchService.resetResults();
     this.searchService.search();
   }
 
@@ -311,15 +318,26 @@ export class boardComponent {
     return ~index && this.lostService.defaulApikeys[index];
   }
 
-  public searchForName(componentName: string): void {
-    if (this.filterElements[componentName].answer && Array.isArray(this.filterElements[componentName].answer)) {
-      this.showNameInput = this.filterElements[componentName].answer.some((answer: any, answerIndex: number) => {
+  public searchForName(): void {
+    if (this.filterElements.extras && this.filterElements.extras.answer && Array.isArray(this.filterElements.extras.answer)) {
+      this.showNameInput = this.filterElements.extras.answer.some((answer: any, answerIndex: number) => {
         if (answer.name === 'Placa Id') {
           return true;
         }
         return false;
       });
     }
+  }
+
+  public apiSearchDogName(dogName?: string): void {
+    this.nameInput = dogName;
+    if (dogName) {
+      this.searchService.addQuery('name', dogName);
+    } else {
+      this.searchService.removeQuery('name');
+    }
+    this.searchService.resetResults();
+    this.searchService.search();
   }
 
   public getOnlyNames(answers: any): string[] {

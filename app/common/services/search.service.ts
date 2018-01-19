@@ -83,7 +83,7 @@ export class SearchService {
     }else if(queryName === 'found_date') {
       delete this.queryObj[this.apiDate.fromDate];
       delete this.queryObj[this.apiDate.toDate];
-    }else  {
+    }else {
      delete this.queryObj[queryName]; 
     }
     console.log('after query', this.queryObj);
