@@ -55,6 +55,7 @@ export class LostFoundService {
   public openPayment: boolean;
   public openBreedSearch: boolean;
   public btnBreedSearchDom: ElementRef;
+  public patterNoColor: boolean;
 
   constructor(
     public router: Router,
@@ -70,8 +71,14 @@ export class LostFoundService {
   }
 
   public next(): void {
-     const nextIndex: number =  this.pagePosition === (this.sequence.length-1) ? this.pagePosition : this.pagePosition + 1;
-    const nextPage: string = this.parentPage + '/' + this.sequence[nextIndex];
+    if (this.defualtSequence[this.pagePosition] === 'pattern' && this.patterNoColor) {
+      this.globalService.clearErroMessages();
+      this.globalService.setErrorMEssage('todos los patrones debe tener color');
+      this.globalService.openErrorModal();
+      return;
+    }
+    const nextIndex: number =  this.pagePosition === (this.sequence.length-1) ? this.pagePosition : this.pagePosition + 1;
+    const nextPage: string = '/' + this.parentPage + '/' + this.sequence[nextIndex];
     this.router.navigate([nextPage]);
   }
 
@@ -97,6 +104,7 @@ export class LostFoundService {
     }
     const stopCall: boolean = self.matchService.stopCalling(self.searchService.totalResults, self.pagePosition);
     const apiConst: string = self.defaulApikeys[self.pagePosition];
+
     self.pageAnswers[self.pagePosition] = self.copyAnswer(self.getGeneralAnswer());
     self.searchFilter();
     if (self.defualtSequence[self.pagePosition] === 'location') {
@@ -136,13 +144,17 @@ export class LostFoundService {
       // sorting to see who has the highest matching value.
       self.searchService.results && self.searchService.results.length && self.searchService.sort('match', true);
       // take the first 3 or 1 and do something
-      console.log('results', self.searchService.results);
+      console.log('answer', self.pageAnswers);
 
     }
     if (self.defualtSequence[self.pagePosition] === 'color') {
       self.multipleImgAnswers && self.changePatternSequence(self.multipleImgAnswers.filter((value: any, index: number)=>{return value.disabled}));
     }
-    console.log('page answers', self.pageAnswers);
+    if (self.defualtSequence[self.pagePosition] === 'pattern') {
+      self.patterNoColor = self.multipleImgAnswers.length && self.multipleImgAnswers.some((value: Ielement, index: number) => {
+          return value.name && !value.name.split(':')[1];
+      });
+    }
   }
 
   // answer should not be modifed unless the button aswer is hit.
@@ -282,7 +294,12 @@ export class LostFoundService {
     return {address: this.address, latLng: this.latLng};
     } else if(this.imgAnswer && this.imgAnswer.disabled===true) {
      return this.imgAnswer;
-    } else if (this.multipleImgAnswers && this.multipleImgAnswers.length) {
+    } else if (this.multipleImgAnswers) {
+      if (this.optional && !this.multipleImgAnswers.length) {
+        return [];
+      }else if (!this.optional && !this.multipleImgAnswers.length) {
+        return undefined;
+      }
       return this.multipleImgAnswers;
     }else if (this.inputField && this.inputField.type === 'binary') {
       return {};

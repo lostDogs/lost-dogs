@@ -202,7 +202,7 @@ export class SearchService {
   }
 
   public answerToApi(answer: any, toString: boolean): string {
-    let answerParsed: any;
+    let answerParsed: any = '';
     if (answer && answer.latLng) {
       answerParsed = answer.latLng.lng + ',' + answer.latLng.lat;
     } else if (answer && answer.name) {
@@ -213,7 +213,7 @@ export class SearchService {
         answers.push(multAnswer.apiVal || typeof multAnswer.apiVal === 'boolean' ? multAnswer.apiVal : multAnswer.name);
        });
        answerParsed = toString ? '' + answers : answers;
-    }else {
+    }else if (typeof answer === 'string') {
       answerParsed = answer;
     }
     return answerParsed;
