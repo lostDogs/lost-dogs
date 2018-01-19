@@ -52,6 +52,7 @@ export class SideBlockComponent {
   public colorOptions: any;
   @Input()
   public forceSelection: number;
+  public init: boolean;
 /*
 * SplicedAnswer is a temp solution, because board splice elements from the array and in lost/ found not.
 * when removing elements only lost/found went in the condition and spliced elements didnt, so splicedAnswer will tell 
@@ -162,7 +163,9 @@ public splicedAnswer: boolean;
     this.elements[indexed].disabled = disabled.length < this.maxElments ? !this.elements[indexed].disabled : false;
     
     if (!this.multiple) {  
-        if (indexed !== this.previousSelected) {
+      console.log('indexed', indexed)
+      console.log('this.previousSelected', this.previousSelected);
+        if (indexed !== this.previousSelected || !this.init) {
           this.selectedEmitter.emit(this.elements[indexed]);
         }
     } else {
@@ -179,12 +182,13 @@ public splicedAnswer: boolean;
         this.multipleElements.splice(removeIndex, 1);
         this.selectedEmitter.emit(this.multipleElements);
       }
-      if(disabled.length < this.maxElments) {
+      if(this.multipleElements && disabled.length < this.maxElments) {
         this.multipleElements.push(this.elements[indexed]);
         this.selectedEmitter.emit(this.multipleElements);
       }
     }
     this.previousSelected = indexed;
+    this.init = true;
   }
 
   public colorSelected(row: number, column: number, colorNum: number, indexed?: number) {

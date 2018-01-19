@@ -75,6 +75,8 @@ export class SearchService {
   }
 
   public removeQuery(queryName:string): void {
+    console.log('remove query name' , queryName);
+    console.log('before query', this.queryObj[queryName]);
     if (queryName === 'location') {
       delete this.queryObj.location;
       delete this.queryObj.maxDistance;
@@ -84,6 +86,7 @@ export class SearchService {
     }else  {
      delete this.queryObj[queryName]; 
     }
+    console.log('after query', this.queryObj);
   }
 
   public addInnerFilter(compName: string, value: any): void {

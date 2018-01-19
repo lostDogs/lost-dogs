@@ -209,6 +209,9 @@ export class boardComponent {
      event = this.initDateAnswer ? event : undefined;
    }else if (Array.isArray(event)) {
      let indexSplice: number;
+     if (!event.length) {
+       this.delQueryAndSearch(componentName);
+     }
      event.forEach((el: any, elIndex: number) => {
        if (!el.disabled) {
          // watch out you are modifing the array inside the loop.
@@ -277,7 +280,7 @@ export class boardComponent {
     const apiName: string = this.getApiName(compName);
     const answerToApi: string = this.searchService.answerToApi(answer, true);
     this.searchService.addQuery(apiName, answerToApi);
-      this.searchService.resetResults();
+    this.searchService.results = [];
     if (compName === 'date') {
       this.searchService.loading = true;
       this.searchService.callByTimer(this.searchService.search, this.searchService);
@@ -289,7 +292,7 @@ export class boardComponent {
   public delQueryAndSearch(compName: string): void {
     const apiName: string = this.getApiName(compName);
     this.searchService.removeQuery(apiName);
-    this.searchService.resetResults();
+    this.searchService.results = [];
     this.searchService.search();
   }
 
