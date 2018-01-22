@@ -63,7 +63,7 @@ export class DogCardComponent {
   }
   
   public colorFigures() {
-    if(this.data.color.length > 1) {
+    if(this.data.color.length > 1 && this.data.patternColors) {
       const elNames: string[] = Object.keys(this.data.patternColors);
       const colors: string[] = Object.values(this.data.patternColors);
       elNames.forEach((elName: string, elIndex: number) => {
