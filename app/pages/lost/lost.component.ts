@@ -68,6 +68,7 @@ export class lostComponent {
         // page should have one.
         const previousIndex = this.lostService.pagePosition === 0 ? this.lostService.pagePosition : this.lostService.pagePosition -1;
         if (this.lostService.optional && this.lostService.pageAnswers[previousIndex] && !this.lostService.pageAnswers[this.lostService.pagePosition]) {
+          console.log('setting answer to empty >>>')
           this.lostService.pageAnswers[this.lostService.pagePosition] = [];
         }
         this.goBack = this.lostService.pagePosition !== 0 && !this.lostService.pageAnswers[previousIndex];
@@ -85,7 +86,6 @@ export class lostComponent {
     this.lostService.resetService();
     this.displayIntro = true;
     this.dogCardService.open = true;
-    console.log('parent page in ngoninit', this.router.url.split('/')[1]);
     this.lostService.parentPage = this.router.url.split('/')[1];
     this.fullWidth = this.progressDom.nativeElement.clientWidth;
     // sequence could change according to the action Lost/ Found.

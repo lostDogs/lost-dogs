@@ -1,5 +1,5 @@
 <div class="review-page row" [ngClass]="{'remove-extra': LostService.openPayment}">
-  <div class="col l6 push-l3 s12" [hidden]="LostService.savedSuccess && LostService.savedImgs" *ngIf="!LostService.openPayment">
+  <div class="col l6 push-l3 s12" [hidden]="LostService.savedSuccess && LostService.savedImgs || LostService.openPayment">
     <div class="centered zise" *ngIf="LostService.dogPicture" (click)="LostService.goTo(LostService.sequence.length-2)">
       <div  class="profile-dog" [ngStyle]="{'background-image': 'url(' + LostService.dogPicture + ')' }">
         <div class="overlay"><a>Editar</a></div>
@@ -22,10 +22,12 @@
           <dog-figure [display]="pageAnswersCopy[i][0].names"></dog-figure>
         </div>
         <div class="circle" [ngStyle]="{'background-image': 'url(' + pageAnswersCopy[i].imgUrl + ')' }" *ngIf="pageAnswersCopy[i] && !LostService.sequence[i].imgUrl"></div>
-        <span class="title" *ngIf="LostService.sequence[i]==='date'"><b>{{description}}:</b>  {{pageAnswersCopy[i]}}</span>
-        <span class="title" *ngIf="pageAnswersCopy[i] && LostService.sequence[i]==='location'"><b>{{description}}:</b>  {{pageAnswersCopy[i].address}}</span>
-        <span class="title" *ngIf="pageAnswersCopy[i] && LostService.sequence[i]!=='location' && LostService.sequence[i]!=='date' && !window.Array.isArray(pageAnswersCopy[i])"><b>{{description}}:</b>  {{pageAnswersCopy[i].name}}</span>
-        <span class="title" *ngIf="pageAnswersCopy[i] && window.Array.isArray(pageAnswersCopy[i]) && pageAnswersCopy[i][0]"><b>{{description}}:</b>  {{ '' + pageAnswersCopy[i][0].labels}}</span>
+        <span class="title"><b>{{description}}: </b>
+          <span *ngIf="LostService.sequence[i]==='date'"> {{pageAnswersCopy[i]}}</span>
+          <span *ngIf="pageAnswersCopy[i] && LostService.sequence[i]==='location'"> {{pageAnswersCopy[i].address}}</span>
+          <span *ngIf="pageAnswersCopy[i] && LostService.sequence[i]!=='location' && LostService.sequence[i]!=='date' && !window.Array.isArray(pageAnswersCopy[i])"> {{pageAnswersCopy[i].name}}</span>
+          <span *ngIf="pageAnswersCopy[i] && window.Array.isArray(pageAnswersCopy[i]) && pageAnswersCopy[i][0]">{{ '' + pageAnswersCopy[i][0].labels}}</span>
+        </span>
         <a class="secondary-content" (click)="LostService.goTo(i)">Editar</a>
       </li>
       <li class="collection-item avatar centered" *ngIf="LostService.comments">

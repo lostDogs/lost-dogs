@@ -56,16 +56,21 @@ export class MatchMakerService {
     // keyword per dogObj array
     filterValue = filterValue ||  typeof filterValue === 'boolean' ? filterValue : null;
     const regex: RegExp = new RegExp(filterValue, 'g');
-    const found: string[] = result && result.match(regex);
-    return (found && found.length);
+    let found: string[];
+    if (result && typeof result === 'string') {
+      result = result.trim();
+      found = result !== '' ? result.match(regex) : [];
+    }
+    return found && found.length ? found.length : 0;
   }
 
   public filterByString(results: IdogData[], answer: string, apiKey: string): IdogData[] {
-    results && Array.isArray(results) && results.forEach((res: IdogData, resIndes: number) => {
+    Array.isArray(results) && results.length && results.forEach((res: IdogData, resIndes: number) => {
       let response: string[] = !Array.isArray(res[apiKey]) && res[apiKey] && res[apiKey].length ? res[apiKey].split(',') : res[apiKey];
       response = !Array.isArray(res[apiKey]) && res[apiKey] && res[apiKey].length ? res[apiKey].split(' ') : res[apiKey];
       let matches: number = 0;
-      Array.isArray(response) && response.forEach((val: string, valIndex: number) => {
+
+      Array.isArray(response) && response.length && answer && response.forEach((val: string, valIndex: number) => {
         matches = matches + this.findInString(answer, val);
       });
       console.log('matches', matches);

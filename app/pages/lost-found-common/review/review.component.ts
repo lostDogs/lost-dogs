@@ -73,13 +73,12 @@ export class ReviewComponent {
     this.LostService.openPayment = true;
     setTimeout(() => {
       const scrollTo: number = this.descriptionDom.nativeElement.offsetTop + 120 ;
-      console.log('scrooll to ', scrollTo);
         $('html, body').animate({ scrollTop: scrollTo }, 600);
     }, 5);
   }
 
   public setFinalToLocalStorage(): void {
-    console.log('saving to localStorage');
+
     if (Array.isArray(this.LostService.pageAnswers) && this.LostService.pageAnswers[0]) {
       const dog: any = this.LostService.objDogBuilder();
       localStorage.setItem('reported-dog-data', JSON.stringify(dog));

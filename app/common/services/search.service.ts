@@ -75,15 +75,18 @@ export class SearchService {
   }
 
   public removeQuery(queryName:string): void {
+    console.log('remove query name' , queryName);
+    console.log('before query', this.queryObj[queryName]);
     if (queryName === 'location') {
       delete this.queryObj.location;
       delete this.queryObj.maxDistance;
     }else if(queryName === 'found_date') {
       delete this.queryObj[this.apiDate.fromDate];
       delete this.queryObj[this.apiDate.toDate];
-    }else  {
+    }else {
      delete this.queryObj[queryName]; 
     }
+    console.log('after query', this.queryObj);
   }
 
   public addInnerFilter(compName: string, value: any): void {
@@ -199,7 +202,7 @@ export class SearchService {
   }
 
   public answerToApi(answer: any, toString: boolean): string {
-    let answerParsed: any;
+    let answerParsed: any = '';
     if (answer && answer.latLng) {
       answerParsed = answer.latLng.lng + ',' + answer.latLng.lat;
     } else if (answer && answer.name) {
@@ -210,7 +213,7 @@ export class SearchService {
         answers.push(multAnswer.apiVal || typeof multAnswer.apiVal === 'boolean' ? multAnswer.apiVal : multAnswer.name);
        });
        answerParsed = toString ? '' + answers : answers;
-    }else {
+    }else if (typeof answer === 'string') {
       answerParsed = answer;
     }
     return answerParsed;
