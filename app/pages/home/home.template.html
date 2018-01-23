@@ -22,9 +22,8 @@
     <div class="col l3 m12 s12 option" id="sad-dogo">
     <div class="info">
         <h5 class="row"> <b>Perdi</b> mi perro y lo quiero <b >econtrar</b>.</h5>          
-        <button class="row waves-effect waves-light btn" (click)="goTo('/lost')" [disabled]="!userService.isAuth">
-          <div *ngIf="!userService.isAuth">Inicia sesión</div>
-          <div *ngIf="userService.isAuth">BUSCAR</div>
+        <button class="row waves-effect waves-light btn" (click)="goTo('/lost')" >
+          <div>BUSCAR</div>
         </button>
     </div>
     </div>
@@ -37,9 +36,8 @@
     <div class="col l3 m12 s12 option" id="happy-dogos">
     <div class="info">
       <h5 class="row"><b>Encontre</b> un perro y lo quiero <b>reportar</b>.</h5>
-      <button class="row waves-effect waves-light btn" (click)="goTo('/found')"  [disabled]="!userService.isAuth">      
-      <div *ngIf="!userService.isAuth">Inicia sesión </div>
-      <div *ngIf="userService.isAuth">REPORTAR</div>
+      <button class="row waves-effect waves-light btn" (click)="goTo('/found')">
+      <div>REPORTAR</div>
     </button>
     </div>
     </div>    
