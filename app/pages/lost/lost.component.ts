@@ -41,6 +41,7 @@ export class lostComponent {
          window.scroll(0,0);
         const urlChildLoction = data.url.split('/')[2];
         this.childPage = urlChildLoction;
+        console.log("child page >> ", this.childPage);
         const Indexlocation = this.lostService.sequence.indexOf(urlChildLoction);
         this.lostService.pagePosition = Indexlocation !== -1 ? Indexlocation : 0;
         if (urlChildLoction === 'location') {

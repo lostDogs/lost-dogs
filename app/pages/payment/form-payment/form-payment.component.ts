@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef} from '@angular/core';
+import { Component, ViewChild, ElementRef, Input} from '@angular/core';
 import {UserService} from '../../../common/services/user.service';
 import {ValidationService} from '../../../common/services/validation.service';
 import {formObj} from '../../create-account/account.component';
@@ -40,6 +40,8 @@ export class FormPaymentComponent {
   public rewardAmount: string;
   public lostParam: string;
   public chargeCreate: boolean;
+  @Input()
+  public fromLostPage: boolean;
 
   constructor (
     public userService: UserService,
@@ -75,11 +77,13 @@ export class FormPaymentComponent {
     for (let i = todaysYear; i <= todaysYear + 10; i++) {
       this.years.push('' + i);
     }
-    this.lostService.resetService();
     this.openSpayService.loadOpenPayScript();
   }
 
   public ngOnInit(): void {
+    if (!this.fromLostPage) {
+      this.lostService.resetService();
+    }
     const monthSelect: JQuery = $('#cc-month');
     const yearSelect: JQuery = $('#cc-year');
     const un_0: number = 3;
@@ -96,7 +100,8 @@ export class FormPaymentComponent {
       this.dogId = params.cID;
       this.transcationId = params.transcation;
       this.lostParam = params.Lt;
-      const value: string = this.lostService.defualtSequence[this.lostService.defualtSequence.length - 1]
+      const value: string = this.lostService.defualtSequence[this.lostService.defualtSequence.length - 1];
+      console.log('value to search', value);
       this.chargeCreate = !!~this.router.url.indexOf(value);
       this.rewardAmount = params.rW || (this.dogService.dogData && this.dogService.dogData.reward);
       if (!this.dogService.dogData && this.dogId) {
@@ -193,12 +198,11 @@ export class FormPaymentComponent {
             }
           });
         } else if (this.chargeCreate) {
-          this.openSpayService.chargeClient(chargeObj, this.userService.token).add(() => {
-            if (this.openSpayService.sucessPaymentId) {
-              this.lostService.saveToApi().add(() => {
-                this.router.navigateByUrl('/lost/review');
-              });
-              alert('SUCESS ID: ' + this.openSpayService.sucessPaymentId);
+          console.log('calling charge create ', this.chargeCreate);
+          this.lostService.saveToApi(chargeObj).add(() => {
+            if (this.lostService.savedData) {
+              this.loading = false;
+              this.lostService.openPayment = false;
             }
           });
         }        

@@ -27,6 +27,7 @@ export class ReviewComponent {
     this.LostService.imgAnswer = undefined;
     this.LostService.answer = undefined;
     this.LostService.inputField = undefined;
+    this.LostService.inReviewPage = true;
   }
 
 
@@ -62,8 +63,9 @@ export class ReviewComponent {
         this.pageAnswersCopy[index] = [{names: names, imgUrls: imgUrls, Indexs: originalIndexs, labels: labels.length ? labels : names}];
       }
     });
-    this.LostService.inReviewPage = true;
-     this.setFinalToLocalStorage();
+    this.setFinalToLocalStorage();
+    console.log('page position lost service', this.LostService.pagePosition);
+    console.log('sequence lost service', this.LostService.sequence);
   }
 
   public toPaymentForm(): void {

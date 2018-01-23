@@ -169,7 +169,7 @@ export class LostFoundService {
     }
   }
 
-  public saveToApi(): Subscription {
+  public saveToApi(PaymentFromObj?: any): Subscription {
     const dog: string = localStorage.getItem('reported-dog-data');
     if (dog) {
       const dogObj: Object = JSON.parse(dog);
@@ -177,10 +177,12 @@ export class LostFoundService {
         'Content-Type': 'application/json',
         'Authorization': 'token ' + this.userService.token
       };
+      if (PaymentFromObj) {
+        Object.assign(dogObj, PaymentFromObj);
+      }
       this.loadingSave = true;
       return this.api.post('https://fierce-falls-25549.herokuapp.com/api/dogs',dogObj, headers).subscribe(data => {
         console.log('sucessss', data);
-        this.loadingSave = false;
         this.savedSuccess = true;
         this.question = 'Perro creado con exito!';
         this.savedData = this.trasnfromDogData(data);
@@ -211,11 +213,15 @@ export class LostFoundService {
       this.api.put(url, blob, {'Content-Type': 'image/jpeg', 'Content-encoding': 'base64'}).subscribe(
         data => {
           this.savedImgs = true;
+          this.loadingSave = false;
+          $('html, body').animate({ scrollTop: 0 }, 350);
           localStorage.removeItem('reported-dog-img-0');
           console.log('sucess', data);
 
         },
         e => {
+          this.savedImgs = false;
+          this.loadingSave = false;
          this.globalService.clearErroMessages();
          this.globalService.setErrorMEssage('No pudimos agregar las imagenes');
          this.globalService.openErrorModal();
