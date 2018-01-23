@@ -5,7 +5,7 @@
       <h5 class="subtitle" [hidden]="lost">Revisa el perro que encontraste </h5>
       <dog-card  #DogCard [atReviewPage]="true"  [data]="dogData" [maxCards]="1" [cardIndex]="0"></dog-card>
     </div>
-    <div class="col push-l2 l4 m12 s12 steps-block" *ngIf="(lost || transcationId && !rewardSetted)">
+    <div class="col push-l2 l4 m12 s12 steps-block" [hidden]="!((lost && !rewardSetted ) || (transcationId && !rewardSetted))">
       <h5 class="subtitle" [hidden]="!lost">Agrega una recompenza</h5>
       <h6 class="subtitle subheader" [hidden]="!lost"> ...para agradecer a la persona que lo encontró y lo cuido</h6>
       <h5 class="subtitle" [hidden]="lost">Tu recompenza es menor al valor estimado.</h5>
@@ -17,9 +17,9 @@
         <h6 class="under" [ngStyle]="{'opacity': reward !== EstimReward ? 0 : 1}">* valor estimada para mantener un perro {{dogSize}} por {{totalDays}} dias</h6>
       </div>
       <div class="centered submit">
-        <button class="waves-effect btn warning" *ngIf="transcationId && !rewardSetted" (click)="setReward()" (mouseover)="tempReward=reward;reward=fixedReward" (mouseleave)="reward=tempReward">Conservar<i class="medium material-icons right">chevron_right</i></button>
-        <button class="waves-effect btn info" *ngIf="transcationId && !rewardSetted" (click)="setReward()" (mouseover)="reward=calcEstimatedReward(dogData)">Cambiar<i class="medium material-icons right">chevron_right</i></button>
-        <button class="waves-effect btn info" *ngIf="!(transcationId && !rewardSetted)" (click)="setReward()">Seguir<i class="medium material-icons right">chevron_right</i></button>
+        <button class="waves-effect btn warning" [disabled]="!dogData" *ngIf="transcationId && !rewardSetted" (click)="setReward()" (mouseover)="tempReward=reward;reward=fixedReward" (mouseleave)="reward=tempReward">Conservar<i class="medium material-icons right">chevron_right</i></button>
+        <button class="waves-effect btn info" [disabled]="!dogData" *ngIf="transcationId && !rewardSetted" (click)="setReward()" (mouseover)="reward=calcEstimatedReward(dogData)">Cambiar<i class="medium material-icons right">chevron_right</i></button>
+        <button class="waves-effect btn info" [disabled]="!dogData" *ngIf="!(transcationId && !rewardSetted)" (click)="setReward()">Seguir<i class="medium material-icons right">chevron_right</i></button>
       </div>
     </div>
     <div class="col push-l2 l4 m12 s12 steps-block" [hidden]="!rewardSetted">
@@ -30,7 +30,7 @@
         <h6><b>3.</b> una vez que recibas el perro asegura de pasarle el <b>codigo QR</b> que se te envó por correo al rescatista para que puda recoletar su recompenza.</h6>
       </div>
       <div class="centered submit">
-        <button class="waves-effect btn action" (click)="next()">aceptar<i class="medium material-icons right">thumb_up</i></button>
+        <button class="waves-effect btn action" [disabled]="!dogData" (click)="next()">aceptar<i class="medium material-icons right">thumb_up</i></button>
       </div>      
     </div>    
     <div class="col push-l2 l4 m12 s12 steps-block" [hidden]="lost || transcationId">
@@ -42,7 +42,7 @@
         <h6><b>4.</b> Subelo en la liga que te llegará por correo, para recibir tu recompenza.</h6>
       </div>      
     <div class="centered submit">
-      <button class="waves-effect btn action" (click)="next()">aceptar<i class="medium material-icons right">thumb_up</i></button>
+      <button class="waves-effect btn action" [disabled]="!dogData" (click)="next()">aceptar<i class="medium material-icons right">thumb_up</i></button>
     </div>
     </div>    
   </div>
