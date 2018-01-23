@@ -144,8 +144,6 @@ export class LostFoundService {
       // sorting to see who has the highest matching value.
       self.searchService.results && self.searchService.results.length && self.searchService.sort('match', true);
       // take the first 3 or 1 and do something
-      console.log('answer', self.pageAnswers);
-
     }
     if (self.defualtSequence[self.pagePosition] === 'color') {
       self.multipleImgAnswers && self.changePatternSequence(self.multipleImgAnswers.filter((value: any, index: number)=>{return value.disabled}));
@@ -155,6 +153,7 @@ export class LostFoundService {
           return value.name && !value.name.split(':')[1];
       });
     }
+    console.log('answer', self.pageAnswers);
   }
 
   // answer should not be modifed unless the button aswer is hit.

@@ -75,8 +75,6 @@ export class SearchService {
   }
 
   public removeQuery(queryName:string): void {
-    console.log('remove query name' , queryName);
-    console.log('before query', this.queryObj[queryName]);
     if (queryName === 'location') {
       delete this.queryObj.location;
       delete this.queryObj.maxDistance;
@@ -86,7 +84,6 @@ export class SearchService {
     }else {
      delete this.queryObj[queryName]; 
     }
-    console.log('after query', this.queryObj);
   }
 
   public addInnerFilter(compName: string, value: any): void {
@@ -210,13 +207,37 @@ export class SearchService {
     } else if (Array.isArray(answer) && answer.length && answer[0].name) {
       let answers: any[] = [];
        answer.forEach((multAnswer: any,multAnswerIndex: number) => {
-        answers.push(multAnswer.apiVal || typeof multAnswer.apiVal === 'boolean' ? multAnswer.apiVal : multAnswer.name);
+         const response = multAnswer.apiVal || typeof multAnswer.apiVal === 'boolean' ? multAnswer.apiVal : multAnswer.name;
+         const isArray = this.getArrayFromString(response);
+         if (isArray) {
+           isArray.forEach((singleAns: string, singleAnsIndex: number) => {
+             answers.push(singleAns);
+           });
+         } else {
+          answers.push(response);
+         }
        });
        answerParsed = toString ? '' + answers : answers;
     }else if (typeof answer === 'string') {
-      answerParsed = answer;
+      const isArray = this.getArrayFromString(answer);
+      if (isArray) {
+        let ansArr: string[] = [];
+        isArray.forEach((singleAns: string, singleAnsIndex: number) => {
+            ansArr.push(singleAns);
+        });
+        answerParsed = ansArr;
+      } else {
+        answerParsed = answer;
+      }
     }
     return answerParsed;
+  }
+
+  getArrayFromString(value: string ): string[] {
+    if (/,/g.test(value)) {
+      return value.split(',');
+    } 
+    return undefined;
   }
 
   public patternConvertion(dogData: IdogData): {[patternName: string]: string} {
