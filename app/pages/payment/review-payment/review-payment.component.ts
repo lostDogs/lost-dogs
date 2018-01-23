@@ -63,7 +63,7 @@ export class ReviewPaymentComponent {
       this.mailingService.getTransaction(this.userService.token, this.transcationId).add(() => {
         this.dogCardService.getDog(this.mailingService.transaction.dog_id).add(() => {
           this.dogData = this.dogCardService.dogData;
-          this.rewardSetted = this.dogData.reward > this.calcEstimatedReward(this.dogData);
+          this.rewardSetted = +this.dogData.reward > +this.calcEstimatedReward(this.dogData);
           if (!this.rewardSetted) {
             this.fixedReward = this.dogData.reward;
             this.reward = this.calcEstimatedReward(this.dogData);
@@ -113,9 +113,7 @@ export class ReviewPaymentComponent {
     const dateApp: any = new Date(dog.created_at.split('T')[0].replace(/-/g, '/'));
     const today: any = new Date();
     const daysDiff: number = Math.round((today - dateApp) / (1000 * 60 * 60 * 24));
-    console.log('days diff', daysDiff);
     const minEstRew: number = +estimationsRew[dog.size_id] * daysDiff;
-    console.log('min est rew', minEstRew);
     const total: any = ((minEstRew * gain) / (1 - ourGain)).toFixed(2);
     this.totalDays = daysDiff;
     this.dogSize = dogSizes[dog.size_id].name;

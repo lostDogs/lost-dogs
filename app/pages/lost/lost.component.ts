@@ -68,7 +68,6 @@ export class lostComponent {
         // page should have one.
         const previousIndex = this.lostService.pagePosition === 0 ? this.lostService.pagePosition : this.lostService.pagePosition -1;
         if (this.lostService.optional && this.lostService.pageAnswers[previousIndex] && !this.lostService.pageAnswers[this.lostService.pagePosition]) {
-          console.log('setting answer to empty >>>')
           this.lostService.pageAnswers[this.lostService.pagePosition] = [];
         }
         this.goBack = this.lostService.pagePosition !== 0 && !this.lostService.pageAnswers[previousIndex];
@@ -189,7 +188,7 @@ export class lostComponent {
        this.globalService.clearErroMessages();
        this.globalService.setErrorMEssage('la fecha es menor q Viernes 31 de Dic del 2010');
        this.globalService.openErrorModal();
-       return;        
+       return;
       }
       this.lostService.setAnwer();
     } else {
