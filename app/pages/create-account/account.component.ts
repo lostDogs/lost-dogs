@@ -18,7 +18,7 @@ export interface Iuser {
   name: {first: formObj, last1: formObj, last2: formObj};
   adress: {adressName: formObj, postalCode: formObj, city: formObj, numberExt: formObj, numberInt: formObj, country: formObj, street: formObj};
   contact: {areaCode: formObj, phone: formObj, email: formObj};
-  access: {userName: formObj, password: formObj, password2: formObj};
+  access: {password: formObj, password2: formObj};
 }
 
 @Component({
@@ -70,7 +70,6 @@ export class accountComponent {
         email: {valid: true, value: undefined, required: true}
       },
       access: {
-        userName: {valid: true, value: undefined, required: true},
         password: {valid: true, value: undefined, required: true},
         password2: {valid: true, value: undefined, required: true}
       }
@@ -223,7 +222,7 @@ export class accountComponent {
         'area_code': user.contact.areaCode.value
       },
       'email': user.contact.email.value,
-      'username': user.access.userName.value,
+      'username': user.contact.email.value,
       'confirm_password': user.access.password.value,
       'password': user.access.password2.value,
       'avatarFileType': 'image/jpeg'
