@@ -96,6 +96,9 @@ export class accountComponent {
   }
 
   public ngOnInit(): void {
+    if (this.userService.isAuth) {
+      this.router.navigate(['/profile']);
+    }
     $('select').change(() => {
       const input = $('#country');
       this.user.adress.country.value = input.val();

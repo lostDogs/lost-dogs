@@ -66,4 +66,9 @@ export class generalHeaderComponent implements OnInit  {
       this.cookieService.setCookie('initHeader','true',  tomorrow.toGMTString());
     }*/
   }
+  public AuthRedirect(): void {
+    if (this.router.url.split('/')[1] === 'account'){
+      this.router.navigate(['/profile']);
+    }
+  }
 };

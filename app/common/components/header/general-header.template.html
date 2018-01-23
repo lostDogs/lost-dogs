@@ -46,8 +46,8 @@
       <li><a href="javascript:void(0)" class="waves-effect" *ngIf="userService.isAuth" (click)="userService.logout()"><i class="material-icons left">reply</i>Cerrar sesión</a></li>
       <li><div class="divider"></div></li>
       <li><a class="subheader" *ngIf="userService.isAuth">mas acciones</a></li>
-      <li><a routerLink="lost" class="waves-effect" *ngIf="userService.isAuth"><i class="material-icons left">security</i>Perdi un perro</a></li>
-      <li><a routerLink="found" class="waves-effect" *ngIf="userService.isAuth"><i class="material-icons left">search</i>Encontre un perro</a></li>
+      <li><a routerLink="lost" class="waves-effect"><i class="material-icons left">security</i>Perdi un perro</a></li>
+      <li><a routerLink="found" class="waves-effect"><i class="material-icons left">search</i>Encontre un perro</a></li>
       <li><a routerLink="board" class="waves-effect"><i class="material-icons left">style</i>Catalogo</a></li>
       <li><div class="divider"></div></li>
    </ul>
@@ -63,7 +63,7 @@
           <input type="password" name="password" id="user-password"  [(ngModel)]="password" (keyup)="userService.errors.passwordReq = false;userService.errors.invalidUser = false;">
           <label for="user-password">contraseña <b *ngIf="userService.errors.invalidUser"> incorrecta</b></label>
       </div>
-      <button class="btn waves-effect col l12 action" type="submit" [disabled]="userService.loading">
+      <button class="btn waves-effect col l12 action" type="submit" (click)="AuthRedirect()" [disabled]="userService.loading">
         <div *ngIf="!userService.loading">Iniciar sesión<i class="material-icons right">send</i></div>
         <div *ngIf="userService.loading">Cargando ...</div>
       </button>
