@@ -41,7 +41,6 @@ export class editAccountComponent {
         email: {valid: true, value: this.userService.user.email, required: true}
       },
       access: {
-        userName: {valid: true, value: this.userService.user.username, required: true},
         password: {valid: true, value: undefined, required: true},
         password2: {valid: true, value: undefined, required: true}
       }

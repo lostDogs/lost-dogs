@@ -57,7 +57,7 @@
   <form class="row" title="form-login" #loginForm="ngForm" (ngSubmit)="userService.login(userService.tempUserName, password)"   *ngIf="!userService.isAuth" novalidate>
       <div class="input-field main-white col l12 s12" [ngClass]="{'wrong-red': userService.errors.userReq || userService.errors.invalidUser}">
         <input type="text" name="user name" id="user-name" [(ngModel)]="userService.tempUserName" (keyup)="userService.errors.userReq = false;userService.errors.invalidUser = false;">
-        <label for="user-name" [ngClass]="{'active': userService.tempUserName}">nombre usuario <b *ngIf="userService.errors.invalidUser"> incorrecto ó</b></label>
+        <label for="user-name" [ngClass]="{'active': userService.tempUserName}">Correo <b *ngIf="userService.errors.invalidUser"> incorrecto ó</b></label>
       </div>
       <div class="input-field main-white col l12 s12" [ngClass]="{'wrong-red': userService.errors.passwordReq || userService.errors.invalidUser}">
           <input type="password" name="password" id="user-password"  [(ngModel)]="password" (keyup)="userService.errors.passwordReq = false;userService.errors.invalidUser = false;">

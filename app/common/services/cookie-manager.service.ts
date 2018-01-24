@@ -4,9 +4,7 @@ export class CookieManagerService {
   constructor() {}
 
  public setCookie(name: string, value: any, expDate?: string): void {
-    if(value instanceof Object) {
-      value = JSON.stringify(value);
-    }
+    value = JSON.stringify(value);
     let cookieVal: string = name + '=' + value;
     if (expDate) {
       cookieVal += ';expires=' + expDate;
@@ -21,7 +19,7 @@ export class CookieManagerService {
   }
 
   public getCookie(name: string): any {
-    const regex = new RegExp('[; ]'+name+'=([^\\s;]*)');
+    const regex = new RegExp('[; ]'+name+'=([^;]*)');
     const sMatch = (' ' + document.cookie).match(regex);
     if (name && sMatch)  {
       try {

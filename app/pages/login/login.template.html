@@ -6,7 +6,7 @@
     <div class="row login-fields">
       <div class="input-field  alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': userService.errors.userReq || userService.errors.invalidUser}">
         <input type="text" name="user-name" id="user-name-2" [(ngModel)]="userService.tempUserName" (keyup)="userService.errors.userReq = false;userService.errors.invalidUser = false;">
-        <label for="user-name-2" [ngClass]="{'active': userService.tempUserName}">Nombre usuario <b *ngIf="userService.errors.invalidUser"> incorrecto ó</b></label>
+        <label for="user-name-2" [ngClass]="{'active': userService.tempUserName}">Correo <b *ngIf="userService.errors.invalidUser"> incorrecto ó</b></label>
       </div>
       <div class="input-field  alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': userService.errors.passwordReq || userService.errors.invalidUser}">
           <input type="password" name="password" [(ngModel)]="password" (keyup)="userService.errors.passwordReq = false;userService.errors.invalidUser = false;">
@@ -38,7 +38,7 @@
     <div class="row">
       <div  class="input-field alt-black col l4 s12 push-l4" [ngClass]="{'wrong-red': false}">
         <input type="text" name="user-name" id="user-name-3" [(ngModel)]="userService.tempUserName" (keyup)="false">
-        <label for="user-name-3" [ngClass]="{'active': userService.tempUserName}">Nombre usuario <b *ngIf="false"> incorrecto ó</b></label>
+        <label for="user-name-3" [ngClass]="{'active': userService.tempUserName}">Correo <b *ngIf="false"> incorrecto ó</b></label>
       </div>
     </div>
     <button class="btn waves-effect col l2 s8 action" [disabled]="userService.forgotloading || userService.forgotSucess" (click)="callForgot();">
