@@ -22,6 +22,8 @@ export class generalHeaderComponent implements OnInit  {
   @ViewChild('UserDom')
   public userDom: ElementRef;
   public initHeader: boolean;
+  public openedFirstMessage: boolean;
+  public openSecondMessage:boolean;
 
   constructor (
     public renderer: Renderer,
@@ -39,12 +41,28 @@ export class generalHeaderComponent implements OnInit  {
       if (this.showLoginFrom && !(this.elRef.nativeElement.lastChild.contains(event.target) || loginDom && loginDom.contains(event.target) || userDom && userDom.contains(event.target) )) {
         this.showLoginFrom = false;
       }
+      if (this.openedFirstMessage && !this.openSecondMessage) {
+        this.globalService.clearErroMessages();
+        this.globalService.setErrorMEssage('Esta pagina necesitará de tu ubicación & camara');
+        this.openSecondMessage = true;
+        setTimeout(() => {
+          this.globalService.openBlueModal();
+        },1000);
+      }
     });
   } 
   public toggleLoginFrom(event: any) {
     this.showLoginFrom = !this.showLoginFrom;
     this.password = undefined;
   }
+
+    public openMessage() {
+    this.globalService.clearErroMessages();
+    this.globalService.setErrorMEssage('Esta pagina necesta de cookie para funcionar');
+    this.globalService.openBlueModal();
+    this.openedFirstMessage = true;
+  }
+
 
   public ngOnInit(): void {
     // part 1: this code makes that the initial nav animation just appear once every day
@@ -66,6 +84,16 @@ export class generalHeaderComponent implements OnInit  {
       this.cookieService.setCookie('initHeader','true',  tomorrow.toGMTString());
     }*/
   }
+
+  public ngAfterViewInit(): void {
+    if (!this.cookieService.getCookie('WarningMessage')) {
+      setTimeout(() => {
+        this.openMessage();
+        this.cookieService.setCookie('WarningMessage', true);
+      }, 3000);
+    }
+  }
+
   public AuthRedirect(): void {
     if (this.router.url.split('/')[1] === 'account'){
       this.router.navigate(['/profile']);
