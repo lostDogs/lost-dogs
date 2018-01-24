@@ -24,7 +24,7 @@ export class ExtrasBlockComponent {
 
 
   public setElement() {
-    const content: any = accessories;
+    const content: any = JSON.parse(JSON.stringify(accessories));
     this.elements = content;
     this.elements.forEach((access: any, index: number) => {
       this.elements[index].apiVal =  access.id;

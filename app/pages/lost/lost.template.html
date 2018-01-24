@@ -46,7 +46,7 @@
     <router-outlet></router-outlet>
     <div class="map-block" [ngStyle]="{'width': mapWidth + 'px'}" *ngIf="lostService && lostService.matchService && startMap" [ngClass]="{'hidden': lostService.defualtSequence[lostService.pagePosition]!=='location'}">
       <map (locationAdressEmiter)="lostService.address=$event;changeMapElement($event)" (locationEmiter)="lostService.latLng=$event;" [locationAdress]="lostService.locationAdressInput" [location]="lostService.latLong" [rangeRadius]="lostService.matchService.rangeRadius"></map>
-    </div>    
+    </div>
     <div class="buttons row" *ngIf="lostService.pagePosition !== lostService.sequence.length - 1">
       <button class="waves-effect btn warning" (click)="lostService.back()" [disabled]="lostService.searchService.timer || lostService.searchService.loading" [ngClass]="{'disappear': lostService.pagePosition === 0 || lostService.inReviewPage}">Atras <i class="material-icons left">chevron_left</i></button>
       <!-- <button class="waves-effect btn info" (click)="lostService.setAnwer()"  [disabled]="!lostService.getGeneralAnswer()">responder <i class="material-icons right">send</i></button> -->
@@ -63,6 +63,7 @@
     </div>  
   </div>
   <div class="row results" *ngIf="(lostService.pagePosition !== lostService.sequence.length - 1) && lostService.searchService.results && !lostService.searchService.loading">
+    <h3 class="row text-centered" [ngClass]="{'blur-filter': dogCardService.open}">Coincidencias...</h3>
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
     <dog-card *ngFor="let card of lostService.searchService.results;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt"  [data]="card" [maxCards]="lostService.searchService.results.length"></dog-card>
   </div>
