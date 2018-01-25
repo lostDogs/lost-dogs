@@ -2,6 +2,12 @@
 
 
 review {
+  .text-centered {
+    text-align: center;
+  }
+  .text-end {
+    text-align: end;
+  }
   .review-page.row {
     color: black;
     padding: 40px 0;
@@ -95,6 +101,11 @@ review {
       color: #039be5;
       cursor: pointer;
     }
+    a.mult-link {
+      text-transform: uppercase;
+      color: #039be5;
+      cursor: pointer;
+    }
     .collection .avatar .circle {
       width: 80px;
       height: 80px;
@@ -102,7 +113,7 @@ review {
       left: 1px;
       background-repeat: no-repeat;
       background-position: center;
-      background-size: cover; 
+      background-size: contain; 
       &.material-icons {
         top: 5px;
         left: 5px;
@@ -131,6 +142,9 @@ review {
     .collection .collection-header .secondary-content {
       padding-top: 54px;
       padding-right: 21px;      
+    }
+    .collection .collection-item p.view-more {
+      line-height: 3rem;
     }
     .collection .collection-item, .collection-header  {
       min-height: 180px;

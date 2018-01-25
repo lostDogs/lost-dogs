@@ -22,7 +22,7 @@
           <dog-figure [display]="pageAnswersCopy[i][0].names"></dog-figure>
         </div>
         <div class="circle" [ngStyle]="{'background-image': 'url(' + pageAnswersCopy[i].imgUrl + ')' }" *ngIf="pageAnswersCopy[i] && !LostService.sequence[i].imgUrl"></div>
-        <span class="title" style="padding: 0 155px;"><b>{{description}}: </b>
+        <span class="title" [ngStyle]="{'padding': window.Array.isArray(pageAnswersCopy[i]) && pageAnswersCopy[i][0] && '0 155px' }"><b>{{description}}: </b>
           <span *ngIf="LostService.sequence[i]==='date'"> {{pageAnswersCopy[i]}}</span>
           <span *ngIf="pageAnswersCopy[i] && LostService.sequence[i]==='location'"> {{pageAnswersCopy[i].address}}</span>
           <span *ngIf="pageAnswersCopy[i] && LostService.sequence[i]!=='location' && LostService.sequence[i]!=='date' && !window.Array.isArray(pageAnswersCopy[i])"> {{pageAnswersCopy[i].name}}</span>
@@ -48,12 +48,24 @@
   <div class="col l6 push-l3 s12" *ngIf="LostService.openPayment">
     <ul class="collection with-header" #Description>
       <li class="collection-item avatar centered" >
-        <div class="circle" [ngStyle]="{'background-image': 'url(' + LostService.dogPicture + ')' }" ></div>
-        <span class="title title-money">
-          <b>{{paymentDesc}}</b>
-          <span style="color:#26a69a">$ 65.00 MXN</span>
-        </span>
-        <a  class="secondary-content" (click)="LostService.openPayment=false">Editar</a>
+        <table style="width: 100%;">
+          <tr>
+            <td style="width: 20%;"><div class="circle" [ngStyle]="{'background-image': 'url(' + LostService.dogPicture + ')' }" ></div></td>
+            <td style="width: 70%;">
+              <span class="title title-money row">
+                <b>{{paymentDesc}}</b>
+                <span style="color:#26a69a">$ 65.00 MXN</span>
+              </span>
+              <div class="row "  style="margin-top: 20px;" [hidden]="!extraInfo">
+                <p class="row view-more"><b style="margin-right: 10px;">Tu pago incluye...</b> Reportar el perro en la platafroma de esta forma mucha gente lo podrá ver</p>
+              </div>
+            </td>
+            <td class="text-end">
+              <a  class="mult-link" (click)="LostService.openPayment=false">Editar</a>
+              <a  class="mult-link" (click)="extraInfo=!extraInfo"><div [hidden]="extraInfo">más</div><div [hidden]="!extraInfo">menos</div></a>
+            </td>
+          </tr>
+        </table>
       </li>
     </ul> 
   </div>
