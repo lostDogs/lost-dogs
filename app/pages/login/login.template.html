@@ -2,7 +2,7 @@
   <div class="main-title row">
     <h4>Inicia sesión</h4>
   </div>
-  <form class="create-account"  name="page-login" #loginPage="ngForm" (ngSubmit)="userService.login(userService.tempUserName, password)" novalidate>
+  <form class="create-account"  name="page-login" #loginPage="ngForm" (ngSubmit)="loginRedirect(userService.tempUserName, password)" novalidate>
     <div class="row login-fields">
       <div class="input-field  alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': userService.errors.userReq || userService.errors.invalidUser}">
         <input type="text" name="user-name" id="user-name-2" [(ngModel)]="userService.tempUserName" (keyup)="userService.errors.userReq = false;userService.errors.invalidUser = false;">
@@ -33,18 +33,20 @@
     </div>
   </form>
   <div #Forgot></div>
-  <div class="forgot" [hidden]="!forgot" >
-    <h4>Se te enviará una contraseña al correo de tu usuario</h4>
+  <div class="forgot create-account" [hidden]="!forgot" >
+    <h4 class="row">Se te enviará una contraseña al correo de tu usuario</h4>
     <div class="row">
       <div  class="input-field alt-black col l4 s12 push-l4" [ngClass]="{'wrong-red': false}">
         <input type="text" name="user-name" id="user-name-3" [(ngModel)]="userService.tempUserName" (keyup)="false">
         <label for="user-name-3" [ngClass]="{'active': userService.tempUserName}">Correo <b *ngIf="false"> incorrecto ó</b></label>
       </div>
     </div>
-    <button class="btn waves-effect col l2 s8 action" [disabled]="userService.forgotloading || userService.forgotSucess" (click)="callForgot();">
-      <div *ngIf="!userService.forgotloading">Aceptar <i class="material-icons right">send</i></div>
-      <div *ngIf="userService.forgotloading">Cargando ...</div>
-    </button>
+    <div class="row row-extraspace centered">
+      <button class="btn waves-effect col l2 s8 action" [disabled]="userService.forgotloading || userService.forgotSucess" (click)="callForgot();">
+        <div *ngIf="!userService.forgotloading">Aceptar <i class="material-icons right">send</i></div>
+        <div *ngIf="userService.forgotloading">Cargando ...</div>
+      </button>
+    </div>
     <div #ForgotSucess></div>
     <div [hidden]="!userService.forgotSucess" class="forgot-sucess">
       <i class="material-icons medium">done_all</i>

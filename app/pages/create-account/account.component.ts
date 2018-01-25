@@ -95,7 +95,7 @@ export class accountComponent {
   }
 
   public ngOnInit(): void {
-    if (this.userService.isAuth) {
+    if (this.userService.isAuth && !this.profilePage) {
       this.router.navigate(['/profile']);
     }
     $('select').change(() => {

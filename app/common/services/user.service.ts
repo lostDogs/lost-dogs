@@ -110,8 +110,10 @@ export class UserService {
     this.isAvatarSet = true;
     this.errors.invalidUser = false;
     if (this.previousUrl) {
-    this.router.navigateByUrl(this.previousUrl);
-    this.previousUrl = undefined;
+      console.log('prevUrl', this.previousUrl);
+      this.router.navigateByUrl(this.previousUrl).then(() => {
+        this.previousUrl = undefined;
+      });
     }
     window.scroll(0,0);
   }
@@ -147,16 +149,17 @@ export class UserService {
 
   public loginNotSuccess(e: any): void {
     this.loading = false;
+    this.isAuth = false;
     this.errors.invalidUser = true;
     this.timesTrying++;
     console.error('error in login', e);
   }
 
-  public login(username?: string, password?: string, noAuth?: boolean): void {
+  public login(username?: string, password?: string, noAuth?: boolean): Subscription {
     if( password && username || noAuth) {
       const user:any = {password: password, username: username};
       this.loading = true;
-      this.api.post('https://fierce-falls-25549.herokuapp.com/api/users/login', user).subscribe(
+      return this.api.post('https://fierce-falls-25549.herokuapp.com/api/users/login', user).subscribe(
         data => this.loginSucess(data, username),
         e => this.loginNotSuccess(e),
       );
