@@ -16,9 +16,10 @@ export class ColorBlockComponent {
   @Input()
   public splicedAnswer: boolean;
   constructor() {
-    const colorValues: string[] = Object.values(colors)
+    const colorValues: string[] = Object.values(colors);
+    const colorNames: string[] = Object.keys(colors);
     for (let i = 0; i < colorValues.length; ++i) {
-      this.bgColors.push({bgColor: colorValues[i], name: colorValues[i]});
+      this.bgColors.push({bgColor: colorValues[i], name: colorValues[i], label: colorNames[i]});
     }
   }
   

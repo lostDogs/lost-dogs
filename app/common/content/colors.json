@@ -1,14 +1,13 @@
 {
-  "orange": "#ef6b13",
-  "Red_Irish":"#6C2C18",
-  "brown": "#A56E4A",
-  "brown_Chesapeake": "#CDA578",
-  "yellow_mix": "#E0AC87",
-  "dark_golden": "#DFA96D",
-  "yellow_lab": "#DBCDAE",
-  "pepper": "#72736E",
-  "cream_french": "#DBD7D8",
-  "salt":"#ECEBF0",
-  "white": "#ffffff",
-  "black_lab": "#111212"
+  "Naranja": "#ef6b13",
+  "Rojo Irish":"#6C2C18",
+  "Cafe": "#A56E4A",
+  "Café chesapeake": "#CDA578",
+  "Amarillo mezclado": "#E0AC87",
+  "Dorado oscuro": "#DFA96D",
+  "Amarillo labrador": "#DBCDAE",
+  "Gris pimienta": "#72736E",
+  "Gris claro":"#ECEBF0",
+  "blanco": "#ffffff",
+  "Negro": "#111212"
 }

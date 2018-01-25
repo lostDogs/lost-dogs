@@ -22,7 +22,7 @@
           <dog-figure [display]="pageAnswersCopy[i][0].names"></dog-figure>
         </div>
         <div class="circle" [ngStyle]="{'background-image': 'url(' + pageAnswersCopy[i].imgUrl + ')' }" *ngIf="pageAnswersCopy[i] && !LostService.sequence[i].imgUrl"></div>
-        <span class="title"><b>{{description}}: </b>
+        <span class="title" style="padding: 0 155px;"><b>{{description}}: </b>
           <span *ngIf="LostService.sequence[i]==='date'"> {{pageAnswersCopy[i]}}</span>
           <span *ngIf="pageAnswersCopy[i] && LostService.sequence[i]==='location'"> {{pageAnswersCopy[i].address}}</span>
           <span *ngIf="pageAnswersCopy[i] && LostService.sequence[i]!=='location' && LostService.sequence[i]!=='date' && !window.Array.isArray(pageAnswersCopy[i])"> {{pageAnswersCopy[i].name}}</span>
