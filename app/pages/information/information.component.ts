@@ -1,6 +1,6 @@
 import {Component, ViewChild, ElementRef} from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {Router} from '@angular/router';
+import {Router, NavigationEnd} from '@angular/router';
 import * as info from  '../../common/content/information.json';
 
 @Component({
@@ -21,15 +21,17 @@ export class InformationComponent {
   constructor (public domSan: DomSanitizer, public router: Router) {
     this.data = info;
     this.urlsConst = {legal: 'legal', cookies: 'cookies' , privacy : 'privacy', aboutUs: 'about', terms: 'terms'};
+    this.router.events.subscribe(data => {
+      if (data instanceof NavigationEnd) {
+       this.urlOn = this.router.url.split('/')[2];
+       this.changeContent();
+      }
+    })
   }
   public ngOnInit(): void {
-    this.urlOn = this.router.url.split('/')[2];
-    this.changeContent();
   }
 
   public ngDoCheck(): void {
-   this.urlOn = this.router.url.split('/')[2];
-   this.changeContent();
   }
 
   public changeContent(): void {
@@ -45,7 +47,7 @@ export class InformationComponent {
       this.infohtml = this.domSan.bypassSecurityTrustHtml(this.data[this.urlsConst.privacy].join(''));
     } else if (this.urlsConst.aboutUs === this.urlOn) {
       this.title = 'Sobre nosotros';
-      this.infohtml = this.domSan.bypassSecurityTrustHtml('<h4>TBD</h4>');
+      this.infohtml = this.domSan.bypassSecurityTrustHtml(this.data[this.urlsConst.aboutUs].join(''));
     }else if (this.urlsConst.terms === this.urlOn) {
       this.title = 'Terminos y condiciones';
       this.infohtml = this.domSan.bypassSecurityTrustHtml(this.data[this.urlsConst.terms].join(''));

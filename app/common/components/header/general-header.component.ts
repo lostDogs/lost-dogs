@@ -97,7 +97,7 @@ export class generalHeaderComponent implements OnInit  {
   }
 
   public AuthRedirect(): void {
-    if (this.router.url.split('/')[1] === 'account'){
+    if (this.router.url.split('/')[1] === 'account') {
       this.router.navigate(['/profile']);
     }
   }
