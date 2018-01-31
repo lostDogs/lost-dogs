@@ -20,7 +20,7 @@ export class InformationComponent {
 
   constructor (public domSan: DomSanitizer, public router: Router) {
     this.data = info;
-    this.urlsConst = {legal: 'legal', cookies: 'cookies' , privacy : 'privacy', aboutUs: 'about', terms: 'terms'};
+    this.urlsConst = {legal: 'legal', cookies: 'cookies' , privacy : 'privacy', aboutUs: 'about', terms: 'terms', pricing: 'pricing'};
     this.router.events.subscribe(data => {
       if (data instanceof NavigationEnd) {
        this.urlOn = this.router.url.split('/')[2];
@@ -51,6 +51,9 @@ export class InformationComponent {
     }else if (this.urlsConst.terms === this.urlOn) {
       this.title = 'Terminos y condiciones';
       this.infohtml = this.domSan.bypassSecurityTrustHtml(this.data[this.urlsConst.terms].join(''));
+    }else if (this.urlsConst.pricing === this.urlOn) {
+      this.title = 'Costos y recompensas';
+      this.infohtml = this.domSan.bypassSecurityTrustHtml(this.data[this.urlsConst.pricing].join(''));
     }
   }
 

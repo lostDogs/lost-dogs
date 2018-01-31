@@ -57,5 +57,13 @@
     "<b>Trabajo en equipo y colaboración:</b> En Lost Dog dependemos de la colaboración comprometida de todos los participantes: pet lovers, empresas de productos y servicios para mascotas.<br><br>",
     "<b> Innovación y actualización:</b> En Lost Dog estamos conscientes de la importancia de innovar y actualizarnos constantemente para ser referentes en nuestra comunidad. <br><br><br><br>",
     "<div class='row' style='margin-top: 50px;'><div class='col l3 s3 m3' style='text-align: center'><img class='icons-about' alt='icons' src='http://cdn.lostdog.mx/assets/img/icon-first.png'/></div><div class='col l3 s3 m3' style='text-align: center'><img class='icons-about' alt='icons' src='http://cdn.lostdog.mx/assets/img/icon-second.png'/></div><div class='col l3 s3 m3' style='text-align: center'><img class='icons-about' alt='icons' src='http://cdn.lostdog.mx/assets/img/icon-third.png'/></div><div class='col l3 s3 m3' style='text-align: center'><img class='icons-about' alt='icons' src='http://cdn.lostdog.mx/assets/img/icon-fourth.png'/></div></div>"
+  ],
+  "pricing": [
+    "<div class='text-centered'><h4 class='subtitle row'>Hacer una publicación de una mascota perdida</h4><h5 class='row'> <b class='money-color'> $ 65.00 MXN</b> </h5> Este anuncio tiene vigencia de 6 meses y estará visible en la página para todos los visitantes.<br>",
+    "<h4 class='subtitle row'>Hacer una publicación de una mascota encontrada</h4><h5 class='row'><b class='money-color'> $ 00.00 MXN</b></h5>Este anuncio tiene vigencia de 6 meses y estará visible en la página para todos los visitantes.<br>",
+    "<h4 class='subtitle row'>Costo de manutención* </h4><h5 class='row'> Calculado de acuerdo al tamaño de la mascota y el número de días que el rescatista la cuido.</h5> Este costo cubre la inversión que el rescatista hizo para mantener a tu mascota en óptimas condiciones mientras la recuperabas. <br>",
+    "*Pagar por este importe es obligatorio si se quiere recuperar a la mascota.",
+    "<h4 class='subtitle row'>Recompensa </h4><h5 class='row'> Este monto es definido por el valor que percibe el dueño por su mascota y es opcional.</h5> Este dinero será entregado al rescatista de manera segura una vez que se haya comprobado la entrega de la mascota. <br>",
+    "<h4 class='subtitle row'>Comisión LostDog</h4><h5 class='row'>LostDog tomará el <b class='money-color'>20%</b> del total ...</h5> ...de la suma de recompensa y comisión de manutención por los servicios web otorgados. <br></div>"
   ]
 }

@@ -8,6 +8,12 @@ information {
       height: 200px;
     }
   }
+  .text-centered {
+    text-align: center;
+  }
+  .money-color {
+    color: $greenMat;
+  }
   .info {
     background-color: $lightGrey;
     .main-content {
