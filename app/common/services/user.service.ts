@@ -109,11 +109,11 @@ export class UserService {
     this.setUser(data);
     this.isAvatarSet = true;
     this.errors.invalidUser = false;
-    if (this.previousUrl) {
+    if (this.previousUrl && (data.name || data.username)) {
       console.log('prevUrl', this.previousUrl);
-      this.router.navigateByUrl(this.previousUrl).then(() => {
-        this.previousUrl = undefined;
-      });
+      this.router.navigateByUrl(this.previousUrl);
+      setTimeout(() => {this.previousUrl = undefined;}, 20);
+
     }
     window.scroll(0,0);
   }

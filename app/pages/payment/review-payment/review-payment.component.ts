@@ -126,4 +126,9 @@ export class ReviewPaymentComponent {
     this.dogSize = dogSizes[dog.size_id].name;
     return this.EstimReward = total + '';
   }
+  public changeReward(): void {
+    if (this.reward === this.fixedReward || !this.reward || this.reward === '') {
+      this.reward = this.calcEstimatedReward(this.dogData);
+    }
+  }
 };

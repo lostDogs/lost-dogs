@@ -18,7 +18,7 @@
       </div>
       <div class="centered submit">
         <button class="waves-effect btn warning" [disabled]="!dogData" *ngIf="transcationId && !rewardSetted" (click)="setReward()" (mouseover)="tempReward=reward;reward=fixedReward" (mouseleave)="reward=tempReward">Conservar<i class="medium material-icons right">chevron_right</i></button>
-        <button class="waves-effect btn info" [disabled]="!dogData" *ngIf="transcationId && !rewardSetted" (click)="setReward()" (mouseover)="reward=calcEstimatedReward(dogData)">Cambiar<i class="medium material-icons right">chevron_right</i></button>
+        <button class="waves-effect btn info" [disabled]="!dogData" *ngIf="transcationId && !rewardSetted" (click)="setReward()" (mouseover)="changeReward()">Cambiar<i class="medium material-icons right">chevron_right</i></button>
         <button class="waves-effect btn info" [disabled]="!dogData" *ngIf="!(transcationId && !rewardSetted)" (click)="setReward()">Seguir<i class="medium material-icons right">chevron_right</i></button>
       </div>
     </div>
