@@ -146,7 +146,7 @@ export class RewardPickerComponent {
         ctx.translate(-canvas.height, 0);
     }    
     ctx.drawImage(img, 0, 0);
-    return canvas.toDataURL("image/jpeg", 100);
+    return canvas.toDataURL('image/jpeg', 100);
   }
 
   public getTransaction(userToken: string, transactionId: string): void {
@@ -155,18 +155,12 @@ export class RewardPickerComponent {
       this.invalidQr = this.rewardService.invalidTransactionId;
       this.transacionSucess = this.rewardService.transaction && this.rewardService.transaction.dog_id;
       this.focusUpload = false;
-      if (this.transacionSucess) {
-        this.dogService.getDog(this.rewardService.transaction.dog_id).add(() => {
-          if (!this.dogService.dogData) {
-            console.error('unable to get data');
-          } else {
-            this.toBeRewarded = (+this.dogService.dogData.reward * 0.80).toFixed(2);
-          const formOffset: number = this.formDom.nativeElement.offsetTop - 120;
-          setTimeout(() => {
-            $('html, body').animate({ scrollTop: formOffset}, 500);
-          }, 500);
-          }
-        });
+      if (this.transacionSucess && this.rewardService.transaction) {
+        this.toBeRewarded = (+this.rewardService.transaction.amount * 0.80).toFixed(2);
+        const formOffset: number = this.formDom.nativeElement.offsetTop - 120;
+        setTimeout(() => {
+          $('html, body').animate({ scrollTop: formOffset}, 500);
+        }, 500);
       } else {
         this.scannedValue = undefined;
         this.img = undefined;
@@ -206,7 +200,6 @@ export class RewardPickerComponent {
       this.openPay.transfer(this.transObj, formObj, this.userService.token).add(() => {
         if (this.openPay.trasnferData && this.openPay.trasnferData.id) {
           const self = this;
-          this.dogService.deleteDog(this.dogService.dogData._id);
           setTimeout(() => {
             const sucessDomTop: number = self.transSucessDom.nativeElement.offsetTop - 120;
             $('html, body').animate({scrollTop: sucessDomTop}, 500);
