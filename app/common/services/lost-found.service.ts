@@ -180,7 +180,7 @@ export class LostFoundService {
         Object.assign(dogObj, PaymentFromObj);
       }
       this.loadingSave = true;
-      return this.api.post('https://fierce-falls-25549.herokuapp.com/api/dogs',dogObj, headers).subscribe(data => {
+      return this.api.post(this.api.API_PROD + 'dogs',dogObj, headers).subscribe(data => {
         console.log('sucessss', data);
         this.savedSuccess = true;
         this.question = 'Perro creado con exito!';
@@ -366,7 +366,7 @@ export class LostFoundService {
       this.defaulApikeys.splice(patternIndex, 1);
     }
   }
-  
+
   public getReviewFromLocalStorage(): void {
     const pageAnswers = localStorage.getItem('temp-anwers');
     const reward = localStorage.getItem('temp-reward');

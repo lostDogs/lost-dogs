@@ -40,8 +40,10 @@ export class DogCardService {
    public lostDogs: IdogData[];
   public foundDogs: IdogData[];
   public editData: any;
+  public dogenpoint: string;
 
   constructor(public api: ApiService, public userService: UserService, public globalService: GlobalFunctionService, private searchService: SearchService, public router: Router) {
+    this.dogenpoint = this.api.API_PROD + 'dogs'
     this.shortMonths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
     this.months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     this.breeds = breedContent;
@@ -56,7 +58,7 @@ export class DogCardService {
       'Content-Type': 'application/json',
       'Authorization': 'token ' + this.userService.token
     };
-    return this.api.get('https://fierce-falls-25549.herokuapp.com/api/dogs', dogID, headers).subscribe(
+    return this.api.get(this.dogenpoint, dogID, headers).subscribe(
       data => {
         this.dogData = this.searchService.parseDogData(data);
       },
@@ -83,7 +85,7 @@ export class DogCardService {
         return true;
       }
     });
-    return this.api.delete('https://fierce-falls-25549.herokuapp.com/api/dogs', dogID, headers).subscribe(
+    return this.api.delete(this.dogenpoint, dogID, headers).subscribe(
       data => {
         this.loadingApi = false;
         this.open = false;
@@ -103,7 +105,7 @@ export class DogCardService {
       'Content-Type': 'application/json',
       'Authorization': 'token ' + this.userService.token
     };
-    const url: string = 'https://fierce-falls-25549.herokuapp.com/api/dogs/' + dogId;
+    const url: string = this.dogenpoint + '/' + dogId;
     return this.api.put(url, objToChange, headers).subscribe(
       data => {
         this.editData = data;

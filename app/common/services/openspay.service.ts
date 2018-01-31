@@ -100,8 +100,8 @@ export class OpenSpayService {
 
   public chargeClient(chargeobj: any, userToken: string, transID?: string): Subscription {
     const headers: any = this.setheards(userToken);
-    const url: string = transID ? '/api/transactions/' + transID + '/pay' : '/api/transactions/pay';
-    return this.api.post('https://fierce-falls-25549.herokuapp.com' + url , chargeobj, headers).subscribe(
+    const url: string = transID ? '/transactions/' + transID + '/pay' : '/api/transactions/pay';
+    return this.api.post(this.api.API_PROD + url , chargeobj, headers).subscribe(
       data => {
         console.log('charged data sucess!', data);
         this.sucessPaymentId = data['paymentResult'].id;
@@ -119,9 +119,9 @@ export class OpenSpayService {
   public transfer(qrObj: {identifier: string, transactionId: string}, transferData: any, userToken: string): Subscription {
     const headers: any = this.setheards(userToken);
     console.log('qrObj identifier', qrObj.identifier);
-    const url: string = '/api/transactions/' + qrObj.transactionId + '/reward/' + qrObj.identifier;
+    const url: string = 'transactions/' + qrObj.transactionId + '/reward/' + qrObj.identifier;
     this.loadingTrasnfer = true;
-    return this.api.post('https://fierce-falls-25549.herokuapp.com' + url , transferData, headers).subscribe(
+    return this.api.post(this.api.API_PROD + url , transferData, headers).subscribe(
       data => {
         console.log('transfer sucess!', data);
         this.trasnferData = data;
@@ -141,9 +141,9 @@ export class OpenSpayService {
 
   public refund(userToken: string, transactionId: string, reason?: string): Subscription {
     const headers: any = this.setheards(userToken);
-    const url: string = '/api/transactions/' + transactionId + '/refund';
+    const url: string = 'transactions/' + transactionId + '/refund';
     const reasonObj = reason ? {reason: reason} : {};
-    return this.api.delete('https://fierce-falls-25549.herokuapp.com' + url , reasonObj, headers).subscribe(
+    return this.api.delete(this.api.API_PROD + url , reasonObj, headers).subscribe(
       data => {
         this.refundData = true;
       },

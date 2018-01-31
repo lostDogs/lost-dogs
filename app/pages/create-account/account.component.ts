@@ -241,7 +241,7 @@ export class accountComponent {
   public postUser(): void {
     const userPost: any = this.userBuilder(this.user);
     this.loading = true;
-    this.api.post('https://fierce-falls-25549.herokuapp.com/api/users', userPost).subscribe(
+    this.api.post(this.api.API_PROD + 'users', userPost).subscribe(
       data => this.afterCreateData(data),
       e => this.afterCreateError(e),
       () => this.toHomePage()
@@ -259,7 +259,7 @@ export class accountComponent {
     });
     if (valid) {
       let userToEdit: any = this.userBuilder(this.user);
-      let url: string = 'https://fierce-falls-25549.herokuapp.com/api/users/' + this.userService.user.username;
+      let url: string = this.api.API_PROD + 'users/' + this.userService.user.username;
       if (userBlock.password) {
         url = url + '/changePassword';
         userToEdit = {

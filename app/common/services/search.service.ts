@@ -34,7 +34,7 @@ export class SearchService {
   public maxDistance: number;
   // 1km diameter initially
   public maxDistanceDefault: number = 1000;
-  public _endpointUrl: string = 'https://fierce-falls-25549.herokuapp.com/api/dogs?searchTerms=';
+  public _endpointUrl: string;
   public queryObj: any;
   public totalResults: number;
   public beforeFilterResults: IdogData[];
@@ -55,6 +55,7 @@ export class SearchService {
 
   constructor(public api: ApiService, public userService: UserService) {
     this.queryObj = {};
+    this._endpointUrl = this.api.API_PROD + 'dogs?searchTerms=&matched=false';
     this.innerFiltes = {};
     this.results = [];
     this.window = window;
