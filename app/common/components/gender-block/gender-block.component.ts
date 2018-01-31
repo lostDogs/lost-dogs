@@ -23,10 +23,10 @@ export class GenderBlockComponent {
 
   public setElement() {
     const content: any = genderContent;
-    this.elements = content;
+    this.elements = JSON.parse(JSON.stringify(content));
     this.elements.forEach((gender: any, index: number) => {
       this.elements[index].apiVal =  gender.id;
-    });    
+    });
   }
 
 

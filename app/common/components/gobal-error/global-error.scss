@@ -1,7 +1,7 @@
 @import '../../styles/variables.scss';
 global-error {
   position: fixed;
-  z-index: 1001;
+  z-index: 1021;
   div.fixed-action-btn {
     top: 0;
     right: 24px;
@@ -10,6 +10,11 @@ global-error {
       visibility: hidden;
     }
   }
+   div.tap-target {
+    &.blue {
+      background-color: $buttonInfo !important;
+    }
+   }
   div.tap-target-wrapper{
     &.open {
       div.tap-target {
@@ -39,7 +44,10 @@ global-error {
         background: transparent;
       }
       .btn.btn-floating.tap-target-origin {
-        background-color: $redAccent2;
+          background-color: $redAccent2;
+        &.blue {
+         background-color: $buttonInfo; 
+        }
         i.material-icons {
           color: white;
         }

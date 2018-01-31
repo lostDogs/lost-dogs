@@ -16,7 +16,7 @@
             <div title="cerrar" class="close-icon" (click)="multipleBlockRemove(filter, j)">
               <i class="tiny material-icons">close</i>
             </div>
-            <p class="answer-text">{{answerSelected.name}}</p>
+            <p [ngStyle]="{'background-color': answerSelected.name.charAt(0)==='#' && answerSelected.name}" class="answer-text">{{answerSelected.label || answerSelected.name}}</p>
           </div>
           <div class="answerSelected" *ngIf="nameInput && showNameInput" (click)="enableComponent(filter, i)">
             <div title="cerrar" class="close-icon" (click)="apiSearchDogName();nameModel='';">
@@ -75,7 +75,7 @@
     </h3>
     <h3 *ngIf="searchFound">
     <i class="medium material-icons circle-white">pets</i>
-      Econtrados
+      Encontrados
     </h3>
     <div class="right-controls">
       <div class="toggle-buttons">

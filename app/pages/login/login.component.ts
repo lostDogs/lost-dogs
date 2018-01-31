@@ -15,11 +15,19 @@ export class LoginComponent {
   @ViewChild('ForgotSucess')
   public forgotSucessDom: ElementRef;
 
-  constructor (public userService: UserService, public activeRoute: ActivatedRoute) {
+  constructor (public userService: UserService, public activeRoute: ActivatedRoute, public route: Router) {
     this.userService.forgotSucess = false;
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.forgot = params.fG === 'true';
     });    
+  }
+
+  public loginRedirect(user: string, password: string): void {
+    this.userService.login(user, password).add(() => {
+     if (this.userService.isAuth && !this.userService.previousUrl) {
+       this.route.navigate(['/home']);
+     }
+    });
   }
 
   public scrollTo(domEl: ElementRef): void {
@@ -42,6 +50,9 @@ export class LoginComponent {
   public ngOnInit(): void {
     if (this.forgot) {
       this.scrollTo(this.forgotDom);
+    }
+    if (this.userService.isAuth) {
+      this.route.navigate(['/home']);
     }
   }
 }

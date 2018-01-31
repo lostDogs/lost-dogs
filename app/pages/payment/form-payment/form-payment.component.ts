@@ -84,6 +84,9 @@ export class FormPaymentComponent {
     if (!this.fromLostPage) {
       this.lostService.resetService();
     }
+    if (!this.userService.isAuth) {
+      return;
+    }
     const monthSelect: JQuery = $('#cc-month');
     const yearSelect: JQuery = $('#cc-year');
     const un_0: number = 3;
@@ -117,8 +120,6 @@ export class FormPaymentComponent {
     }else if (this.chargeCreate) {
       const unit: number = un_0 + un_1;
       this.rewardAmount = ((unit + 1)* unit * 2 + unit).toFixed(2) + '';
-    } else {
-      //this.router.navigateByUrl('/home');
     }
     });
   }

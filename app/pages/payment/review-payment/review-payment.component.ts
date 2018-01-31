@@ -51,6 +51,10 @@ export class ReviewPaymentComponent {
 
   public ngOnInit(): void {
     this.dogCardService.open = false;
+    if (!this.userService.isAuth) {
+      return;
+    }
+    console.log('calling on Init');
     if (this.dogIndex && this.searchService.results && this.searchService.results[this.dogIndex] && this.searchService.results[this.dogIndex]._id === this.dogID) {
       this.dogData = this.dogCardService.dogData = this.searchService.results[this.dogIndex];
       this.reward = this.calcEstimatedReward(this.dogData);
@@ -76,6 +80,8 @@ export class ReviewPaymentComponent {
   public ngAfterViewInit(): void {
     $('.tooltipped').tooltip({delay: 50});
     $('#money-input').mask('000,000.00', {reverse: true});
+
+
   }
 
   public next(): void {

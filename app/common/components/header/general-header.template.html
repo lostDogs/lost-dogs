@@ -2,8 +2,8 @@
   <img class="hide-anim" src="static/loading-step-2.gif" alt="loading..." *ngIf="(!newUser && !initHeader) && !displayNavOpts">
   <div  class="menu-options col l5 m1 s3"  [ngClass]="{'hidden': !displayNavOpts}">
     <a routerLink="board" class="actions" (click)="lostService.resetService()">Catalogo</a>
-    <a routerLink="lost" class="actions" (click)="lostService.resetService()" *ngIf="userService.isAuth">Perdi</a>
-    <a routerLink="found" class="actions" (click)="lostService.resetService()" *ngIf="userService.isAuth">Encontre</a>  
+    <a routerLink="lost" class="actions" (click)="lostService.resetService()">Perdí</a>
+    <a routerLink="found" class="actions" (click)="lostService.resetService()">Encontré</a>
     <a href="javascript:void(0)" class="home-mobile" data-activates="slide-out"><img src="static/side-menu.png" alt="side menu"></a>
   </div>
   <div class="menu-options col l4 m2" *ngIf="displayNavOpts"> 
@@ -46,8 +46,8 @@
       <li><a href="javascript:void(0)" class="waves-effect" *ngIf="userService.isAuth" (click)="userService.logout()"><i class="material-icons left">reply</i>Cerrar sesión</a></li>
       <li><div class="divider"></div></li>
       <li><a class="subheader" *ngIf="userService.isAuth">mas acciones</a></li>
-      <li><a routerLink="lost" class="waves-effect" *ngIf="userService.isAuth"><i class="material-icons left">security</i>Perdi un perro</a></li>
-      <li><a routerLink="found" class="waves-effect" *ngIf="userService.isAuth"><i class="material-icons left">search</i>Encontre un perro</a></li>
+      <li><a routerLink="lost" class="waves-effect"><i class="material-icons left">security</i>Perdi un perro</a></li>
+      <li><a routerLink="found" class="waves-effect"><i class="material-icons left">search</i>Encontre un perro</a></li>
       <li><a routerLink="board" class="waves-effect"><i class="material-icons left">style</i>Catalogo</a></li>
       <li><div class="divider"></div></li>
    </ul>
@@ -57,13 +57,13 @@
   <form class="row" title="form-login" #loginForm="ngForm" (ngSubmit)="userService.login(userService.tempUserName, password)"   *ngIf="!userService.isAuth" novalidate>
       <div class="input-field main-white col l12 s12" [ngClass]="{'wrong-red': userService.errors.userReq || userService.errors.invalidUser}">
         <input type="text" name="user name" id="user-name" [(ngModel)]="userService.tempUserName" (keyup)="userService.errors.userReq = false;userService.errors.invalidUser = false;">
-        <label for="user-name" [ngClass]="{'active': userService.tempUserName}">nombre usuario <b *ngIf="userService.errors.invalidUser"> incorrecto ó</b></label>
+        <label for="user-name" [ngClass]="{'active': userService.tempUserName}">Correo <b *ngIf="userService.errors.invalidUser"> incorrecto ó</b></label>
       </div>
       <div class="input-field main-white col l12 s12" [ngClass]="{'wrong-red': userService.errors.passwordReq || userService.errors.invalidUser}">
           <input type="password" name="password" id="user-password"  [(ngModel)]="password" (keyup)="userService.errors.passwordReq = false;userService.errors.invalidUser = false;">
           <label for="user-password">contraseña <b *ngIf="userService.errors.invalidUser"> incorrecta</b></label>
       </div>
-      <button class="btn waves-effect col l12 action" type="submit" [disabled]="userService.loading">
+      <button class="btn waves-effect col l12 action" type="submit" (click)="AuthRedirect()" [disabled]="userService.loading">
         <div *ngIf="!userService.loading">Iniciar sesión<i class="material-icons right">send</i></div>
         <div *ngIf="userService.loading">Cargando ...</div>
       </button>

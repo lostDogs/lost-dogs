@@ -7,6 +7,7 @@ export class GlobalFunctionService {
 
   public globalError: boolean;
   public openErrorModal: () => void;
+  public openBlueModal: () => void;
   public closeErrorModal: () => void;
   public errorMessages: string[];
   public subErrorMessage: string[];

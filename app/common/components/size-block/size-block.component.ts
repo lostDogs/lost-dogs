@@ -16,7 +16,7 @@ export class SizeBlockComponent {
 
   constructor() {
     const content: any = sizesContent;
-    this.elements = content;
+    this.elements = JSON.parse(JSON.stringify(content));
     this.setElement();
   }
   
