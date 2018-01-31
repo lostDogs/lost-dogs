@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../services/user.service';
 import {LostFoundService} from '../../services/lost-found.service';
 import {CookieManagerService} from '../../services/cookie-manager.service';
+import {DogCardService} from '../../services/dog-card.service';
 
 @Component({
   selector: 'general-header',
@@ -33,7 +34,8 @@ export class generalHeaderComponent implements OnInit  {
     public userService: UserService,
     public router: Router,
     public lostService: LostFoundService,
-    public cookieService: CookieManagerService
+    public cookieService: CookieManagerService,
+    public dogService: DogCardService
   ) {
     this.renderer.listenGlobal('document', 'click', (event: any) => {
       const loginDom: any = this.loginDom && this.loginDom.nativeElement;
@@ -98,5 +100,12 @@ export class generalHeaderComponent implements OnInit  {
     if (this.router.url.split('/')[1] === 'account'){
       this.router.navigate(['/profile']);
     }
+  }
+
+  public resetPage(): void {
+    this.lostService.resetService();
+    this.lostService.displayIntro = true;
+    this.dogService.open = true;
+    this.lostService.searchService.queryObj = {};
   }
 };

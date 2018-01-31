@@ -11,6 +11,7 @@ import {GlobalFunctionService} from  '../services/global-function.service';
 
 @Injectable()
 export class LostFoundService {
+    public displayIntro: boolean;
   public locationAdressInput: string;
   public address: string;
   public latLng: {lat: number, lng: number};
@@ -326,7 +327,7 @@ export class LostFoundService {
      this.pageAnswers = [];
      this.pagePosition = undefined;
      this.multipleImgAnswers = undefined;
-     this.parentPage = undefined;
+     this.parentPage = this.router.url.split('/')[1];
      this.inReviewPage = undefined;
      this.retrieveData = undefined;
      this.openNameInput = undefined;

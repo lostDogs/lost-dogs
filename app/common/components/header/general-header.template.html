@@ -2,8 +2,8 @@
   <img class="hide-anim" src="static/loading-step-2.gif" alt="loading..." *ngIf="(!newUser && !initHeader) && !displayNavOpts">
   <div  class="menu-options col l5 m1 s3"  [ngClass]="{'hidden': !displayNavOpts}">
     <a routerLink="board" class="actions" (click)="lostService.resetService()">Catalogo</a>
-    <a routerLink="lost" class="actions" (click)="lostService.resetService()">Perdí</a>
-    <a routerLink="found" class="actions" (click)="lostService.resetService()">Encontré</a>
+    <a routerLink="lost" class="actions" (click)="resetPage()">Perdí</a>
+    <a routerLink="found" class="actions" (click)="resetPage()">Encontré</a>
     <a href="javascript:void(0)" class="home-mobile" data-activates="slide-out"><img src="static/side-menu.png" alt="side menu"></a>
   </div>
   <div class="menu-options col l4 m2" *ngIf="displayNavOpts"> 
