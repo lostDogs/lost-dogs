@@ -366,6 +366,7 @@ export class LostFoundService {
       this.defaulApikeys.splice(patternIndex, 1);
     }
   }
+  
   public getReviewFromLocalStorage(): void {
     const pageAnswers = localStorage.getItem('temp-anwers');
     const reward = localStorage.getItem('temp-reward');

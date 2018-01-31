@@ -38,7 +38,8 @@ export class DogCardService {
   public loadingApi: boolean;
   // used on main profile template only
    public lostDogs: IdogData[];
-  public foundDogs: IdogData[]; 
+  public foundDogs: IdogData[];
+  public editData: any;
 
   constructor(public api: ApiService, public userService: UserService, public globalService: GlobalFunctionService, private searchService: SearchService, public router: Router) {
     this.shortMonths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
@@ -95,6 +96,25 @@ export class DogCardService {
        this.globalService.openErrorModal();             
       }
       );
+  }
+
+  public editDog(dogId: string, objToChange: any): Subscription {
+    const headers: any = {
+      'Content-Type': 'application/json',
+      'Authorization': 'token ' + this.userService.token
+    };
+    const url: string = 'https://fierce-falls-25549.herokuapp.com/api/dogs/' + dogId;
+    return this.api.put(url, objToChange, headers).subscribe(
+      data => {
+        this.editData = data;
+      },
+      error => {
+        this.editData = undefined;
+       this.globalService.clearErroMessages();
+       this.globalService.setErrorMEssage('Ops! no se pudo editar por el momento');
+       this.globalService.openErrorModal();
+      }
+    );
   }
 
   public setLostDogs(): void {
