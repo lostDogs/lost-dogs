@@ -38,7 +38,7 @@ export class DogCardComponent {
   public ngOnInit(): void {
     this.mappedData = this.dogCardService.mapData(this.data);
     if (this.data && this.data.reward) {
-      this.data.reward = (+this.data.reward.replace(',', '') * 0.8).toFixed(2) + '';
+      this.data.reward = (+this.data.reward * 0.8).toFixed(2) + '';
     }
   }
 

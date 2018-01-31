@@ -262,7 +262,7 @@ export class LostFoundService {
       dogObj[this.extrasApiKeys.comments] = this.comments;
     }
     if (this.reward && this.reward !== this.defaultReward) {
-    dogObj[this.extrasApiKeys.reward] = this.reward.replace(',', '');
+    dogObj[this.extrasApiKeys.reward] = typeof this.reward === 'string' ? +this.reward.replace(',', '') : +this.reward;
     }
     dogObj[this.extrasApiKeys.name] = this.dogName || 'NA/';
     dogObj[this.extrasApiKeys.lost] = this.parentPage === 'lost';
