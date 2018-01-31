@@ -148,7 +148,7 @@ export class SearchService {
     } else {
       // means we dont have this page yet so we need to call the service.
       this.addQuery('page', this.atPage);
-      this.search()
+      this.search();
     }
   }
 
@@ -176,6 +176,15 @@ export class SearchService {
   public setLocationFilter(name: string, value: any): void {
     this.queryObj[name] = value;
     this.queryObj.maxDistance = this.maxDistance;
+  }
+
+  public sortByApi(type: string, dsc: boolean) {
+    if (type === 'date' || type === 'reward') {
+      this.resetResults();
+      this.addQuery('sortBy', type === 'date' ? 'found_date' : 'reward');
+      this.addQuery('sortOder', dsc ? 'dsc' : 'asc');
+      this.search();
+    }
   }
 
   public sort(type: string, dsc: boolean) {
