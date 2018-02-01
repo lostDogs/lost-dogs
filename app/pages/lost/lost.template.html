@@ -76,14 +76,16 @@
       </div>
     </div>
   </section>  
-  <div class="row intro" *ngIf="displayIntro && !lostService.inReviewPage">
-    <div class="lost col l12 s12 m12" *ngIf="lostService.parentPage==='lost'">
+  <div class="row intro" [hidden]="!(lostService.displayIntro && !lostService.inReviewPage)">
+    <div class="lost col l12 s12 m12" [hidden]="!(lostService.parentPage==='lost')">
       <h3>No te preocupes, lo vamos econtrar<i class="medium material-icons">sentiment_very_satisfied</i></h3>
       <h5>solo responde las siguentes {{lostService.displayedSequence.length}} preguntas</h5>
+      <h6>Recuerda que este servicio tiene un costo de $65.00 MXN</h6>
     </div>
-    <div class="found col l12 s12 m12" *ngIf="lostService.parentPage==='found'">
+    <div class="found col l12 s12 m12" [hidden]="!(lostService.parentPage==='found')">
       <h3>Muchas gracias por ayudar a que encuentre a su dueno <i class="medium material-icons">sentiment_very_satisfied</i></h3>
-      <h5>solo responde las siguentes {{lostService.displayedSequence.length}} preguntas</h5>
+      <h5>sólo responde las siguentes {{lostService.displayedSequence.length}} preguntas</h5>
+      <h6>Recuerda que para obtener la recomepenza necesitas una cuenta de nómina y Clabe interbancaria</h6>
     </div>
     <button class="waves-effect btn info" (click)="start()">comenzar!<i class="medium material-icons left">thumb_up</i></button>
   </div>

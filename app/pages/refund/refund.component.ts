@@ -33,11 +33,7 @@ export class RefundComponent {
     this.dogService.dogData = undefined;
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.transcationId = params.transcation;
-      this.rewardService.getTransaction(this.userService.token, this.transcationId).add(() => {
-        if (this.rewardService.transaction) {
-          this.dogService.getDog(this.rewardService.transaction.dog_id);
-        }
-      });
+      this.rewardService.getTransaction(this.userService.token, this.transcationId);
     });    
   }
 

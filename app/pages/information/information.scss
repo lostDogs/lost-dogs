@@ -1,5 +1,19 @@
 @import '../../common/styles/variables.scss';
 information {
+  .icons-about {
+    width: 150px;
+    height: 160px;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      width: 190px;
+      height: 200px;
+    }
+  }
+  .text-centered {
+    text-align: center;
+  }
+  .money-color {
+    color: $greenMat;
+  }
   .info {
     background-color: $lightGrey;
     .main-content {

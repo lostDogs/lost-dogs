@@ -31,10 +31,10 @@ lost, found {
     cursor: default;    
   }
   .no-results-block {
-    padding-top: 50px;
+    padding: 50px 0;
     @media screen and (max-device-width: $screen-mobile-max) {
-      padding-top: 100px;
-    }    
+      padding-top: 100px 0;
+    }  
   }
   #location-search, #date-input  {
     margin-top: 14px;

@@ -106,6 +106,7 @@ export class ReviewPaymentComponent {
 
   public setReward(): void {
     this.rewardSetted = true;
+    this.reward = typeof  this.reward === 'string' ? this.reward : this.reward + '';
     this.reward = this.reward.replace('.','').replace(',', '');
     this.reward =this.reward.slice(0, this.reward.length - 2) + '.' + this.reward.slice(this.reward.length - 2);
   }
@@ -124,5 +125,10 @@ export class ReviewPaymentComponent {
     this.totalDays = daysDiff;
     this.dogSize = dogSizes[dog.size_id].name;
     return this.EstimReward = total + '';
+  }
+  public changeReward(): void {
+    if (this.reward === this.fixedReward || !this.reward || this.reward === '') {
+      this.reward = this.calcEstimatedReward(this.dogData);
+    }
   }
 };

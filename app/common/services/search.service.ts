@@ -34,7 +34,7 @@ export class SearchService {
   public maxDistance: number;
   // 1km diameter initially
   public maxDistanceDefault: number = 1000;
-  public _endpointUrl: string = 'https://fierce-falls-25549.herokuapp.com/api/dogs?searchTerms=';
+  public _endpointUrl: string;
   public queryObj: any;
   public totalResults: number;
   public beforeFilterResults: IdogData[];
@@ -55,6 +55,7 @@ export class SearchService {
 
   constructor(public api: ApiService, public userService: UserService) {
     this.queryObj = {};
+    this._endpointUrl = this.api.API_PROD + 'dogs?searchTerms=&matched=false';
     this.innerFiltes = {};
     this.results = [];
     this.window = window;
@@ -147,7 +148,7 @@ export class SearchService {
     } else {
       // means we dont have this page yet so we need to call the service.
       this.addQuery('page', this.atPage);
-      this.search()
+      this.search();
     }
   }
 
@@ -175,6 +176,15 @@ export class SearchService {
   public setLocationFilter(name: string, value: any): void {
     this.queryObj[name] = value;
     this.queryObj.maxDistance = this.maxDistance;
+  }
+
+  public sortByApi(type: string, dsc: boolean) {
+    if (type === 'date' || type === 'reward') {
+      this.resetResults();
+      this.addQuery('sortBy', type === 'date' ? 'found_date' : 'reward');
+      this.addQuery('sortOder', dsc ? 'dsc' : 'asc');
+      this.search();
+    }
   }
 
   public sort(type: string, dsc: boolean) {

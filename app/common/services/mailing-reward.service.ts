@@ -6,13 +6,13 @@ import {GlobalFunctionService} from  '../services/global-function.service';
 
 @Injectable()
 export class MailingRewardService {
-  private _endpointUrl: string = 'https://fierce-falls-25549.herokuapp.com/api/';
-  // public transaction: {lost_id?: string, found_id?: string, dog_id?: string, status?: string, id?: string};
   public transaction: any;
   public invalidTransactionId: boolean;
   public errorInEmails: boolean;
 
-  constructor(private api: ApiService, public router: Router, public globalService: GlobalFunctionService) {}
+  constructor(private api: ApiService, public router: Router, public globalService: GlobalFunctionService) {
+
+  }
 
   public sendEmailsToUsers(lost: boolean, userToken: string, dogId: string, paymentInfo?: any): Subscription {
     const headers: any = {
@@ -21,7 +21,7 @@ export class MailingRewardService {
     };
     const lostFound: string = lost ? 'lost' : 'found';
     paymentInfo = paymentInfo || {};
-    const url: string = this._endpointUrl + 'dogs/' + dogId + '/' + lostFound;
+    const url: string = this.api.API_PROD + 'dogs/' + dogId + '/' + lostFound;
     return this.api.post(url , paymentInfo, headers).subscribe(
       data => {
         console.log('sucess', data);
@@ -40,7 +40,7 @@ export class MailingRewardService {
       'Content-Type': 'application/json',
       'Authorization': 'token ' + userToken
     };
-    return this.api.get(this._endpointUrl + 'transactions/' + transactionId , undefined, headers).subscribe(data => {
+    return this.api.get(this.api.API_PROD + 'transactions/' + transactionId , undefined, headers).subscribe(data => {
       console.log('sucess', data);
       this.transaction = data;
       this.invalidTransactionId = false;

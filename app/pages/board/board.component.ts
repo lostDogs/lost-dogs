@@ -136,7 +136,7 @@ export class boardComponent {
         replacedBlock.replaceWith(replaceBlock);
       }
       const sortVal: string = input.val() && (input.val()).split(':');
-      self.searchService.sort(sortVal[0], !!sortVal[1]);
+      self.searchService.sortByApi(sortVal[0], !!sortVal[1]);
     });    
   }
 

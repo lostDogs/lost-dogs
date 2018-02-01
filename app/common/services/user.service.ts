@@ -109,17 +109,17 @@ export class UserService {
     this.setUser(data);
     this.isAvatarSet = true;
     this.errors.invalidUser = false;
-    if (this.previousUrl) {
+    if (this.previousUrl && (data.name || data.username)) {
       console.log('prevUrl', this.previousUrl);
-      this.router.navigateByUrl(this.previousUrl).then(() => {
-        this.previousUrl = undefined;
-      });
+      this.router.navigateByUrl(this.previousUrl);
+      setTimeout(() => {this.previousUrl = undefined;}, 20);
+
     }
     window.scroll(0,0);
   }
 
   public forgot(userName: string): Subscription {
-    const url: string = 'https://fierce-falls-25549.herokuapp.com/api/users/' + userName + '/forgotPassword';
+    const url: string = this.api.API_PROD + 'users/' + userName + '/forgotPassword';
     this.forgotloading = true;
     const headers: any = {
       'Content-Type': 'application/json',
@@ -159,7 +159,7 @@ export class UserService {
     if( password && username || noAuth) {
       const user:any = {password: password, username: username};
       this.loading = true;
-      return this.api.post('https://fierce-falls-25549.herokuapp.com/api/users/login', user).subscribe(
+      return this.api.post(this.api.API_PROD + 'users/login', user).subscribe(
         data => this.loginSucess(data, username),
         e => this.loginNotSuccess(e),
       );

@@ -135,7 +135,7 @@ export class FormPaymentComponent {
 
   public setReward(param: string): void  {
     this.rewardAmount =  !param ? this.dogService.dogData.reward : param;
-     this.rewardAmount =  this.rewardAmount || '00.00';
+    this.rewardAmount =  this.rewardAmount || '00.00';
   }
 
   public pay(event: Event): void {

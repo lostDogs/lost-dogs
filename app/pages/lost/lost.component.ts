@@ -18,7 +18,6 @@ export class lostComponent {
   public goBack: boolean;
   public fullWidth: number;
   public progress: number;
-  public displayIntro: boolean;
   public screenWidth: number;
   public mapWidth: number;
   public startMap: boolean;
@@ -83,7 +82,7 @@ export class lostComponent {
       this.router.navigate(['/login']);
     }
     this.lostService.resetService();
-    this.displayIntro = true;
+    this.lostService.displayIntro = true;
     this.dogCardService.open = true;
     this.lostService.parentPage = this.router.url.split('/')[1];
     this.fullWidth = this.progressDom.nativeElement.clientWidth;
@@ -150,7 +149,7 @@ export class lostComponent {
   } 
 
   public start(): void {
-    this.displayIntro=false;
+    this.lostService.displayIntro=false;
     this.dogCardService.open=false;
      this.lostService.start = true;
     this.lostService.searchService.resetResults();
