@@ -25,7 +25,7 @@
         <input  [hidden]="scannedValue" type="file" accept="image/*;capture=camera" (change)="fileChange($event)">
     </div>
     <div #RewardAprox></div>
-    <form name="rewards" class="create-account" #RewardForm="ngForm" (ngSubmit)="rewarded()" *ngIf="transacionSucess && dogService.dogData">
+    <form name="rewards" class="create-account" #RewardForm="ngForm" (ngSubmit)="rewarded()" *ngIf="transacionSucess">
       <div class="row input-fields">
         <div class="input-field  alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': !rewardForm.accountNumber.valid}" (keyup)="rewardForm.accountNumber.valid = validate.onlyNumbers(rewardForm.accountNumber.value);"  (change)="rewardForm.accountNumber.valid = validate.onlyNumbers(rewardForm.accountNumber.value)">
           <input type="text" name="account" id="account" [(ngModel)]="rewardForm.accountNumber.value">
@@ -49,8 +49,8 @@
       </div>
       <div class="row centered row-extraspace">
         <button type="submit" class="waves-effect btn action col l2 s8" [disabled]="loading || (openPay.trasnferData && openPay.trasnferData.id)" (click)="rewardMe($event)">
-          <div [hidden]="loading && !dogService.dogData">Recompénsame<i class="medium material-icons right">monetization_on</i></div>
-          <div [hidden]="!loading && dogService.dogData">cargando ...</div>
+          <div [hidden]="loading">Recompénsame<i class="medium material-icons right">monetization_on</i></div>
+          <div [hidden]="!loading">cargando ...</div>
         </button>
       </div>
     </form>
@@ -58,7 +58,7 @@
   <div class="transfer-sucess" *ngIf="openPay.trasnferData && openPay.trasnferData.id" #TransSucess>
     <i class="material-icons medium">done_all</i>
     <h5>Se ha realizado exitosamente el deposito en tu cuenta!</h5>
-    <h5>Esperalo en X horas</h5>
+    <h5>Esperalo en un plazo de hasta 24 horas</h5>
   </div>
   <canvas id="img-rotation" class="invisible"></canvas>
 </div>

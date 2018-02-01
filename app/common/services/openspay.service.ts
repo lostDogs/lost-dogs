@@ -80,7 +80,7 @@ export class OpenSpayService {
   }
 
   public mapChargeRequest(amount: string, user: any, description: string): object {
-      amount = amount.replace(/,/g, '');
+      amount = typeof amount === 'string'  ? amount.replace(/,/g, ''): amount;
       const chargeRequest ={
         paymentInfo: {
           method: 'card',
@@ -100,7 +100,7 @@ export class OpenSpayService {
 
   public chargeClient(chargeobj: any, userToken: string, transID?: string): Subscription {
     const headers: any = this.setheards(userToken);
-    const url: string = transID ? '/transactions/' + transID + '/pay' : '/api/transactions/pay';
+    const url: string = transID ? 'transactions/' + transID + '/pay' : '/api/transactions/pay';
     return this.api.post(this.api.API_PROD + url , chargeobj, headers).subscribe(
       data => {
         console.log('charged data sucess!', data);

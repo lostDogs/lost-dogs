@@ -24,6 +24,7 @@ export class DogCardComponent {
   public maxCards: number = 3;
   @Input()
   public deleteBtn: boolean;
+  public rewardtoShow: string;
 
   constructor(public dogCardService: DogCardService, public renderer: Renderer, public elRef: ElementRef, public router: Router)  {
     this.mobile = window.screen.width <= 767;
@@ -38,7 +39,7 @@ export class DogCardComponent {
   public ngOnInit(): void {
     this.mappedData = this.dogCardService.mapData(this.data);
     if (this.data && this.data.reward) {
-      this.data.reward = (+this.data.reward * 0.8).toFixed(2) + '';
+      this.rewardtoShow = (+this.data.reward * 0.8).toFixed(2) + '';
     }
   }
 

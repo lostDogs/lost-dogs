@@ -21,8 +21,10 @@ export class mainProfileComponent {
     this.searchService.addQuery('reporter_id', this.userService.user.username);
     this.searchService.addQuery('pageSize', 45);
     this.searchService.search().add(() => {
-      this.dogCardService.setFoundDogs();
-      this.dogCardService.setLostDogs();
+      if (this.searchService.results && this.searchService.results.length) {
+        this.dogCardService.setFoundDogs();
+        this.dogCardService.setLostDogs();
+      }
     });
   }
 
