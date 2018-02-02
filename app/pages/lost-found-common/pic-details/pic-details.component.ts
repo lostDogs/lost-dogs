@@ -14,8 +14,8 @@ export class DetailsComponent {
 
   constructor(public LostService: LostFoundService) {
     this.LostService.question2 = 'sube una foto del perro';
-    this.LostService.question3 = 'aniade un cometario extra';
-    this.LostService.question = 'ponle una recompenza';
+    this.LostService.question3 = 'añade un cometario extra';
+    this.LostService.question = 'ponle una recompensa';
     this.LostService.optional = false;
     this.LostService.multipleImgAnswers = undefined;
     this.LostService.inputField = {type: 'binary', label: 'dogPicture'};

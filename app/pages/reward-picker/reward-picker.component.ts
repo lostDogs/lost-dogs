@@ -179,7 +179,7 @@ export class RewardPickerComponent {
         clabe: '012298026516924616',
         holder_name: 'chris Tupper'
       },
-      description: 'recompenza para Chris de transID > ' + this.transObj.transactionId      
+      description: 'recompensa para Chris de transID > ' + this.transObj.transactionId      
     };   
     this.rewardForm.accountNumber.value && this.rewardForm.holderName.value
      */
@@ -194,7 +194,7 @@ export class RewardPickerComponent {
           clabe: this.rewardForm.accountNumber.value,
           holder_name: this.rewardForm.holderName.value
         },
-        description: 'recompenza para ' + this.userService.user.name + ' de transactionID > ' + this.transObj.transactionId
+        description: 'recompensa para ' + this.userService.user.name + ' de transactionID > ' + this.transObj.transactionId
       };
       this.openPay.trasnferData = undefined;
       this.openPay.transfer(this.transObj, formObj, this.userService.token).add(() => {

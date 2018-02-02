@@ -90,7 +90,7 @@ export class OpenSpayService {
           description: description,
           capture: true
         },
-        saveCard: true
+        saveCard: false
       }
      const deviceSession = this.openPay.deviceData.setup(chargeRequest);
      chargeRequest.paymentInfo['device_session_id'] = deviceSession;

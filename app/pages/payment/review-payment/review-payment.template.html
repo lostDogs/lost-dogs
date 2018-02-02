@@ -6,13 +6,13 @@
       <dog-card  #DogCard [atReviewPage]="true"  [data]="dogData" [maxCards]="1" [cardIndex]="0"></dog-card>
     </div>
     <div class="col push-l2 l4 m12 s12 steps-block" [hidden]="!((lost && !rewardSetted ) || (transcationId && !rewardSetted))">
-      <h5 class="subtitle" [hidden]="!lost">Agrega una recompenza</h5>
+      <h5 class="subtitle" [hidden]="!lost">Agrega una recompensa</h5>
       <h6 class="subtitle subheader" [hidden]="!lost"> ...para agradecer a la persona que lo encontró y lo cuido</h6>
-      <h5 class="subtitle" [hidden]="lost">Tu recompenza es menor al valor estimado.</h5>
-      <h6 class="subtitle subheader" [hidden]="lost">tu recomenza es <span>{{fixedReward}}</span> pero puedes cambiarla</h6>
+      <h5 class="subtitle" [hidden]="lost">Tu recompensa es menor al valor estimado.</h5>
+      <h6 class="subtitle subheader" [hidden]="lost">tu recompensa es <span>{{fixedReward}}</span> pero puedes cambiarla</h6>
       <div class="steps money-reward action draw account-completed" (mouseover)="foucusMoney()" (mouseleave)="clearInput()">
         <h2>$</h2>
-        <input id="money-input" type="text" name="recompoenza"  [(ngModel)]="reward" size="10">
+        <input id="money-input" type="text" name="recompensa"  [(ngModel)]="reward" size="10">
         <h2 class="currency">MXN</h2>
         <h6 class="under" [ngStyle]="{'opacity': reward !== EstimReward ? 0 : 1}">* valor estimada para mantener un perro {{dogSize}} por {{totalDays}} dias</h6>
       </div>
@@ -25,9 +25,9 @@
     <div class="col push-l2 l4 m12 s12 steps-block" [hidden]="!rewardSetted">
       <h5 class="subtitle">Que sigue?</h5>
       <div class="steps">
-        <h6><b>1.</b> primero te haremos el cargo  de la recompenza. No te preocupes, si no es tu perro, <b>te regresamos tu dinero.</b></h6>
+        <h6><b>1.</b> primero te haremos el cargo  de la recompensa. No te preocupes, si no es tu perro, <b>te regresamos tu dinero.</b></h6>
         <h6><b>2.</b> te mandaremos el contacto de quien lo econtró para que te pongas de acuerdo donde y a que horas verse.</h6>
-        <h6><b>3.</b> una vez que recibas el perro asegura de pasarle el <b>codigo QR</b> que se te envó por correo al rescatista para que puda recoletar su recompenza.</h6>
+        <h6><b>3.</b> una vez que recibas el perro asegura de pasarle el <b>codigo QR</b> que se te envó por correo al rescatista para que puda recoletar su recompensa.</h6>
       </div>
       <div class="centered submit">
         <button class="waves-effect btn action" [disabled]="!dogData" (click)="next()">aceptar<i class="medium material-icons right">thumb_up</i></button>
@@ -39,7 +39,7 @@
         <h6><b>1.</b> Le mandaremos tu datos al dueño, si es su perro, El se podra en contanto contigo.</h6>
         <h6><b>2.</b> Agenda una hora y lugar donde entregaras el perro.</h6>
         <h6><b>3.</b> Una vez de lo entregues, recuerda escanear el codigo QR se le envió al dueño.</h6>
-        <h6><b>4.</b> Subelo en la liga que te llegará por correo, para recibir tu recompenza.</h6>
+        <h6><b>4.</b> Subelo en la liga que te llegará por correo, para recibir tu recompensa.</h6>
       </div>      
     <div class="centered submit">
       <button class="waves-effect btn action" [disabled]="!dogData" (click)="next()">aceptar<i class="medium material-icons right">thumb_up</i></button>

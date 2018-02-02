@@ -9,7 +9,7 @@
       <li class="collection-header avatar"  *ngIf="LostService.dogName"><h5>{{LostService.dogName}}</h5><a  class="secondary-content" (click)="LostService.goTo(LostService.sequence.length-3)">Editar</a></li>
       <li class="collection-item avatar centered" *ngIf="LostService.parentPage==='lost'">
         <div class="circle material-icons location"><i class="medium material-icons">attach_money</i></div>
-        <span class="title"><b>Recompenza:</b> $ {{LostService.reward}} MXN</span>
+        <span class="title"><b>Recompensa:</b> $ {{LostService.reward}} MXN</span>
         <a class="secondary-content" (click)="LostService.goTo(LostService.sequence.length-2)">Editar</a>
       </li>
       <li class="collection-item avatar centered" *ngFor="let description of LostService.displayedSequence; let i=index">
@@ -57,7 +57,7 @@
                 <span style="color:#26a69a">$ 65.00 MXN</span>
               </span>
               <div class="row "  style="margin-top: 20px;" [hidden]="!extraInfo">
-                <p class="row view-more"><b style="margin-right: 10px;">Tu pago incluye...</b> Reportar el perro en la platafroma de esta forma mucha gente lo podrá ver</p>
+                <p class="row view-more"><b style="margin-right: 10px;">Tu pago incluye...</b> un anuncio de tu mascota de alta visibilidad en la página lostDog por un año</p>
               </div>
             </td>
             <td class="text-end">

@@ -68,10 +68,13 @@ export class ReviewComponent {
     console.log('sequence lost service', this.LostService.sequence);
   }
 
-  public toPaymentForm(): void {
+  public ngAfterViewInit(): void {
     const breed: string = this.getName('breed');
     this.paymentDesc = this.LostService.dogName ? 'Reportar a ' + this.LostService.dogName :   'Reportar un ' + breed;
     this.paymentDesc += '.... ';
+  }
+
+  public toPaymentForm(): void {
     this.LostService.openPayment = true;
     setTimeout(() => {
       const scrollTo: number = this.descriptionDom.nativeElement.offsetTop + 120 ;

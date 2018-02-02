@@ -369,6 +369,7 @@ export class LostFoundService {
   }
 
   public getReviewFromLocalStorage(): void {
+    console.log('getting review from local storage >>');
     const pageAnswers = localStorage.getItem('temp-anwers');
     const reward = localStorage.getItem('temp-reward');
     const comments = localStorage.getItem('temp-comments');

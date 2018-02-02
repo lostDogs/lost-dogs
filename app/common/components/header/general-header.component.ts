@@ -45,7 +45,7 @@ export class generalHeaderComponent implements OnInit  {
       }
       if (this.openedFirstMessage && !this.openSecondMessage) {
         this.globalService.clearErroMessages();
-        this.globalService.setErrorMEssage('Esta pagina necesitará de tu ubicación & camara');
+        this.globalService.setErrorMEssage('Esta pagina puede que necesite de tu ubicación o camara');
         this.openSecondMessage = true;
         setTimeout(() => {
           this.globalService.openBlueModal();
@@ -60,7 +60,7 @@ export class generalHeaderComponent implements OnInit  {
 
     public openMessage() {
     this.globalService.clearErroMessages();
-    this.globalService.setErrorMEssage('Esta pagina necesta de cookie para funcionar');
+    this.globalService.setErrorMEssage('Esta pagina necesta de cookies para funcionar');
     this.globalService.openBlueModal();
     this.openedFirstMessage = true;
   }

@@ -55,13 +55,13 @@ export class FormPaymentComponent {
     public lostService: LostFoundService
   ) {
     this.creaditCard = {
-      method: {valid: true, value: undefined, required: false, label: 'Metodo de pago'},
-      number: {valid: true, value: undefined, required: true, label: 'Numero de tarjeta'},
-      ownerName: {valid: true, value: undefined, required: true, label: 'Nombre del dueno'},
+      method: {valid: true, value: undefined, required: false, label: 'Método de pago'},
+      number: {valid: true, value: undefined, required: true, label: 'Número de tarjeta'},
+      ownerName: {valid: true, value: undefined, required: true, label: 'Nombre del dueño'},
       expMonth: {valid: true, value: undefined, required: true, label: 'Mes'},
-      expYear: {valid: true, value: undefined, required: true, label: 'Anio'},
+      expYear: {valid: true, value: undefined, required: true, label: 'Año'},
       ccv: {valid: true, value: undefined, required: true, label: 'Ccv'},
-      type: {valid: true, value: undefined, required: false, label: 'typo de tarjeta'}
+      type: {valid: true, value: undefined, required: false, label: 'tipo de tarjeta'}
     };
     this.extra = {
       terms: {valid: true, value: undefined, required: true , label: 'Terminos & condiciones'},
@@ -176,10 +176,9 @@ export class FormPaymentComponent {
     const tokenData: any = this.openSpayService.mapTokenData(this.creaditCard);
     this.openSpayService.createToken(tokenData).then(() => {
       if (this.openSpayService.tokenId) {
-        const transDesc: string = this.chargeCreate ? 'pago por reportar perro' : 'pago de recompenza de ' + this.userService.user.name + ' para el perro >' + this.dogService.dogData._id;
+        const transDesc: string = this.chargeCreate ? 'pago para reportar perro' : 'pago de recompensa de ' + this.userService.user.name + ' para el perro >' + this.dogService.dogData._id;
         const chargeObj: any = this.openSpayService.mapChargeRequest(this.rewardAmount, this.userService.user,transDesc);
         if (this.transcationId) {
-          console.log('paying for lost with chargeClient');
           this.openSpayService.chargeClient(chargeObj, this.userService.token, this.transcationId).add(() => {
             if (this.openSpayService.sucessPaymentId) {
               this.loading = false;
@@ -189,7 +188,6 @@ export class FormPaymentComponent {
             }
           });
         } else if (this.dogId) {
-          console.log('paying for found with email service');
           this.mailingService.sendEmailsToUsers(false, this.userService.token, this.dogService.dogData._id, chargeObj).add(() => {
             if (!this.mailingService.errorInEmails) {
               this.loading = false;
@@ -199,7 +197,6 @@ export class FormPaymentComponent {
             }
           });
         } else if (this.chargeCreate) {
-          console.log('calling charge create ', this.chargeCreate);
           this.lostService.saveToApi(chargeObj).add(() => {
             if (this.lostService.savedData) {
               this.loading = false;
