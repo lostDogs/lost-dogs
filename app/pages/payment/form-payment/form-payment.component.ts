@@ -104,7 +104,6 @@ export class FormPaymentComponent {
       this.transcationId = params.transcation;
       this.lostParam = params.Lt;
       const value: string = this.lostService.defualtSequence[this.lostService.defualtSequence.length - 1];
-      console.log('value to search', value);
       this.chargeCreate = !!~this.router.url.indexOf(value);
       this.rewardAmount = params.rW || (this.dogService.dogData && this.dogService.dogData.reward);
       if (!this.dogService.dogData && this.dogId) {
@@ -144,12 +143,27 @@ export class FormPaymentComponent {
     this.globalService.clearErroMessages();
     const card: boolean = this.validation(this.creaditCard);
     const extras: boolean = this.validation(this.extra);
-    const openPayValidation: any = this.openSpayService.validateCardNum(this.creaditCard.number.value) && this.openSpayService.validateCvc(this.creaditCard.number.value, this.creaditCard.ccv.value);
-    if (card && extras && openPayValidation) {
+    const validateCardNum: any = this.openSpayService.validateCardNum(this.creaditCard.number.value);
+    const validateCvc: any = this.openSpayService.validateCvc(this.creaditCard.number.value, this.creaditCard.ccv.value);
+    const validateExpiry: any = this.openSpayService.validateExpiry(this.creaditCard.expMonth.value, '20' + this.creaditCard.expYear.value);
+    if (card && extras && validateCardNum && validateExpiry && validateCvc) {
       this.cardSpin = true;
       this.loading = true;
       this.proccedTransaction();
     } else  {
+      if (!validateExpiry) {
+        this.creaditCard.expYear.valid = false;
+        this.creaditCard.expMonth.valid = false;
+        this.globalService.setErrorMEssage('Fecha invalida');
+      }
+      if (!validateCardNum) {
+        this.creaditCard.number.valid = false;
+        this.globalService.setErrorMEssage('Número de tarjeta invalido');
+      }
+      if (!validateCvc) {
+        this.creaditCard.ccv.valid = false;
+        this.globalService.setErrorMEssage('CCV invalido');
+      }
       this.globalService.openErrorModal();
     }
   }

@@ -165,7 +165,11 @@ export class OpenSpayService {
     };
     Object.assign(headers, configObj);
     return headers;
-  }  
+  }
+
+  public validateExpiry(month: string, year: string): boolean {
+    return this.openPay.card.validateExpiry(month, year);
+  }
 
   public loadOpenPayScript(): any {
     //  Dynamically inserting payment scirpts on the dom.
