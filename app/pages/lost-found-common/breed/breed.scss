@@ -8,3 +8,11 @@ button.btn.info.breed-search.breed {
     position: absolute;
     bottom: 30px;    
   }
+  lost {
+    button.btn.info.breed-search.breed {
+      @media screen and (max-device-width: $screen-mobile-max) {
+        right: 115px;
+        top: 60px;        
+      }
+    }
+  }

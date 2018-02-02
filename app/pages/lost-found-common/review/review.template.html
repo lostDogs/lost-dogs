@@ -9,7 +9,7 @@
       <li class="collection-header avatar"  *ngIf="LostService.dogName"><h5>{{LostService.dogName}}</h5><a  class="secondary-content" (click)="LostService.goTo(LostService.sequence.length-3)">Editar</a></li>
       <li class="collection-item avatar centered" *ngIf="LostService.parentPage==='lost'">
         <div class="circle material-icons location"><i class="medium material-icons">attach_money</i></div>
-        <span class="title"><b>Recompensa:</b> $ {{LostService.reward}} MXN</span>
+        <span class="title"><b>Recompensa:</b> $ {{LostService.reward}} MXN*</span>
         <a class="secondary-content" (click)="LostService.goTo(LostService.sequence.length-2)">Editar</a>
       </li>
       <li class="collection-item avatar centered" *ngFor="let description of LostService.displayedSequence; let i=index">
@@ -35,12 +35,13 @@
         <span class="title"><b>Comentarios:</b>  {{LostService.comments}} </span>
         <a class="secondary-content" (click)="LostService.goTo(LostService.sequence.length-2)">Editar</a>
       </li>      
-    </ul>    
+    </ul>
     <button class="waves-effect btn action submit" [disabled]="LostService.loadingSave">
       <div *ngIf="LostService.parentPage==='lost' && !LostService.loadingSave" (click)="toPaymentForm()">Si! es mi perro<i class="material-icons right">send</i></div>
       <div *ngIf="LostService.parentPage==='found' && !LostService.loadingSave" (click)="LostService.saveToApi()">Si!  es el perro<i class="material-icons right">send</i></div>
       <div *ngIf="LostService.loadingSave && !LostService.savedImgs">Carngado ...</div>
     </button>
+    <div class="row" style="color: white; text-align: center;padding-top: 30px"><p>*Si tu perro es econtrado recuerda que el <b>20%</b> de la recompenza es para LostDog</p></div>
   </div>
   <div class="col l12 m12 s12 centered" *ngIf="LostService.savedSuccess && LostService.savedImgs">
       <dog-card  [atReviewPage]="true"  [data]="LostService.savedData"  [maxCards]="1" [cardIndex]="0"></dog-card>
@@ -50,7 +51,7 @@
       <li class="collection-item avatar centered" >
         <table style="width: 100%;">
           <tr>
-            <td style="width: 20%;"><div class="circle" [ngStyle]="{'background-image': 'url(' + LostService.dogPicture + ')' }" ></div></td>
+            <td style="width: 20%;"><div class="circle" style="top: 6px;" [ngStyle]="{'background-image': 'url(' + LostService.dogPicture + ')' }" ></div></td>
             <td style="width: 70%;">
               <span class="title title-money row">
                 <b>{{paymentDesc}}</b>
