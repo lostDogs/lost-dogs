@@ -22,7 +22,7 @@ export class ColorComponent {
   }
 
   public fillData(pageAnswer: any, lostService: any): void {
-    if (pageAnswer) {
+    if (pageAnswer && pageAnswer.length) {
       pageAnswer.push('retrieve');
       lostService.multipleImgAnswers = lostService.copyAnswer(pageAnswer);
     }
