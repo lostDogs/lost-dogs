@@ -170,32 +170,5 @@ export class OpenSpayService {
   public validateExpiry(month: string, year: string): boolean {
     return this.openPay.card.validateExpiry(month, year);
   }
-
-  public loadOpenPayScript(): any {
-    //  Dynamically inserting payment scirpts on the dom.
-    const scripts: JQuery = $('script');
-    const mainOpenPayPath: string = 'https://openpay.s3.amazonaws.com/';
-    const dynamicScripts: string[] = ['openpay.v1.min.js', 'openpay-data.v1.min.js'];
-    const nodeType: string = 'text/javascript';
-    const charset: string = 'UTF-8';
-    for (let i = 0; i < scripts.length; ++i) {
-        if (scripts[i].getAttribute('src') && scripts[i].getAttribute('src').includes(dynamicScripts[0]) || scripts[i].getAttribute('src').includes(dynamicScripts[1])) {
-            return;
-        }
-    }
-    dynamicScripts.forEach((scriptName: string, scriptIndex: number) => {
-      let node = document.createElement('script');
-      node.type = nodeType;
-      node.charset = charset;
-      node.src = mainOpenPayPath + scriptName;
-      node.async = false;
-      document.getElementsByTagName('head')[0].appendChild(node);
-      node.onload = ()=> {
-        if (scriptIndex === dynamicScripts.length - 1) {
-          this.initOpenPay();
-        }
-      };
-    });
-  }
   
 }
