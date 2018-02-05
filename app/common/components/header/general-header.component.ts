@@ -106,6 +106,13 @@ export class generalHeaderComponent implements OnInit  {
     this.lostService.resetService();
     this.lostService.displayIntro = true;
     this.dogService.open = true;
+    this.lostService.parentPage = this.router.url.split('/')[1];
     this.lostService.searchService.queryObj = {};
+    this.lostService.searchService.addQuery('lost', this.lostService.parentPage !== 'lost');
+    this.lostService.searchService.addQuery('pageSize', this.lostService.searchService._pageSize);
+    this.lostService.displayedSequence && this.lostService.displayedSequence.length && this.lostService.displayedSequence.forEach((value: any, index: number) => {
+      this.lostService.pageAnswers.push(undefined);
+    });
+
   }
 };

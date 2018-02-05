@@ -45,7 +45,7 @@
   <div class="component-container" [ngClass]="{'blur-filter': dogCardService.open}">
     <router-outlet></router-outlet>
     <div class="map-block" [ngStyle]="{'width': mapWidth + 'px'}" *ngIf="lostService && lostService.matchService && startMap" [ngClass]="{'hidden': lostService.defualtSequence[lostService.pagePosition]!=='location'}">
-      <map (locationAdressEmiter)="lostService.address=$event;changeMapElement($event)" (locationEmiter)="lostService.latLng=$event;" [locationAdress]="lostService.locationAdressInput" [location]="lostService.latLong" [rangeRadius]="lostService.matchService.rangeRadius"></map>
+      <map (locationAdressEmiter)="lostService.address=$event;changeMapElement($event);" (locationEmiter)="lostService.latLng=$event;changeMapElement($event);" [locationAdress]="lostService.locationAdressInput" [location]="lostService.latLong" [rangeRadius]="lostService.matchService.rangeRadius"></map>
     </div>
     <div class="buttons row" *ngIf="lostService.pagePosition !== lostService.sequence.length - 1">
       <button class="waves-effect btn warning" (click)="lostService.back()" [disabled]="lostService.searchService.timer || lostService.searchService.loading" [ngClass]="{'disappear': lostService.pagePosition === 0 || lostService.inReviewPage}">Atras <i class="material-icons left">chevron_left</i></button>
@@ -90,6 +90,6 @@
     <button class="waves-effect btn info" (click)="start()">comenzar!<i class="medium material-icons left">thumb_up</i></button>
   </div>
   <div class="row payment" *ngIf="lostService.openPayment">
-    <form-payment [fromLostPage]="true"></form-payment>
+    <form-payment [fromLostPage]="true" [loadingImg]="lostService.loadingSave"></form-payment>
   </div> 
 </section>

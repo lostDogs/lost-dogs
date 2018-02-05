@@ -86,17 +86,10 @@ export class lostComponent {
     this.lostService.parentPage = this.router.url.split('/')[1];
     this.fullWidth = this.progressDom.nativeElement.clientWidth;
     // sequence could change according to the action Lost/ Found.
-    const lost: boolean = this.lostService.parentPage === 'lost';
-    this.lostService.searchService.addQuery('lost', !lost);
+    this.lostService.sequence = this.lostService.defualtSequence;
+    this.lostService.displayedSequence = this.lostService.defaultDisplayedSequence;
+    this.lostService.searchService.addQuery('lost', this.lostService.parentPage !== 'lost');
     this.lostService.searchService.addQuery('pageSize', this.lostService.searchService._pageSize);
-    if (lost) {
-      this.lostService.sequence = this.lostService.defualtSequence;
-      this.lostService.displayedSequence = this.lostService.defaultDisplayedSequence;
-    } else if(!lost) {
-      this.lostService.sequence = this.lostService.defualtSequence;
-      this.lostService.displayedSequence = this.lostService.defaultDisplayedSequence;
-    }
-
     this.lostService.displayedSequence.forEach((value: any, index: number) => {
       this.lostService.pageAnswers.push(undefined);
     });

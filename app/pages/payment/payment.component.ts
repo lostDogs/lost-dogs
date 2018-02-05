@@ -14,6 +14,7 @@ require('../../common/plugins/masks.js');
 
 export class PaymentComponent {
   public title: string;
+
   constructor(public globalService: GlobalFunctionService, public router: Router, public userService: UserService, public cookieService: CookieManagerService) {
     this.router.events.subscribe(data => {
       if (data instanceof NavigationEnd && data.url.length) {

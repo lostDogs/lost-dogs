@@ -73,7 +73,7 @@
         </div>
         <!-- card on mobile ends -->
         <div class="col push-l3 submit mobile-centered">
-          <button type="submit" class="waves-effect btn action" [disabled]="loading">
+          <button type="submit" class="waves-effect btn action" [disabled]="loading || loadingImg">
             <div [hidden]="loading">aceptar<i class="medium material-icons right">send</i></div>
             <div [hidden]="!loading">cargando ...</div>
           </button>

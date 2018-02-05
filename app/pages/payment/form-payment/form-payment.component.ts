@@ -42,6 +42,8 @@ export class FormPaymentComponent {
   public chargeCreate: boolean;
   @Input()
   public fromLostPage: boolean;
+  @Input()
+  public loadingImg: boolean;
 
   constructor (
     public userService: UserService,
@@ -220,7 +222,6 @@ export class FormPaymentComponent {
           this.lostService.saveToApi(chargeObj).add(() => {
             if (this.lostService.savedData) {
               this.loading = false;
-              this.lostService.openPayment = false;
             }
           });
         }        
