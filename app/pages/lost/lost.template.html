@@ -8,7 +8,7 @@
           <!-- <label for="question">{{inputField.label}}</label> -->
     </div>
     <button class="btn waves-effect info" id="date-input" (click)="setDate()" *ngIf="(lostService.inputField && lostService.inputField.type==='date')"><i class="material-icons">send</i></button>
-    <form #addressSearch="ngForm" (ngSubmit)="lostService.locationAdressInput=lostService.address" [hidden]="!(lostService.inputField && lostService.inputField.type==='address')">
+    <form #addressSearch="ngForm" (ngSubmit)="lostService.locationAdressInput=lostService.address;lostService.matchService.rangeRadius=0.5;" [hidden]="!(lostService.inputField && lostService.inputField.type==='address')">
       <div class="input-field col l3  s10 push-s1 push-l3">
             <input type="text" name="addresss" id="address" [(ngModel)]="lostService.address" (focus)="onFocusAddres()">
             <!-- <label for="question">{{inputField.label}}</label> -->
