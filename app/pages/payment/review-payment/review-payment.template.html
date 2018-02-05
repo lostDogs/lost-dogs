@@ -5,46 +5,72 @@
       <h5 class="subtitle" [hidden]="lost|| transcationId">Revisa el perro que encontraste </h5>
       <dog-card  #DogCard [atReviewPage]="true"  [data]="dogData" [maxCards]="1" [cardIndex]="0"></dog-card>
     </div>
-    <div class="col push-l2 l4 m12 s12 steps-block" [hidden]="!((lost && !rewardSetted ) || (transcationId && !rewardSetted))">
-      <h5 class="subtitle" [hidden]="!lost">Agrega una recompensa</h5>
-      <h6 class="subtitle subheader" [hidden]="!lost"> ...para agradecer a la persona que lo encontró y lo cuido</h6>
-      <h5 class="subtitle" [hidden]="lost">Tu recompensa es menor al valor estimado.</h5>
-      <h6 class="subtitle subheader" [hidden]="lost">tu recompensa es <span>{{fixedReward}}</span> pero puedes cambiarla</h6>
-      <div class="steps money-reward action draw account-completed" (mouseover)="foucusMoney()" (mouseleave)="clearInput()">
-        <h2>$</h2>
-        <input id="money-input" type="text" name="recompensa"  [(ngModel)]="reward" size="10">
-        <h2 class="currency">MXN</h2>
-        <h6 class="under" [ngStyle]="{'opacity': reward !== EstimReward ? 0 : 1}">* valor estimada para mantener un perro {{dogSize}} por {{totalDays}} dias</h6>
+    <div class="col push-l1 l5 m12 s12 steps-block" [hidden]="transcationId || evidenceNext">
+      <h5  class="subtitle" [hidden]="lost">Agrega una evidencia de que tienes el perro. </h5>
+      <h5  class="subtitle"  [hidden]="!lost">Agrega una evidencia de que es tu perro.</h5>
+      <div class="row steps">
+        <div class="alt-black col l5 m5 s5 push-l1 push-m1 push-s1">
+          <h6 class="subtitle subheader">puede ser escrita </h6>
+          <textarea type="text" name="refund reason" class="materialize-textarea" id="evidence-text" (keyup)="resize()"></textarea>
+        </div>
+        <div class="file-field col l5 m5 s5 push-l1 push-m1 push-s1">
+          <h6 class="subtitle subheader">o un imagen</h6>
+          <div class="img-back">
+            <div alt="image de evidencia" class="centered size" id="evidence-pic" [ngStyle]="{'background-image': 'url(' + mailingService.evidence.picture + ')' }">
+              <div  class="description" [ngStyle]="{'opacity': mailingService.evidence.picture ? 0 : 1}" [ngClass]="{'wrong-icon': errorImg}">
+                <i class="large material-icons">camera_alt</i>
+              </div>
+            </div>
+            <input type="file"  name="image del perro" (change)="filePicChange($event)" >
+          </div>          
+        </div>
       </div>
       <div class="centered submit">
-        <button class="waves-effect btn warning" [disabled]="!dogData" *ngIf="transcationId && !rewardSetted" (click)="setReward()" (mouseover)="tempReward=reward;reward=fixedReward" (mouseleave)="reward=tempReward">Conservar<i class="medium material-icons right">chevron_right</i></button>
-        <button class="waves-effect btn info" [disabled]="!dogData" *ngIf="transcationId && !rewardSetted" (click)="setReward()" (mouseover)="changeReward()">Cambiar<i class="medium material-icons right">chevron_right</i></button>
-        <button class="waves-effect btn info" [disabled]="!dogData" *ngIf="!(transcationId && !rewardSetted)" (click)="setReward()">Seguir<i class="medium material-icons right">chevron_right</i></button>
-      </div>
+        <button class="waves-effect btn action" [disabled]="!mailingService.evidence.text && !mailingService.evidence.picture" (click)="evidenceNext = true ">aceptar<i class="medium material-icons right">thumb_up</i></button>
+      </div>      
     </div>
-    <div class="col push-l2 l4 m12 s12 steps-block" [hidden]="!rewardSetted">
-      <h5 class="subtitle">Que sigue?</h5>
-      <div class="steps">
-        <h6><b>1.</b> Primero te haremos el cargo  de la recompensa. No te preocupes, si no es tu perro, <b>te regresamos tu dinero.</b></h6>
-        <h6><b>2.</b> Te mandaremos el contacto de quien lo econtró para que te pongas de acuerdo donde y a que horas verse.</h6>
-        <h6><b>3.</b> Una vez que recibas el perro asegurate de pasarle el <b>codigo QR</b> que se te envó por correo al rescatista para que puda recoletar su recompensa.</h6>
+    <span [hidden]="!(transcationId || evidenceNext)">
+      <div class="col push-l2 l4 m12 s12 steps-block" [hidden]="!((lost && !rewardSetted ) || (transcationId && !rewardSetted)) ">
+        <h5 class="subtitle" [hidden]="!lost">Agrega una recompensa</h5>
+        <h6 class="subtitle subheader" [hidden]="!lost"> ...para agradecer a la persona que lo encontró y lo cuido</h6>
+        <h5 class="subtitle" [hidden]="lost">Tu recompensa es menor al valor estimado.</h5>
+        <h6 class="subtitle subheader" [hidden]="lost">tu recompensa es <span>{{fixedReward}}</span> pero puedes cambiarla</h6>
+        <div class="steps money-reward action draw account-completed" (mouseover)="foucusMoney()" (mouseleave)="clearInput()">
+          <h2>$</h2>
+          <input id="money-input" type="text" name="recompensa"  [(ngModel)]="reward" size="10">
+          <h2 class="currency">MXN</h2>
+          <h6 class="under" [ngStyle]="{'opacity': reward !== EstimReward ? 0 : 1}">* valor estimada para mantener un perro {{dogSize}} por {{totalDays}} dias</h6>
+        </div>
+        <div class="centered submit">
+          <button class="waves-effect btn warning" [disabled]="!dogData" *ngIf="transcationId && !rewardSetted" (click)="setReward()" (mouseover)="tempReward=reward;reward=fixedReward" (mouseleave)="reward=tempReward">Conservar<i class="medium material-icons right">chevron_right</i></button>
+          <button class="waves-effect btn info" [disabled]="!dogData" *ngIf="transcationId && !rewardSetted" (click)="setReward()" (mouseover)="changeReward()">Cambiar<i class="medium material-icons right">chevron_right</i></button>
+          <button class="waves-effect btn info" [disabled]="!dogData" *ngIf="!(transcationId && !rewardSetted)" (click)="setReward()">Seguir<i class="medium material-icons right">chevron_right</i></button>
+        </div>
       </div>
+      <div class="col push-l2 l4 m12 s12 steps-block" [hidden]="!rewardSetted">
+        <h5 class="subtitle">Que sigue?</h5>
+        <div class="steps">
+          <h6><b>1.</b> Primero te haremos el cargo  de la recompensa. No te preocupes, si no es tu perro, <b>te regresamos tu dinero.</b></h6>
+          <h6><b>2.</b> Te mandaremos el contacto de quien lo econtró para que te pongas de acuerdo donde y a que horas verse.</h6>
+          <h6><b>3.</b> Una vez que recibas el perro asegurate de pasarle el <b>codigo QR</b> que se te envó por correo al rescatista para que puda recoletar su recompensa.</h6>
+        </div>
+        <div class="centered submit">
+          <button class="waves-effect btn action" [disabled]="!dogData" (click)="next()">aceptar<i class="medium material-icons right">thumb_up</i></button>
+        </div>      
+      </div>    
+      <div class="col push-l2 l4 m12 s12 steps-block" [hidden]="lost || transcationId">
+        <h5 class="subtitle">Pasos</h5>
+        <div class="steps" >
+          <h6><b>1.</b> Le mandaremos tu datos al dueño, si es su perro, El se podra en contanto contigo.</h6>
+          <h6><b>2.</b> Agenda una hora y lugar donde entregaras el perro.</h6>
+          <h6><b>3.</b> Una vez de lo entregues, recuerda escanear el codigo QR se le envió al dueño.</h6>
+          <h6><b>4.</b> Subelo en la liga que te llegará por correo, para recibir tu recompensa.</h6>
+        </div>      
       <div class="centered submit">
         <button class="waves-effect btn action" [disabled]="!dogData" (click)="next()">aceptar<i class="medium material-icons right">thumb_up</i></button>
-      </div>      
-    </div>    
-    <div class="col push-l2 l4 m12 s12 steps-block" [hidden]="lost || transcationId">
-      <h5 class="subtitle">Pasos</h5>
-      <div class="steps" >
-        <h6><b>1.</b> Le mandaremos tu datos al dueño, si es su perro, El se podra en contanto contigo.</h6>
-        <h6><b>2.</b> Agenda una hora y lugar donde entregaras el perro.</h6>
-        <h6><b>3.</b> Una vez de lo entregues, recuerda escanear el codigo QR se le envió al dueño.</h6>
-        <h6><b>4.</b> Subelo en la liga que te llegará por correo, para recibir tu recompensa.</h6>
-      </div>      
-    <div class="centered submit">
-      <button class="waves-effect btn action" [disabled]="!dogData" (click)="next()">aceptar<i class="medium material-icons right">thumb_up</i></button>
-    </div>
-    </div>    
+      </div>
+      </div> 
+    </span>
   </div>
     <div class="row" [hidden]="!ShowSendEmail">
     <div class="col l10 push-l1 m12 s12 todo"> <i class="medium material-icons">email</i></div>

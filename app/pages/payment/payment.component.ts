@@ -20,7 +20,7 @@ export class PaymentComponent {
         const urlLoction = data.url && data.url.split('/')[2];
         const urlChildLoction = urlLoction && urlLoction.split('?')[0];
         if (urlChildLoction === 'review') {
-          this.title = 'Revisa los datos';
+          this.title = 'Sigue las instrucciones';
         }else if (urlChildLoction === 'form') {
           this.title = 'Agrega tu tarjeta';
         }

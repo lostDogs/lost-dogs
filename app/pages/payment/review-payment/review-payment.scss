@@ -1,5 +1,15 @@
 @import '../../../common/styles/variables.scss';
 review-payment {
+  .img-back {
+    .size {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    }
+  }
+  .wrong-icon {
+    color: $redAccent;
+  }
   dog-card {
     width: 100%;
     article.expanded {
