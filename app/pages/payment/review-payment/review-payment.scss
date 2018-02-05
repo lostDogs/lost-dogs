@@ -1,6 +1,9 @@
 @import '../../../common/styles/variables.scss';
 review-payment {
   .img-back {
+    i.material-icons.enormous {
+      font-size: 15rem;
+    }
     .size {
     background-size: contain;
     background-repeat: no-repeat;

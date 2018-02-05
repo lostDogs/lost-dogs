@@ -138,3 +138,10 @@ ul.autocomplete-content.dropdown-content {
     }
   }
 }
+
+textarea.materialize-textarea {
+  @media screen and (max-device-width: $screen-mobile-max) {
+    font-size: 2rem;
+    height: 150px;
+  }
+}
