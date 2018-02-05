@@ -163,8 +163,6 @@ public splicedAnswer: boolean;
     this.elements[indexed].disabled = disabled.length < this.maxElments ? !this.elements[indexed].disabled : false;
     
     if (!this.multiple) {  
-      console.log('indexed', indexed)
-      console.log('this.previousSelected', this.previousSelected);
         if (indexed !== this.previousSelected || !this.init) {
           this.selectedEmitter.emit(this.elements[indexed]);
         }
@@ -173,7 +171,7 @@ public splicedAnswer: boolean;
       //this.multipleElements = this.removedElement && this.removedElement.length ? this.removedElement : this.multipleElements;
       // search for uniqueness
       let some: boolean = this.multipleElements.some((el: Ielement, index: number) => {
-        if (el.name === this.elements[indexed].name) {
+        if (el.name.replace(/: ([^\s]+)/g,'') === this.elements[indexed].name.replace(/: ([^\s]+)/g,'')) {
           removeIndex = index;
           return true;
         }
@@ -235,6 +233,7 @@ public splicedAnswer: boolean;
       if (Array.isArray(elements)) {
         const disabled: any[] = elements.filter((value: any, index: number) => {return value.disabled});
         const notDisabled: any[] = elements.filter((value: any, index: number) => {return !value.disabled});
+        const retrieveIndex: number = elements.indexOf('retrieve');
         if (!changes.removedElement.isFirstChange() && (notDisabled.length || this.splicedAnswer) && elements[elements.length - 1] !== 'retrieve') {  
           // setting
           this.elements.forEach((value: Ielement, index: number) => {
@@ -245,7 +244,7 @@ public splicedAnswer: boolean;
           });
           this.multipleElements = elements;
         } else if(disabled.length && elements[elements.length - 1] === 'retrieve') {
-         elements.splice(elements.length - 1, 1);
+         elements.splice(retrieveIndex, 1);
          this.retrieveMultiple();
         } else if (this.colors && changes.removedElement.isFirstChange()) {
            this.initDog();
@@ -254,6 +253,7 @@ public splicedAnswer: boolean;
           this.elements[elements.orginalIndex].disabled = elements.disabled;
           this.previousSelected = elements.orginalIndex;
       }
+
     }else if (changes.removedElement && !changes.removedElement.currentValue && changes.removedElement.previousValue) {
       const prevElment: Ielement = changes.removedElement.previousValue;
       if(prevElment.key && !Array.isArray(prevElment)) {
@@ -279,6 +279,7 @@ public splicedAnswer: boolean;
         }        
       });
       this.multipleElements = this.removedElement;
+      this.selectedEmitter.emit(this.multipleElements);
     }
   }
 

@@ -45,14 +45,13 @@ export class lostComponent {
         if (urlChildLoction === 'location') {
           console.log('starting map');
           if (this.startMap && !this.lostService.searchService.timer && !this.lostService.pageAnswers[this.lostService.pagePosition]) {
-            console.log('setting answwer in map in route subscription');
             this.lostService.searchService.callByTimer(this.lostService.setAnwer, this.lostService);
           }
           this.startMap = true;
         }else if (urlChildLoction === 'breed') {
           this.lostService.btnBreedSearchDom = this.buttonBreedSearch;
         }
-        if (urlChildLoction !== 'review') {
+        if (urlChildLoction !== 'review'  && urlChildLoction !== 'terms') {
           localStorage.clear();
         }
         if (this.lostService.retrieveData) {
@@ -87,17 +86,10 @@ export class lostComponent {
     this.lostService.parentPage = this.router.url.split('/')[1];
     this.fullWidth = this.progressDom.nativeElement.clientWidth;
     // sequence could change according to the action Lost/ Found.
-    const lost: boolean = this.lostService.parentPage === 'lost';
-    this.lostService.searchService.addQuery('lost', !lost);
+    this.lostService.sequence = this.lostService.defualtSequence;
+    this.lostService.displayedSequence = this.lostService.defaultDisplayedSequence;
+    this.lostService.searchService.addQuery('lost', this.lostService.parentPage !== 'lost');
     this.lostService.searchService.addQuery('pageSize', this.lostService.searchService._pageSize);
-    if (lost) {
-      this.lostService.sequence = this.lostService.defualtSequence;
-      this.lostService.displayedSequence = this.lostService.defaultDisplayedSequence;
-    } else if(!lost) {
-      this.lostService.sequence = this.lostService.defualtSequence;
-      this.lostService.displayedSequence = this.lostService.defaultDisplayedSequence;
-    }
-
     this.lostService.displayedSequence.forEach((value: any, index: number) => {
       this.lostService.pageAnswers.push(undefined);
     });
@@ -179,13 +171,13 @@ export class lostComponent {
       }
       if (dateInput >= new Date()) {
        this.globalService.clearErroMessages();
-       this.globalService.setErrorMEssage('la fecha es mayor q la presente');
+       this.globalService.setErrorMEssage('la fecha es mayor que la presente');
        this.globalService.openErrorModal();
        return;
       }
       if (dateInput <= minDate) {
        this.globalService.clearErroMessages();
-       this.globalService.setErrorMEssage('la fecha es menor q Viernes 31 de Dic del 2010');
+       this.globalService.setErrorMEssage('la fecha es menor que Viernes 31 de Dic del 2010');
        this.globalService.openErrorModal();
        return;
       }

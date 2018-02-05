@@ -8,7 +8,7 @@
           <!-- <label for="question">{{inputField.label}}</label> -->
     </div>
     <button class="btn waves-effect info" id="date-input" (click)="setDate()" *ngIf="(lostService.inputField && lostService.inputField.type==='date')"><i class="material-icons">send</i></button>
-    <form #addressSearch="ngForm" (ngSubmit)="lostService.locationAdressInput=lostService.address" [hidden]="!(lostService.inputField && lostService.inputField.type==='address')">
+    <form #addressSearch="ngForm" (ngSubmit)="lostService.locationAdressInput=lostService.address;lostService.matchService.rangeRadius=0.5;" [hidden]="!(lostService.inputField && lostService.inputField.type==='address')">
       <div class="input-field col l3  s10 push-s1 push-l3">
             <input type="text" name="addresss" id="address" [(ngModel)]="lostService.address" (focus)="onFocusAddres()">
             <!-- <label for="question">{{inputField.label}}</label> -->
@@ -45,7 +45,7 @@
   <div class="component-container" [ngClass]="{'blur-filter': dogCardService.open}">
     <router-outlet></router-outlet>
     <div class="map-block" [ngStyle]="{'width': mapWidth + 'px'}" *ngIf="lostService && lostService.matchService && startMap" [ngClass]="{'hidden': lostService.defualtSequence[lostService.pagePosition]!=='location'}">
-      <map (locationAdressEmiter)="lostService.address=$event;changeMapElement($event)" (locationEmiter)="lostService.latLng=$event;" [locationAdress]="lostService.locationAdressInput" [location]="lostService.latLong" [rangeRadius]="lostService.matchService.rangeRadius"></map>
+      <map (locationAdressEmiter)="lostService.address=$event;changeMapElement($event);" (locationEmiter)="lostService.latLng=$event;changeMapElement($event);" [locationAdress]="lostService.locationAdressInput" [location]="lostService.latLong" [rangeRadius]="lostService.matchService.rangeRadius"></map>
     </div>
     <div class="buttons row" *ngIf="lostService.pagePosition !== lostService.sequence.length - 1">
       <button class="waves-effect btn warning" (click)="lostService.back()" [disabled]="lostService.searchService.timer || lostService.searchService.loading" [ngClass]="{'disappear': lostService.pagePosition === 0 || lostService.inReviewPage}">Atras <i class="material-icons left">chevron_left</i></button>
@@ -85,11 +85,11 @@
     <div class="found col l12 s12 m12" [hidden]="!(lostService.parentPage==='found')">
       <h3>Muchas gracias por ayudar a que encuentre a su dueno <i class="medium material-icons">sentiment_very_satisfied</i></h3>
       <h5>sólo responde las siguentes {{lostService.displayedSequence.length}} preguntas</h5>
-      <h6>Recuerda que para obtener la recomepenza necesitas una cuenta de nómina y Clabe interbancaria</h6>
+      <h6>Recuerda que para obtener la recompensa necesitas una cuenta de nómina y Clabe interbancaria</h6>
     </div>
     <button class="waves-effect btn info" (click)="start()">comenzar!<i class="medium material-icons left">thumb_up</i></button>
   </div>
   <div class="row payment" *ngIf="lostService.openPayment">
-    <form-payment [fromLostPage]="true"></form-payment>
+    <form-payment [fromLostPage]="true" [loadingImg]="lostService.loadingSave"></form-payment>
   </div> 
 </section>

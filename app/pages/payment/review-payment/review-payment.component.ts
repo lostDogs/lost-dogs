@@ -29,6 +29,8 @@ export class ReviewPaymentComponent {
   public dogSize: string = '';
   public totalDays: number;
   public fixedReward: string;
+  public errorImg: boolean;
+  public evidenceText: JQuery;
 
   constructor (
     public userService: UserService,
@@ -80,8 +82,7 @@ export class ReviewPaymentComponent {
   public ngAfterViewInit(): void {
     $('.tooltipped').tooltip({delay: 50});
     $('#money-input').mask('000,000.00', {reverse: true});
-
-
+    this.evidenceText = $('#evidence-text');
   }
 
   public next(): void {
@@ -131,4 +132,30 @@ export class ReviewPaymentComponent {
       this.reward = this.calcEstimatedReward(this.dogData);
     }
   }
+  public filePicChange(ev: any): void {
+    let file: File = ev.target.files[0];
+    console.log('ev', ev);
+     if (ev.target && ev.target.files && file && file.type.match('image.*')) {
+        try {
+          const reader = new FileReader();
+          reader.onload = (event: any) => {
+            this.mailingService.evidence.picture = event.target.result;
+            this.errorImg = undefined;
+          };
+          reader.readAsDataURL(file);
+        }catch (error) {
+          // do nothing
+        }
+      } else {
+        this.errorImg = true;
+        console.error('not an image');
+      }    
+  }
+
+  public resize(): void {
+    this.evidenceText.trigger('autoresize');
+    this.mailingService.evidence.text = this.evidenceText.val();
+}
+
+
 };

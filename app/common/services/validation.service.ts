@@ -23,7 +23,7 @@ export class ValidationService {
   public phone(field: string): boolean {
     const phoneRegex: RegExp = /^[0-9-\.\+\(\)]+$/i;
     if (!phoneRegex.test(field)) {
-      this.errors.phone = 'únicamente numeros';
+      this.errors.phone = 'únicamente números';
       return false;
     }
     return true;

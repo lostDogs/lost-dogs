@@ -15,7 +15,7 @@
           <textarea type="text" name="refund reason" class="materialize-textarea" id="refund-reason" (keyup)="resize()"></textarea>
         </div>
       </div>
-        <button class="btn waves-effect action" (click)="refundme()" [disabled]="openPay.refundData || !reasonVal">Aceptar<i class="material-icons right">send</i></button>
+        <button class="btn waves-effect action" (click)="refundme()" [disabled]="openPay.refundData || !reasonVal || !rewardService.transaction.amount">Aceptar<i class="material-icons right">send</i></button>
     </div>
     <div class="refund-block row sucess" [hidden]="!openPay.refundData" #RefundSucess>
       <i class="material-icons medium">done_all</i>

@@ -42,6 +42,8 @@ export class FormPaymentComponent {
   public chargeCreate: boolean;
   @Input()
   public fromLostPage: boolean;
+  @Input()
+  public loadingImg: boolean;
 
   constructor (
     public userService: UserService,
@@ -55,13 +57,13 @@ export class FormPaymentComponent {
     public lostService: LostFoundService
   ) {
     this.creaditCard = {
-      method: {valid: true, value: undefined, required: false, label: 'Metodo de pago'},
-      number: {valid: true, value: undefined, required: true, label: 'Numero de tarjeta'},
-      ownerName: {valid: true, value: undefined, required: true, label: 'Nombre del dueno'},
+      method: {valid: true, value: undefined, required: false, label: 'Método de pago'},
+      number: {valid: true, value: undefined, required: true, label: 'Número de tarjeta'},
+      ownerName: {valid: true, value: undefined, required: true, label: 'Nombre del dueño'},
       expMonth: {valid: true, value: undefined, required: true, label: 'Mes'},
-      expYear: {valid: true, value: undefined, required: true, label: 'Anio'},
+      expYear: {valid: true, value: undefined, required: true, label: 'Año'},
       ccv: {valid: true, value: undefined, required: true, label: 'Ccv'},
-      type: {valid: true, value: undefined, required: false, label: 'typo de tarjeta'}
+      type: {valid: true, value: undefined, required: false, label: 'tipo de tarjeta'}
     };
     this.extra = {
       terms: {valid: true, value: undefined, required: true , label: 'Terminos & condiciones'},
@@ -77,10 +79,10 @@ export class FormPaymentComponent {
     for (let i = todaysYear; i <= todaysYear + 10; i++) {
       this.years.push('' + i);
     }
-    this.openSpayService.loadOpenPayScript();
   }
 
   public ngOnInit(): void {
+    this.openSpayService.initOpenPay();
     if (!this.fromLostPage) {
       this.lostService.resetService();
     }
@@ -89,8 +91,7 @@ export class FormPaymentComponent {
     }
     const monthSelect: JQuery = $('#cc-month');
     const yearSelect: JQuery = $('#cc-year');
-    const un_0: number = 3;
-    const un_1: number = 2;
+    const chargeCreateAmount: number = 65;
     monthSelect.change(() => {
       this.creaditCard.expMonth.value = monthSelect.val();
       this.creaditCard.expMonth.valid = true;
@@ -104,9 +105,11 @@ export class FormPaymentComponent {
       this.transcationId = params.transcation;
       this.lostParam = params.Lt;
       const value: string = this.lostService.defualtSequence[this.lostService.defualtSequence.length - 1];
-      console.log('value to search', value);
       this.chargeCreate = !!~this.router.url.indexOf(value);
       this.rewardAmount = params.rW || (this.dogService.dogData && this.dogService.dogData.reward);
+      if (this.rewardAmount && this.dogService.dogData && +this.rewardAmount.replace(',','') < 10) {
+        this.noChargeProcced();
+      }
       if (!this.dogService.dogData && this.dogId) {
         this.dogService.getDog(this.dogId).add(() => {
           this.setReward(params.rW);
@@ -118,8 +121,7 @@ export class FormPaymentComponent {
         });
       });
     }else if (this.chargeCreate) {
-      const unit: number = un_0 + un_1;
-      this.rewardAmount = ((unit + 1)* unit * 2 + unit).toFixed(2) + '';
+      this.rewardAmount = chargeCreateAmount.toFixed(2);
     }
     });
   }
@@ -136,20 +138,40 @@ export class FormPaymentComponent {
   public setReward(param: string): void  {
     this.rewardAmount =  !param ? this.dogService.dogData.reward : param;
     this.rewardAmount =  this.rewardAmount || '00.00';
+    if (+this.rewardAmount.replace(',','') < 10) {
+      this.noChargeProcced();
+    }
   }
 
-  public pay(event: Event): void {
-    event.preventDefault();
+  public pay(event?: Event): void {
+    if (event) {
+      event.preventDefault();
+    }
     this.creaditCard.type.value = this.validate.cardType;
     this.globalService.clearErroMessages();
     const card: boolean = this.validation(this.creaditCard);
     const extras: boolean = this.validation(this.extra);
-    const openPayValidation: any = this.openSpayService.validateCardNum(this.creaditCard.number.value) && this.openSpayService.validateCvc(this.creaditCard.number.value, this.creaditCard.ccv.value);
-    if (card && extras && openPayValidation) {
+    const validateCardNum: any = this.openSpayService.validateCardNum(this.creaditCard.number.value);
+    const validateCvc: any = this.openSpayService.validateCvc(this.creaditCard.number.value, this.creaditCard.ccv.value);
+    const validateExpiry: any = this.openSpayService.validateExpiry(this.creaditCard.expMonth.value, '20' + this.creaditCard.expYear.value);
+    if (card && extras && validateCardNum && validateExpiry && validateCvc) {
       this.cardSpin = true;
       this.loading = true;
       this.proccedTransaction();
     } else  {
+      if (!validateExpiry) {
+        this.creaditCard.expYear.valid = false;
+        this.creaditCard.expMonth.valid = false;
+        this.globalService.setErrorMEssage('Fecha invalida');
+      }
+      if (!validateCardNum) {
+        this.creaditCard.number.valid = false;
+        this.globalService.setErrorMEssage('Número de tarjeta invalido');
+      }
+      if (!validateCvc) {
+        this.creaditCard.ccv.valid = false;
+        this.globalService.setErrorMEssage('CCV invalido');
+      }
       this.globalService.openErrorModal();
     }
   }
@@ -176,10 +198,9 @@ export class FormPaymentComponent {
     const tokenData: any = this.openSpayService.mapTokenData(this.creaditCard);
     this.openSpayService.createToken(tokenData).then(() => {
       if (this.openSpayService.tokenId) {
-        const transDesc: string = this.chargeCreate ? 'pago por reportar perro' : 'pago de recompenza de ' + this.userService.user.name + ' para el perro >' + this.dogService.dogData._id;
+        const transDesc: string = this.chargeCreate ? 'pago para reportar perro' : 'pago de recompensa de ' + this.userService.user.name + ' para el perro >' + this.dogService.dogData._id;
         const chargeObj: any = this.openSpayService.mapChargeRequest(this.rewardAmount, this.userService.user,transDesc);
         if (this.transcationId) {
-          console.log('paying for lost with chargeClient');
           this.openSpayService.chargeClient(chargeObj, this.userService.token, this.transcationId).add(() => {
             if (this.openSpayService.sucessPaymentId) {
               this.loading = false;
@@ -189,7 +210,6 @@ export class FormPaymentComponent {
             }
           });
         } else if (this.dogId) {
-          console.log('paying for found with email service');
           this.mailingService.sendEmailsToUsers(false, this.userService.token, this.dogService.dogData._id, chargeObj).add(() => {
             if (!this.mailingService.errorInEmails) {
               this.loading = false;
@@ -199,16 +219,27 @@ export class FormPaymentComponent {
             }
           });
         } else if (this.chargeCreate) {
-          console.log('calling charge create ', this.chargeCreate);
           this.lostService.saveToApi(chargeObj).add(() => {
             if (this.lostService.savedData) {
               this.loading = false;
-              this.lostService.openPayment = false;
             }
           });
         }        
       }
     });
+  }
+
+  public noChargeProcced(): void {
+    const today: Date = new Date();
+    this.loading = true;
+    this.creaditCard.number.value = '4111-1111-1111-1111';
+    this.creaditCard.ownerName.value = 'Jhon Doe';
+    this.creaditCard.expMonth.value = (today.getMonth() + 1) + '';
+    this.creaditCard.expYear.value = ((today.getFullYear() + 2) + '').substring(2, 4);
+    this.creaditCard.ccv.value = '123';
+    this.extra.noPersonalData.value = true;
+    this.extra.terms.value = true;
+    this.pay();
   }
 
 };

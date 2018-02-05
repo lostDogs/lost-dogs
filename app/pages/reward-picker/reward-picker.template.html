@@ -1,6 +1,6 @@
 <div class="page">
   <div class="main-title row">
-    <h5>Obten tu recompeza!</h5>
+    <h5>Obten tu recompesa!</h5>
   </div>
   <div class="main-content row text-centered">
     <h5 class="instructions row"><b>Escanea</b> el codigo <b>o sube </b> la imagen </h5>
@@ -48,7 +48,7 @@
         </div>
       </div>
       <div class="row centered row-extraspace">
-        <button type="submit" class="waves-effect btn action col l2 s8" [disabled]="loading || (openPay.trasnferData && openPay.trasnferData.id)" (click)="rewardMe($event)">
+        <button type="submit" class="waves-effect btn action col l2 s8" [disabled]="loading || (openPay.trasnferData && openPay.trasnferData.id) || !rewardService.transaction.amount" (click)="rewardMe($event)">
           <div [hidden]="loading">Recompénsame<i class="medium material-icons right">monetization_on</i></div>
           <div [hidden]="!loading">cargando ...</div>
         </button>

@@ -9,9 +9,10 @@ export class MailingRewardService {
   public transaction: any;
   public invalidTransactionId: boolean;
   public errorInEmails: boolean;
+  public evidence: {picture?: string, text?: string};
 
   constructor(private api: ApiService, public router: Router, public globalService: GlobalFunctionService) {
-
+    this.evidence = {};
   }
 
   public sendEmailsToUsers(lost: boolean, userToken: string, dogId: string, paymentInfo?: any): Subscription {

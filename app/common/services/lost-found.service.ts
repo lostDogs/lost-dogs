@@ -72,11 +72,19 @@ export class LostFoundService {
   }
 
   public next(): void {
-    if (this.defualtSequence[this.pagePosition] === 'pattern' && this.patterNoColor) {
-      this.globalService.clearErroMessages();
-      this.globalService.setErrorMEssage('todos los patrones debe tener color');
-      this.globalService.openErrorModal();
-      return;
+    if (this.defualtSequence[this.pagePosition] === 'pattern') {
+      if (this.patterNoColor) {
+        this.globalService.clearErroMessages();
+        this.globalService.setErrorMEssage('todos los patrones debe tener color');
+        this.globalService.openErrorModal();
+        return;
+      }
+      if (this.multipleImgAnswers.length <= 1) {
+        this.globalService.clearErroMessages();
+        this.globalService.setErrorMEssage('selecciona más de uno');
+        this.globalService.openErrorModal();
+        return;
+      }
     }
     const nextIndex: number =  this.pagePosition === (this.sequence.length-1) ? this.pagePosition : this.pagePosition + 1;
     const nextPage: string = '/' + this.parentPage + '/' + this.sequence[nextIndex];
@@ -214,6 +222,7 @@ export class LostFoundService {
         data => {
           this.savedImgs = true;
           this.loadingSave = false;
+          this.openPayment = false;
           $('html, body').animate({ scrollTop: 0 }, 350);
           localStorage.removeItem('reported-dog-img-0');
           console.log('sucess', data);
@@ -221,6 +230,7 @@ export class LostFoundService {
         },
         e => {
           this.savedImgs = false;
+          this.openPayment = false;
           this.loadingSave = false;
          this.globalService.clearErroMessages();
          this.globalService.setErrorMEssage('No pudimos agregar las imagenes');
@@ -369,6 +379,7 @@ export class LostFoundService {
   }
 
   public getReviewFromLocalStorage(): void {
+    console.log('getting review from local storage >>');
     const pageAnswers = localStorage.getItem('temp-anwers');
     const reward = localStorage.getItem('temp-reward');
     const comments = localStorage.getItem('temp-comments');

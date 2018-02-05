@@ -89,8 +89,6 @@ export class DogCardComponent {
     // 0,1 => 0
     // 2,3 => 1
     // 4,5 => 2
-    // 6,7 => 3
-    // 8,9 => 4    
     const index: number = 2 * this.cardIndex;
     const thisCardDom: HTMLElement = $(queryString)[index];
     const cardDomMobile: HTMLElement = $(queryString)[index + 1];

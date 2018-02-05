@@ -45,7 +45,7 @@ export class generalHeaderComponent implements OnInit  {
       }
       if (this.openedFirstMessage && !this.openSecondMessage) {
         this.globalService.clearErroMessages();
-        this.globalService.setErrorMEssage('Esta pagina necesitará de tu ubicación & camara');
+        this.globalService.setErrorMEssage('Esta pagina puede que necesite de tu ubicación o camara');
         this.openSecondMessage = true;
         setTimeout(() => {
           this.globalService.openBlueModal();
@@ -60,7 +60,7 @@ export class generalHeaderComponent implements OnInit  {
 
     public openMessage() {
     this.globalService.clearErroMessages();
-    this.globalService.setErrorMEssage('Esta pagina necesta de cookie para funcionar');
+    this.globalService.setErrorMEssage('Esta pagina necesta de cookies para funcionar');
     this.globalService.openBlueModal();
     this.openedFirstMessage = true;
   }
@@ -106,6 +106,13 @@ export class generalHeaderComponent implements OnInit  {
     this.lostService.resetService();
     this.lostService.displayIntro = true;
     this.dogService.open = true;
+    this.lostService.parentPage = this.router.url.split('/')[1];
     this.lostService.searchService.queryObj = {};
+    this.lostService.searchService.addQuery('lost', this.lostService.parentPage !== 'lost');
+    this.lostService.searchService.addQuery('pageSize', this.lostService.searchService._pageSize);
+    this.lostService.displayedSequence && this.lostService.displayedSequence.length && this.lostService.displayedSequence.forEach((value: any, index: number) => {
+      this.lostService.pageAnswers.push(undefined);
+    });
+
   }
 };
