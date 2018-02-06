@@ -2,6 +2,7 @@ import {Component,ElementRef, ViewChild} from '@angular/core';
 import {LostFoundService} from '../../../common/services/lost-found.service';
 import {Router} from '@angular/router';
 import {DogCardService} from '../../../common/services/dog-card.service';
+import {SearchService} from '../../../common/services/search.service';
 
 @Component({
   selector: 'review',
@@ -19,7 +20,7 @@ export class ReviewComponent {
 
   public paymentDesc: string;
 
-  constructor(public LostService: LostFoundService, public router: Router, public dogCardService: DogCardService) {
+  constructor(public LostService: LostFoundService, public router: Router, public dogCardService: DogCardService, public searchService: SearchService) {
     this.window = window;
     this.LostService.question2 = undefined;
     this.LostService.question3 = undefined;
@@ -64,14 +65,13 @@ export class ReviewComponent {
       }
     });
     this.setFinalToLocalStorage();
-    console.log('page position lost service', this.LostService.pagePosition);
-    console.log('sequence lost service', this.LostService.sequence);
   }
 
   public ngAfterViewInit(): void {
     const breed: string = this.getName('breed');
     this.paymentDesc = this.LostService.dogName ? 'Reportar a ' + this.LostService.dogName :   'Reportar un ' + breed;
     this.paymentDesc += '.... ';
+    this.parsePatternAndFill();
   }
 
   public toPaymentForm(): void {
@@ -111,6 +111,27 @@ export class ReviewComponent {
   public getName(valueName: string): string {
     const index: number = this.LostService.defualtSequence.indexOf(valueName);
     return ~index && this.pageAnswersCopy[index][0].names;
+  }
 
+  private parsePatternAndFill(): void {
+    const patIndex: number = this.LostService.defualtSequence.indexOf('pattern');
+    const patterns: any[] = ~patIndex && this.pageAnswersCopy[patIndex];
+    if (patterns && patterns[0] && patterns[0].names) {
+      const pattObj = this.searchService.patternConvertion({'pattern_id': patterns[0].names + ''});
+      this.colorFigure(Object.values(pattObj), Object.keys(pattObj));
+    }
+  }
+  
+  private colorFigure(colors: string[], patterns: string[]): void {
+    if (patterns.length) {
+      patterns.forEach((pat: string, patIndex: number) => {
+        colors[patIndex] && this.fillColor(colors[patIndex], pat);
+      });
+    }
+  }
+
+  private fillColor(color: string, pattern: string): void {
+    const query: string = '.review-page .circle dog-figure #' + pattern + ' g';
+    $(query).attr('style', 'fill:' + color);
   }
 }

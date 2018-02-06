@@ -250,7 +250,7 @@ export class SearchService {
     return undefined;
   }
 
-  public patternConvertion(dogData: IdogData): {[patternName: string]: string} {
+  public patternConvertion(dogData: any): {[patternName: string]: string} {
     if (dogData.pattern_id && dogData.pattern_id.length) {
       const patterns = dogData.pattern_id.split(',');
       let patConverted: any = {};
