@@ -25,6 +25,7 @@ export class DogCardComponent {
   @Input()
   public deleteBtn: boolean;
   public rewardtoShow: string;
+  public dogPicture: string;
 
   constructor(public dogCardService: DogCardService, public renderer: Renderer, public elRef: ElementRef, public router: Router)  {
     this.mobile = window.screen.width <= 767;
@@ -109,7 +110,35 @@ export class DogCardComponent {
     this.dogCardService.deleteDog(this.data._id).add(() => {
       this.viewMore = false;
       this.dogCardService.setFoundDogs();
-      this.dogCardService.setLostDogs();      
+      this.dogCardService.setLostDogs();
     });
   }
+
+  public showEditImg(): boolean {
+    return this.deleteBtn && this.viewMore;
+  }
+
+
+  public filePicChange(ev: any): void {
+    let file: File = ev.target.files[0];
+    if (ev.target && ev.target.files && file && file.type.match('image.*')) {
+      try {
+        const reader = new FileReader();
+        reader.onload = (event: any) => {
+          this.dogCardService.editImg(this.data.images[0].uploadImageUrl, this.data._id, file).add(() => {
+            if (this.dogCardService.editImgSucess) {
+              this.dogPicture = event.target.result;
+              this.viewMore = false;
+            }
+          });
+        };
+        reader.readAsDataURL(file);
+      }catch (error) {
+        file = this.dogPicture = undefined;
+      }
+    } else {
+      file = this.dogPicture = undefined;
+      console.error('not an image');
+    }    
+  }  
 }
