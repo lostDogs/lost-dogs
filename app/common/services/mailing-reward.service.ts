@@ -10,9 +10,10 @@ export class MailingRewardService {
   public invalidTransactionId: boolean;
   public errorInEmails: boolean;
   public evidence: {picture?: string, text?: string};
+  public uploadImgSucess: boolean;
 
   constructor(private api: ApiService, public router: Router, public globalService: GlobalFunctionService) {
-    this.evidence = {};
+    this.evidence = {};   
   }
 
   public sendEmailsToUsers(lost: boolean, userToken: string, dogId: string, paymentInfo?: any): Subscription {
@@ -23,12 +24,15 @@ export class MailingRewardService {
     const lostFound: string = lost ? 'lost' : 'found';
     paymentInfo = paymentInfo || {};
     const url: string = this.api.API_PROD + 'dogs/' + dogId + '/' + lostFound;
-    return this.api.post(url , paymentInfo, headers).subscribe(
+    const evidenceObj = { 'fileType': localStorage.getItem('evidence-picture-0') && 'image/jpeg' , 'evidenceText': localStorage.getItem('evidence-text-0') };
+    return this.api.post(url , Object.assign(paymentInfo, evidenceObj), headers).subscribe(
       data => {
-        console.log('sucess', data);
         this.errorInEmails = false;
+        localStorage.removeItem('evidence-text-0');
+        this.uploadImgSucess = !localStorage.getItem('evidence-picture-0');
+        data['uploadEvidenceUrl'] && this.uploadToBucket(data['uploadEvidenceUrl']);
       }, error => {
-          this.errorInEmails = true;
+         this.errorInEmails = true;
          this.globalService.clearErroMessages();
          this.globalService.setErrorMEssage('Ops! hubo un error en la peticion');
          this.globalService.setSubErrorMessage('Intenta más tarde!');
@@ -55,6 +59,28 @@ export class MailingRewardService {
          this.globalService.openErrorModal();
          //this.router.navigateByUrl('/home');
     });
+  }
+
+  public uploadToBucket(url: string): void {
+    const img = localStorage.getItem('evidence-picture-0');
+   if (img) {
+     fetch(img)
+      .then(res => res.blob())
+      .then(blob => {
+        this.api.put(url, blob, {'Content-Type': 'image/jpeg', 'Content-encoding': 'base64'}).subscribe(
+          data => {
+            this.uploadImgSucess = true;
+            localStorage.removeItem('evidence-picture-0');
+          },
+          error => {
+            this.uploadImgSucess = false;
+            this.globalService.clearErroMessages();
+            this.globalService.setErrorMEssage('No pudimos agregar la imagen');
+            this.globalService.openErrorModal();
+          }
+        )
+      })    
+    }
   }
 }
 

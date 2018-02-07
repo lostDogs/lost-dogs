@@ -82,6 +82,8 @@ export class FormPaymentComponent {
   }
 
   public ngOnInit(): void {
+    this.mailingService.evidence.text = localStorage.getItem('evidence-text-0');
+    this.mailingService.evidence.picture = localStorage.getItem('evidence-picture-0');
     this.openSpayService.initOpenPay();
     if (!this.fromLostPage) {
       this.lostService.resetService();

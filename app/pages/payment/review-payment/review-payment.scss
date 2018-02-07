@@ -1,8 +1,10 @@
 @import '../../../common/styles/variables.scss';
 review-payment {
   .img-back {
-    i.material-icons.enormous {
-      font-size: 15rem;
+    i.material-icons.large {
+      @media screen and (max-device-width: $screen-mobile-max) {
+        font-size: 15rem;
+      }
     }
     .size {
     background-size: contain;
