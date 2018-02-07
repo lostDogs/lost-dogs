@@ -18,7 +18,7 @@
           <div class="img-back">
             <div alt="image de evidencia" class="centered size" id="evidence-pic" [ngStyle]="{'background-image': 'url(' + mailingService.evidence.picture + ')' }">
               <div  class="description" [ngStyle]="{'opacity': mailingService.evidence.picture ? 0 : 1}" [ngClass]="{'wrong-icon': errorImg}">
-                <i class="enormous material-icons">camera_alt</i>
+                <i class="large material-icons">camera_alt</i>
               </div>
             </div>
             <input type="file"  name="image del perro" (change)="filePicChange($event)" >
@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="centered submit">
-        <button class="waves-effect btn action" [disabled]="!mailingService.evidence.text && !mailingService.evidence.picture" (click)="evidenceNext = true ">aceptar<i class="medium material-icons right">thumb_up</i></button>
+        <button class="waves-effect btn action" [disabled]="!mailingService.evidence.text && !mailingService.evidence.picture" (click)="continueEvidence()">aceptar<i class="medium material-icons right">thumb_up</i></button>
       </div>      
     </div>
     <span [hidden]="!(transcationId || evidenceNext)">
@@ -77,6 +77,14 @@
     <div class="col l10 push-l1 m12 s12 todo">
       <h5>Te hemos enviado un correo con los datos del reporte.</h5>
       <h5>Pronto el dueño se pondra en contacto contigo.</h5>
+      <div [hidden]="!this.mailingService.evidence.picture">
+        <div [hidden]="mailingService.uploadImgSucess">
+          <img class="gif" src="http://cdn.lostdog.mx/assets/img/loading-grey.gif" alt="Cargando..">
+        </div>
+        <div [hidden]="!mailingService.uploadImgSucess">
+              <h6>La evindecia se agregado satisfactoriamente.</h6>
+        </div>        
+      </div>      
     </div>    
   </div>
 </div>

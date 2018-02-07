@@ -21,8 +21,10 @@ export class SideBlockDogComponent {
   public showArrows: boolean;
   @Input()
   public dogData: any[];
-@Input()
+  @Input()
   public totalResults: number;
+  @Input()
+  public prevTotal: number = 0;
   @ViewChild('ScollSection')
   public scrolling: ElementRef;
 

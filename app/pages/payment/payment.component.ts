@@ -16,8 +16,9 @@ export class PaymentComponent {
   public title: string;
 
   constructor(public globalService: GlobalFunctionService, public router: Router, public userService: UserService, public cookieService: CookieManagerService) {
-    this.router.events.subscribe(data => {
+    const subscription = this.router.events.subscribe(data => {
       if (data instanceof NavigationEnd && data.url.length) {
+         const urlLoc = data.url.split('/')[1];
         const urlLoction = data.url && data.url.split('/')[2];
         const urlChildLoction = urlLoction && urlLoction.split('?')[0];
         if (urlChildLoction === 'review') {
@@ -25,6 +26,11 @@ export class PaymentComponent {
         }else if (urlChildLoction === 'form') {
           this.title = 'Agrega tu tarjeta';
         }
+        if (urlLoc !== 'payment') {
+          localStorage.removeItem('evidence-picture-0');
+          localStorage.removeItem('evidence-text-0');
+          subscription.unsubscribe();
+        }        
       }
     });
   }

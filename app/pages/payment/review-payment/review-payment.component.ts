@@ -8,6 +8,7 @@ import {SearchService, IdogData} from '../../../common/services/search.service';
 import {MailingRewardService} from '../../../common/services/mailing-reward.service';
 import * as estimationsRew from '../../../common/content/rewards-per-day.mx.json';
 import * as dogSizes from '../../../common/content/sizes.json';
+const imgCompress = require('@xkeshi/image-compressor');
 
 @Component({
   selector: 'review-payment',
@@ -31,6 +32,7 @@ export class ReviewPaymentComponent {
   public fixedReward: string;
   public errorImg: boolean;
   public evidenceText: JQuery;
+  public evidenceNext: boolean;
 
   constructor (
     public userService: UserService,
@@ -53,10 +55,11 @@ export class ReviewPaymentComponent {
 
   public ngOnInit(): void {
     this.dogCardService.open = false;
+    this.mailingService.evidence.text = localStorage.getItem('evidence-text-0');
+    this.mailingService.evidence.picture = localStorage.getItem('evidence-picture-0');
     if (!this.userService.isAuth) {
       return;
     }
-    console.log('calling on Init');
     if (this.dogIndex && this.searchService.results && this.searchService.results[this.dogIndex] && this.searchService.results[this.dogIndex]._id === this.dogID) {
       this.dogData = this.dogCardService.dogData = this.searchService.results[this.dogIndex];
       this.reward = this.calcEstimatedReward(this.dogData);
@@ -134,22 +137,23 @@ export class ReviewPaymentComponent {
   }
   public filePicChange(ev: any): void {
     let file: File = ev.target.files[0];
-    console.log('ev', ev);
-     if (ev.target && ev.target.files && file && file.type.match('image.*')) {
-        try {
+    if (ev.target && ev.target.files && file && file.type.match('image.*')) {
+      try {
+        this.minifyImgFile(file).then(miniFile => {
           const reader = new FileReader();
           reader.onload = (event: any) => {
             this.mailingService.evidence.picture = event.target.result;
             this.errorImg = undefined;
           };
-          reader.readAsDataURL(file);
-        }catch (error) {
-          // do nothing
-        }
-      } else {
-        this.errorImg = true;
-        console.error('not an image');
-      }    
+          reader.readAsDataURL(miniFile);
+        });
+      }catch (error) {
+        // do nothing
+      }
+    } else {
+      this.errorImg = true;
+      console.error('not an image');
+    }    
   }
 
   public resize(): void {
@@ -157,5 +161,30 @@ export class ReviewPaymentComponent {
     this.mailingService.evidence.text = this.evidenceText.val();
 }
 
+  public continueEvidence(): void {
+    this.evidenceNext = true;
+    if (this.mailingService.evidence.text) {
+      localStorage.setItem('evidence-text-0', this.mailingService.evidence.text);
+    }
+    if (this.mailingService.evidence.picture) {
+      localStorage.setItem('evidence-picture-0', this.mailingService.evidence.picture);
+    }
+  }
+
+  public minifyImgFile(file: File): Promise<any> {
+    return new Promise((resolve: any, reject: any) => {
+      new imgCompress(file, {
+        quality: .6,
+        width: '150px',
+         success(result: any) {
+          console.log('reducing file zise', result);
+          resolve(result);
+         },
+          error(error: any) {
+            reject(error);
+          }
+      });
+    });
+  }
 
 };

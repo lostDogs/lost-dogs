@@ -4,7 +4,7 @@
   </div>
   <div class="scroll-section" (scroll)="onScroll($event)" #ScollSection>
     <div class="" id="rowSide" [ngStyle]="{'width': rowWidth}">
-      <dog-card *ngFor="let dog of dogData;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt" [data]="dog" [maxCards]="totalResults" [deleteBtn]="true"></dog-card>
+      <dog-card *ngFor="let dog of dogData;let i= index" (click)="userAt=i;" [cardIndex]="i+prevTotal" [userAt]="userAt" [data]="dog" [maxCards]="totalResults" [deleteBtn]="true"></dog-card>
     </div>
   </div>
   <div class="clickable right"[ngStyle]="{'height': scrolling.nativeElement.clientHeight + 'px'}" (click)="goRight()" [ngClass]="{'active': pressedRight, 'blur-filter': dogCard.open}" *ngIf="showArrows && scrolling.nativeElement.scrollLeft!==maxScrollLeft ">

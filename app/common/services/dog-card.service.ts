@@ -41,6 +41,7 @@ export class DogCardService {
   public foundDogs: IdogData[];
   public editData: any;
   public dogenpoint: string;
+  public editImgSucess: boolean;
 
   constructor(public api: ApiService, public userService: UserService, public globalService: GlobalFunctionService, private searchService: SearchService, public router: Router) {
     this.dogenpoint = this.api.API_PROD + 'dogs'
@@ -117,6 +118,24 @@ export class DogCardService {
        this.globalService.openErrorModal();
       }
     );
+  }
+
+  public editImg(uploadImageUrl: string, dogId: string, img: any): Subscription {
+    const headers: any = {
+       'Content-Type': 'image/jpeg',
+       'Content-encoding': 'base64'
+    };
+    return this.api.put(uploadImageUrl, img, headers).subscribe(
+      data => {
+        this.editImgSucess = true;
+      },
+      error => {
+        this.editImgSucess = false;
+       this.globalService.clearErroMessages();
+       this.globalService.setErrorMEssage('Ops! no se pudo modificar la imagen');
+       this.globalService.openErrorModal();
+    });
+
   }
 
   public setLostDogs(): void {

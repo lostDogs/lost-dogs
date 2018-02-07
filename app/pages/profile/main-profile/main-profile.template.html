@@ -38,7 +38,7 @@
   </div>
   <div class="row info my-founds" *ngIf="dogCardService.foundDogs && dogCardService.foundDogs.length">
     <div class="col l10 s12 offset-l1" [ngClass]="{'no-border': dogCardService.open}">
-      <side-block-dog [dogData]="dogCardService.foundDogs"  [totalResults]="searchService.totalResults"></side-block-dog>
+      <side-block-dog [dogData]="dogCardService.foundDogs"  [totalResults]="searchService.totalResults" [prevTotal]="dogCardService.lostDogs.length"></side-block-dog>
     </div>
   </div>
 </div>

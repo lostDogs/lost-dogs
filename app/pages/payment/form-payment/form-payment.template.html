@@ -117,6 +117,14 @@
     <div class="col l10 push-l1 m12 s12 todo">
       <h5>Te hemos enviado un correo con los datos de la personas que lo encontró.</h5>
       <h5>Ponte de acuerdo con él para agendar la hora y el lugar para recoger el perro.</h5>
+      <div [hidden]="!this.mailingService.evidence.picture">
+        <div [hidden]="mailingService.uploadImgSucess">
+          <img class="gif" src="http://cdn.lostdog.mx/assets/img/loading-grey.gif" alt="Cargando..">
+        </div>
+        <div [hidden]="!mailingService.uploadImgSucess">
+              <h6>La evindecia se agregado satisfactoriamente.</h6>
+        </div>        
+      </div>
     </div>    
   </div>
 </div>
