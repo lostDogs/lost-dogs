@@ -67,16 +67,24 @@
           <h6><b>4.</b> Subelo en la liga que te llegará por correo, para recibir tu recompensa.</h6>
         </div>      
       <div class="centered submit">
-        <button class="waves-effect btn action" [disabled]="!dogData || uploadImgSucess" (click)="next()">aceptar<i class="medium material-icons right">thumb_up</i></button>
+        <button class="waves-effect btn action" [disabled]="!dogData" (click)="next()">aceptar<i class="medium material-icons right">thumb_up</i></button>
       </div>
       </div> 
     </span>
   </div>
-    <div class="row" [hidden]="!ShowSendEmail && !uploadImgSucess">
+    <div class="row" [hidden]="!ShowSendEmail">
     <div class="col l10 push-l1 m12 s12 todo"> <i class="medium material-icons">email</i></div>
     <div class="col l10 push-l1 m12 s12 todo">
       <h5>Te hemos enviado un correo con los datos del reporte.</h5>
       <h5>Pronto el dueño se pondra en contacto contigo.</h5>
+      <div [hidden]="!this.mailingService.evidence.picture">
+        <div [hidden]="mailingService.uploadImgSucess">
+          <img class="gif" src="http://cdn.lostdog.mx/assets/img/loading-grey.gif" alt="Cargando..">
+        </div>
+        <div [hidden]="!mailingService.uploadImgSucess">
+              <h6>La evindecia se agregado satisfactoriamente.</h6>
+        </div>        
+      </div>      
     </div>    
   </div>
 </div>
