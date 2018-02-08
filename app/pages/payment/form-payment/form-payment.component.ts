@@ -108,7 +108,9 @@ export class FormPaymentComponent {
       this.lostParam = params.Lt;
       const value: string = this.lostService.defualtSequence[this.lostService.defualtSequence.length - 1];
       this.chargeCreate = !!~this.router.url.indexOf(value);
+
       this.rewardAmount = params.rW || (this.dogService.dogData && this.dogService.dogData.reward);
+       this.rewardAmount =  this.rewardAmount &&  this.rewardAmount + '';
       if (this.rewardAmount && this.dogService.dogData && +this.rewardAmount.replace(',','') < 10) {
         this.noChargeProcced();
       }

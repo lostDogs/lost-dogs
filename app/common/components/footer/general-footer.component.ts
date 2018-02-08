@@ -14,5 +14,10 @@ export class generalFooterComponent {
     this.activatedRoute.queryParams.subscribe(
       data => this.newUser = data.nU ? true : false
     );
-  }  
+  }
+
+  public toPage(url: string): void {
+    window.open(url);
+  }
+
 }
