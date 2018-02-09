@@ -7,7 +7,7 @@
   },
   {
     "id": "2",
-    "name": "Akita-inu",
+    "name": "Akita inu",
     "looksLike": "109"
   },
   {
@@ -26,16 +26,16 @@
   },
   {
     "id": "6",
-    "name": "azawakh",
+    "name": "Azawakh",
     "looksLike": "48"
   },
   {
     "id": "7",
-    "name": "basset hound "
+    "name": "Basset hound "
   },
   {
     "id": "8",
-    "name": "beagle ",
+    "name": "Beagle ",
     "looksLike": "139 140"
   },
   {
@@ -45,32 +45,32 @@
   },
   {
     "id": "10",
-    "name": "bichon frise"
+    "name": "Bichon frise"
   },
   {
     "id": "11",
-    "name": "bobtail dog "
+    "name": "Bobtail dog "
   },
   {
     "id": "12",
-    "name": "boerboel",
+    "name": "Boerboel",
     "looksLike": "21"
   },
   {
     "id": "13",
-    "name": "border collie "
+    "name": "Border collie "
   },
   {
     "id": "14",
-    "name": "boston-terrier "
+    "name": "Boston-terrier "
   },
   {
     "id": "15",
-    "name": "boxer"
+    "name": "Boxer"
   },
   {
     "id": "16",
-    "name": "boyero de berna "
+    "name": "Boyero de berna "
   },
   {
     "id": "17",
@@ -78,23 +78,23 @@
   },
   {
     "id": "18",
-    "name": "bulldog frances"
+    "name": "Bulldog frances"
   },
   {
     "id": "19",
-    "name": "bulldog ingles "
+    "name": "Bulldog ingles "
   },
   {
     "id": "20",
-    "name": "bullmastiff"
+    "name": "Bullmastiff"
   },
   {
     "id": "21",
-    "name": "cairn terrier"
+    "name": "Cairn terrier"
   },
   {
     "id": "22",
-    "name": "caniche"
+    "name": "Caniche"
   },
   {
     "id": "23",
@@ -103,34 +103,34 @@
   },
   {
     "id": "24",
-    "name": "catalburun",
+    "name": "Catalburun",
     "otherNames": "Pointer de turquia"
   },
   {
     "id": "25",
-    "name": "cavalier king",
+    "name": "Cavalier king",
     "otherNames": "Charles spaniel"
   },
   {
     "id": "26",
-    "name": "chino crestado ",
+    "name": "Chino crestado ",
     "otherNames": "Crestado, Puff" 
   },
   {
     "id": "27",
-    "name": "chihuahua "
+    "name": "Chihuahua "
   },
   {
     "id": "28",
-    "name": "chow chow"
+    "name": "Chow chow"
   },
   {
     "id": "29",
-    "name": "cocker spaniel ingles"
+    "name": "Cocker spaniel ingles"
   },
   {
     "id": "30",
-    "name": "cocker-americano ",
+    "name": "Cocker-americano ",
     "otherNames": "Cocker spaniel"
   },
   {
@@ -139,34 +139,34 @@
   },
   {
     "id": "32",
-    "name": "dalmata "
+    "name": "Dalmata "
   },
   {
     "id": "33",
-    "name": "daschund ",
+    "name": "Daschund ",
     "otherNames": "Doxie, Teckel, salchica"
   },
   {
     "id": "34",
-    "name": "doberman "
+    "name": "Doberman "
   },
   {
     "id": "35",
-    "name": "Dogo mallorquín",
+    "name": "Dogo Mallorquín",
     "otherNames": "Ca de bou"
   },
   {
     "id": "36",
-    "name": "dogo_argentino"
+    "name": "Dogo Argentino"
   },
   {
     "id": "37",
-    "name": "dogo-canario",
+    "name": "Dogo canario",
     "otherNames": "Presa canario"
   },
   {
     "id": "38",
-    "name": "dogo del tibet",
+    "name": "Dogo del Tibet",
     "otherNames": "Mastin tibetano"
   },
   {
@@ -186,12 +186,12 @@
   },
   {
     "id": "42",
-    "name": "fox terrier de pelo liso",
+    "name": "Fox Terrier de pelo liso",
     "looksLike": "41"
   },
   {
     "id": "43",
-    "name": "french-poodle ",
+    "name": "French poodle ",
     "looksLike": "93 22",
     "otherNames": "poodle "
   },
@@ -202,7 +202,7 @@
   },
   {
     "id": "45",
-    "name": "Galgo español",
+    "name": "Galgo Español",
     "looksLike": "44"
   },
   {
@@ -211,11 +211,11 @@
   },
   {
     "id": "47",
-    "name": "gran danes "
+    "name": "Gran Danes"
   },
   {
     "id": "48",
-    "name": "greyhound ",
+    "name": "Greyhound",
     "otherNames": "Lebrel ingles, Galgo ingles"
   },
   {
@@ -225,7 +225,7 @@
   },
   {
     "id": "51",
-    "name": "husky siberiano",
+    "name": "Husky Siberiano",
     "looksLike": "4"
   },
   {
@@ -234,7 +234,7 @@
   },
   {
     "id": "53",
-    "name": "komondor "
+    "name": "Komondor "
   },
   {
     "id": "54",
@@ -255,7 +255,7 @@
   },
   {
     "id": "58",
-    "name": "Lundehund noruego"
+    "name": "Lundehund Noruego"
   },
   {
     "id": "59",
@@ -263,11 +263,11 @@
   },
   {
     "id": "60",
-    "name": "maltes "
+    "name": "Maltes "
   },
   {
     "id": "61",
-    "name": "mastiff neapolitan"
+    "name": "Mastiff neapolitan"
   },
   {
     "id": "62",
@@ -279,7 +279,7 @@
   },
   {
     "id": "64",
-    "name": "mastin-espanol"
+    "name": "Mastin-espanol"
   },
   {
     "id": "65",
@@ -287,11 +287,11 @@
   },
   {
     "id": "66",
-    "name": "otherhound"
+    "name": "Otherhound"
   },
   {
     "id": "67",
-    "name": "papillon "
+    "name": "Papillon "
   },
   {
     "id": "68",
@@ -319,7 +319,7 @@
   },
   {
     "id": "74",
-    "name": "pastor de Shetland "
+    "name": "Pastor de Shetland "
   },
   {
     "id": "75",
@@ -355,11 +355,11 @@
   },
   {
     "id": "83",
-    "name": "perro cantor de nueva guinea"
+    "name": "Perro cantor de Nueva Guinea"
   },
   {
     "id": "84",
-    "name": "perro peruano"
+    "name": "Perro peruano"
   },
   {
     "id": "85",
@@ -371,11 +371,11 @@
   },
   {
     "id": "87",
-    "name": "Podenco Andaluz"
+    "name": "Podenco andaluz"
   },
   {
     "id": "88",
-    "name": "Podenco Canario"
+    "name": "Podenco canario"
   },
   {
     "id": "89",
@@ -408,7 +408,7 @@
   },
   {
     "id": "96",
-    "name": "Ridgeback tailandes "
+    "name": "Ridgeback tailandes"
   },
   {
     "id": "97",
@@ -436,7 +436,7 @@
   },
   {
     "id": "103",
-    "name": "schnauzer mediano "
+    "name": "Schnauzer mediano "
   },
   {
     "id": "104",
@@ -481,11 +481,11 @@
   },
   {
     "id": "114",
-    "name": "Spitz japones"
+    "name": "Spitz Japones"
   },
   {
     "id": "115",
-    "name": "stafforshire bull-terrier"
+    "name": "Stafforshire bull-terrier"
   },
   {
     "id": "116",
@@ -493,7 +493,7 @@
   },
   {
     "id": "117",
-    "name": "terrier ingles",
+    "name": "Terrier Ingles",
     "otherNames": "bull terrier"
   },
   {
@@ -502,7 +502,7 @@
   },
   {
     "id": "119",
-    "name": "Tosa-inu"
+    "name": "Tosa inu"
   },
   {
     "id": "120",
@@ -526,7 +526,7 @@
   },
   {
     "id": "125",
-    "name": "xoloescuincle "
+    "name": "Xoloescuincle "
   },
   {
     "id": "126",
@@ -538,7 +538,7 @@
   },
   {
     "id": "128",
-    "name": "cane corso",
+    "name": "Cane corso",
     "otherNames": "mastin italiano"
   },
   {
@@ -547,7 +547,7 @@
   },
   {
     "id": "130",
-    "name": "cardigan welsh corgi"
+    "name": "Cardigan welsh corgi"
   },
   {
     "id": "131",
@@ -555,19 +555,19 @@
   },
   {
     "id": "132",
-    "name": "affenpinscher"
+    "name": "Affenpinscher"
   },
   {
     "id": "133",
-    "name": "bichon habanero"
+    "name": "Bichon habanero"
   },
   {
     "id": "134",
-    "name": "bichon maltes"
+    "name": "Bichon maltes"
   },
   {
     "id": "135",
-    "name": "galgo italiano"
+    "name": "Galgo italiano"
   },
   {
     "id": "136",
