@@ -1,5 +1,9 @@
 @import '../../common/styles/variables.scss';
 information {
+  .color-blue {
+    color: $lightBlue;
+    font-weight: 500;
+  }
   .icons-about {
     width: 150px;
     height: 160px;

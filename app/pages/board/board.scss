@@ -130,7 +130,7 @@ board {
     opacity: 0;
     }
     .scrollable {
-      overflow-y: scroll;
+      overflow-y: hidden;
       background-color: $pink;
     }
     .row.form {
