@@ -69,7 +69,7 @@ public splicedAnswer: boolean;
     this.multipleElements = [];
     //TODO: blockWidth is the hardcoded with of the component. Try to get it trought the dom element 
     this.blockWidth = this.mobile ? 360 : 210;
-    this.scrollleftSteeps = this.mobile ? 100 : 50;
+    this.scrollleftSteeps = document.documentElement.clientWidth * 0.8;
      // For patternType only
     this.colorOptions = {};
   }
@@ -122,9 +122,11 @@ public splicedAnswer: boolean;
 
 
   public goLeft():void {
-    if ( this.scrolling.nativeElement.scrollLeft - this.scrollleftSteeps >= 0) {
+    const moveLeft: number = this.scrolling.nativeElement.scrollLeft - this.scrollleftSteeps;
+    const left: number = moveLeft >= 0 ? moveLeft : 0;
+    if ( left >= 0) {
       this.pressedLeft = true;
-      this.scrolling.nativeElement.scrollLeft = this.scrolling.nativeElement.scrollLeft - this.scrollleftSteeps;
+      $('side-block .scroll-section').animate({ scrollLeft: left}, 300);
       setTimeout(() => {this.pressedLeft = false;}, 300);
     }
 
@@ -139,9 +141,11 @@ public splicedAnswer: boolean;
   }
 
   public goRight(): void {
-    if ( this.scrolling.nativeElement.scrollLeft + this.scrollleftSteeps <= this.maxScrollLeft) {
+    const moveRight: number =  this.scrolling.nativeElement.scrollLeft + this.scrollleftSteeps;
+    const right: number = moveRight <= this.maxScrollLeft ? moveRight : this.maxScrollLeft;
+    if (right <= this.maxScrollLeft) {
       this.pressedRight = true;
-      this.scrolling.nativeElement.scrollLeft = this.scrolling.nativeElement.scrollLeft + this.scrollleftSteeps;
+      $('side-block .scroll-section').animate({ scrollLeft: right}, 300);
       setTimeout(() => {this.pressedRight = false;}, 300);
     }
   }
