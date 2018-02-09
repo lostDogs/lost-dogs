@@ -1,1 +1,0 @@
-node ./tools/aws/$1/$2
