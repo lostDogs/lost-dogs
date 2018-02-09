@@ -49,7 +49,7 @@ export class InformationComponent {
       this.title = 'Sobre nosotros';
       this.infohtml = this.domSan.bypassSecurityTrustHtml(this.data[this.urlsConst.aboutUs].join(''));
     }else if (this.urlsConst.terms === this.urlOn) {
-      this.title = 'Terminos y condiciones';
+      this.title = 'Términos y condiciones';
       this.infohtml = this.domSan.bypassSecurityTrustHtml(this.data[this.urlsConst.terms].join(''));
     }else if (this.urlsConst.pricing === this.urlOn) {
       this.title = 'Costos y recompensas';

@@ -5,22 +5,22 @@
   <h6 *ngIf="viewMore && data.name">{{mappedData.breed}}</h6>
   <h6 class="reward" *ngIf="viewMore && data.reward && data.lost"> $ {{rewardtoShow}} MXN</h6>
   <figure>
-    <div class="main-image" [ngStyle]="{'background-image': 'url(' + (data.images && data.images.length && data.images[0].image_url) ||  '/static/temp-profile-dog.jpg' + ')' }">
+    <div class="main-image" [ngStyle]="{'background-image': 'url(' + (data.images && data.images.length && data.images[0].image_url) + ')', 'background-size': viewMore ? 'contain' : 'cover' }">
 <!--       <div class="edit-icon file-field" [hidden]="!showEditImg()">
         <i class="material-icons Small">edit</i>
         <input type="file"  name="image del perro" (change)="filePicChange($event)" >
       </div> -->
       <div class="dog-properties" [hidden]="!(!mobile || viewMore)">
         <!-- <div class="dog-gender-female property centered"><img src="/static/male.png"></div> -->
-        <div class="dog-gender property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.gender.imgUrl + ')'}"  data-position="left" [attr.data-tooltip]="mappedData.gender.name"></div>
-        <div class="dog-color property bg-img tooltipped" data-position="left" [attr.data-tooltip]="+mappedData.colors">
+        <div class="dog-gender property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.gender.imgUrl + ')'}"  data-position="left" [attr.data-tooltip]="mappedData.gender.name" [ngClass]="{'opened-side': mobile && viewMore}"></div>
+        <div class="dog-color property bg-img tooltipped" data-position="left" [attr.data-tooltip]="+mappedData.colors" [ngClass]="{'opened-side': mobile && viewMore}">
           <dog-figure [display]="data.pattern_id"></dog-figure>
         </div>
-        <div class="dog-date property tooltipped " data-position="left" [attr.data-tooltip]="mappedData.date.name">
+        <div class="dog-date property tooltipped " data-position="left" [attr.data-tooltip]="mappedData.date.name" [ngClass]="{'opened-side': mobile && viewMore}">
           <p class="truncate">{{mappedData.date.short.split(' ')[0]}} </p>
           <p class="truncate">{{mappedData.date.short.split(' ')[1]}}</p>
         </div>
-        <div class="dog-size property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.size.imgUrl + ')'}" data-position="left" [attr.data-tooltip]="mappedData.size.name" ></div>
+        <div class="dog-size property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.size.imgUrl + ')'}" data-position="left" [attr.data-tooltip]="mappedData.size.name" [ngClass]="{'opened-side': mobile && viewMore}"></div>
       </div>
     </div>
   </figure>
