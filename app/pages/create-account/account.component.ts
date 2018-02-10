@@ -177,12 +177,12 @@ export class accountComponent {
   public setImgToBucket(url: string): void {
     this.api.put(url, this.binaryImg, {'Content-Type': 'image/jpeg', 'Content-encoding': 'base64'}).subscribe(
       data => this.sucessImgToBucket(data),
-      e => this.errorImgToBucket(e)
+      e => this.errorImgToBucket(e),
+      ()=> this.toHomePage()
     );
   }
 
   public sucessImgToBucket(data: any): void {
-    console.log('sucessfully created', data);
     this.userService.isAvatarSet = true
   }
   public toHomePage(): void {
@@ -243,8 +243,7 @@ export class accountComponent {
     this.loading = true;
     this.api.post(this.api.API_PROD + 'users', userPost).subscribe(
       data => this.afterCreateData(data),
-      e => this.afterCreateError(e),
-      () => this.toHomePage()
+      e => this.afterCreateError(e)
       );
   }
 

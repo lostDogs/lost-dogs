@@ -43,6 +43,8 @@ dog-card {
         top: 12%;
         max-height: 1300px;
         overflow-y: scroll;
+        overflow-x: hidden;
+        padding: 0 20px;
         a.btn, button.btn {
           font-size: 2.5rem;
           height: 80px;
@@ -76,6 +78,7 @@ dog-card {
       z-index: 30;
       max-height: 550px;
       overflow-y: scroll;
+      overflow-x: hidden;
       box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);      
       a.btn, button.btn {
         width: 50%;
