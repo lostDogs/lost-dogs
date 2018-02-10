@@ -33,7 +33,11 @@ export class RefundComponent {
     this.dogService.dogData = undefined;
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.transcationId = params.transcation;
-      this.rewardService.getTransaction(this.userService.token, this.transcationId);
+      this.rewardService.getTransaction(this.userService.token, this.transcationId).add(() => {
+        if (this.rewardService.transaction.lost_id !== this.userService.user.username) {
+          this.router.navigate(['/login']);
+        }
+      });
     });    
   }
 
@@ -41,7 +45,7 @@ export class RefundComponent {
     if (!this.userService.isAuth) {
       this.userService.previousUrl = this.router.url;
       this.router.navigate(['/login']);
-    } 
+    }
   }
 
   public ngAfterViewInit(): void {}
