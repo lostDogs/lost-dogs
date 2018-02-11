@@ -7,10 +7,18 @@ review-payment {
       }
     }
     .size {
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin-bottom: 12px;
+      @media screen and (max-device-width: $screen-mobile-max) {
+        margin-bottom: 0;
+      }
     }
+  }
+  .col.extra-space {
+    padding-top: 10px;
+    margin: 0 10px;
   }
   .wrong-icon {
     color: $redAccent;

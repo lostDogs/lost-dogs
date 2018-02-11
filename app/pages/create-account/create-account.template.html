@@ -14,7 +14,7 @@
             </div>
             <div *ngIf="!user.pic.valid" class="wrong-red img-txt"><span><strong>No</strong> es una </span><span>imagen</span></div>
             <img [src]="user.pic.value" alt="image de perfil" class="circle width-center" id="prof-pic" [ngClass]="{'wrong-red': !user.pic.valid}">
-            <input type="file" class="circle width-center" name="userPic" (change)="filePicChange($event)" >
+            <input type="file" class="circle width-center" name="userPic" (change)="!profilePage && filePicChange($event)" >
           </div>
         </div>
         <div class="row row-extraspace">
@@ -109,7 +109,7 @@
       <div class="account-completed account-block draw" id="contact-block" [ngClass]="{'action': user.contact.email.valid && user.contact.areaCode.valid && user.contact.phone.valid && user.contact.email.value && user.contact.areaCode.value && user.contact.phone.value}">
         <div class="row">
           <h5  class="col l4 s12">
-            Contato
+            Contacto
             <i class="material-icons left">local_phone</i>
           </h5>
         </div>    

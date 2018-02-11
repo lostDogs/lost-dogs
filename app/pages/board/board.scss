@@ -225,9 +225,8 @@ board {
         @media screen and (max-device-width: $screen-mobile-max) {
           display: block;
           margin-left: 125px;
-          margin-top: 15px;
           .btn {
-            height: 5rem;
+            height: 6rem;
             i {
               vertical-align: bottom;
             }
