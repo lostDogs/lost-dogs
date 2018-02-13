@@ -5,6 +5,7 @@ import * as countryData from '../../common/content/countries.json';
 import {Router} from '@angular/router';
 import {UserService} from '../../common/services/user.service';
 import {GlobalFunctionService} from '../../common/services/global-function.service';
+require('../../common/plugins/masks.js');
 
 export interface formObj {
   valid: boolean;
@@ -17,7 +18,7 @@ export interface Iuser {
   pic: formObj;
   name: {first: formObj, last1: formObj, last2: formObj};
   adress: {adressName: formObj, postalCode: formObj, city: formObj, numberExt: formObj, numberInt: formObj, country: formObj, street: formObj};
-  contact: {areaCode: formObj, phone: formObj, email: formObj};
+  contact: {phone: formObj, email: formObj};
   access: {password: formObj, password2: formObj};
 }
 
@@ -49,35 +50,35 @@ export class accountComponent {
     this.countries = [{"id": "MX", "name": "Mexico"}];
     // define the user object before
     this.user = {
-      pic: {value:'./static/profile-undef.png', valid: true, required: true, label: 'imagen de perfil'},
+      pic: {value:'./static/profile-undef.png', valid: true, required: true, label: 'Imagen de perfil'},
       name: {
-        first: {valid: true, value: undefined, required: true},
-        last1: {valid: true, value: undefined, required: true},
-        last2: {valid: true, value: undefined, required: true}
+        first: {valid: true, value: undefined, required: true, label: 'Nombre'},
+        last1: {valid: true, value: undefined, required: true, label: 'Apellido paterno'},
+        last2: {valid: true, value: undefined, required: true, label: 'Apellido materno'}
       },
       adress: {
-        adressName: {valid: true, value: undefined, required: true},
-        postalCode: {valid: true, value: undefined, required: true},
-        city: {valid: true, value: undefined, required: true},
-        numberExt: {valid: true, value: undefined, required: true},
-        numberInt: {valid: true, value: undefined, required: false},
-        country: {valid: true, value: undefined, required: true},
-        street: {valid: true, value: undefined, required: true}
+        adressName: {valid: true, value: undefined, required: true, label: 'Colonia'},
+        postalCode: {valid: true, value: undefined, required: true, label: 'Código Postal'},
+        city: {valid: true, value: undefined, required: true, label: 'Ciudad'},
+        numberExt: {valid: true, value: undefined, required: true, label: 'Número exterior'},
+        numberInt: {valid: true, value: undefined, required: false, label: 'Número interior'},
+        country: {valid: true, value: undefined, required: true, label: 'País'},
+        street: {valid: true, value: undefined, required: true, label: 'Calle'}
       },
       contact: {
-        areaCode: {valid: true, value: undefined, required: true},
-        phone: {valid: true, value: undefined, required: true},
-        email: {valid: true, value: undefined, required: true}
+        phone: {valid: true, value: undefined, required: true, label: 'Teléfono celular'},
+        email: {valid: true, value: undefined, required: true, label: 'Correo electrónico'}
       },
       access: {
-        password: {valid: true, value: undefined, required: true},
-        password2: {valid: true, value: undefined, required: true}
+        password: {valid: true, value: undefined, required: true, label: 'Contraseña'},
+        password2: {valid: true, value: undefined, required: true, label: 'Repetir contraseña'}
       }
     };
   }
 
   public ngAfterViewInit(): void {
    $('select').material_select();
+   $('#phone').mask('0000000000');
    if (this.hoverRetainState)  {
      this.hoverRetainState();
    }
@@ -120,9 +121,11 @@ export class accountComponent {
           if (element[propKey[i]].required && !content) {
             element[propKey[i]].valid = false;
             validForm = false;
-          }else if (!element[propKey[i]].valid) {
+          }
+          if (!element[propKey[i]].valid) {
             validForm = false;
-            this.globalService.setErrorMEssage(propKey[i] +' invalido');
+            const fieldName = element[propKey[i]].label ? element[propKey[i]].label : propKey[i];
+            this.globalService.setErrorMEssage(fieldName +' invalido');
             break;
           }
         }
@@ -183,8 +186,9 @@ export class accountComponent {
   }
 
   public sucessImgToBucket(data: any): void {
-    this.userService.isAvatarSet = true
+    setTimeout(() => {this.userService.isAvatarSet = true;}, 1000);
   }
+
   public toHomePage(): void {
     this.loading = false;
     this.router.navigate(['/home'], {queryParams:{nU: true}});
@@ -219,7 +223,7 @@ export class accountComponent {
       },
       'phone_number': {
         'number': user.contact.phone.value,
-        'area_code': user.contact.areaCode.value
+         'area_code': ''
       },
       'email': user.contact.email.value,
       'username': user.contact.email.value,

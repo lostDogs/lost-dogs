@@ -17,8 +17,8 @@
           Iniciar sesión
           <img  id="profile-arrow" src="static/dropdown.png" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">
       </a>
-      <a #UserDom href="javascript:void(0)"  *ngIf="userService.isAuth" (click)="toggleLoginFrom($event)">
-        <img *ngIf="userService.isAvatarSet" src="{{userService.user.avatar}}" class="avatar" alt="profile picture">
+      <a #UserDom href="javascript:void(0)"  *ngIf="userService.isAuth && userService.isAvatarSet" (click)="toggleLoginFrom($event)">
+        <img  src="{{userService.user.avatar}}" class="avatar" alt="profile picture">
         <p class="profile-name">{{userService.user.name}}</p>
         <img  id="profile-arrow" src="static/dropdown.png" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">
       </a>
@@ -27,8 +27,8 @@
   </div>
   <ul id="slide-out" class="side-nav">
       <li><div class="user-profile">
-        <div class="user-background" *ngIf="userService.isAuth">
-          <a routerLink="/profile/edit" class="profile-link"><img *ngIf="userService.isAvatarSet" src="{{userService.user.avatar}}" alt="profile picture" class="circle profile-mobile"></a>
+        <div class="user-background" *ngIf="userService.isAuth && userService.isAvatarSet">
+          <a routerLink="/profile/edit" class="profile-link"><img src="{{userService.user.avatar}}" alt="profile picture" class="circle profile-mobile"></a>
           <a routerLink="/profile/edit" class="row">{{userService.user.name}}</a>
           <a routerLink="/profile/edit">{{userService.user.email}}</a>
         </div>
@@ -73,7 +73,7 @@
         </a>        
       </div>
       <div class="col l12 account-link" *ngIf="userService.timesTrying >= 1" id="forgot-pass">
-        <a [routerLink]="['/login']" [queryParams]="{fG:'true'}" title="" class="waves-effect">olvide mi contraseña
+        <a [routerLink]="['/login']" [queryParams]="{fG:'true'}" title="" class="waves-effect">olvidé mi contraseña
          <i class="material-icons right">lock</i>
         </a>        
       </div>      
