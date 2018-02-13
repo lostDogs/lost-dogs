@@ -44,7 +44,7 @@
           </button>
         </div>
       </div>
-      <div class="account-completed account-block draw"  id="address-block" [ngClass]="{'action': user.adress.numberExt.valid && user.adress.adressName.valid && user.adress.postalCode.valid && user.adress.city.valid && user.adress.country.valid && user.adress.numberExt.value && user.adress.adressName.value && user.adress.postalCode.value && user.adress.city.value && user.adress.country.value}">
+      <div class="account-completed account-block draw"  id="address-block" [ngClass]="{'action': user.adress.numberExt.valid && user.adress.adressName.valid && user.adress.postalCode.valid && user.adress.city.valid && user.adress.country.valid && user.adress.street.valid && user.adress.numberExt.value && user.adress.adressName.value && user.adress.postalCode.value && user.adress.city.value && user.adress.country.value && user.adress.street.value}">
         <div class="row">
           <h5 class="col l4 s12" >
             Domicilio
@@ -59,23 +59,23 @@
                 <label for="street" [ngClass]="{'fadeInDown': !user.adress.street.valid && !user.adress.street.value}" [hidden]="!(!user.adress.street.valid && !user.adress.street.value)">Calle es Requerido</label>
           </div>
           <div class="input-field alt-black col l3 s12" [ngClass]="{'wrong-red': !user.adress.numberExt.valid}">
-              <input type="text" name="numberExt" id="number-ext" [(ngModel)]="user.adress.numberExt.value" (keyup)="user.adress.numberExt.valid = validate.onlyNumbers(user.adress.numberExt.value, 2, 10, 'numberExt');"  (change)="user.adress.numberExt.valid = validate.onlyNumbers(user.adress.numberExt.value, 2, 10,'numberExt');">
-                <label for="number-ext" [ngClass]="{'fadeInDown': user.adress.numberExt.valid && createAccount.controls.numberExt && createAccount.controls.numberExt.dirty}" [hidden]="!user.adress.numberExt.valid">Número Exterior</label>
+              <input type="text" name="numberExt" id="number-ext" [(ngModel)]="user.adress.numberExt.value" (keyup)="user.adress.numberExt.valid = validate.onlyNumbers(user.adress.numberExt.value, 0, 9999, 'numberExt');"  (change)="user.adress.numberExt.valid = validate.onlyNumbers(user.adress.numberExt.value, 0, 9999,'numberExt');">
+                <label for="number-ext" [ngClass]="{'fadeInDown': user.adress.numberExt.valid && createAccount.controls.numberExt && createAccount.controls.numberExt.dirty}" [hidden]="!user.adress.numberExt.valid">Número exterior</label>
                 <label for="number-ext" [ngClass]="{'fadeInDown': (!user.adress.numberExt.valid && user.adress.numberExt.value)}" [hidden]="!(!user.adress.numberExt.valid && user.adress.numberExt.value)">{{validate.errors.onlyNumbers.numberExt}}</label>
                 <label for="number-ext" [ngClass]="{'fadeInDown': !user.adress.numberExt.valid && !user.adress.numberExt.value}" [hidden]="!(!user.adress.numberExt.valid && !user.adress.numberExt.value)">Número Exterior es Requerido</label>
           </div>
           <div class="input-field alt-black col l3 s12" [ngClass]="{'wrong-red': !user.adress.numberInt.valid}">
-              <input type="text" name="numberInt" id="number-int" [(ngModel)]="user.adress.numberInt.value" (keyup)="user.adress.numberInt.valid = validate.onlyNumbers(user.adress.numberInt.value);"  (change)="user.adress.numberInt.valid = validate.onlyNumbers(user.adress.numberInt.value);">
-                <label for="number-int" [ngClass]="{'fadeInDown': user.adress.numberInt.valid && createAccount.controls.numberInt && createAccount.controls.numberInt.dirty}" [hidden]="!user.adress.numberInt.valid">Número Interior</label>
+              <input type="text" name="numberInt" id="number-int" [(ngModel)]="user.adress.numberInt.value" (keyup)="user.adress.numberInt.valid = validate.onlyNumbers(user.adress.numberInt.value,0, 9999);"  (change)="user.adress.numberInt.valid = validate.onlyNumbers(user.adress.numberInt.value,0, 9999);">
+                <label for="number-int" [ngClass]="{'fadeInDown': user.adress.numberInt.valid && createAccount.controls.numberInt && createAccount.controls.numberInt.dirty}" [hidden]="!user.adress.numberInt.valid">Número interior</label>
                 <label for="number-int" [ngClass]="{'fadeInDown': (!user.adress.numberInt.valid && user.adress.numberInt.value)}" [hidden]="!(!user.adress.numberInt.valid && user.adress.numberInt.value)">{{validate.errors.onlyNumbers.default}}</label>        
           </div>        
         </div>
         <div class="row">
           <div class="input-field alt-black col l3 s12" [ngClass]="{'wrong-red': !user.adress.postalCode.valid}">
                 <input type="text" name="postalCode" id="postal-code" [(ngModel)]="user.adress.postalCode.value" (keyup)="user.adress.postalCode.valid = validate.postalCode(user.adress.postalCode.value);"  (change)="user.adress.postalCode.valid = validate.postalCode(user.adress.postalCode.value);">
-                <label for="postal-code" [ngClass]="{'fadeInDown': user.adress.postalCode.valid && createAccount.controls.postalCode && createAccount.controls.postalCode.dirty}" [hidden]="!user.adress.postalCode.valid">codigo postal</label>
+                <label for="postal-code" [ngClass]="{'fadeInDown': user.adress.postalCode.valid && createAccount.controls.postalCode && createAccount.controls.postalCode.dirty}" [hidden]="!user.adress.postalCode.valid">Código Postal</label>
                 <label for="postal-code" [ngClass]="{'fadeInDown': (!user.adress.postalCode.valid && user.adress.postalCode.value)}" [hidden]="!(!user.adress.postalCode.valid && user.adress.postalCode.value)">{{validate.errors.postalCode}}</label>
-                <label for="postal-code" [ngClass]="{'fadeInDown': !user.adress.postalCode.valid && !user.adress.postalCode.value}" [hidden]="!(!user.adress.postalCode.valid && !user.adress.postalCode.value)">codigo postal es requerido</label>
+                <label for="postal-code" [ngClass]="{'fadeInDown': !user.adress.postalCode.valid && !user.adress.postalCode.value}" [hidden]="!(!user.adress.postalCode.valid && !user.adress.postalCode.value)">Código Postal es requerido</label>
           </div>
           <div class="input-field alt-black col l3 s12" [ngClass]="{'wrong-red': !user.adress.adressName.valid}">
               <input type="text" name="adresss" id="adresss" [(ngModel)]="user.adress.adressName.value" (keyup)="user.adress.adressName.valid = validate.stringHipens(user.adress.adressName.value);"  (change)="user.adress.adressName.valid = validate.stringHipens(user.adress.adressName.value);">
@@ -85,9 +85,9 @@
           </div>          
           <div class="input-field alt-black  col l3 s12" [ngClass]="{'wrong-red': !user.adress.city.valid}">
                 <input type="text" name="city" id="city" [(ngModel)]="user.adress.city.value" (keyup)="user.adress.city.valid = validate.name(user.adress.city.value);"  (change)="user.adress.city.valid = validate.name(user.adress.city.value);">
-                <label for="city" [ngClass]="{'fadeInDown': user.adress.city.valid && createAccount.controls.city && createAccount.controls.city.dirty}" [hidden]="!user.adress.city.valid">ciudad</label>
+                <label for="city" [ngClass]="{'fadeInDown': user.adress.city.valid && createAccount.controls.city && createAccount.controls.city.dirty}" [hidden]="!user.adress.city.valid">Ciudad</label>
                 <label for="city" [ngClass]="{'fadeInDown': (!user.adress.city.valid && user.adress.city.value)}" [hidden]="!(!user.adress.city.valid && user.adress.city.value)">{{validate.errors.name}}</label>
-                <label for="city" [ngClass]="{'fadeInDown': !user.adress.city.valid && !user.adress.city.value}" [hidden]="!(!user.adress.city.valid && !user.adress.city.value)">ciudad es requerido</label>
+                <label for="city" [ngClass]="{'fadeInDown': !user.adress.city.valid && !user.adress.city.value}" [hidden]="!(!user.adress.city.valid && !user.adress.city.value)">Celectrónicoiudad es requerido</label>
           </div>
           <div class="input-field alt-black col l3 s12 countries" [ngClass]="{'wrong-red': !user.adress.country.valid}">
             <select name="country"  id="country" [(ngModel)]="user.adress.country.value" (keyup)="user.adress.country.valid = validate.name(user.adress.country.value);">
@@ -106,7 +106,7 @@
           </button>
         </div>
       </div>
-      <div class="account-completed account-block draw" id="contact-block" [ngClass]="{'action': user.contact.email.valid && user.contact.areaCode.valid && user.contact.phone.valid && user.contact.email.value && user.contact.areaCode.value && user.contact.phone.value}">
+      <div class="account-completed account-block draw" id="contact-block" [ngClass]="{'action': user.contact.email.valid && user.contact.phone.valid && user.contact.email.value && user.contact.phone.value}">
         <div class="row">
           <h5  class="col l4 s12">
             Contacto
@@ -116,23 +116,17 @@
         <div class="row">
           <div class="input-field alt-black col l12  s12" [ngClass]="{'wrong-red': !user.contact.email.valid}">
                 <input type="text" name="email" id="email" [(ngModel)]="user.contact.email.value" (keyup)="user.contact.email.valid = validate.email(user.contact.email.value);"  (change)="user.contact.email.valid = validate.email(user.contact.email.value);">
-                <label for="email" [ngClass]="{'fadeInDown': user.contact.email.valid && createAccount.controls.email && createAccount.controls.email.dirty}" [hidden]="!user.contact.email.valid">Correo electronico</label>
+                <label for="email" [ngClass]="{'fadeInDown': user.contact.email.valid && createAccount.controls.email && createAccount.controls.email.dirty}" [hidden]="!user.contact.email.valid">Correo electrónico</label>
                 <label for="email" [ngClass]="{'fadeInDown': (!user.contact.email.valid && user.contact.email.value)}" [hidden]="!(!user.contact.email.valid && user.contact.email.value)">{{validate.errors.email}}</label>
-                <label for="email" [ngClass]="{'fadeInDown': !user.contact.email.valid && !user.contact.email.value}" [hidden]="!(!user.contact.email.valid && !user.contact.email.value)">Correo electronico es requerido</label>
+                <label for="email" [ngClass]="{'fadeInDown': !user.contact.email.valid && !user.contact.email.value}" [hidden]="!(!user.contact.email.valid && !user.contact.email.value)">Correo electrónico es requerido</label>
           </div>
         </div>
         <div class="row">
-          <div class="input-field alt-black col l2 s4" [ngClass]="{'wrong-red': !user.contact.areaCode.valid}">
-                <input type="text" name="areaCode" id="area-code"  [(ngModel)]="user.contact.areaCode.value" (keyup)="user.contact.areaCode.valid = validate.onlyNumbers(user.contact.areaCode.value, 2, 5, 'areaCode');"  (change)="user.contact.areaCode.valid = validate.onlyNumbers(user.contact.areaCode.value, 2, 5, 'areaCode');">
-                <label for="area-code" [ngClass]="{'fadeInDown': user.contact.areaCode.valid && createAccount.controls.areaCode && createAccount.controls.areaCode.dirty}" [hidden]="!user.contact.areaCode.valid">Lada</label>
-                <label for="area-code" [ngClass]="{'fadeInDown': (!user.contact.areaCode.valid && user.contact.areaCode.value)}" [hidden]="!(!user.contact.areaCode.valid && user.contact.areaCode.value)">{{validate.errors.onlyNumbers.areaCode}}</label>
-                <label for="area-code" [ngClass]="{'fadeInDown': !user.contact.areaCode.valid && !user.contact.areaCode.value}" [hidden]="!(!user.contact.areaCode.valid && !user.contact.areaCode.value)">Lada es requerido</label>
-          </div>
           <div class="input-field alt-black  col l5 s8" [ngClass]="{'wrong-red': !user.contact.phone.valid}">
-                <input type="text" name="phone" id="phone" [(ngModel)]="user.contact.phone.value" (keyup)="user.contact.phone.valid = validate.onlyNumbers(user.contact.phone.value, 8, 15, 'phone');"  (change)="user.contact.phone.valid = validate.onlyNumbers(user.contact.phone.value, 8, 15, 'phone');">
-                <label for="phone" [ngClass]="{'fadeInDown': user.contact.phone.valid && createAccount.controls.phone && createAccount.controls.phone.dirty}" [hidden]="!user.contact.phone.valid">Telefono celular</label>
+                <input type="text" name="phone" id="phone" [(ngModel)]="user.contact.phone.value" (keyup)="user.contact.phone.valid = validate.onlyNumbers(user.contact.phone.value, 8, 10, 'phone');"  (change)="user.contact.phone.valid = validate.onlyNumbers(user.contact.phone.value, 8, 10, 'phone');">
+                <label for="phone" [ngClass]="{'fadeInDown': user.contact.phone.valid && createAccount.controls.phone && createAccount.controls.phone.dirty}" [hidden]="!user.contact.phone.valid">Teléfono celular</label>
                 <label for="phone" [ngClass]="{'fadeInDown': (!user.contact.phone.valid && user.contact.phone.value)}" [hidden]="!(!user.contact.phone.valid && user.contact.phone.value)">{{validate.errors.onlyNumbers.phone}}</label>
-                <label for="phone" [ngClass]="{'fadeInDown': !user.contact.phone.valid && !user.contact.phone.value}" [hidden]="!(!user.contact.phone.valid && !user.contact.phone.value)">Telefono celular es requerido</label>
+                <label for="phone" [ngClass]="{'fadeInDown': !user.contact.phone.valid && !user.contact.phone.value}" [hidden]="!(!user.contact.phone.valid && !user.contact.phone.value)">Teléfono celular es requerido</label>
           </div>
         </div>
         <div class="row centered profile-row" *ngIf="profilePage && disableButton">

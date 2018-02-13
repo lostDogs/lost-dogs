@@ -48,7 +48,7 @@ export class ValidationService {
   }
 
   public onlyNumbers(field: string, min: number = undefined, max: number = undefined, fieldName: string): boolean {
-    if (!min || !max) {
+    if ((typeof min !== 'number') || (typeof max !== 'number')) {
       min = 0;
       max = 100;
     }
