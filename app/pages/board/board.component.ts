@@ -98,6 +98,9 @@ export class boardComponent {
     this.lostService.defaultDisplayedSequence.forEach((componentLabel: string, index: number) => {
       this.filterElements[this.lostService.defualtSequence[index]].width = this.widthPerFilter + 'px';
     });
+    $('body').bind('no-auth-token-add', () => {
+      this.initialSearchCall();
+    });
   }
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(event: any) {
@@ -112,6 +115,9 @@ export class boardComponent {
 
   public ngOnInit(): void {
     $('#date-input').mask('0000/00/00');
+  }
+
+  public initialSearchCall(): void {
     this.searchService.resetResults();
     this.searchService.addQuery('lost', !this.searchFound);
     this.searchService.addQuery('pageSize', this.searchService._pageSize);

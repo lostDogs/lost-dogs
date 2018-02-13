@@ -32,7 +32,9 @@ export class UserService {
       this.isAvatarSet = true;
     } else {
       console.log('else login with no values auth');
-      this.login(undefined, undefined, true);
+      this.login(undefined, undefined, true).add(() => {
+        $('body').trigger('no-auth-token-add');
+      });
       this.isAvatarSet = false;
     }
     if (userToken) {
