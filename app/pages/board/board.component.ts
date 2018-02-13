@@ -1,6 +1,7 @@
 import {Component, ViewChildren, QueryList, ElementRef, ViewChild, Inject, HostListener} from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import {DogCardService} from '../../common/services/dog-card.service';
+import {UserService} from '../../common/services/user.service';
 import {SearchService, IdogData} from '../../common/services/search.service';
 import {LostFoundService} from '../../common/services/lost-found.service';
 import {AsyncPipe} from '@angular/common';
@@ -65,7 +66,7 @@ export class boardComponent {
   @ViewChild('ButtonBreedSearch')
   public buttonBreedSearchDom: ElementRef;
 
-  constructor(@Inject(DOCUMENT) private document:  Document, public dogCardService: DogCardService, public lostService: LostFoundService, public searchService: SearchService) {
+  constructor(@Inject(DOCUMENT) private document:  Document, public dogCardService: DogCardService, public lostService: LostFoundService, public searchService: SearchService, public userService: UserService) {
     this.filtersKey = [];
     this.window = window;
     this.searchService.api.queryParams = undefined;
@@ -98,9 +99,6 @@ export class boardComponent {
     this.lostService.defaultDisplayedSequence.forEach((componentLabel: string, index: number) => {
       this.filterElements[this.lostService.defualtSequence[index]].width = this.widthPerFilter + 'px';
     });
-    $('body').bind('no-auth-token-add', () => {
-      this.initialSearchCall();
-    });
   }
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(event: any) {
@@ -115,6 +113,14 @@ export class boardComponent {
 
   public ngOnInit(): void {
     $('#date-input').mask('0000/00/00');
+    if (!this.userService.token && this.userService.noAuthSubs) {
+      this.userService.noAuthSubs.unsubscribe();
+      this.userService.login(undefined, undefined, true).add(() => {
+       this.initialSearchCall();
+      })
+    } else  {
+      this.initialSearchCall();
+    }
   }
 
   public initialSearchCall(): void {
