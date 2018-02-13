@@ -20,6 +20,7 @@ export class UserService {
   public forgotloading: boolean;
   public forgotSucess: boolean;
   public tempUserName: any;
+  public noAuthSubs: Subscription;
 
   constructor (public api: ApiService, public router: Router, public globalService: GlobalFunctionService, public CookieService: CookieManagerService) {
     this.user = {};
@@ -32,7 +33,7 @@ export class UserService {
       this.isAvatarSet = true;
     } else {
       console.log('else login with no values auth');
-      this.login(undefined, undefined, true);
+      this.noAuthSubs = this.login(undefined, undefined, true);
       this.isAvatarSet = false;
     }
     if (userToken) {
