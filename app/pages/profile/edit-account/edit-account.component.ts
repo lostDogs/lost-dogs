@@ -36,7 +36,6 @@ export class editAccountComponent {
         street: {valid: true, value: this.userService.user.address.street, required: true},
       },
       contact: {
-        areaCode: {valid: true, value: this.userService.user.phoneNumber.area_code, required: true},
         phone: {valid: true, value: this.userService.user.phoneNumber.number, required: true},
         email: {valid: true, value: this.userService.user.email, required: true}
       },
