@@ -1,26 +1,26 @@
 <header class="col l12 m12" id="nav-header"  [ngClass]="{'blur-new-user': newUser, 'bottom-top-anim': !newUser || !initHeader, 'size-no-anim': newUser || initHeader}">
-  <img class="hide-anim" src="static/loading-step-2.gif" alt="loading..." *ngIf="(!newUser && !initHeader) && !displayNavOpts">
+  <img class="hide-anim" src="http://cdn.lostdog.mx/assets/img/loading-step-2.gif" alt="loading..." *ngIf="(!newUser && !initHeader) && !displayNavOpts">
   <div  class="menu-options col l5 m1 s3"  [ngClass]="{'hidden': !displayNavOpts}">
     <a routerLink="board" class="actions" (click)="lostService.resetService()">Catálogo</a>
     <a routerLink="lost" class="actions" (click)="resetPage()">Perdí</a>
     <a routerLink="found" class="actions" (click)="resetPage()">Encontré</a>
-    <a href="javascript:void(0)" class="home-mobile" data-activates="slide-out"><img src="static/side-menu.png" alt="side menu"></a>
+    <a href="javascript:void(0)" class="home-mobile" data-activates="slide-out"><img src="http://cdn.lostdog.mx/assets/img/side-menu.png" alt="side menu"></a>
   </div>
   <div class="menu-options col l4 m2" *ngIf="displayNavOpts"> 
       <a routerLink="home"  class="logo">
-        <img id="home-logo" src="static/logo-med.png" alt="lost dog logo" [ngStyle]="{'opacity': router.url==='/home' ? globalService.scrollOpacity : 1}">
+        <img id="home-logo" src="http://cdn.lostdog.mx/assets/img/logo-med.png" alt="lost dog logo" [ngStyle]="{'opacity': router.url==='/home' ? globalService.scrollOpacity : 1}">
       </a> 
     </div> 
     <div class="menu-options col l3 m2" [ngClass]="{'hidden': !displayNavOpts}">
       <div class="profile">
         <a #LoginDom href="javascript:void(0)" (click)="toggleLoginFrom($event)"  *ngIf="!userService.isAuth">
           Iniciar sesión
-          <img  id="profile-arrow" src="static/dropdown.png" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">
+          <i  id="profile-arrow" class="material-icons" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">arrow_drop_down</i>
       </a>
       <a #UserDom href="javascript:void(0)"  *ngIf="userService.isAuth && userService.isAvatarSet" (click)="toggleLoginFrom($event)">
         <img  src="{{userService.user.avatar}}" class="avatar" alt="profile picture">
         <p class="profile-name">{{userService.user.name}}</p>
-        <img  id="profile-arrow" src="static/dropdown.png" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">
+        <i  id="profile-arrow" class="material-icons" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">arrow_drop_down</i>
       </a>
       <!-- <a href="javascript:void(0)" *ngIf="userService.isAuth">{{userService.user.name}}</a> -->
      </div> 
@@ -34,7 +34,7 @@
         </div>
         <div class="no-user-background centered" *ngIf="!userService.isAuth">
           <a routerLink="/home">
-            <img src="static/logo-med-invert.png">
+            <img src="http://cdn.lostdog.mx/assets/img/logo-med-invert.png">
           </a>
         </div>
       </div></li>

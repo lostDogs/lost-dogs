@@ -59,7 +59,7 @@
 }
 
 #home-dogs{
-  background: url(/static/dogsBlur1.png) repeat fixed center;
+  background: url(http://cdn.lostdog.mx/assets/img/dogsBlur1.png) repeat fixed center;
   background-position: 0px 98px;
   color: white;
   .logo-huge {
@@ -144,18 +144,18 @@
           }
     }
     #sad-dogo {
-      background: url(/static/sadDogo.png) no-repeat center;
+      background: url(http://cdn.lostdog.mx/assets/img/sadDogo.png) no-repeat center;
       background-size: cover;
       border-left: 6px solid white;
     }
     #muchos-dogos {
-      background: url(/static/muchosDogos.png) no-repeat center;
+      background: url(http://cdn.lostdog.mx/assets/img/muchosDogos.png) no-repeat center;
       background-size: cover;
       border-left: 6px solid white;
       border-right: 6px solid white;
     }
     #happy-dogos {
-      background: url(/static/happyDogo.png) no-repeat center;
+      background: url(http://cdn.lostdog.mx/assets/img/happyDogo.png) no-repeat center;
       background-size: cover;
       border-right: 6px solid white;
     }
@@ -255,7 +255,7 @@
     }
   }  
   @media screen and (max-device-width: $screen-mobile-max) {
-    background: url(/static/mobileFullHome1.jpg) repeat fixed;
+    background: url(http://cdn.lostdog.mx/assets/img/mobileFullHome1.jpg) repeat fixed;
     background-position: 0px 111px;
     background-size: contain;
     .circular {

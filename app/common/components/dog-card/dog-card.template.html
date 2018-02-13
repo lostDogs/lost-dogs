@@ -11,7 +11,6 @@
         <input type="file"  name="image del perro" (change)="filePicChange($event)" >
       </div> -->
       <div class="dog-properties" [hidden]="!(!mobile || viewMore)">
-        <!-- <div class="dog-gender-female property centered"><img src="/static/male.png"></div> -->
         <div class="dog-gender property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.gender.imgUrl + ')'}"  data-position="left" [attr.data-tooltip]="mappedData.gender.name" [ngClass]="{'opened-side': mobile && viewMore}"></div>
         <div class="dog-color property bg-img tooltipped" data-position="left" [attr.data-tooltip]="+mappedData.colors" [ngClass]="{'opened-side': mobile && viewMore}">
           <dog-figure [display]="data.pattern_id"></dog-figure>
@@ -26,7 +25,6 @@
   </figure>
   <figure>
     <div class="dog-properties-mobile" [ngStyle]="{'display': (!mobile || viewMore) ? 'none' : 'flex'}">
-      <!-- <div class="dog-gender-female property centered"><img src="/static/male.png"></div> -->
       <div class="dog-gender property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.gender.imgUrl + ')'}"  data-position="left" [attr.data-tooltip]="mappedData.gender.name"></div>
       <div class="dog-color property bg-img tooltipped"  data-position="left" [attr.data-tooltip]="+mappedData.colors">
         <dog-figure [display]="data.pattern_id"></dog-figure>

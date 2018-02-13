@@ -5,10 +5,10 @@
   <div class="main-create-account row">
 
     <form name="create account"  #createAccount="ngForm" (ngSubmit)="createUser(createAccount)" class="col l6 s12 offset-l3 form-create-account">
-      <div class="account-completed account-block draw" id="name-block" [ngClass]="{'action': user.name.first.valid && user.name.last1.valid && user.name.last2.valid && user.name.first.value && user.name.last1.value && user.name.last2.value &&  (user.pic.value !== './static/profile-undef.png') && user.pic.valid}">
+      <div class="account-completed account-block draw" id="name-block" [ngClass]="{'action': user.name.first.valid && user.name.last1.valid && user.name.last2.valid && user.name.first.value && user.name.last1.value && user.name.last2.value &&  (user.pic.value !== 'http://cdn.lostdog.mx/assets/img/profile-undef.png') && user.pic.valid}">
         <div class="file-field input-field alt-black">
           <div class="profile-pic">
-            <div  class="img-txt" *ngIf="user.pic.valid && user.pic.value ==='./static/profile-undef.png'">
+            <div  class="img-txt" *ngIf="user.pic.valid && user.pic.value ==='http://cdn.lostdog.mx/assets/img/profile-undef.png'">
               <span>Agrega una</span>
               <span>imagen</span>
             </div>
