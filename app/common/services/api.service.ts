@@ -4,9 +4,14 @@ import {Observable} from 'rxjs/Rx';
 
 @Injectable()
 export class ApiService {
-  constructor (public http: Http) { }
   public queryParams: string;
   public API_PROD: string = 'https://radiant-anchorage-50391.herokuapp.com/api/';
+  constructor (public http: Http) {
+    const url: string = window.location.href;
+    if (/herokuapp/g.test(url) || /localhost/g.test(url)) {
+      this.API_PROD = 'http://localhost:3000/api/';
+    }
+   }
 
   public get(url: string, queryObj?: any, header?: any): Observable<Response> {
     console.log('calling GET! >');
