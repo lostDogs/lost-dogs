@@ -189,7 +189,7 @@ export class accountComponent {
   }
 
   public sucessImgToBucket(data: any): void {
-    setTimeout(() => {this.userService.isAvatarSet = true;}, 1000);
+    setTimeout(() => {this.userService.isAvatarSet = true;}, 2000);
   }
 
   public toHomePage(): void {
