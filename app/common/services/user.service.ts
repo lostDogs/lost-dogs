@@ -158,7 +158,7 @@ export class UserService {
 
   public login(username?: string, password?: string, noAuth?: boolean): Subscription {
     if( password && username || noAuth) {
-      const user:any = {password: password, username: username};
+      const user:any = {password: password, username: username && username.toLowerCase()};
       this.loading = true;
       return this.api.post(this.api.API_PROD + 'users/login', user).subscribe(
         data => this.loginSucess(data, username),

@@ -228,8 +228,8 @@ export class accountComponent {
         'number': user.contact.phone.value,
          'area_code': ''
       },
-      'email': user.contact.email.value,
-      'username': user.contact.email.value,
+      'email': user.contact.email.value.toLowerCase(),
+      'username': user.contact.email.value.toLowerCase(),
       'confirm_password': user.access.password.value,
       'password': user.access.password2.value,
       'avatarFileType': 'image/jpeg'
