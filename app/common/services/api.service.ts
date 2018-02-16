@@ -8,7 +8,9 @@ export class ApiService {
   public API_PROD: string = 'https://radiant-anchorage-50391.herokuapp.com/api/';
   constructor (public http: Http) {
     const url: string = window.location.href;
-    if (/herokuapp/g.test(url) || /localhost/g.test(url)) {
+    if (/herokuapp/g.test(url)) {
+      this.API_PROD = 'https://dev-lostdog-api.herokuapp.com/api/';
+    } else if (/localhost/g.test(url)) {
       this.API_PROD = 'http://localhost:3000/api/';
     }
    }
