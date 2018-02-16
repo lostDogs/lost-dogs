@@ -8,6 +8,7 @@ import {UserService} from '../services/user.service';
 import {SearchService, IdogData} from '../services/search.service';
 import {MatchMakerService} from '../services/match-maker.service';
 import {GlobalFunctionService} from  '../services/global-function.service';
+const imgCompress = require('@xkeshi/image-compressor');
 
 @Injectable()
 export class LostFoundService {
