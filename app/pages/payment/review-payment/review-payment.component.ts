@@ -174,10 +174,10 @@ export class ReviewPaymentComponent {
   public minifyImgFile(file: File): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
       new imgCompress(file, {
-        quality: .6,
-        width: '150px',
+        quality: .8,
+        maxWidth: 650,
          success(result: any) {
-          console.log('reducing file zise', result);
+          console.log('reducing file zise quality: 0.6 width: 350px', result);
           resolve(result);
          },
           error(error: any) {

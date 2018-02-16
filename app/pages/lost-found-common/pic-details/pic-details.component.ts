@@ -37,16 +37,15 @@ export class DetailsComponent {
     console.log('ev', ev);
      if (ev.target && ev.target.files && file && file.type.match('image.*')) {
         try {
-          if (file.size > 3 * 1024 * 1024) {
-            file = this.minifyImgFile(file);
-          }
-          const reader = new FileReader();
-          reader.onload = (event: any) => {
-            this.LostService.dogPicture = event.target.result;
-            this.errorImg = undefined;
-            this.LostService.setAnwer();
-          };
-          reader.readAsDataURL(file);
+          this.minifyImgFile(file).then(miniFile => {
+            const reader = new FileReader();
+            reader.onload = (event: any) => {
+              this.LostService.dogPicture = event.target.result;
+              this.errorImg = undefined;
+              this.LostService.setAnwer();
+            };
+            reader.readAsDataURL(miniFile);
+          });
         }catch (error) {
           // do nothing
         }
@@ -57,15 +56,20 @@ export class DetailsComponent {
       }    
   }
 
-  public minifyImgFile(file: File): any {
-    const self:DetailsComponent = this;
-    new imgCompress(file, {
-      quality: .7,
-       success(result: any) {
-        console.log('reducing file zise', result);
-        return result;
-       }
-    })
+  public minifyImgFile(file: File): Promise<any> {
+    return new Promise((resolve: any, reject: any) => {
+      new imgCompress(file, {
+        quality: .8,
+        maxWidth: 650,
+         success(result: any) {
+          console.log('reducing file zise quality: 0.6 width: 150px', result);
+          resolve(result);
+         },
+          error(error: any) {
+            reject(error);
+          }
+      });
+    });
   }
 
   public setFocusOnMoney(): void {

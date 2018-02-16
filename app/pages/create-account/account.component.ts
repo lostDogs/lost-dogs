@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {UserService} from '../../common/services/user.service';
 import {GlobalFunctionService} from '../../common/services/global-function.service';
 require('../../common/plugins/masks.js');
+const imgCompress = require('@xkeshi/image-compressor');
 
 export interface formObj {
   valid: boolean;
@@ -150,15 +151,17 @@ export class accountComponent {
 
   public filePicChange(ev: any): void {
     const file: File = ev.target.files[0];
-      this.binaryImg = file;
       if (ev.target && ev.target.files && file && file.type.match('image.*')) {
         try {
-          const reader = new FileReader();
-          reader.onload = (event: any) => {
-            this.user.pic.value = event.target.result;
-            this.user.pic.valid = true;
-          };
-          reader.readAsDataURL(file);
+          this.minifyImgFile(file).then(miniFile => {
+          this.binaryImg = miniFile;
+            const reader = new FileReader();
+            reader.onload = (event: any) => {
+              this.user.pic.value = event.target.result;
+              this.user.pic.valid = true;
+            };
+            reader.readAsDataURL(miniFile);
+          });
         }catch (error) {
           // do nothing
         }
@@ -287,5 +290,21 @@ export class accountComponent {
         },
       )
     }
-  } 
+  }
+
+  public minifyImgFile(file: File): Promise<any> {
+    return new Promise((resolve: any, reject: any) => {
+      new imgCompress(file, {
+        quality: .7,
+        maxWidth: 250,
+         success(result: any) {
+          console.log('reducing file zise quality: 0.7 width: 250px', result);
+          resolve(result);
+         },
+          error(error: any) {
+            reject(error);
+          }
+      });
+    });
+  }  
 };
