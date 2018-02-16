@@ -115,7 +115,7 @@
         </div>    
         <div class="row">
           <div class="input-field alt-black col l12  s12" [ngClass]="{'wrong-red': !user.contact.email.valid}">
-                <input type="text" name="email" id="email" [(ngModel)]="user.contact.email.value" (keyup)="user.contact.email.valid = validate.email(user.contact.email.value);"  (change)="user.contact.email.valid = validate.email(user.contact.email.value);">
+                <input type="text" name="email" id="email" [disabled]="profilePage"  [(ngModel)]="user.contact.email.value" (keyup)="user.contact.email.valid = validate.email(user.contact.email.value);"  (change)="user.contact.email.valid = validate.email(user.contact.email.value);">
                 <label for="email" [ngClass]="{'fadeInDown': user.contact.email.valid && createAccount.controls.email && createAccount.controls.email.dirty}" [hidden]="!user.contact.email.valid">Correo electrónico</label>
                 <label for="email" [ngClass]="{'fadeInDown': (!user.contact.email.valid && user.contact.email.value)}" [hidden]="!(!user.contact.email.valid && user.contact.email.value)">{{validate.errors.email}}</label>
                 <label for="email" [ngClass]="{'fadeInDown': !user.contact.email.valid && !user.contact.email.value}" [hidden]="!(!user.contact.email.valid && !user.contact.email.value)">Correo electrónico es requerido</label>
