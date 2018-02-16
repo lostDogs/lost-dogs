@@ -72,20 +72,20 @@
         </div>
         <div class="row">
           <div class="input-field alt-black col l3 s12" [ngClass]="{'wrong-red': !user.adress.postalCode.valid}">
-                <input type="text" name="postalCode" id="postal-code" [(ngModel)]="user.adress.postalCode.value" (keyup)="user.adress.postalCode.valid = validate.postalCode(user.adress.postalCode.value);"  (change)="user.adress.postalCode.valid = validate.postalCode(user.adress.postalCode.value);">
+                <input type="text" name="postalCode" id="postal-code" [(ngModel)]="user.adress.postalCode.value" (keyup)="user.adress.postalCode.valid = validate.postalCode(user.adress.postalCode.value);"  (change)="user.adress.postalCode.valid = validate.postalCode(user.adress.postalCode.value); getValuesFromPcodes()">
                 <label for="postal-code" [ngClass]="{'fadeInDown': user.adress.postalCode.valid && createAccount.controls.postalCode && createAccount.controls.postalCode.dirty}" [hidden]="!user.adress.postalCode.valid">Código Postal</label>
                 <label for="postal-code" [ngClass]="{'fadeInDown': (!user.adress.postalCode.valid && user.adress.postalCode.value)}" [hidden]="!(!user.adress.postalCode.valid && user.adress.postalCode.value)">{{validate.errors.postalCode}}</label>
                 <label for="postal-code" [ngClass]="{'fadeInDown': !user.adress.postalCode.valid && !user.adress.postalCode.value}" [hidden]="!(!user.adress.postalCode.valid && !user.adress.postalCode.value)">Código Postal es requerido</label>
           </div>
           <div class="input-field alt-black col l3 s12" [ngClass]="{'wrong-red': !user.adress.adressName.valid}">
               <input type="text" name="adresss" id="adresss" [(ngModel)]="user.adress.adressName.value" (keyup)="user.adress.adressName.valid = validate.stringHipens(user.adress.adressName.value);"  (change)="user.adress.adressName.valid = validate.stringHipens(user.adress.adressName.value);">
-                <label for="adresss" [ngClass]="{'fadeInDown': user.adress.adressName.valid && createAccount.controls.adresss && createAccount.controls.adresss.dirty}" [hidden]="!user.adress.adressName.valid">Colonia</label>
+                <label for="adresss" [ngClass]="{'fadeInDown': user.adress.adressName.valid && createAccount.controls.adresss && createAccount.controls.adresss.dirty, 'active': user.adress.adressName.value}" [hidden]="!user.adress.adressName.valid">Colonia</label>
                 <label for="adresss" [ngClass]="{'fadeInDown': (!user.adress.adressName.valid && user.adress.adressName.value)}" [hidden]="!(!user.adress.adressName.valid && user.adress.adressName.value)">{{validate.errors.stringHipens}}</label>
                 <label for="adresss" [ngClass]="{'fadeInDown': !user.adress.adressName.valid && !user.adress.adressName.value}" [hidden]="!(!user.adress.adressName.valid && !user.adress.adressName.value)">Colonia es Requerido</label>
           </div>          
           <div class="input-field alt-black  col l3 s12" [ngClass]="{'wrong-red': !user.adress.city.valid}">
                 <input type="text" name="city" id="city" [(ngModel)]="user.adress.city.value" (keyup)="user.adress.city.valid = validate.name(user.adress.city.value);"  (change)="user.adress.city.valid = validate.name(user.adress.city.value);">
-                <label for="city" [ngClass]="{'fadeInDown': user.adress.city.valid && createAccount.controls.city && createAccount.controls.city.dirty}" [hidden]="!user.adress.city.valid">Ciudad</label>
+                <label for="city" [ngClass]="{'fadeInDown': user.adress.city.valid && createAccount.controls.city && createAccount.controls.city.dirty, 'active': user.adress.city.value}" [hidden]="!user.adress.city.valid">Ciudad</label>
                 <label for="city" [ngClass]="{'fadeInDown': (!user.adress.city.valid && user.adress.city.value)}" [hidden]="!(!user.adress.city.valid && user.adress.city.value)">{{validate.errors.name}}</label>
                 <label for="city" [ngClass]="{'fadeInDown': !user.adress.city.valid && !user.adress.city.value}" [hidden]="!(!user.adress.city.valid && !user.adress.city.value)">Celectrónicoiudad es requerido</label>
           </div>

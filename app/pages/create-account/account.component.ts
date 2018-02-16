@@ -34,6 +34,7 @@ export class accountComponent {
   public countries: any;
   public binaryImg: any;
   public loading: boolean;
+  public loadingTextField: string = 'Cargando...';
   @Input()
   public title: string = 'Crea tu cuenta';
   @Input()
@@ -306,5 +307,37 @@ export class accountComponent {
           }
       });
     });
-  }  
+  }
+
+  public getValuesFromPcodes(): void {
+    this.user.adress.adressName.value = this.loadingTextField;
+    this.user.adress.city.value = this.loadingTextField;
+    this.api.get('https://api-codigos-postales.herokuapp.com/v2/codigo_postal/' + this.user.adress.postalCode.value,{}, {}).subscribe(
+      data => {
+        if (this.user.adress.adressName.value === this.loadingTextField) {
+          this.user.adress.adressName.value = data['colonias'][0] && data['colonias'][0] + '';
+        }
+        if (this.user.adress.city.value === this.loadingTextField) {
+          this.user.adress.city.value = data['municipio'];
+        }
+      },
+      error => {
+        if (this.user.adress.adressName.value === this.loadingTextField) {
+          this.user.adress.adressName.value = '';
+        }
+        if (this.user.adress.city.value === this.loadingTextField) {
+          this.user.adress.city.value = '';
+        }
+      },
+      () => {
+        if (!this.user.adress.country.value) {
+          $('.countries .select-dropdown').click();
+          setTimeout(() => {
+            $('.select-dropdown li span .bfh-flag-MX').click();
+            setTimeout(() => {$('.countries .select-dropdown').click();}, 1000);
+          }, 500);
+        }
+      }
+    );
+  }
 };
