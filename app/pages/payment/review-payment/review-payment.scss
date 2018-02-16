@@ -18,7 +18,7 @@ review-payment {
   }
   .col.extra-space {
     padding-top: 10px;
-    margin: 0 10px;
+    margin: 0 10px 50px 10px;
   }
   .wrong-icon {
     color: $redAccent;
@@ -54,8 +54,11 @@ review-payment {
       color: $greenMat;
       padding: 50px 3px;
       @media screen and (max-device-width: $screen-mobile-max) {
-        input {
+        input#money-input {
             width: 35%;
+        }
+        .under {
+          padding: 0 100px;
         }
       }
     }

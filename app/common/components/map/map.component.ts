@@ -41,6 +41,7 @@ public custom: CustomMarker;
     if (changes.locationAdress && changes.locationAdress.currentValue) {
       const formatedAddress: string = changes.locationAdress.currentValue;
       this.getLatLng(formatedAddress, this);
+      this.mapDef.setZoom(this.getZoomFromRange(this.rangeRadius));
     }else if (changes.rangeRadius && changes.rangeRadius.currentValue && this.custom) {
         const range: number = changes.rangeRadius.currentValue;
         this.custom.remove();
@@ -133,7 +134,6 @@ public custom: CustomMarker;
         ctrl.locationAdressEmiter.emit(formatedAddresss);
         ctrl.addMarker(ctrl.location, ctrl.mapDef, ctrl, {animation: google.maps.Animation.DROP});
         ctrl.mapDef.panTo(ctrl.location);
-        ctrl.mapDef.setZoom(15);
       }
     });
   }
@@ -212,12 +212,13 @@ export class CustomMarker extends google.maps.OverlayView {
 
     if(pointMin && pointMax) {
       const disTwoPoint = Math.sqrt(Math.pow(pointMax.x - pointMin.x, 2) + Math.pow(pointMax.y - pointMin.y, 2)) / 2;
-      div.style.top = (point.y - disTwoPoint / 2) * (point.y / point.y) + 'px';
-      div.style.left = (point.x - disTwoPoint / 2) * (point.x / point.x) + 'px';
+      // generating the top pixel is the max + 25% of its width
+      div.style.top = pointMax.y - Math.round(disTwoPoint / 4)  + 'px';
+      // for the left when need to not the 25% but the 50% of its width
+      div.style.left = pointMax.x + Math.round(disTwoPoint / 2) + 'px';
       div.style.width = disTwoPoint + 'px';
       div.style.height = disTwoPoint + 'px';
     }
-    //console.log('div', this.div);
   }
 
   public remove() {

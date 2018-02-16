@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {UserService} from '../../common/services/user.service';
 import {GlobalFunctionService} from '../../common/services/global-function.service';
 require('../../common/plugins/masks.js');
+const imgCompress = require('@xkeshi/image-compressor');
 
 export interface formObj {
   valid: boolean;
@@ -33,6 +34,7 @@ export class accountComponent {
   public countries: any;
   public binaryImg: any;
   public loading: boolean;
+  public loadingTextField: string = 'Cargando...';
   @Input()
   public title: string = 'Crea tu cuenta';
   @Input()
@@ -150,15 +152,17 @@ export class accountComponent {
 
   public filePicChange(ev: any): void {
     const file: File = ev.target.files[0];
-      this.binaryImg = file;
       if (ev.target && ev.target.files && file && file.type.match('image.*')) {
         try {
-          const reader = new FileReader();
-          reader.onload = (event: any) => {
-            this.user.pic.value = event.target.result;
-            this.user.pic.valid = true;
-          };
-          reader.readAsDataURL(file);
+          this.minifyImgFile(file).then(miniFile => {
+          this.binaryImg = miniFile;
+            const reader = new FileReader();
+            reader.onload = (event: any) => {
+              this.user.pic.value = event.target.result;
+              this.user.pic.valid = true;
+            };
+            reader.readAsDataURL(miniFile);
+          });
         }catch (error) {
           // do nothing
         }
@@ -186,7 +190,7 @@ export class accountComponent {
   }
 
   public sucessImgToBucket(data: any): void {
-    setTimeout(() => {this.userService.isAvatarSet = true;}, 1000);
+    setTimeout(() => {this.userService.isAvatarSet = true;}, 2000);
   }
 
   public toHomePage(): void {
@@ -225,8 +229,8 @@ export class accountComponent {
         'number': user.contact.phone.value,
          'area_code': ''
       },
-      'email': user.contact.email.value,
-      'username': user.contact.email.value,
+      'email': user.contact.email.value.toLowerCase(),
+      'username': user.contact.email.value.toLowerCase(),
       'confirm_password': user.access.password.value,
       'password': user.access.password2.value,
       'avatarFileType': 'image/jpeg'
@@ -287,5 +291,53 @@ export class accountComponent {
         },
       )
     }
-  } 
+  }
+
+  public minifyImgFile(file: File): Promise<any> {
+    return new Promise((resolve: any, reject: any) => {
+      new imgCompress(file, {
+        quality: .7,
+        maxWidth: 250,
+         success(result: any) {
+          console.log('reducing file zise quality: 0.7 width: 250px', result);
+          resolve(result);
+         },
+          error(error: any) {
+            reject(error);
+          }
+      });
+    });
+  }
+
+  public getValuesFromPcodes(): void {
+    this.user.adress.adressName.value = this.loadingTextField;
+    this.user.adress.city.value = this.loadingTextField;
+    this.api.get('https://api-codigos-postales.herokuapp.com/v2/codigo_postal/' + this.user.adress.postalCode.value,{}, {}).subscribe(
+      data => {
+        if (this.user.adress.adressName.value === this.loadingTextField) {
+          this.user.adress.adressName.value = data['colonias'][0] && data['colonias'][0] + '';
+        }
+        if (this.user.adress.city.value === this.loadingTextField) {
+          this.user.adress.city.value = data['municipio'];
+        }
+      },
+      error => {
+        if (this.user.adress.adressName.value === this.loadingTextField) {
+          this.user.adress.adressName.value = '';
+        }
+        if (this.user.adress.city.value === this.loadingTextField) {
+          this.user.adress.city.value = '';
+        }
+      },
+      () => {
+        if (!this.user.adress.country.value) {
+          $('.countries .select-dropdown').click();
+          setTimeout(() => {
+            $('.select-dropdown li span .bfh-flag-MX').click();
+            setTimeout(() => {$('.countries .select-dropdown').click();}, 1000);
+          }, 500);
+        }
+      }
+    );
+  }
 };
