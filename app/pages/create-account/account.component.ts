@@ -111,6 +111,7 @@ export class accountComponent {
 
   public createUser (form: any): void {
     // Check for undefined and set formvalue to false
+    console.log('Form with cpatcha', form);
     let validForm: boolean = true;
     const userFirts: any[] = Object.keys(this.user);
     this.globalService.clearErroMessages();
