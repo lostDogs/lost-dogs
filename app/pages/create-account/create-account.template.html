@@ -168,8 +168,8 @@
           </button>
         </div>
       </div>
-       <div class="row centered row-extraspace" *ngIf="!profilePage">
-          <div class="col l4 s8 g-recaptcha captcha-mobile" data-sitekey="6LdnUEcUAAAAAKr9B2gqB23-sZsHN3tXRLYadPBX" data-callback="captchaSubmit"></div> 
+       <div class="row centered row-extraspace">
+          <div id="g-captcha" class="col l4 s8 captcha-mobile"></div> 
        </div>
       <div class="row centered row-extraspace" *ngIf="!profilePage">
         <button class="btn waves-effect col l4 s8 action" type="submit" [disabled]="loading">

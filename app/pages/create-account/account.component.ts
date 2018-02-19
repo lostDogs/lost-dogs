@@ -76,6 +76,8 @@ export class accountComponent {
         password2: {valid: true, value: undefined, required: true, label: 'Repetir contraseña'}
       }
     };
+    window['captchaSubmit'] = this.captchaSubmit;
+    window['onloadCallback'] = this.onloadCallback;
   }
 
   public ngAfterViewInit(): void {
@@ -345,5 +347,13 @@ export class accountComponent {
 
   public captchaSubmit(data: any): void {
     console.log('Captcha submitFrom', data);
+  }
+
+  public onloadCallback(): void {
+    window['grecaptcha'].render('html_element', {
+      'sitekey' : '6LdnUEcUAAAAAKr9B2gqB23-sZsHN3tXRLYadPBX',
+      'callback': window['captchaSubmit']
+    })
+
   }
 };
