@@ -8,7 +8,7 @@ module.exports = {
         app: ['./app/main.ts']
   },
   output: { 
-    path: 'public',
+    path: '/public',
     chunkFilename: 'module-chunk.js',
     filename: 'app.bundle.js'
   },
