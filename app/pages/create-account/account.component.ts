@@ -341,4 +341,8 @@ export class accountComponent {
       }
     );
   }
+
+  public captchaSubmit(data: any): void {
+    console.log('Captcha submitFrom', data);
+  }
 };

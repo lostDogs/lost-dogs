@@ -1,11 +1,18 @@
 @import '../../common/styles/variables.scss';
 
- .centered {
+.centered {
   display: flex;
-   * {
+  * {
     margin: auto;  
-    }
-   }
+  }
+}
+
+ .captcha-mobile {
+  @media screen and (max-device-width: $screen-mobile-max) {
+    transform: scale(1.5);
+    padding-bottom: 30px;
+  }
+ }
 
   div.main-title {
     margin-top: 99px;
