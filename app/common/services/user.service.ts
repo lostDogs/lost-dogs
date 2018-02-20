@@ -21,6 +21,7 @@ export class UserService {
   public forgotSucess: boolean;
   public tempUserName: any;
   public noAuthSubs: Subscription;
+  public validCaptcha: boolean;
 
   constructor (public api: ApiService, public router: Router, public globalService: GlobalFunctionService, public CookieService: CookieManagerService) {
     this.user = {};
@@ -177,4 +178,54 @@ export class UserService {
     this.CookieService.deleteCookie('authToken');
     this.user = {};
   }
+
+  public captchaSubmit(data: any): void {
+    console.log('Captcha submitFrom', data);
+    const headers: any = {
+      'Authorization': 'token ' + this.token
+    };
+    this.api.post(this.api.API_PROD + 'users/captcha',{captchaVal: data}, headers).subscribe(
+      data => {
+        console.log('data', data);
+        this.validCaptcha = data['sucess'];
+      },
+      error => {
+        console.log('error', error);
+      }
+    );
+  }
+
+  public onloadCallback(): void {
+    window['grecaptcha'].render('g-captcha', {
+      'sitekey' : '6LdnUEcUAAAAAKr9B2gqB23-sZsHN3tXRLYadPBX',
+      'callback': window['captchaSubmit']
+    });
+    setTimeout(() => {$('body div').last().children().addClass('iframe-challenge-mobile')}, 3000);
+  }
+
+  public expiredCaptcha(): void {
+    this.validCaptcha = undefined;
+  }
+
+  public loadCaptchaScript( ): any {
+    const scripts: JQuery = $('script');
+    const dynamicScripts: string[] = ['https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit'];
+    const nodeType: string = 'text/javascript';
+    const charset: string = 'UTF-8';
+    for (let i = 0; i < scripts.length; ++i) {
+        if (scripts[i].getAttribute('src') && scripts[i].getAttribute('src').includes(dynamicScripts[0])) {
+            return;
+        }
+    }
+    dynamicScripts.forEach((scriptName: string, scriptIndex: number) => {
+      let node = document.createElement('script');
+      node.type = nodeType;
+      node.charset = charset;
+      node.src = scriptName;
+      node.async = true;
+      node.id = 'captcha-script';
+      node.setAttribute('defer','');
+      document.getElementsByTagName('head')[0].appendChild(node);
+    });
+  }  
 }

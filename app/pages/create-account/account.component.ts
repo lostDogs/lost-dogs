@@ -76,6 +76,11 @@ export class accountComponent {
         password2: {valid: true, value: undefined, required: true, label: 'Repetir contraseña'}
       }
     };
+    //Catptcha code incliding the ngOnDestroy.
+    window['captchaSubmit'] = this.userService.captchaSubmit.bind(this.userService);
+    window['expiredCaptcha'] = this.userService.expiredCaptcha.bind(this.userService);
+    window['onloadCallback'] = this.userService.onloadCallback;
+    this.userService.loadCaptchaScript();
   }
 
   public ngAfterViewInit(): void {
@@ -110,10 +115,16 @@ export class accountComponent {
   }
 
   public createUser (form: any): void {
+    this.globalService.clearErroMessages();
+    if (!this.userService.validCaptcha) {
+      this.globalService.setErrorMEssage('Parece que eres un robot');
+      this.globalService.setSubErrorMessage('error en re-captcha');
+      this.globalService.openErrorModal();
+      return;
+    }
     // Check for undefined and set formvalue to false
     let validForm: boolean = true;
     const userFirts: any[] = Object.keys(this.user);
-    this.globalService.clearErroMessages();
     userFirts.forEach((userKey: any, elementIndex: number) => {
       const element: any = this.user[userKey];
       const propKey: any = Object.keys(element);
@@ -335,14 +346,16 @@ export class accountComponent {
           $('.countries .select-dropdown').click();
           setTimeout(() => {
             $('.select-dropdown li span .bfh-flag-MX').click();
-            setTimeout(() => {$('.countries .select-dropdown').click();}, 1000);
+            setTimeout(() => {$('.countries .select-dropdown').click();}, 500);
           }, 500);
         }
       }
     );
   }
 
-  public captchaSubmit(data: any): void {
-    console.log('Captcha submitFrom', data);
+  public ngOnDestroy(): void {
+    this.userService.validCaptcha = undefined;
+    $('script#captcha-script').detach();
   }
+
 };
