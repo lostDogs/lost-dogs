@@ -77,7 +77,7 @@ export class ReviewComponent {
   public toPaymentForm(): void {
     this.LostService.openPayment = true;
     setTimeout(() => {
-      const scrollTo: number = this.descriptionDom.nativeElement.offsetTop + 120 ;
+      const scrollTo: number = this.descriptionDom.nativeElement.offsetTop + 120;
         $('html, body').animate({ scrollTop: scrollTo }, 600);
     }, 5);
   }

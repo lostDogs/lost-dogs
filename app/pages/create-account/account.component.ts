@@ -116,12 +116,6 @@ export class accountComponent {
 
   public createUser (form: any): void {
     this.globalService.clearErroMessages();
-    if (!this.userService.validCaptcha) {
-      this.globalService.setErrorMEssage('Parece que eres un robot');
-      this.globalService.setSubErrorMessage('error en re-captcha');
-      this.globalService.openErrorModal();
-      return;
-    }
     // Check for undefined and set formvalue to false
     let validForm: boolean = true;
     const userFirts: any[] = Object.keys(this.user);
@@ -154,9 +148,13 @@ export class accountComponent {
         }
       }
     });
-    if (validForm) {
+    if (validForm && this.userService.validCaptcha) {
       this.postUser();
     } else {
+      if (!this.userService.validCaptcha && validForm) {
+        this.globalService.setErrorMEssage('Parece que eres un robot');
+        this.globalService.setSubErrorMessage('error en re-captcha');
+      }
       this.globalService.openErrorModal();
     }
   }

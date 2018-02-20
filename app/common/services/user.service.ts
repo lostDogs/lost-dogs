@@ -180,16 +180,16 @@ export class UserService {
   }
 
   public captchaSubmit(data: any): void {
-    console.log('Captcha submitFrom', data);
     const headers: any = {
       'Authorization': 'token ' + this.token
     };
     this.api.post(this.api.API_PROD + 'users/captcha',{captchaVal: data}, headers).subscribe(
       data => {
         console.log('data', data);
-        this.validCaptcha = data['sucess'];
+        this.validCaptcha = data['success'];
       },
       error => {
+        this.validCaptcha = undefined;
         console.log('error', error);
       }
     );
