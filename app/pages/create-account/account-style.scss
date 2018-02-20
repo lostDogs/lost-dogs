@@ -7,11 +7,17 @@
   }
 }
 
- .captcha-mobile {
+ .col.captcha-mobile {
   @media screen and (max-device-width: $screen-mobile-max) {
     transform: scale(1.5);
     padding-bottom: 30px;
   }
+ }
+
+ .iframe-challenge-mobile {
+  @media screen and (max-device-width: $screen-mobile-max) {
+    transform: scale(2);
+  }  
  }
 
   div.main-title {

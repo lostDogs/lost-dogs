@@ -66,7 +66,7 @@ export class RefundComponent {
   public scrollTo(domEl: ElementRef): void {
     if (domEl.nativeElement) {
       setTimeout(() => {
-        const offset = domEl.nativeElement.offsetTop + 120;
+        const offset = domEl.nativeElement.offsetTop - 120;
         $('html, body').animate({ scrollTop: offset}, 700);
       }, 300);
     }
