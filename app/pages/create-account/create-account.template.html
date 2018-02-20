@@ -168,7 +168,7 @@
           </button>
         </div>
       </div>
-       <div class="row centered row-extraspace">
+       <div class="row centered row-extraspace" [hidden]="profilePage">
           <div id="g-captcha" class="centered captcha-mobile" data-expired-callback="expiredCaptcha"></div> 
        </div>
       <div class="row centered row-extraspace" *ngIf="!profilePage">
