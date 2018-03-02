@@ -168,6 +168,9 @@
           </button>
         </div>
       </div>
+       <div class="row centered row-extraspace" [hidden]="profilePage">
+          <div id="g-captcha" class="centered captcha-mobile" data-expired-callback="expiredCaptcha"></div> 
+       </div>
       <div class="row centered row-extraspace" *ngIf="!profilePage">
         <button class="btn waves-effect col l4 s8 action" type="submit" [disabled]="loading">
         <div *ngIf="!loading">Crear cuenta <i class="material-icons right">perm_identity</i></div>
