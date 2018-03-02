@@ -116,6 +116,7 @@ export class accountComponent {
 
   public createUser (form: any): void {
     this.globalService.clearErroMessages();
+    this.userService.isAvatarSet = undefined;
     // Check for undefined and set formvalue to false
     let validForm: boolean = true;
     const userFirts: any[] = Object.keys(this.user);
@@ -199,7 +200,7 @@ export class accountComponent {
   }
 
   public sucessImgToBucket(data: any): void {
-    setTimeout(() => {this.userService.isAvatarSet = true;}, 2000);
+    setTimeout(() => {this.userService.isAvatarSet = true;}, 4000);
   }
 
   public toHomePage(): void {
