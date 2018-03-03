@@ -61,7 +61,7 @@ export class RewardPickerComponent {
     console.log('scanned', event);
     this.scannedValue = event;
     this.invalidQr = false;
-    this.img = 'http://cdn.lostdog.mx/assets/img/temp-qrcode.jpeg';
+    this.img = 'https://www.lostdog.mx/assets/img/temp-qrcode.jpeg';
     this.getTransaction(this.userService.token, this.scannedValue);
   }
     public getCameras(event: string): void {

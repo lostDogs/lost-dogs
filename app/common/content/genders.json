@@ -1,4 +1,4 @@
 [
-  {"imgUrl": "http://cdn.lostdog.mx/assets/img/male-icon1.png", "name": "macho", "id": true},
-  {"imgUrl": "http://cdn.lostdog.mx/assets/img/female-icon1.png", "name": "hembra", "id": false}
+  {"imgUrl": "https://www.lostdog.mx/assets/img/male-icon1.png", "name": "macho", "id": true},
+  {"imgUrl": "https://www.lostdog.mx/assets/img/female-icon1.png", "name": "hembra", "id": false}
 ]
