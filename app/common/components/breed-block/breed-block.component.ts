@@ -12,7 +12,7 @@ export class BreedBlockComponent {
   public elements: any[];
   public neverAgain: boolean = true;
   public breeds: any = breedContent;
-  public dogImgUrl: string = 'http://cdn.lostdog.mx/assets/img/dogs/';
+  public dogImgUrl: string = 'https://www.lostdog.mx/assets/img/dogs/';
   public maxSelection: number = 1;
   public forceSelection: number;
 

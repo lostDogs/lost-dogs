@@ -56,7 +56,7 @@
   </div>
   <div class="promise-reponses" [ngClass]="{'blur-filter': dogCardService.open}">
     <div class="loading-block" [hidden]="!lostService.searchService.loading">
-      <img class="gif" src="http://cdn.lostdog.mx/assets/img/loading-grey.gif" alt="Cargando..">
+      <img class="gif" src="https://www.lostdog.mx/assets/img/loading-grey.gif" alt="Cargando..">
     </div>
     <div class="no-results-block" *ngIf="!(lostService.searchService.results && lostService.searchService.results.length) && !lostService.searchService.loading && (lostService.pagePosition !== lostService.sequence.length - 1)">
       <h4><b>No</b> hay resultados!</h4>
