@@ -21,8 +21,8 @@ export class OpenSpayService {
   public init: boolean;
   public tokenId: any;
   public sucessPaymentId: string;
-  public MERCHANT_ID: string = 'mrvo5dylz7xeq7pnyoqx';
-  public PUBLIC_KEY: string = 'pk_85e195c76956425d973944d88521d47e';
+  public MERCHANT_ID: string = process.env.MERCHANT_ID;
+  public PUBLIC_KEY: string = process.env.PUBLIC_KEY;
   public trasnferData: any;
   public loadingTrasnfer: boolean;
   public refundData: any;
@@ -34,7 +34,7 @@ export class OpenSpayService {
       this.openPay =window['OpenPay'];
       this.openPay.setId(this.MERCHANT_ID);
       this.openPay.setApiKey(this.PUBLIC_KEY);
-      this.openPay.setSandboxMode(true);
+      this.openPay.setSandboxMode(process.env.ENV === 'prd' ? true : false);
       this.init = true;
     }
 
