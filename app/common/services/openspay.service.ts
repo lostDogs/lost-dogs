@@ -49,8 +49,10 @@ export class OpenSpayService {
           resolve(suscess);
         },
         (error: any) => {
-          console.log('error', error);
+          console.error('error in token >', error);
           this.tokenId = undefined;
+          this.globalService.clearErroMessages();
+          this.globalService.setErrorMEssage('Error al generar el token');
           reject(error);
         })
     });
@@ -112,7 +114,7 @@ export class OpenSpayService {
        this.globalService.setErrorMEssage('Ops! no hacer el cargo por el momento');
        this.globalService.setSubErrorMessage(error._body && error._body.code);
        this.globalService.openErrorModal();
-        console.error('error making charge to customers', error);
+        console.error('error making charge to customers >', error);
       });
   }
 
@@ -135,7 +137,7 @@ export class OpenSpayService {
          this.globalService.setSubErrorMessage(error._body.code);
        }
        this.globalService.openErrorModal();
-        console.error('error making a transfer', error);
+        console.error('error making a transfer >', error);
       });
   }
 
@@ -152,7 +154,7 @@ export class OpenSpayService {
        this.globalService.clearErroMessages();
        this.globalService.setErrorMEssage('Ops! no hacer el cargo por el momento');
        this.globalService.openErrorModal();
-       console.error('error at refund call', error);
+       console.error('error at refund call >', error);
       }
     );
   }
