@@ -52,7 +52,7 @@ export class accountComponent {
     this.countries = [{"id": "MX", "name": "Mexico"}];
     // define the user object before
     this.user = {
-      pic: {value:'http://cdn.lostdog.mx/assets/img/profile-undef.png', valid: true, required: true, label: 'Imagen de perfil'},
+      pic: {value:'https://www.lostdog.mx/assets/img/profile-undef.png', valid: true, required: true, label: 'Imagen de perfil'},
       name: {
         first: {valid: true, value: undefined, required: true, label: 'Nombre'},
         last1: {valid: true, value: undefined, required: true, label: 'Apellido paterno'},
@@ -116,6 +116,7 @@ export class accountComponent {
 
   public createUser (form: any): void {
     this.globalService.clearErroMessages();
+    this.userService.isAvatarSet = undefined;
     // Check for undefined and set formvalue to false
     let validForm: boolean = true;
     const userFirts: any[] = Object.keys(this.user);
@@ -138,7 +139,7 @@ export class accountComponent {
         }
       } else {
         const fieldName = element.label ? element.label : userKey;
-        if (element.required && (!element.value || element.value === 'http://cdn.lostdog.mx/assets/img/profile-undef.png' ) ) {
+        if (element.required && (!element.value || element.value === 'https://www.lostdog.mx/assets/img/profile-undef.png' ) ) {
           element.valid = false;
           validForm = false;
           this.globalService.setErrorMEssage(fieldName +' requerido');
@@ -177,7 +178,7 @@ export class accountComponent {
         }
       } else {
         this.user.pic.valid = false;
-        this.user.pic.value = 'http://cdn.lostdog.mx/assets/img/profile-undef.png';
+        this.user.pic.value = 'https://www.lostdog.mx/assets/img/profile-undef.png';
         console.error('not an image');
       }
   }
@@ -199,7 +200,7 @@ export class accountComponent {
   }
 
   public sucessImgToBucket(data: any): void {
-    setTimeout(() => {this.userService.isAvatarSet = true;}, 2000);
+    setTimeout(() => {this.userService.isAvatarSet = true;}, 4000);
   }
 
   public toHomePage(): void {

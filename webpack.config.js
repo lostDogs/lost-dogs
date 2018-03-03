@@ -90,7 +90,14 @@ module.exports = {
         'window.jQuery' : 'jquery',
          Hammer: 'hammerjs/hammer'
     }),
-    new webpack.ContextReplacementPlugin(/protobufjs/, /^$/)
+    new webpack.ContextReplacementPlugin(/protobufjs/, /^$/),
+        new webpack.DefinePlugin({'process.env': {
+          'ENV': JSON.stringify('prd'),
+          'MERCHANT_ID': JSON.stringify('mxvt14ztaqjv8hfq61jh'),
+          'PUBLIC_KEY': JSON.stringify('pk_e7d314e2c176477f86220b5801e813da'),
+          'API_URL': JSON.stringify('https://lostdog-api.herokuapp.com/api/')
+          }
+        })
   ],
   node: {
     fs: 'empty'

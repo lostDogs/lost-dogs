@@ -29,7 +29,7 @@
       <div class="row input-fields">
         <div class="input-field  alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': !rewardForm.accountNumber.valid}" (keyup)="rewardForm.accountNumber.valid = validate.onlyNumbers(rewardForm.accountNumber.value);"  (change)="rewardForm.accountNumber.valid = validate.onlyNumbers(rewardForm.accountNumber.value)">
           <input type="text" name="account" id="account" [(ngModel)]="rewardForm.accountNumber.value">
-          <label for="account">Número de cuenta o tarjeta
+          <label for="account">Clabe interbancaria
             <span for="account" [hidden]="rewardForm.accountNumber.valid">incorrecto</span>
           </label>
         </div>

@@ -44,7 +44,7 @@ export class LostFoundService {
   public reward: string;
   public comments: string;
   public defaultReward: string = '000,000.00';
-  public defaultDogPic: string = 'http://cdn.lostdog.mx/assets/img/default-dog-pic.jpg';
+  public defaultDogPic: string = 'https://www.lostdog.mx/assets/img/default-dog-pic.jpg';
 
   public loadingSave: boolean;
   public savedSuccess: boolean;

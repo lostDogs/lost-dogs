@@ -206,8 +206,8 @@ export class FormPaymentComponent {
         const chargeObj: any = this.openSpayService.mapChargeRequest(this.rewardAmount, this.userService.user,transDesc);
         if (this.transcationId) {
           this.openSpayService.chargeClient(chargeObj, this.userService.token, this.transcationId).add(() => {
+            this.loading = false;
             if (this.openSpayService.sucessPaymentId) {
-              this.loading = false;
               this.sucess = true;
               this.globalService.paymentRewardSucess = true;
               $('html, body').animate({ scrollTop: 0 }, 500);
@@ -215,8 +215,8 @@ export class FormPaymentComponent {
           });
         } else if (this.dogId) {
           this.mailingService.sendEmailsToUsers(false, this.userService.token, this.dogService.dogData._id, chargeObj).add(() => {
+            this.loading = false;
             if (!this.mailingService.errorInEmails) {
-              this.loading = false;
               this.sucess = true;
               this.globalService.paymentRewardSucess = true;
               $('html, body').animate({ scrollTop: 0 }, 500);
@@ -224,8 +224,8 @@ export class FormPaymentComponent {
           });
         } else if (this.chargeCreate) {
           this.lostService.saveToApi(chargeObj).add(() => {
+            this.loading = false;
             if (this.lostService.savedData) {
-              this.loading = false;
             }
           });
         }        
