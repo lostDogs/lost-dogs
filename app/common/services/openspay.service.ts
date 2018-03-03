@@ -34,7 +34,7 @@ export class OpenSpayService {
       this.openPay =window['OpenPay'];
       this.openPay.setId(this.MERCHANT_ID);
       this.openPay.setApiKey(this.PUBLIC_KEY);
-      this.openPay.setSandboxMode(process.env.ENV === 'prd' ? true : false);
+      this.openPay.setSandboxMode(process.env.ENV !== 'prd');
       this.init = true;
     }
 
