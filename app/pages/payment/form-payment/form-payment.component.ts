@@ -200,7 +200,7 @@ export class FormPaymentComponent {
 
   public proccedTransaction(): void {
     const tokenData: any = this.openSpayService.mapTokenData(this.creaditCard);
-    this.openSpayService.createToken(tokenData).then(() => {
+    this.openSpayService.createToken(tokenData).then((sucess: any) => {
       if (this.openSpayService.tokenId) {
         const transDesc: string = this.chargeCreate ? 'pago para reportar perro' : 'pago de recompensa de ' + this.userService.user.name + ' para el perro >' + this.dogService.dogData._id;
         const chargeObj: any = this.openSpayService.mapChargeRequest(this.rewardAmount, this.userService.user,transDesc);
@@ -230,6 +230,9 @@ export class FormPaymentComponent {
           });
         }        
       }
+    }).catch((error) => {
+      this.loading = false;
+      console.error('proccedTransaction error in token > ', error);
     });
   }
 
