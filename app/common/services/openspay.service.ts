@@ -53,6 +53,7 @@ export class OpenSpayService {
           this.tokenId = undefined;
           this.globalService.clearErroMessages();
           this.globalService.setErrorMEssage('Error al generar el token');
+          this.globalService.openErrorModal();
           reject(error);
         })
     });
