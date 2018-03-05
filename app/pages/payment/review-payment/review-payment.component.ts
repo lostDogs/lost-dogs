@@ -112,7 +112,8 @@ export class ReviewPaymentComponent {
     this.rewardSetted = true;
     this.reward = typeof  this.reward === 'string' ? this.reward : this.reward + '';
     this.reward = this.reward.replace('.','').replace(',', '');
-    this.reward =this.reward.slice(0, this.reward.length - 2) + '.' + this.reward.slice(this.reward.length - 2);
+    this.reward = (this.reward.slice(0, this.reward.length - 2) + '.' + this.reward.slice(this.reward.length - 2));
+    this.reward = ((+this.reward).toFixed(2)) + '';
   }
 
   public calcEstimatedReward(dog: any): string {
