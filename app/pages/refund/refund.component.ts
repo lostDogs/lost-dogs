@@ -4,6 +4,7 @@ import {UserService} from '../../common/services/user.service';
 import {OpenSpayService} from '../../common/services/openspay.service';
 import {MailingRewardService} from '../../common/services/mailing-reward.service';
 import {DogCardService} from '../../common/services/dog-card.service';
+import {GlobalFunctionService} from '../../common/services/global-function.service';
 
 @Component({
   selector: 'refund',
@@ -26,7 +27,8 @@ export class RefundComponent {
     public activeRoute: ActivatedRoute,
     public openPay: OpenSpayService,
     public rewardService: MailingRewardService,
-    public dogService: DogCardService
+    public dogService: DogCardService,
+    public globalService: GlobalFunctionService
   ) {
     this.openPay.refundData = undefined;
     this.rewardService.transaction = undefined;
@@ -35,6 +37,11 @@ export class RefundComponent {
       this.transcationId = params.transcation;
       this.rewardService.getTransaction(this.userService.token, this.transcationId).add(() => {
         if (this.rewardService.transaction.lost_id !== this.userService.user.username) {
+          this.router.navigate(['/login']);
+        } else if (/failed/g.test(this.rewardService.transaction.status) || /success/g.test(this.rewardService.transaction.status)) {
+          this.globalService.clearErroMessages();
+          this.globalService.setErrorMEssage(/failed/g.test(this.rewardService.transaction.status) ? 'Ya se realizó un rembolso previo' : 'Ya se pagó una recompensa');
+          this.globalService.openErrorModal();
           this.router.navigate(['/login']);
         }
       });

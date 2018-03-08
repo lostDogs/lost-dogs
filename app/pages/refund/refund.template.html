@@ -6,7 +6,7 @@
     <div class="refund-block row">
       <h5>¿Estás seguro de que quieres el <b>reembolso</b>?</h5>
       <h5 class="extra-padding-top" *ngIf="rewardService.transaction && rewardService.transaction.amount">Cantidad: <span class="money"> $ {{rewardService.transaction.amount}} MXN</span></h5>
-      <button class="btn waves-effect action" [disabled]="nextSure || !(rewardService.transaction && rewardService.transaction.amount) || (rewardService.transaction && rewardService.transaction.status === 'failed') " (click)="nextStep()">si</button>
+      <button class="btn waves-effect action" [disabled]="nextSure || !(rewardService.transaction && rewardService.transaction.amount) || (rewardService.transaction && rewardService.transaction.status === 'failed')" (click)="nextStep()">si</button>
     </div>
     <div class="refund-block" [hidden]="!nextSure" #RefundReason>
       <h5>¿Cuál es la razón?</h5>

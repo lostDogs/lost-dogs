@@ -134,15 +134,19 @@ export class UserService {
         this.tempUserName = undefined;
       },
       error => {
+        const bodyCode: string = JSON.parse(error._body)['code'];
         let messsage: string;
         this.forgotloading = false;
         this.forgotSucess = false;
+        this.globalService.clearErroMessages();
         if (error.status === 404) {
           messsage = 'Usuario no encontrado';
-        }else {
+        } else if (error.status === 402 || /bounce/g.test(bodyCode) || /omplain/g.test(bodyCode)) {
+          messsage = 'Tu correo ha sido marcado como invalido';
+          this.globalService.setSubErrorMessage('Contacta soporte@lostdog.mx para cambiarlo');
+        } else {
           messsage = 'hubo un problema al enviar el correo';
         }
-        this.globalService.clearErroMessages();
         this.globalService.setErrorMEssage(messsage);
         this.globalService.openErrorModal();        
       }
