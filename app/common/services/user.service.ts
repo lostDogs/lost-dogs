@@ -174,9 +174,12 @@ export class UserService {
   public logout(): void {
     this.isAuth = false;
     this.isAvatarSet = false;
+    this.token = undefined;
+    this.user = {};
     this.CookieService.deleteCookie(this.userCookieName);
     this.CookieService.deleteCookie('authToken');
-    this.user = {};
+    console.log('login with no values auth');
+    this.noAuthSubs = this.login(undefined, undefined, true);
   }
 
   public captchaSubmit(data: any): void {
