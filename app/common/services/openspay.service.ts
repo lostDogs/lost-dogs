@@ -110,12 +110,18 @@ export class OpenSpayService {
         this.sucessPaymentId = data['paymentResult'].id;
       },
       error => {
+        const bodyCode: string = JSON.parse(error._body)['code'];
         this.sucessPaymentId = undefined;
        this.globalService.clearErroMessages();
-       this.globalService.setErrorMEssage('Ops! no hacer el cargo por el momento');
-       this.globalService.setSubErrorMessage(error._body && error._body.code);
+       if (error.status === 402 || /bounce/g.test(bodyCode) || /omplain/g.test(bodyCode)) {
+         this.globalService.setErrorMEssage('Tu correo ha sido marcado como invalido');
+         this.globalService.setSubErrorTemplate('cambialo en <a  routerLink="/profile/edit">Mi cuenta</a>');
+       } else {
+         this.globalService.setErrorMEssage('Ops! no hacer el cargo por el momento');
+         this.globalService.setSubErrorMessage(error._body && error._body.code);
+       }
        this.globalService.openErrorModal();
-        console.error('error making charge to customers >', error);
+       console.error('error making charge to customers >', error);
       });
   }
 

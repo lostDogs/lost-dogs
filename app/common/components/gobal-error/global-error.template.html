@@ -4,6 +4,7 @@
 <div class="tap-target" data-activates="menu">
   <div class="tap-target-content">
     <h4 *ngFor="let errorMessage of globalService.errorMessages">{{errorMessage}}</h4>
-    <p *ngFor="let subErrorMessage of globalService.subErrorMessage">{{subErrorMessage}}</p>
+    <p  class="sub-error" *ngFor="let subErrorMessage of globalService.subErrorMessage">{{subErrorMessage}}</p>
+    <p class="sub-error" id="subErrorTemplate"></p>
   </div>
 </div>

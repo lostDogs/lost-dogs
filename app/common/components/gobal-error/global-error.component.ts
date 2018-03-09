@@ -11,7 +11,6 @@ export class GlobalError {
 
   constructor(public globalService: GlobalFunctionService) {}
 
-
   public open(): boolean {
       $('.btn.btn-floating.tap-target-origin').removeClass('blue');
       $('div.tap-target-wrapper .tap-target').removeClass('blue');
