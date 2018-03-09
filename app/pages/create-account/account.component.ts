@@ -45,6 +45,7 @@ export class accountComponent {
   public disableButton: (userBlock: any, originalUserBlock: any) => void;
   @Input()
   public hoverRetainState: () => void;
+  public state: string;
   //only used in profile/edit
   public oldPassword: string;
 
@@ -232,6 +233,7 @@ export class accountComponent {
         'neighborhood': user.adress.adressName.value,
         'zip_code': user.adress.postalCode.value,
         'city': user.adress.city.value,
+        'state': this.state || 'NA',
         'country': user.adress.country.value,
         'street': user.adress.street.value
       },
@@ -338,6 +340,7 @@ export class accountComponent {
         if (this.user.adress.city.value === this.loadingTextField) {
           this.user.adress.city.value = data['municipio'];
         }
+        this.state = data['estado'];
       },
       error => {
         if (this.user.adress.adressName.value === this.loadingTextField) {
