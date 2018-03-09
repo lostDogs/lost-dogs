@@ -280,9 +280,16 @@ export class accountComponent {
       if (userBlock.password) {
         url = url + '/changePassword';
         userToEdit = {
-          new_password: userBlock.password.value,
-          confirm_password: userBlock.password2.value,
-          old_password: this.oldPassword
+          'new_password': userBlock.password.value,
+          'confirm_password': userBlock.password2.value,
+          'old_password': this.oldPassword
+        }
+      }else if (userBlock.contact) {
+        userToEdit = {};
+        if (userBlock.contact.phone) {
+          userToEdit.phone_number.number = userBlock.contact.phone.value;
+        } else if (userBlock.contact.email){
+          userToEdit.email = userBlock.contact.email.value.toLowerCase();
         }
       }
       const headers: any = {
