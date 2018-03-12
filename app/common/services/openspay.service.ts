@@ -137,13 +137,16 @@ export class OpenSpayService {
         this.loadingTrasnfer = false;
       },
       error => {
-       this.loadingTrasnfer = false;
-       this.globalService.clearErroMessages();
-       this.globalService.setErrorMEssage('Ops! no hacer el cargo por el momento');
-       if (error._body && error._body.code) {
-         this.globalService.setSubErrorMessage(error._body.code);
-       }
-       this.globalService.openErrorModal();
+        this.loadingTrasnfer = false;
+        this.globalService.clearErroMessages();
+        const bodyCode: string = JSON.parse(error._body)['code'];
+        if (/Refund/g.test(bodyCode) || /Reward/g.test(bodyCode) && error.status === 409) {
+          this.globalService.setErrorMEssage(/Reward/g.test(bodyCode) ? 'Ya se solicitó la recompensa' : 'Ya se solicitó el rembolso');
+        } else {
+          this.globalService.setErrorMEssage('Ups! no hacer el cargo por el momento');
+          this.globalService.setSubErrorMessage('Intenta más tarde!');
+        }
+        this.globalService.openErrorModal();
         console.error('error making a transfer >', error);
       });
   }
@@ -158,9 +161,14 @@ export class OpenSpayService {
       },
       error => {
         this.refundData = undefined;
-       this.globalService.clearErroMessages();
-       this.globalService.setErrorMEssage('Ops! no hacer el cargo por el momento');
-       this.globalService.openErrorModal();
+        this.globalService.clearErroMessages();
+        const bodyCode: string = JSON.parse(error._body)['code'];
+        if (/Refund/g.test(bodyCode) || /Reward/g.test(bodyCode) && error.status === 409) {
+          this.globalService.setErrorMEssage(/Reward/g.test(bodyCode) ? 'Ya se solicitó la recompensa' : 'Ya se solicitó el rembolso');
+        } else {
+          this.globalService.setErrorMEssage('Ups! no hacer el rembolso por el momento');
+          this.globalService.setSubErrorMessage('Intenta más tarde!');
+        }
        console.error('error at refund call >', error);
       }
     );

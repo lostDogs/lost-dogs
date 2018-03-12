@@ -36,11 +36,15 @@ export class RefundComponent {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.transcationId = params.transcation;
       this.rewardService.getTransaction(this.userService.token, this.transcationId).add(() => {
-        if (this.rewardService.transaction.lost_id !== this.userService.user.username) {
-          this.router.navigate(['/login']);
-        } else if (/failed/g.test(this.rewardService.transaction.status) || /success/g.test(this.rewardService.transaction.status)) {
+        if (this.rewardService.transaction && this.rewardService.transaction.lost_id !== this.userService.user.id) {
           this.globalService.clearErroMessages();
-          this.globalService.setErrorMEssage(/failed/g.test(this.rewardService.transaction.status) ? 'Ya se realizó un rembolso previo' : 'Ya se pagó una recompensa');
+          this.globalService.setErrorMEssage('No eres el usuario correcto');
+          this.globalService.openErrorModal();
+          this.router.navigate(['/login']);
+
+        } else if (this.rewardService.transaction && (/failed/g.test(this.rewardService.transaction.status) || /success/g.test(this.rewardService.transaction.status))) {
+          this.globalService.clearErroMessages();
+          this.globalService.setErrorMEssage(/failed/g.test(this.rewardService.transaction.status) ? 'Ya se realizó un rembolso previo' : 'Ya se pagó la recompensa');
           this.globalService.openErrorModal();
           this.router.navigate(['/login']);
         }

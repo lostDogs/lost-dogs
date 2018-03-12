@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs/Rx';
 import {GlobalFunctionService} from './global-function.service';
 import {CookieManagerService} from './cookie-manager.service';
 
+
 @Injectable()
 export class UserService {
   public isAuth: boolean;
@@ -56,6 +57,7 @@ export class UserService {
       this.user.address = response.address;
       this.user.phoneNumber = response.phone_number;
       this.user.username = response.username;
+      this.user.id = response.id;
       this.isAuth = true;
       this.CookieService.setCookie(this.userCookieName, this.user);
       

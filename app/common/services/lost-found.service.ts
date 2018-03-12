@@ -279,7 +279,7 @@ export class LostFoundService {
     dogObj[this.extrasApiKeys.name] = this.dogName || 'NA/';
     dogObj[this.extrasApiKeys.lost] = this.parentPage === 'lost';
     dogObj[this.extrasApiKeys.img] = 'application/jpeg';
-    dogObj[this.extrasApiKeys.reporter] = this.userService.user.username;
+    dogObj[this.extrasApiKeys.reporter] = this.userService.user.id;
     //dogObj[this.extrasApiKeys.images] = [this.dogPicture];
     dogObj[this.extrasApiKeys.images] =  ['image/jpeg'];
     dogObj[this.extrasApiKeys.address] = addressVal;
