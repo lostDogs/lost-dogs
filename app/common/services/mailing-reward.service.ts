@@ -3,6 +3,7 @@ import {ApiService} from '../services/api.service';
 import {Subscription} from 'rxjs/Rx';
 import {Router} from '@angular/router';
 import {GlobalFunctionService} from  '../services/global-function.service';
+import {OpenSpayService} from '../services/openspay.service';
 
 @Injectable()
 export class MailingRewardService {
@@ -12,7 +13,7 @@ export class MailingRewardService {
   public evidence: {picture?: string, text?: string};
   public uploadImgSucess: boolean;
 
-  constructor(private api: ApiService, public router: Router, public globalService: GlobalFunctionService) {
+  constructor(private api: ApiService, public router: Router, public globalService: GlobalFunctionService, public openSpayService: OpenSpayService) {
     this.evidence = {};   
   }
 
@@ -25,12 +26,16 @@ export class MailingRewardService {
     paymentInfo = paymentInfo || {};
     const url: string = this.api.API_PROD + 'dogs/' + dogId + '/' + lostFound;
     const evidenceObj = { 'fileType': localStorage.getItem('evidence-picture-0') && 'image/jpeg' , 'evidenceText': localStorage.getItem('evidence-text-0') };
+    this.openSpayService.dataPayment = undefined;
     return this.api.post(url , Object.assign(paymentInfo, evidenceObj), headers).subscribe(
       data => {
         this.errorInEmails = false;
         localStorage.removeItem('evidence-text-0');
         this.uploadImgSucess = !localStorage.getItem('evidence-picture-0');
         data['uploadEvidenceUrl'] && this.uploadToBucket(data['uploadEvidenceUrl']);
+        if (data['paymentResult']) {
+          this.openSpayService.dataPayment = data['paymentResult'];
+        }
       }, error => {
          this.errorInEmails = true;
          const bodyCode: string = JSON.parse(error._body)['code'];

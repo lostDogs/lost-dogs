@@ -26,6 +26,7 @@ export class OpenSpayService {
   public trasnferData: any;
   public loadingTrasnfer: boolean;
   public refundData: any;
+  public dataPayment: any;
 
   constructor (public api: ApiService, public globalService: GlobalFunctionService) {}
 
@@ -102,16 +103,20 @@ export class OpenSpayService {
   }
 
   public chargeClient(chargeobj: any, userToken: string, transID?: string): Subscription {
+    this.dataPayment = undefined;
+    this.sucessPaymentId = undefined;
     const headers: any = this.setheards(userToken);
     const url: string = transID ? 'transactions/' + transID + '/pay' : '/api/transactions/pay';
     return this.api.post(this.api.API_PROD + url , chargeobj, headers).subscribe(
       data => {
         console.log('charged data sucess!', data);
         this.sucessPaymentId = data['paymentResult'].id;
+        this.dataPayment = data['paymentResult'];
       },
       error => {
         const bodyCode: string = JSON.parse(error._body)['code'];
         this.sucessPaymentId = undefined;
+        this.dataPayment = undefined;
        this.globalService.clearErroMessages();
        if (error.status === 402 || /bounce/g.test(bodyCode) || /omplain/g.test(bodyCode)) {
          this.globalService.setErrorMEssage('Tu correo ha sido marcado como invalido');
