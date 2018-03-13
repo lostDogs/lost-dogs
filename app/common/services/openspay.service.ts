@@ -26,6 +26,7 @@ export class OpenSpayService {
   public trasnferData: any;
   public loadingTrasnfer: boolean;
   public refundData: any;
+  public dataPayment: any;
 
   constructor (public api: ApiService, public globalService: GlobalFunctionService) {}
 
@@ -49,8 +50,11 @@ export class OpenSpayService {
           resolve(suscess);
         },
         (error: any) => {
-          console.log('error', error);
+          console.error('error in token >', error);
           this.tokenId = undefined;
+          this.globalService.clearErroMessages();
+          this.globalService.setErrorMEssage('Error al generar el token');
+          this.globalService.openErrorModal();
           reject(error);
         })
     });
@@ -99,20 +103,30 @@ export class OpenSpayService {
   }
 
   public chargeClient(chargeobj: any, userToken: string, transID?: string): Subscription {
+    this.dataPayment = undefined;
+    this.sucessPaymentId = undefined;
     const headers: any = this.setheards(userToken);
     const url: string = transID ? 'transactions/' + transID + '/pay' : '/api/transactions/pay';
     return this.api.post(this.api.API_PROD + url , chargeobj, headers).subscribe(
       data => {
         console.log('charged data sucess!', data);
         this.sucessPaymentId = data['paymentResult'].id;
+        this.dataPayment = data['paymentResult'];
       },
       error => {
+        const bodyCode: string = JSON.parse(error._body)['code'];
         this.sucessPaymentId = undefined;
+        this.dataPayment = undefined;
        this.globalService.clearErroMessages();
-       this.globalService.setErrorMEssage('Ops! no hacer el cargo por el momento');
-       this.globalService.setSubErrorMessage(error._body && error._body.code);
+       if (error.status === 402 || /bounce/g.test(bodyCode) || /omplain/g.test(bodyCode)) {
+         this.globalService.setErrorMEssage('Tu correo ha sido marcado como invalido');
+         this.globalService.setSubErrorTemplate('cambialo en <a  routerLink="/profile/edit">Mi cuenta</a>');
+       } else {
+         this.globalService.setErrorMEssage('Ops! no hacer el cargo por el momento');
+         this.globalService.setSubErrorMessage(error._body && error._body.code);
+       }
        this.globalService.openErrorModal();
-        console.error('error making charge to customers', error);
+       console.error('error making charge to customers >', error);
       });
   }
 
@@ -128,14 +142,17 @@ export class OpenSpayService {
         this.loadingTrasnfer = false;
       },
       error => {
-       this.loadingTrasnfer = false;
-       this.globalService.clearErroMessages();
-       this.globalService.setErrorMEssage('Ops! no hacer el cargo por el momento');
-       if (error._body && error._body.code) {
-         this.globalService.setSubErrorMessage(error._body.code);
-       }
-       this.globalService.openErrorModal();
-        console.error('error making a transfer', error);
+        this.loadingTrasnfer = false;
+        this.globalService.clearErroMessages();
+        const bodyCode: string = JSON.parse(error._body)['code'];
+        if (/Refund/g.test(bodyCode) || /Reward/g.test(bodyCode) && error.status === 409) {
+          this.globalService.setErrorMEssage(/Reward/g.test(bodyCode) ? 'Ya se solicitó la recompensa' : 'Ya se solicitó el rembolso');
+        } else {
+          this.globalService.setErrorMEssage('Ups! no hacer el cargo por el momento');
+          this.globalService.setSubErrorMessage('Intenta más tarde!');
+        }
+        this.globalService.openErrorModal();
+        console.error('error making a transfer >', error);
       });
   }
 
@@ -149,10 +166,15 @@ export class OpenSpayService {
       },
       error => {
         this.refundData = undefined;
-       this.globalService.clearErroMessages();
-       this.globalService.setErrorMEssage('Ops! no hacer el cargo por el momento');
-       this.globalService.openErrorModal();
-       console.error('error at refund call', error);
+        this.globalService.clearErroMessages();
+        const bodyCode: string = JSON.parse(error._body)['code'];
+        if (/Refund/g.test(bodyCode) || /Reward/g.test(bodyCode) && error.status === 409) {
+          this.globalService.setErrorMEssage(/Reward/g.test(bodyCode) ? 'Ya se solicitó la recompensa' : 'Ya se solicitó el rembolso');
+        } else {
+          this.globalService.setErrorMEssage('Ups! no hacer el rembolso por el momento');
+          this.globalService.setSubErrorMessage('Intenta más tarde!');
+        }
+       console.error('error at refund call >', error);
       }
     );
   }

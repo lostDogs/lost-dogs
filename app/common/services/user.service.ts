@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs/Rx';
 import {GlobalFunctionService} from './global-function.service';
 import {CookieManagerService} from './cookie-manager.service';
 
+
 @Injectable()
 export class UserService {
   public isAuth: boolean;
@@ -56,6 +57,7 @@ export class UserService {
       this.user.address = response.address;
       this.user.phoneNumber = response.phone_number;
       this.user.username = response.username;
+      this.user.id = response.id;
       this.isAuth = true;
       this.CookieService.setCookie(this.userCookieName, this.user);
       
@@ -134,15 +136,19 @@ export class UserService {
         this.tempUserName = undefined;
       },
       error => {
+        const bodyCode: string = JSON.parse(error._body)['code'];
         let messsage: string;
         this.forgotloading = false;
         this.forgotSucess = false;
+        this.globalService.clearErroMessages();
         if (error.status === 404) {
           messsage = 'Usuario no encontrado';
-        }else {
+        } else if (error.status === 402 || /bounce/g.test(bodyCode) || /omplain/g.test(bodyCode)) {
+          messsage = 'Tu correo ha sido marcado como invalido';
+          this.globalService.setSubErrorMessage('Contacta soporte@lostdog.mx para cambiarlo');
+        } else {
           messsage = 'hubo un problema al enviar el correo';
         }
-        this.globalService.clearErroMessages();
         this.globalService.setErrorMEssage(messsage);
         this.globalService.openErrorModal();        
       }
@@ -174,9 +180,12 @@ export class UserService {
   public logout(): void {
     this.isAuth = false;
     this.isAvatarSet = false;
+    this.token = undefined;
+    this.user = {};
     this.CookieService.deleteCookie(this.userCookieName);
     this.CookieService.deleteCookie('authToken');
-    this.user = {};
+    console.log('login with no values auth');
+    this.noAuthSubs = this.login(undefined, undefined, true);
   }
 
   public captchaSubmit(data: any): void {

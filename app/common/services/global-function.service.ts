@@ -14,9 +14,12 @@ export class GlobalFunctionService {
   public mapsApi: any;
   public paymentRewardSucess: boolean;
   public emailSendedReview: boolean;
+  public subErrorTemplate: string;
+
   constructor() {
     this.errorMessages = [];
     this.subErrorMessage = [];
+    window['erroModal'] = this;
   }
 
   public setErrorMEssage(erorr: string): void {
@@ -27,9 +30,16 @@ export class GlobalFunctionService {
     this.subErrorMessage.push(subError);
   }
 
+  public setSubErrorTemplate(template: string): void {
+    //this.subErrorTemplate = this.domSan.bypassSecurityTrustHtml(template);
+    $('#subErrorTemplate').append(template);
+    console.log('sub error message', this.subErrorTemplate);
+  }
+
   public clearErroMessages(): void {
     this.errorMessages = [];
     this.subErrorMessage = [];
+    $('#subErrorTemplate').empty();
   }
 
   public parseJsonError(e: any): string {

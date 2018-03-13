@@ -45,6 +45,7 @@ export class accountComponent {
   public disableButton: (userBlock: any, originalUserBlock: any) => void;
   @Input()
   public hoverRetainState: () => void;
+  public state: string;
   //only used in profile/edit
   public oldPassword: string;
 
@@ -233,6 +234,7 @@ export class accountComponent {
         'neighborhood': user.adress.adressName.value,
         'zip_code': user.adress.postalCode.value,
         'city': user.adress.city.value,
+        'state': this.state || 'NA',
         'country': user.adress.country.value,
         'street': user.adress.street.value
       },
@@ -281,9 +283,16 @@ export class accountComponent {
       if (userBlock.password) {
         url = url + '/changePassword';
         userToEdit = {
-          new_password: userBlock.password.value,
-          confirm_password: userBlock.password2.value,
-          old_password: this.oldPassword
+          'new_password': userBlock.password.value,
+          'confirm_password': userBlock.password2.value,
+          'old_password': this.oldPassword
+        }
+      }else if (userBlock.contact) {
+        userToEdit = {};
+        if (userBlock.contact.phone) {
+          userToEdit.phone_number.number = userBlock.contact.phone.value;
+        } else if (userBlock.contact.email){
+          userToEdit.email = userBlock.contact.email.value.toLowerCase();
         }
       }
       const headers: any = {
@@ -332,6 +341,7 @@ export class accountComponent {
         if (this.user.adress.city.value === this.loadingTextField) {
           this.user.adress.city.value = data['municipio'];
         }
+        this.state = data['estado'];
       },
       error => {
         if (this.user.adress.adressName.value === this.loadingTextField) {

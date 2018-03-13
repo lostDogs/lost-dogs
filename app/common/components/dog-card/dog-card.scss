@@ -126,7 +126,7 @@ dog-card {
         text-decoration: underline;
       }
     }
-    a.btn{
+    a.btn, button.btn{
       width: 90%;
       background-color: $buttonInfo;
       &:hover {
@@ -297,7 +297,7 @@ dog-card {
     }
   }
 @media screen and (max-device-width: $screen-mobile-max) {
-  a.btn.info {
+  a.btn.info, button.btn.info {
     display: none;
   }
 }

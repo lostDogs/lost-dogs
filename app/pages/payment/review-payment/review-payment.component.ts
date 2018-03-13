@@ -63,22 +63,40 @@ export class ReviewPaymentComponent {
     if (this.dogIndex && this.searchService.results && this.searchService.results[this.dogIndex] && this.searchService.results[this.dogIndex]._id === this.dogID) {
       this.dogData = this.dogCardService.dogData = this.searchService.results[this.dogIndex];
       this.reward = this.calcEstimatedReward(this.dogData);
-    }else if (this.dogID) {
+      this.backToBard();
+    } else if (this.dogID) {
       this.dogCardService.getDog(this.dogID).add(() => {
         this.dogData = this.dogCardService.dogData;
         this.reward = this.calcEstimatedReward(this.dogData);
+        this.backToBard();
       });
-    }else if (this.transcationId) {
+    } else if (this.transcationId) {
       this.mailingService.getTransaction(this.userService.token, this.transcationId).add(() => {
         this.dogCardService.getDog(this.mailingService.transaction.dog_id).add(() => {
           this.dogData = this.dogCardService.dogData;
           this.rewardSetted = +this.dogData.reward > +this.calcEstimatedReward(this.dogData);
+          this.backToBard();
           if (!this.rewardSetted) {
-            this.fixedReward = this.dogData.reward;
+            this.fixedReward = (+this.dogData.reward).toFixed(2);
             this.reward = this.calcEstimatedReward(this.dogData);
           }
         });
       });
+    }
+  }
+
+  public backToBard(): void {
+    if (this.dogData.reporter_id === this.userService.user.email) {
+      this.router.navigateByUrl('/board');
+      this.globalService.clearErroMessages();
+      this.globalService.setErrorMEssage('El perro fue reportado por ti');
+      this.globalService.openErrorModal();
+    } else if (this.dogData.rewardPayed) {
+      this.globalService.clearErroMessages();
+      this.globalService.setErrorMEssage('El perro ya tiene una transacción en proceso');
+      this.globalService.setSubErrorMessage('Espera a que termine la transacción pediente');
+      this.globalService.openErrorModal();
+      this.router.navigateByUrl('/board');
     }
   }
 
@@ -112,7 +130,7 @@ export class ReviewPaymentComponent {
     this.rewardSetted = true;
     this.reward = typeof  this.reward === 'string' ? this.reward : this.reward + '';
     this.reward = this.reward.replace('.','').replace(',', '');
-    this.reward =this.reward.slice(0, this.reward.length - 2) + '.' + this.reward.slice(this.reward.length - 2);
+    this.reward = (this.reward.slice(0, this.reward.length - 2) + '.' + this.reward.slice(this.reward.length - 2));
   }
 
   public calcEstimatedReward(dog: any): string {
