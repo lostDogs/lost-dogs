@@ -111,6 +111,7 @@ export class FormPaymentComponent {
 
       this.rewardAmount = params.rW || (this.dogService.dogData && this.dogService.dogData.reward);
        this.rewardAmount =  this.rewardAmount &&  this.rewardAmount + '';
+       this.backToBoard();
       if (this.rewardAmount && this.dogService.dogData && +this.rewardAmount.replace(',','') < 10) {
         this.noChargeProcced();
       }
@@ -144,6 +145,17 @@ export class FormPaymentComponent {
     this.rewardAmount =  this.rewardAmount || '00.00';
     if (+this.rewardAmount.replace(',','') < 10) {
       this.noChargeProcced();
+    }
+    this.backToBoard();
+  }
+
+  public backToBoard(): void {
+    if (this.dogService.dogData && this.dogService.dogData.rewardPayed && !this.fromLostPage) {
+      this.globalService.clearErroMessages();
+      this.globalService.setErrorMEssage('El perro ya tiene una transacción en proceso');
+      this.globalService.setSubErrorMessage('Espera a que termine la transacción pediente');
+      this.globalService.openErrorModal();
+      this.router.navigateByUrl('/board');
     }
   }
 

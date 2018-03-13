@@ -91,6 +91,12 @@ export class ReviewPaymentComponent {
       this.globalService.clearErroMessages();
       this.globalService.setErrorMEssage('El perro fue reportado por ti');
       this.globalService.openErrorModal();
+    } else if (this.dogData.rewardPayed) {
+      this.globalService.clearErroMessages();
+      this.globalService.setErrorMEssage('El perro ya tiene una transacción en proceso');
+      this.globalService.setSubErrorMessage('Espera a que termine la transacción pediente');
+      this.globalService.openErrorModal();
+      this.router.navigateByUrl('/board');
     }
   }
 

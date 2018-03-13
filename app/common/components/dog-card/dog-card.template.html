@@ -49,7 +49,7 @@
   </div>
   <a class="close" (click)="toogleViewMore()">cerrar</a>
   <a class="row waves-effect btn info" (click)="toogleViewMore()" *ngIf="!viewMore">Ver mas</a>
-  <button class="row waves-effect btn action"  *ngIf="viewMore && !deleteBtn && dogCardService.userService.user.id !== data.reporter_id" (click)="myDog()" [disabled]="data.rewardPayed">
+  <button class="row waves-effect btn action"  *ngIf="viewMore && !deleteBtn && dogCardService.userService.user.id !== data.reporter_id && !atReviewPage" (click)="myDog()" [disabled]="data.rewardPayed">
     <div [hidden]="data.rewardPayed">
       <div [hidden]="data.lost">Mi perro</div>
       <div [hidden]="!data.lost">Lo encontré </div>
