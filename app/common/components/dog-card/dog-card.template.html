@@ -49,11 +49,14 @@
   </div>
   <a class="close" (click)="toogleViewMore()">cerrar</a>
   <a class="row waves-effect btn info" (click)="toogleViewMore()" *ngIf="!viewMore">Ver mas</a>
-  <a class="row waves-effect btn action"  *ngIf="viewMore && !deleteBtn && dogCardService.userService.user.username !== data.reporter_id" (click)="myDog()">
-    <div [hidden]="data.lost">Mi perro</div>
-    <div [hidden]="!data.lost">Lo encontré </div>
-  </a>
-  <button class="row waves-effect btn action" [disabled]="true" *ngIf="viewMore && dogCardService.userService.user.username === data.reporter_id && !deleteBtn">Reportado por ti</button>
+  <button class="row waves-effect btn action"  *ngIf="viewMore && !deleteBtn && dogCardService.userService.user.id !== data.reporter_id && !atReviewPage" (click)="myDog()" [disabled]="data.rewardPayed">
+    <div [hidden]="data.rewardPayed">
+      <div [hidden]="data.lost">Mi perro</div>
+      <div [hidden]="!data.lost">Lo encontré </div>
+    </div>
+    <div [hidden]="!data.rewardPayed">En progreso ...</div>
+  </button>
+  <button class="row waves-effect btn action" [disabled]="true" *ngIf="viewMore && dogCardService.userService.user.id === data.reporter_id && !deleteBtn">Reportado por ti</button>
   <button class="row waves-effect btn danger" [disabled]="dogCardService.loadingApi" *ngIf="viewMore && deleteBtn"  (click)="del()">
     Eliminar
   </button>

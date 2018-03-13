@@ -113,10 +113,23 @@
     </div>
   </div>
   <div class="row" [hidden]="!sucess">
-    <div class="col l10 push-l1 m12 s12 todo"> <i class="medium material-icons">email</i></div>
     <div class="col l10 push-l1 m12 s12 todo">
-      <h5>Te hemos enviado un correo con los datos de la personas que lo encontró.</h5>
-      <h5>Ponte de acuerdo con él para agendar la hora y el lugar para recoger el perro.</h5>
+      <h5>Te hemos enviado un correo con los datos del rescatista:</h5>
+      <div clas="row" *ngIf="sucess && openSpayService.dataPayment.rescuer">
+        <div class="col l6 s10 m10 push-s1 push-m1 push-l3 white-boder extra-padding">
+          <div class="icon-mail"><i class="medium material-icons">email</i></div>
+          <img src="{{openSpayService.dataPayment.rescuer.avatar_url}}"  class="img-background circle circle-size"/>
+          <p><b>nombre:</b> {{openSpayService.dataPayment.rescuer.name}} {{openSpayService.dataPayment.rescuer.surname}}.</p>
+          <p><b>Teléfono:</b> {{openSpayService.dataPayment.rescuer.phone_number.area_code}} {{openSpayService.dataPayment.rescuer.phone_number.number}}.</p>
+          <p><b>email:</b> {{openSpayService.dataPayment.rescuer.email}}.</p>
+          <p class="text-left">-<b>Contacta</b> con el rescatista y <b>acuerda un punto de encuentro</b>, preferentemente un parque <br>o lugar público. Lo mejor es ir acompañado.</p>
+          <p class="text-left">-Si es tu perro, podrás llevártelo a casa.</p>
+          <p class="text-left">-Es importante que <b> entregues el código QR </b> al rescatista para verificar que si fue tu perro y  que ya lo tienes contigo. Este código se lo puedes enviar por email, mensajería instantánea (WhatsApp o SMS) o permitirle que le tome una foto directamente a él.</p>
+          <p class="text-left">-Si el perro no es el tuyo no deberás entregar el código QR al rescatista.</p>
+          <p class="text-left">-Solicita tu dinero de regreso en la liga que te llego por correo.</p>
+          <img src="{{openSpayService.dataPayment.qrUrl}}" class="img-background qr-size" />
+        </div>
+      </div>
       <div [hidden]="!this.mailingService.evidence.picture">
         <div [hidden]="mailingService.uploadImgSucess">
           <img class="gif" src="https://www.lostdog.mx/assets/img/loading-grey.gif" alt="Cargando..">

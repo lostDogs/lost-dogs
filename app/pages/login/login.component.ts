@@ -50,7 +50,7 @@ export class LoginComponent {
       this.globalService.clearErroMessages();
       this.globalService.setErrorMEssage('Parece que eres un robot');
       this.globalService.setSubErrorMessage('error en re-captcha');
-      this.globalService.openErrorModal();      
+      this.globalService.openErrorModal();
       return;
     }
     this.userService.forgot(this.userService.tempUserName).add(() => {

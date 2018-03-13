@@ -25,6 +25,7 @@ export interface IdogData {
   match?: number;
   matchAtHist?: string[];
   matchValHist?: number[];
+  rewardPayed?: boolean;
 }
 
 @Injectable()

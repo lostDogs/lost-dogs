@@ -87,7 +87,7 @@
                 <input type="text" name="city" id="city" [(ngModel)]="user.adress.city.value" (keyup)="user.adress.city.valid = validate.name(user.adress.city.value);"  (change)="user.adress.city.valid = validate.name(user.adress.city.value);">
                 <label for="city" [ngClass]="{'fadeInDown': user.adress.city.valid && createAccount.controls.city && createAccount.controls.city.dirty, 'active': user.adress.city.value}" [hidden]="!user.adress.city.valid">Ciudad</label>
                 <label for="city" [ngClass]="{'fadeInDown': (!user.adress.city.valid && user.adress.city.value)}" [hidden]="!(!user.adress.city.valid && user.adress.city.value)">{{validate.errors.name}}</label>
-                <label for="city" [ngClass]="{'fadeInDown': !user.adress.city.valid && !user.adress.city.value}" [hidden]="!(!user.adress.city.valid && !user.adress.city.value)">Celectrónicoiudad es requerido</label>
+                <label for="city" [ngClass]="{'fadeInDown': !user.adress.city.valid && !user.adress.city.value}" [hidden]="!(!user.adress.city.valid && !user.adress.city.value)">Ciudad es requerido</label>
           </div>
           <div class="input-field alt-black col l3 s12 countries" [ngClass]="{'wrong-red': !user.adress.country.valid}">
             <select name="country"  id="country" [(ngModel)]="user.adress.country.value" (keyup)="user.adress.country.valid = validate.name(user.adress.country.value);">
@@ -115,7 +115,7 @@
         </div>    
         <div class="row">
           <div class="input-field alt-black col l12  s12" [ngClass]="{'wrong-red': !user.contact.email.valid}">
-                <input type="text" name="email" id="email" [disabled]="profilePage"  [(ngModel)]="user.contact.email.value" (keyup)="user.contact.email.valid = validate.email(user.contact.email.value);"  (change)="user.contact.email.valid = validate.email(user.contact.email.value);">
+                <input type="text" name="email" id="email" [(ngModel)]="user.contact.email.value" (keyup)="user.contact.email.valid = validate.email(user.contact.email.value);"  (change)="user.contact.email.valid = validate.email(user.contact.email.value);">
                 <label for="email" [ngClass]="{'fadeInDown': user.contact.email.valid && createAccount.controls.email && createAccount.controls.email.dirty}" [hidden]="!user.contact.email.valid">Correo electrónico</label>
                 <label for="email" [ngClass]="{'fadeInDown': (!user.contact.email.valid && user.contact.email.value)}" [hidden]="!(!user.contact.email.valid && user.contact.email.value)">{{validate.errors.email}}</label>
                 <label for="email" [ngClass]="{'fadeInDown': !user.contact.email.valid && !user.contact.email.value}" [hidden]="!(!user.contact.email.valid && !user.contact.email.value)">Correo electrónico es requerido</label>
