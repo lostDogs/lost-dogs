@@ -5,6 +5,7 @@ import {UserService} from '../../common/services/user.service';
 import {DogCardService} from '../../common/services/dog-card.service';
 import {OpenSpayService} from '../../common/services/openspay.service';
 import {ValidationService} from '../../common/services/validation.service';
+import {GlobalFunctionService} from '../../common/services/global-function.service';
 const QCodeDecoder = require('../../common/vendor/qr-img-decoder.js');
 
 @Component({
@@ -32,7 +33,7 @@ export class RewardPickerComponent {
   @ViewChild('TransSucess')
   public transSucessDom: ElementRef;
 
-  constructor(public rewardService: MailingRewardService, public userService: UserService, public router: Router, public openPay: OpenSpayService, public dogService: DogCardService, public validate: ValidationService) {
+  constructor(public rewardService: MailingRewardService, public userService: UserService, public router: Router, public openPay: OpenSpayService, public dogService: DogCardService, public validate: ValidationService, public globalService: GlobalFunctionService) {
     const ios: boolean = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform)
     this.mobile = window.screen.width <= 767 || ios;
     this.rewardService.transaction = undefined;
@@ -150,7 +151,18 @@ export class RewardPickerComponent {
   }
 
   public getTransaction(userToken: string, transactionId: string): void {
+    try {
     this.transObj = JSON.parse(transactionId);
+  }catch (error) {
+    this.globalService.clearErroMessages();
+    this.globalService.setErrorMEssage('Código inválido');
+    this.globalService.openErrorModal();
+    console.error('not a valid JSON', error);
+        this.scannedValue = undefined;
+        this.img = undefined;
+        this.startScan = JSON.parse(JSON.stringify(true));
+    return;
+  }
     this.rewardService.getTransaction(userToken, this.transObj.transactionId).add(() => {
       this.invalidQr = this.rewardService.invalidTransactionId;
       this.transacionSucess = this.rewardService.transaction && this.rewardService.transaction.dog_id;
@@ -207,6 +219,9 @@ export class RewardPickerComponent {
         }
       });
     }
+  }
+  public ngOnDestroy(): void {
+    this.startScan = JSON.parse(JSON.stringify(false));
   }
 
 }

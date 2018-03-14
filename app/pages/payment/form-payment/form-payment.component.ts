@@ -121,7 +121,7 @@ export class FormPaymentComponent {
         });
       }else if (!this.dogService.dogData && this.transcationId) {
       this.mailingService.getTransaction(this.userService.token, this.transcationId).add(() => {
-        this.dogService.getDog(this.mailingService.transaction.dog_id).add(() => {
+        this.mailingService.transaction && this.dogService.getDog(this.mailingService.transaction.dog_id).add(() => {
           this.setReward(params.rW);
         });
       });
@@ -143,7 +143,7 @@ export class FormPaymentComponent {
   public setReward(param: string): void  {
     this.rewardAmount =  !param ? this.dogService.dogData.reward : param;
     this.rewardAmount =  this.rewardAmount || '00.00';
-    if (+this.rewardAmount.replace(',','') < 10) {
+    if (+(this.rewardAmount.replace(',','')) < 10) {
       this.noChargeProcced();
     }
     this.backToBoard();

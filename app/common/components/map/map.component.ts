@@ -118,7 +118,7 @@ public custom: CustomMarker;
           ctrl.locationAdressEmiter.emit(ctrl.locationAdress);
         }
       }else {
-        ctrl.locationAdress = 'no se encontro ubicacion';
+        ctrl.locationAdress = 'no se encontro úbicacion';
         ctrl.locationAdressEmiter.emit(ctrl.locationAdress);
       }
     });

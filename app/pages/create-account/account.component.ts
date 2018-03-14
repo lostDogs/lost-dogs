@@ -213,7 +213,6 @@ export class accountComponent {
   public afterCreateData(data: any): void {
     this.setImgToBucket(data.uploadAvatarUrl);
     this.userService.setUser(data);
-    this.loading = false;
   }
 
   public afterCreateError(e: any): void {
