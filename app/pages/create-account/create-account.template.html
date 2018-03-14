@@ -34,7 +34,7 @@
                 <input type="text" name="lastName2" id="last-name-2"  [(ngModel)]="user.name.last2.value" (keyup)="user.name.last2.valid = validate.name(user.name.last2.value);"  (change)="user.name.last2.valid = validate.name(user.name.last2.value);">
                 <label for="last-name-2" [ngClass]="{'fadeInDown': user.name.last2.valid && createAccount.controls.lastName2 && createAccount.controls.lastName2.dirty}" [hidden]="!user.name.last2.valid">Apellido materno</label>
                 <label for="last-name-2" [ngClass]="{'fadeInDown': (!user.name.last2.valid && user.name.last2.value)}" [hidden]="!(!user.name.last2.valid && user.name.last2.value)">{{validate.errors.name}}</label>
-                <label for="last-name-2" [ngClass]="{'fadeInDown': !user.name.last2.valid && !user.name.last2.value}" [hidden]="!(!user.name.last2.valid && !user.name.last2.value)">Apellido materno es equerido</label> 
+                <label for="last-name-2" [ngClass]="{'fadeInDown': !user.name.last2.valid && !user.name.last2.value}" [hidden]="!(!user.name.last2.valid && !user.name.last2.value)">Apellido materno es requerido</label> 
           </div>        
         </div>      
         <div class="row centered profile-row" *ngIf="profilePage && disableButton">
