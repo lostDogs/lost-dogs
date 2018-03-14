@@ -1,5 +1,5 @@
 [
   {"imgUrl": "https://www.lostdog.mx/assets/img/acess-collar.png", "name": "collar", "id": "collar"},
-  {"imgUrl": "https://www.lostdog.mx/assets/img/acess-sueter.png", "name": "suter", "id": "coat"},
+  {"imgUrl": "https://www.lostdog.mx/assets/img/acess-sueter.png", "name": "suéter", "id": "coat"},
   {"imgUrl": "https://www.lostdog.mx/assets/img/acess-tag.png", "name": "Placa Id", "id": "dog_tag"}
 ]
