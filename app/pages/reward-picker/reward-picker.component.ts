@@ -155,9 +155,10 @@ export class RewardPickerComponent {
     this.transObj = JSON.parse(transactionId);
   }catch (error) {
     this.globalService.clearErroMessages();
-    this.globalService.setErrorMEssage('Código invalido');
+    this.globalService.setErrorMEssage('Código inválido');
     this.globalService.openErrorModal();
     console.error('not a valid JSON', error);
+    this.retry();
     return;
   }
     this.rewardService.getTransaction(userToken, this.transObj.transactionId).add(() => {
@@ -171,12 +172,7 @@ export class RewardPickerComponent {
           $('html, body').animate({ scrollTop: formOffset}, 500);
         }, 500);
       } else {
-        this.scannedValue = undefined;
-        this.img = undefined;
-        this.startScan = JSON.parse(JSON.stringify(true));
-        setTimeout(() => {
-          this.startScan = false;
-        }, 500);
+        this.retry();
       }
     });
   }
@@ -219,6 +215,15 @@ export class RewardPickerComponent {
   }
   public ngOnDestroy(): void {
     this.startScan = JSON.parse(JSON.stringify(false));
+  }
+  
+  public retry(): void {
+    this.scannedValue = undefined;
+    this.img = undefined;
+    this.startScan = JSON.parse(JSON.stringify(true));
+    setTimeout(() => {
+      this.startScan = false;
+    }, 500);    
   }
 
 }
