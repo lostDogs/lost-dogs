@@ -143,7 +143,7 @@ export class UserService {
         this.globalService.clearErroMessages();
         if (error.status === 404) {
           messsage = 'Usuario no encontrado';
-        } else if (error.status === 402 || /bounce/g.test(bodyCode) || /omplain/g.test(bodyCode)) {
+        } else if (/bounce/g.test(bodyCode) || /omplain/g.test(bodyCode)) {
           messsage = 'Tu correo ha sido marcado como invalido';
           this.globalService.setSubErrorMessage('Contacta soporte@lostdog.mx para cambiarlo');
         } else {

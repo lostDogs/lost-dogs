@@ -2,6 +2,7 @@ import {Component,ElementRef, ViewChild} from '@angular/core';
 import {LostFoundService} from '../../../common/services/lost-found.service';
 import {Router} from '@angular/router';
 import {DogCardService} from '../../../common/services/dog-card.service';
+import {GlobalFunctionService} from '../../../common/services/global-function.service';
 import {SearchService} from '../../../common/services/search.service';
 
 @Component({
@@ -20,7 +21,7 @@ export class ReviewComponent {
 
   public paymentDesc: string;
 
-  constructor(public LostService: LostFoundService, public router: Router, public dogCardService: DogCardService, public searchService: SearchService) {
+  constructor(public LostService: LostFoundService, public router: Router, public dogCardService: DogCardService, public searchService: SearchService, public globalService: GlobalFunctionService) {
     this.window = window;
     this.LostService.question2 = undefined;
     this.LostService.question3 = undefined;
@@ -37,6 +38,12 @@ export class ReviewComponent {
     this.LostService.getReviewFromLocalStorage();
     this.dogCardService.open = false;
     if (this.LostService.reward) {
+      if (+this.LostService.reward < 10) {
+        this.LostService.reward = '00.00';
+        this.globalService.clearErroMessages();
+        this.globalService.setErrorMEssage('Una recompensa válida es mayor a $10.00 MX , de lo contrario sera $0.00 MX');
+        this.globalService.openBlueModal();
+      }
       const newVal: string = ('' + this.LostService.reward).replace('.','').replace(',', '');
       let rewardNewDecimal: string = newVal.substr(0, newVal.length - 2) + '.' + newVal.substr(newVal.length - 2);
       if (rewardNewDecimal.length > 6) {
