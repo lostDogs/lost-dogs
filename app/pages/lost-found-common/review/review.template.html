@@ -41,7 +41,7 @@
       <div [hidden]="!(LostService.parentPage==='found' && !LostService.loadingSave)" (click)="LostService.saveToApi()">Si!  es el perro<i class="material-icons right">send</i></div>
       <div [hidden]="!(LostService.loadingSave && !LostService.savedImgs)">Carngado ...</div>
     </button>
-    <div class="row" style="color: white; text-align: center;padding-top: 30px" [hidden]="LostService.reward === LostService.defaultReward"><p>*Si tu perro es econtrado recuerda que el <b>20%</b> de la recompenza es para LostDog</p></div>
+    <div class="row" style="color: white; text-align: center;padding-top: 30px" [hidden]="LostService.reward === LostService.defaultReward"><p>*Si tu perro es econtrado recuerda que el <b>20%</b> de la recompensa es para Lost Dog</p></div>
   </div>
   <div class="col l12 m12 s12 centered" *ngIf="LostService.savedSuccess && LostService.savedImgs">
       <dog-card  [atReviewPage]="true"  [data]="LostService.savedData"  [maxCards]="1" [cardIndex]="0"></dog-card>

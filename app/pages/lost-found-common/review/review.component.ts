@@ -38,12 +38,6 @@ export class ReviewComponent {
     this.LostService.getReviewFromLocalStorage();
     this.dogCardService.open = false;
     if (this.LostService.reward) {
-      if (+this.LostService.reward < 10) {
-        this.LostService.reward = '00.00';
-        this.globalService.clearErroMessages();
-        this.globalService.setErrorMEssage('Una recompensa válida es mayor a $10.00 MX , de lo contrario sera $0.00 MX');
-        this.globalService.openBlueModal();
-      }
       const newVal: string = ('' + this.LostService.reward).replace('.','').replace(',', '');
       let rewardNewDecimal: string = newVal.substr(0, newVal.length - 2) + '.' + newVal.substr(newVal.length - 2);
       if (rewardNewDecimal.length > 6) {
@@ -79,6 +73,13 @@ export class ReviewComponent {
     this.paymentDesc = this.LostService.dogName ? 'Reportar a ' + this.LostService.dogName :   'Reportar un ' + breed;
     this.paymentDesc += '.... ';
     this.parsePatternAndFill();
+    if (+this.LostService.reward < 10) {
+      //this.LostService.reward = '00.00';
+      this.globalService.clearErroMessages();
+      this.globalService.setErrorMEssage('Una recompensa válida es mayor a $10.00 MX');
+      this.globalService.setSubErrorMessage('de lo contrario sera $0.00 MX');
+      this.globalService.openBlueModal();
+    }    
   }
 
   public toPaymentForm(): void {

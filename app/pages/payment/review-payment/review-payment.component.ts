@@ -148,11 +148,13 @@ export class ReviewPaymentComponent {
     this.dogSize = dogSizes[dog.size_id].name;
     return this.EstimReward = total + '';
   }
+
   public changeReward(): void {
     if (this.reward === this.fixedReward || !this.reward || this.reward === '') {
       this.reward = this.calcEstimatedReward(this.dogData);
     }
   }
+
   public filePicChange(ev: any): void {
     let file: File = ev.target.files[0];
     if (ev.target && ev.target.files && file && file.type.match('image.*')) {

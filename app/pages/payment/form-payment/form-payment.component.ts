@@ -112,7 +112,8 @@ export class FormPaymentComponent {
       this.rewardAmount = params.rW || (this.dogService.dogData && this.dogService.dogData.reward);
        this.rewardAmount =  this.rewardAmount &&  this.rewardAmount + '';
        this.backToBoard();
-      if (this.rewardAmount && this.dogService.dogData && +this.rewardAmount.replace(',','') < 10) {
+       console.log('revwarid in params ', this.rewardAmount);
+      if (this.rewardAmount && this.dogService.dogData && +this.rewardAmount < 10) {
         this.noChargeProcced();
       }
       if (!this.dogService.dogData && this.dogId) {
@@ -143,7 +144,8 @@ export class FormPaymentComponent {
   public setReward(param: string): void  {
     this.rewardAmount =  !param ? this.dogService.dogData.reward : param;
     this.rewardAmount =  this.rewardAmount || '00.00';
-    if (+(this.rewardAmount.replace(',','')) < 10) {
+    console.log('this reward amout', this.rewardAmount);
+    if (+this.rewardAmount < 10) {
       this.noChargeProcced();
     }
     this.backToBoard();
@@ -219,7 +221,7 @@ export class FormPaymentComponent {
         if (this.transcationId) {
           this.openSpayService.chargeClient(chargeObj, this.userService.token, this.transcationId).add(() => {
             this.loading = false;
-            if (this.openSpayService.sucessPaymentId) {
+            if (this.openSpayService.sucessPaymentId || this.openSpayService.dataPayment.rescuer) {
               this.sucess = true;
               this.globalService.paymentRewardSucess = true;
               $('html, body').animate({ scrollTop: 0 }, 500);

@@ -64,39 +64,39 @@ export class UserService {
     }
   }
 
-    public getUserLocation(): Promise<any> {
-      const locationCookie = this.CookieService.getCookie('location');
+   public getUserLocation(): Promise<any> {
       return new Promise((resolve, reject) => {
           let errorMessage: string;
-            if (locationCookie) {
+            if (this.user.location && this.user.location.lat) {
               resolve(this.user.location);
             } else if (navigator.geolocation) {
               navigator.geolocation.getCurrentPosition(
                 (sucess) => {
                   errorMessage = undefined;
                   this.user.location = {lat: sucess.coords.latitude , lng: sucess.coords.longitude};
-                  this.CookieService.setCookie('location', {lat: sucess.coords.latitude , lng: sucess.coords.longitude});
+                  this.CookieService.setCookie(this.userCookieName, this.user);
                   resolve(this.user.location);
               }, (error) => {
+                this.user.location = {lat: 20.659698 , lng: -103.349609};
                 switch(error.code) {
                   case error.PERMISSION_DENIED:
-                    errorMessage = 'User denied the request for Geolocation.';
+                    errorMessage = 'El usuario denegó la solicitud de geolocalización.';
                     break;
                   case error.POSITION_UNAVAILABLE:
-                    errorMessage = 'Location information is unavailable.';
+                    errorMessage = 'La información de ubicación no está disponible.';
                     break;
                   case error.TIMEOUT:
-                    errorMessage = 'The request to get user location timed out.';
+                    errorMessage = 'La petición para la ubicación excedió el tiempo de espera';
                     break;
                   case error['UNKNOWN_ERROR']:
-                    errorMessage = 'An unknown error occurred.';
+                    errorMessage = 'Un error desconocido ocurrió (ubicación).';
                     break;
                 }
                 this.openErrorModal(errorMessage);
-                reject(undefined);
-              });
+                reject(this.user.location);
+              }, {timeout: 15000, maximumAge: 60000});
           } else {
-              errorMessage = 'Geolocation is not supported by this browser.';
+              errorMessage = 'Geolocalización no es compatible con este navegador.';
               this.openErrorModal(errorMessage);
               reject(undefined);
           }        
