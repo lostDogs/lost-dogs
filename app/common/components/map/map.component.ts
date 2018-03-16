@@ -30,11 +30,12 @@ public custom: CustomMarker;
   }
 
   public ngAfterViewInit(): void {
-    let initlocation: any;
     this.userService.getUserLocation().then(
       (sucess) => {this.initMap(sucess)},
-      (error) => {this.initMap()}
-    );
+      (error) => {
+        this.initMap(error);
+        this.mapDef.setZoom(13);
+      });
   }
 
   public ngOnChanges(changes: SimpleChanges): void {

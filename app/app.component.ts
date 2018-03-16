@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, HostListener} from '@angular/core';
 import {ViewEncapsulation} from '@angular/core';
 import {Router, NavigationEnd, Routes} from '@angular/router';
 import {GlobalFunctionService} from './common/services/global-function.service';
@@ -32,11 +32,15 @@ export class appComponent {
     });
   }
 
+  @HostListener('window:beforeunload', ['$event'])
+    beforeunloadHandler(event: any) {
+      this.userService.user.location = undefined;
+      this.cookieService.setCookie(this.userService.userCookieName, this.userService.user);
+    }
+
+
   public ngOnInit(): void {
   }
 
-  public ngOnDestroy(): void {
-    this.userService.user.location = undefined;
-    this.cookieService.setCookie(this.userService.userCookieName, this.userService.user);
-  } 
+  public ngOnDestroy(): void {}
 };
