@@ -1,8 +1,9 @@
-import { Component} from '@angular/core';
+import { Component, HostListener} from '@angular/core';
 import {ViewEncapsulation} from '@angular/core';
 import {Router, NavigationEnd, Routes} from '@angular/router';
 import {GlobalFunctionService} from './common/services/global-function.service';
 import {ApiService} from './common/services/api.service';
+import {UserService} from './common/services/user.service';
 import {CookieManagerService} from './common/services/cookie-manager.service';
 import {resetConfing} from './app.router';
 
@@ -24,7 +25,7 @@ export class appComponent {
   public loading: boolean;
   public errors: boolean;
 
-  constructor (public routing: Router, public globalService: GlobalFunctionService, public api: ApiService, public cookieService: CookieManagerService) {
+  constructor (public routing: Router, public globalService: GlobalFunctionService, public api: ApiService, public cookieService: CookieManagerService, public userService: UserService) {
     this.routing.events.subscribe(data => {
       if (data instanceof NavigationEnd) {
         this.globalService.paymentRewardSucess = this.globalService.emailSendedReview = undefined;
@@ -32,6 +33,13 @@ export class appComponent {
       }
     });
   }
+
+  @HostListener('window:beforeunload', ['$event'])
+    beforeunloadHandler(event: any) {
+      this.userService.user.location = undefined;
+      this.cookieService.setCookie(this.userService.userCookieName, this.userService.user);
+    }
+
 
   public ngOnInit(): void {
     const prevAccess: boolean = this.cookieService.getCookie('appAccesssa');
@@ -41,6 +49,7 @@ export class appComponent {
       resetConfing(this.routing);
     }    
   }
+
 
   public showApp(username: string, password: string): void {  
      const user = {password: password, username: username};
@@ -68,5 +77,7 @@ export class appComponent {
          this.loading = false;
          this.errors = true;
      });
-  }  
+  }
+
+  public ngOnDestroy(): void {}
 };

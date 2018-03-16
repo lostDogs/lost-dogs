@@ -109,7 +109,7 @@ export class OpenSpayService {
     const url: string = transID ? 'transactions/' + transID + '/pay' : '/api/transactions/pay';
     return this.api.post(this.api.API_PROD + url , chargeobj, headers).subscribe(
       data => {
-        console.log('charged data sucess!', data);
+        console.log('charged data sucess >', data);
         this.sucessPaymentId = data['paymentResult'].id;
         this.dataPayment = data['paymentResult'];
       },
@@ -132,12 +132,12 @@ export class OpenSpayService {
 
   public transfer(qrObj: {identifier: string, transactionId: string}, transferData: any, userToken: string): Subscription {
     const headers: any = this.setheards(userToken);
-    console.log('qrObj identifier', qrObj.identifier);
+    console.log('qrObj identifier >', qrObj.identifier);
     const url: string = 'transactions/' + qrObj.transactionId + '/reward/' + qrObj.identifier;
     this.loadingTrasnfer = true;
     return this.api.post(this.api.API_PROD + url , transferData, headers).subscribe(
       data => {
-        console.log('transfer sucess!', data);
+        console.log('transfer sucess >', data);
         this.trasnferData = data;
         this.loadingTrasnfer = false;
       },
@@ -174,6 +174,7 @@ export class OpenSpayService {
           this.globalService.setErrorMEssage('Ups! no hacer el rembolso por el momento');
           this.globalService.setSubErrorMessage('Intenta más tarde!');
         }
+        this.globalService.openErrorModal();
        console.error('error at refund call >', error);
       }
     );
