@@ -112,6 +112,7 @@ export class FormPaymentComponent {
       this.rewardAmount = params.rW || (this.dogService.dogData && this.dogService.dogData.reward);
        this.rewardAmount =  this.rewardAmount &&  this.rewardAmount + '';
        this.backToBoard();
+       console.log('revwarid in params ', this.rewardAmount);
       if (this.rewardAmount && this.dogService.dogData && +this.rewardAmount < 10) {
         this.noChargeProcced();
       }
@@ -220,7 +221,7 @@ export class FormPaymentComponent {
         if (this.transcationId) {
           this.openSpayService.chargeClient(chargeObj, this.userService.token, this.transcationId).add(() => {
             this.loading = false;
-            if (this.openSpayService.sucessPaymentId) {
+            if (this.openSpayService.sucessPaymentId || this.openSpayService.dataPayment.rescuer) {
               this.sucess = true;
               this.globalService.paymentRewardSucess = true;
               $('html, body').animate({ scrollTop: 0 }, 500);

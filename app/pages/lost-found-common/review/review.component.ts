@@ -74,7 +74,7 @@ export class ReviewComponent {
     this.paymentDesc += '.... ';
     this.parsePatternAndFill();
     if (+this.LostService.reward < 10) {
-      this.LostService.reward = '00.00';
+      //this.LostService.reward = '00.00';
       this.globalService.clearErroMessages();
       this.globalService.setErrorMEssage('Una recompensa válida es mayor a $10.00 MX');
       this.globalService.setSubErrorMessage('de lo contrario sera $0.00 MX');

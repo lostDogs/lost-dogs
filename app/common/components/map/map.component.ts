@@ -57,7 +57,7 @@ public custom: CustomMarker;
     const ctrl = this;
     this.mapDef = new google.maps.Map(this.mapDiv.nativeElement, {
       center: {lat: -34.397, lng: 150.644},
-      zoom: 10,
+      zoom: 12,
       streetViewControl: false,
       mapTypeControl: false
     });
@@ -81,7 +81,7 @@ public custom: CustomMarker;
     } else if (this.location) {
       this.addMarker(this.location, this.mapDef, ctrl, {animation: google.maps.Animation.DROP});
       this.mapDef.panTo(this.location);
-      this.mapDef.setZoom(15);
+      this.mapDef.setZoom(this.getZoomFromRange(this.rangeRadius));
     }
     $('document').ready(() => {
       if (google && google.maps) {
