@@ -67,11 +67,14 @@ export class UserService {
     public getUserLocation(): Promise<any> {
       return new Promise((resolve, reject) => {
           let errorMessage: string;
-            if (navigator.geolocation) {
+          if (this.user.location && this.user.location.lat) {
+            resolve(this.user.location);
+          } else if (navigator.geolocation) {
               navigator.geolocation.getCurrentPosition(
                 (sucess) => {
                   errorMessage = undefined;
                   this.user.location = {lat: sucess.coords.latitude , lng: sucess.coords.longitude};
+                  this.CookieService.setCookie(this.userCookieName, this.user);
                   resolve(this.user.location);
               }, (error) => {
                 switch(error.code) {
@@ -91,6 +94,7 @@ export class UserService {
                 this.openErrorModal(errorMessage);
                 reject(undefined);
               }, {timeout: 40000});
+          }
           } else {
               errorMessage = 'Geolocation is not supported by this browser.';
               this.openErrorModal(errorMessage);
