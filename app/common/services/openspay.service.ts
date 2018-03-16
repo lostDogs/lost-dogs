@@ -118,7 +118,7 @@ export class OpenSpayService {
         this.sucessPaymentId = undefined;
         this.dataPayment = undefined;
        this.globalService.clearErroMessages();
-       if (error.status === 402 || /bounce/g.test(bodyCode) || /omplain/g.test(bodyCode)) {
+       if (/bounce/g.test(bodyCode) || /omplain/g.test(bodyCode)) {
          this.globalService.setErrorMEssage('Tu correo ha sido marcado como invalido');
          this.globalService.setSubErrorTemplate('cambialo en <a  routerLink="/profile/edit">Mi cuenta</a>');
        } else {
