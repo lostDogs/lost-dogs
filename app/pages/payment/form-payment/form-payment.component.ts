@@ -112,7 +112,7 @@ export class FormPaymentComponent {
       this.rewardAmount = params.rW || (this.dogService.dogData && this.dogService.dogData.reward);
        this.rewardAmount =  this.rewardAmount &&  this.rewardAmount + '';
        this.backToBoard();
-      if (this.rewardAmount && this.dogService.dogData && +this.rewardAmount.replace(',','') < 10) {
+      if (this.rewardAmount && this.dogService.dogData && +this.rewardAmount < 10) {
         this.noChargeProcced();
       }
       if (!this.dogService.dogData && this.dogId) {
@@ -143,7 +143,8 @@ export class FormPaymentComponent {
   public setReward(param: string): void  {
     this.rewardAmount =  !param ? this.dogService.dogData.reward : param;
     this.rewardAmount =  this.rewardAmount || '00.00';
-    if (+(this.rewardAmount.replace(',','')) < 10) {
+    console.log('this reward amout', this.rewardAmount);
+    if (+this.rewardAmount < 10) {
       this.noChargeProcced();
     }
     this.backToBoard();

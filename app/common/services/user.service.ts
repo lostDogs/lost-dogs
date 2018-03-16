@@ -90,7 +90,7 @@ export class UserService {
                 }
                 this.openErrorModal(errorMessage);
                 reject(undefined);
-              });
+              }, {timeout: 40000});
           } else {
               errorMessage = 'Geolocation is not supported by this browser.';
               this.openErrorModal(errorMessage);
