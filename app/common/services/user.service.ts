@@ -65,13 +65,17 @@ export class UserService {
   }
 
     public getUserLocation(): Promise<any> {
+      const locationCookie = this.CookieService.getCookie('location');
       return new Promise((resolve, reject) => {
           let errorMessage: string;
-            if (navigator.geolocation) {
+            if (locationCookie) {
+              resolve(this.user.location);
+            } else if (navigator.geolocation) {
               navigator.geolocation.getCurrentPosition(
                 (sucess) => {
                   errorMessage = undefined;
                   this.user.location = {lat: sucess.coords.latitude , lng: sucess.coords.longitude};
+                  this.CookieService.setCookie('location', {lat: sucess.coords.latitude , lng: sucess.coords.longitude});
                   resolve(this.user.location);
               }, (error) => {
                 switch(error.code) {
@@ -143,7 +147,7 @@ export class UserService {
         this.globalService.clearErroMessages();
         if (error.status === 404) {
           messsage = 'Usuario no encontrado';
-        } else if (error.status === 402 || /bounce/g.test(bodyCode) || /omplain/g.test(bodyCode)) {
+        } else if (/bounce/g.test(bodyCode) || /omplain/g.test(bodyCode)) {
           messsage = 'Tu correo ha sido marcado como invalido';
           this.globalService.setSubErrorMessage('Contacta soporte@lostdog.mx para cambiarlo');
         } else {

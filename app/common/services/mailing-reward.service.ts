@@ -40,7 +40,7 @@ export class MailingRewardService {
          this.errorInEmails = true;
          const bodyCode: string = JSON.parse(error._body)['code'];
          this.globalService.clearErroMessages();
-       if (error.status === 402 || /bounce/g.test(bodyCode) || /omplain/g.test(bodyCode)) {
+       if (/bounce/g.test(bodyCode) || /omplain/g.test(bodyCode)) {
          this.globalService.setErrorMEssage('Tu correo ha sido marcado como invalido');
          this.globalService.setSubErrorTemplate('cambialo en <a  routerLink="/profile/edit">Mi cuenta</a>');
        } else {
