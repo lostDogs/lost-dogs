@@ -35,7 +35,9 @@ export class appComponent {
   @HostListener('window:beforeunload', ['$event'])
     beforeunloadHandler(event: any) {
       this.userService.user.location = undefined;
-      this.cookieService.setCookie(this.userService.userCookieName, this.userService.user);
+      if (this.userService.isAuth) {
+        this.cookieService.setCookie(this.userService.userCookieName, this.userService.user);
+      }
     }
 
 
