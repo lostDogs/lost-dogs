@@ -12,7 +12,9 @@ export class UserService {
   public isAvatarSet: boolean;
   public user: any;
   public token: string;
+  public location: {lat: number , lng: number};
   public userCookieName: string = 'user';
+  public locCookieName: string = 'location_user';
   public loading: boolean;
   public errors: {passwordReq: boolean, userReq: boolean, invalidUser: boolean};
   public mapsApi: any;
@@ -29,6 +31,7 @@ export class UserService {
     this.errors = {passwordReq: false, userReq: false, invalidUser: false};
     const userCookie: any = this.CookieService.getCookie(this.userCookieName);
     const userToken: any = this.CookieService.getCookie('authToken');
+    const locCookie: any = this.CookieService.getCookie(this.locCookieName);
     if (userCookie) {
       this.user = userCookie;
       this.isAuth = true;
@@ -40,6 +43,9 @@ export class UserService {
     }
     if (userToken) {
       this.token = userToken.authToken;
+    }
+    if (locCookie) {
+      this.location = locCookie;
     }
   }
 
@@ -67,17 +73,17 @@ export class UserService {
    public getUserLocation(): Promise<any> {
       return new Promise((resolve, reject) => {
           let errorMessage: string;
-            if (this.user.location && this.user.location.lat) {
-              resolve(this.user.location);
+            if (this.location && this.location.lat) {
+              resolve(this.location);
             } else if (navigator.geolocation) {
               navigator.geolocation.getCurrentPosition(
                 (sucess) => {
                   errorMessage = undefined;
-                  this.user.location = {lat: sucess.coords.latitude , lng: sucess.coords.longitude};
-                  this.CookieService.setCookie(this.userCookieName, this.user);
-                  resolve(this.user.location);
+                  this.location = {lat: sucess.coords.latitude , lng: sucess.coords.longitude};
+                  this.CookieService.setCookie(this.locCookieName, this.location);
+                  resolve(this.location);
               }, (error) => {
-                this.user.location = {lat: 20.659698 , lng: -103.349609};
+                this.location = {lat: 20.659698 , lng: -103.349609};
                 switch(error.code) {
                   case error.PERMISSION_DENIED:
                     errorMessage = 'El usuario denegó la solicitud de geolocalización.';
@@ -93,7 +99,7 @@ export class UserService {
                     break;
                 }
                 this.openErrorModal(errorMessage);
-                reject(this.user.location);
+                reject(this.location);
               }, {timeout: 15000, maximumAge: 60000});
           } else {
               errorMessage = 'Geolocalización no es compatible con este navegador.';
