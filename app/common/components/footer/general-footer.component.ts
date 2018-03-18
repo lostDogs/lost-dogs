@@ -18,8 +18,17 @@ export class generalFooterComponent {
   }
 
   public toPage(url: string, appName: string): void {
-    setTimeout(() => { window.location.href = url}, 25);
-    window.location.href = appName;
+        let start, end, elapsed;
+        start = new Date().getTime();
+        // the lovely thing about javascript is that it's single threadded.
+        // if this WORKS, it'll stutter for a split second, causing the timer to be off
+        window.location.href = appName;
+        end = new Date().getTime();
+        elapsed = (end - start);
+        // if there's no elapsed time, then the scheme didn't fire, and we head to the url.
+        if (elapsed < 1) {
+            window.location.href = url;
+        }
     // window.open(appName);
   }
 
