@@ -47,11 +47,6 @@ self.pathBuild = (pathName: string): any => {
     return pathObj;
 };
 
-export function resetConfing(router: Router) {
-  self.routing.push({ path: '', redirectTo: 'home' , pathMatch: 'full'}, {path: '**', redirectTo: 'home'});
-  router.resetConfig(self.routing);
-}
-
 export const router: Routes = [
   { path:'home', component: homeComponent},
   {path: 'board', component: boardComponent},

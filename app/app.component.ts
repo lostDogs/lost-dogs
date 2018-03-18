@@ -5,7 +5,6 @@ import {GlobalFunctionService} from './common/services/global-function.service';
 import {ApiService} from './common/services/api.service';
 import {UserService} from './common/services/user.service';
 import {CookieManagerService} from './common/services/cookie-manager.service';
-import {resetConfing} from './app.router';
 
 import 'jquery';
 import 'materialize-css/dist/js/materialize.js';
@@ -40,43 +39,8 @@ export class appComponent {
     }
 
 
-  public ngOnInit(): void {
-    const prevAccess: boolean = this.cookieService.getCookie('appAccesssa');
-    if (prevAccess) {
-      this.show = true;
-      window.scroll(0,0);
-      resetConfing(this.routing);
-    }    
-  }
+  public ngOnInit(): void {}
 
-
-  public showApp(username: string, password: string): void {  
-     const user = {password: password, username: username};
-     this.loading = true;
-     this.api.post(this.api.API_PROD + 'users/login', user).subscribe(
-       data => { 
-         if (data['name'] || data['username']) {
-           this.show = true;
-           this.loading = false;
-           this.errors = false;
-           window.scroll(0,0);
-           this.cookieService.setCookie('appAccesssa', true);
-           setTimeout(()=> {
-           resetConfing(this.routing);
-           this.routing.navigateByUrl('/home');
-           }, 20);
-         } else {
-         this.show = false;
-         this.loading = false;
-         this.errors = true;          
-         }
-       },
-       error => {
-         this.show = false;
-         this.loading = false;
-         this.errors = true;
-     });
-  }
 
   public ngOnDestroy(): void {}
 };
