@@ -27,9 +27,8 @@ export class generalFooterComponent {
         elapsed = (end - start);
         // if there's no elapsed time, then the scheme didn't fire, and we head to the url.
         if (elapsed < 1) {
-            window.location.href = url;
+            window.open(url)
         }
-    // window.open(appName);
   }
 
 }
