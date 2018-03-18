@@ -69,7 +69,10 @@ export class OpenSpayService {
   }
 
   public validateCvc(cardNum: string, cvc: string): boolean {
-    return this.openPay.card.validateCVC(cvc, cardNum);
+    if (cardNum && cvc) {
+      return this.openPay.card.validateCVC(cvc, cardNum);
+    }
+    return undefined;
   }
 
   public mapTokenData(card: ICard): object {
