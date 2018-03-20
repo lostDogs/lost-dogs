@@ -119,7 +119,7 @@ public custom: CustomMarker;
           ctrl.locationAdressEmiter.emit(ctrl.locationAdress);
         }
       }else {
-        ctrl.locationAdress = 'no se encontro úbicacion';
+        ctrl.locationAdress = 'no se encontro ubicación';
         ctrl.locationAdressEmiter.emit(ctrl.locationAdress);
       }
     });

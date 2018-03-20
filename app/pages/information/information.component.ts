@@ -36,7 +36,7 @@ export class InformationComponent {
 
   public changeContent(): void {
     if (this.urlsConst.legal === this.urlOn) {
-      this.title = 'Informacion legal';
+      this.title = 'Información legal';
       // este apartado corresponde los terminos y condiciones y privacidad de lost dogs.
       //this.infohtml = this.domSan.bypassSecurityTrustHtml(this.data);
     } else if (this.urlsConst.cookies === this.urlOn) {
