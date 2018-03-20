@@ -48,7 +48,7 @@ self.pathBuild = (pathName: string): any => {
 };
 
 export const router: Routes = [
-  { path:'home', component: homeComponent},
+  { path:'', component: homeComponent},
   {path: 'board', component: boardComponent},
   {path: 'account', component: accountComponent},
   self.pathBuild('lost'),
@@ -79,8 +79,8 @@ export const router: Routes = [
   },
   {path: 'info/:param', component: InformationComponent},
   {path: 'refund/:param', component: RefundComponent},
-  { path: '', redirectTo: 'home' , pathMatch: 'full'},
-  {path: '**', redirectTo: 'home'}
+  { path: '', redirectTo: '' , pathMatch: 'full'},
+  {path: '**', redirectTo: ''}
  ];
  // TODO: remove in prod only for temp access.
 self.routing = router;
@@ -88,7 +88,7 @@ self.routing = router;
 // TODO: check why routing is not working without the hash.
 // TODO: read full file https://angular.io/docs/ts/latest/guide/router.html.
 @NgModule({
-  imports: [RouterModule.forRoot(router, { useHash: true})],
+  imports: [RouterModule.forRoot(router, { useHash: false})],
   exports: [RouterModule]
 })
 export class AppRouterModule{}
