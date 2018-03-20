@@ -10,7 +10,8 @@ module.exports = {
   output: { 
     path: 'public',
     chunkFilename: 'module-chunk.js',
-    filename: 'app.bundle.js'
+    filename: 'app.bundle.js',
+    publicPath: '/'
   },
   // Configure the ts-load module that helps compile ts
   module: {
