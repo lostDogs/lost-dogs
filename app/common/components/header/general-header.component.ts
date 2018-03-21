@@ -60,7 +60,7 @@ export class generalHeaderComponent implements OnInit  {
 
     public openMessage() {
     this.globalService.clearErroMessages();
-    this.globalService.setErrorMEssage('Esta página necesta de cookies para funcionar');
+    this.globalService.setErrorMEssage('Esta página necesita de cookies para funcionar');
     this.globalService.openBlueModal();
     this.openedFirstMessage = true;
   }
