@@ -15,7 +15,7 @@ export class GenderComponent {
   }
   
   public ngOnInit(): void {
-    this.LostService.question = 'Cual es su género?';
+    this.LostService.question = '¿Cuál es su género?';
     this.LostService.imgAnswer = undefined;
     this.LostService.inputField = {type: 'image', label: 'Gender'};
     this.LostService.retrieveData = this.fillData;

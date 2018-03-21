@@ -21,9 +21,9 @@ export class ExtrasComponent {
     this.LostService.inputField = {type: 'multiple', label: 'Extras'};
    this.LostService.retrieveData = this.fillData;
     if (this.LostService.parentPage === 'lost') { 
-      this.LostService.question = 'Que acessorios tenia?';
+      this.LostService.question = '¿Qué acessorios tenía?';
     } else if(this.LostService.parentPage === 'found') {
-      this.LostService.question = 'Que acessorios tiene?';
+      this.LostService.question = '¿Qué acessorios tiene?';
     }    
   }
 

@@ -44,7 +44,7 @@ export class MailingRewardService {
          this.globalService.setErrorMEssage('Tu correo ha sido marcado como invalido');
          this.globalService.setSubErrorTemplate('cambialo en <a  routerLink="/profile/edit">Mi cuenta</a>');
        } else {
-         this.globalService.setErrorMEssage('Ops! hubo un error en la peticion');
+         this.globalService.setErrorMEssage('Ops! hubo un error en la petición');
          this.globalService.setSubErrorMessage('Intenta más tarde!');
       }
          this.globalService.openErrorModal();
