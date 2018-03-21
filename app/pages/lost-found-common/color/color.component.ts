@@ -18,7 +18,7 @@ export class ColorComponent {
     this.LostService.imgAnswer = undefined;
     this.LostService.inputField = {type: 'multiple', label: 'Color'};
     this.LostService.retrieveData = this.fillData;
-    this.LostService.question = 'Cual es su color?';
+    this.LostService.question = '¿Cuál es su color?';
   }
 
   public fillData(pageAnswer: any, lostService: any): void {

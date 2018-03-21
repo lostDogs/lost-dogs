@@ -18,9 +18,9 @@ export class LocationComponent {
     this.LostService.retrieveData = this.fillData;
     this.LostService.inputField = {type:'address', label:''}
     if (this.LostService.parentPage === 'lost') {
-      this.LostService.question = 'Donde lo perdiste?';
+      this.LostService.question = '¿Dónde lo perdiste?';
     } else if(this.LostService.parentPage === 'found') {
-      this.LostService.question = 'Donde lo econtraste?';
+      this.LostService.question = '¿Dónde lo econtraste?';
     }
   }
 

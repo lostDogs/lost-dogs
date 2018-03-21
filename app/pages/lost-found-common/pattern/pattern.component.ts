@@ -20,7 +20,7 @@ export class PatternComponent {
     this.LostService.imgAnswer = undefined;
     this.LostService.inputField = {type: 'multiple', label: 'Patron'};
     this.LostService.retrieveData = undefined;
-    this.LostService.question = 'Cual es su Patron?';
+    this.LostService.question = '¿Cuál es su patrón?';
     const colorIndex: number = this.LostService.defualtSequence.indexOf('color');
     if (~colorIndex && this.LostService.pageAnswers[colorIndex]) {
       let tempColor: string[] = [];

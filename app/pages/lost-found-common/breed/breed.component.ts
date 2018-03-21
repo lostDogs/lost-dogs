@@ -21,9 +21,9 @@ export class BreedComponent {
     this.LostService.retrieveData = this.fillData;
     
     if (this.LostService.parentPage === 'lost') { 
-      this.LostService.question = 'Que raza es?';
+      this.LostService.question = '¿Qué raza es?';
     } else if(this.LostService.parentPage === 'found') {
-      this.LostService.question = 'A cual se parece?';
+      this.LostService.question = '¿A cuál se parece?';
     }
   }
 
@@ -45,9 +45,9 @@ export class BreedComponent {
 
   public changeTitle(event: any) {
     if (event) {
-      this.LostService.question = 'A cual se parece?';
+      this.LostService.question = '¿A cuál se parece?';
     }else  {
-      this.LostService.question = 'Que raza es?';
+      this.LostService.question = '¿Qué raza es?';
     }
   }
 }
