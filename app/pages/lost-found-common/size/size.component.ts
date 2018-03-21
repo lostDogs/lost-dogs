@@ -13,7 +13,7 @@ export class SizeComponent {
   }
   
   public ngOnInit(): void {
-    this.LostService.question = 'Cual es su tamaño?';
+    this.LostService.question = '¿Cuál es su tamaño?';
     this.LostService.imgAnswer = undefined;
     this.LostService.inputField = {type: 'image', label: 'Tamaño'};
     this.LostService.retrieveData = this.fillData;

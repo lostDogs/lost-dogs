@@ -42,7 +42,7 @@
     <p class="mobile truncate" *ngIf="!(!mobile || viewMore)">{{data.address}}</p>
   </div>
   <div class="accessories row" [hidden]="!(viewMore && mappedData.accessories && mappedData.accessories.length)">
-    <div class="accessory tooltipped" data-position="top" data-tooltip="collar" *ngFor="let access of mappedData.accessories;let i= index" [ngStyle]="{'background-image': 'url(' + access.imgUrl + ')'}"> </div>
+    <div class="accessory tooltipped" data-position="top" [attr.data-tooltip]="access.name" *ngFor="let access of mappedData.accessories;let i= index" [ngStyle]="{'background-image': 'url(' + access.imgUrl + ')'}"> </div>
   </div>
   <div class="row extras-comments" *ngIf="viewMore && data.description">
     <p>{{data.description}}</p>
