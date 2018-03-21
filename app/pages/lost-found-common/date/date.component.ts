@@ -21,9 +21,9 @@ export class DateComponent {
     this.LostService.inputField = {type: 'date', label: 'dd/mm/aaaa'};
 
     if (this.LostService.parentPage === 'lost') { 
-      this.LostService.question = 'Cuando lo Perdiste?';
+      this.LostService.question = '¿Cuándo lo Perdiste?';
     } else if(this.LostService.parentPage === 'found') {
-      this.LostService.question = 'Cuando lo Encontraste?';
+      this.LostService.question = '¿Cuándo lo Encontraste?';
     }
   }
 
