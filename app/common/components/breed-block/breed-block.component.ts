@@ -35,7 +35,7 @@ export class BreedBlockComponent {
     this.elements = [];
     this.breeds.forEach((value: any, valueIndex: number) => {
       // api val is adding the look alike,  and id value is the clean val.
-    this.elements.push({name: value.name, imgUrl: this.dogImgUrl + value.id + '.jpg', apiVal: value.id, id: value.id});
+      this.elements.push({name: value.name, imgUrl: this.dogImgUrl + value.id + '.jpg', apiVal: value.id, id: value.id, label: value.label || value.name});
     });
     this.renderer.listenGlobal('document', 'click', (event: any) => {
       if (this.openBreedSearch  && !this.btnDom.nativeElement.contains(event.target) && !this.breedSearchDom.nativeElement.contains(event.target)) {
@@ -46,12 +46,6 @@ export class BreedBlockComponent {
   }
 
   public ngOnInit(): void {
-    const onPage: string = this.router.url.split('/')[1];
-    if (onPage === 'lost') {
-      this.elements.unshift({name: 'sin raza', imgUrl: this.dogImgUrl + 'noRace.jpg', apiVal: 0, id: 0 });
-    } else  {
-      this.elements.unshift({name: 'mezcla', imgUrl: this.dogImgUrl + 'mix.jpg', apiVal: 0, id: 0 });
-    }
   }
 
   public ngAfterViewInit(): void {
@@ -98,7 +92,7 @@ export class BreedBlockComponent {
     const lastIndex: number = event.length && event.length - 1;
     const disabledElements: any[] = event.filter((value: any)=>{return value.disabled});
     const isIndexCero: boolean = event.length && event.some((val: any, valIndex: number) => {
-      if (val.id === 0 && val.disabled) {
+      if (+val.id === 0 && val.disabled) {
         return true;
       }
     });
@@ -123,12 +117,12 @@ export class BreedBlockComponent {
         event[lastIndex].apiVal += ' ' + alike;
         event[lastIndex].apiVal = event[lastIndex].apiVal && event[lastIndex].apiVal.trim().replace(/\s/g, ',');
       }      
-      const filteredEvents: any[] = event.length && event.filter((value: any, index: number)=>{return value.id});
+      const filteredEvents: any[] = event.length && event.filter((value: any, index: number)=>{return typeof value.id});
       this.selectedEmitter.emit(filteredEvents);
   }
 
   public findAlike(id: string): string {
-    const selectedBreed: any = this.breeds[+id - 1];
+    const selectedBreed: any = this.breeds[+id];
     return selectedBreed && selectedBreed.looksLike;
   }
 
