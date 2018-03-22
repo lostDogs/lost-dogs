@@ -122,7 +122,7 @@ export class BreedBlockComponent {
   }
 
   public findAlike(id: string): string {
-    const selectedBreed: any = this.breeds[+id - 1];
+    const selectedBreed: any = this.breeds[+id];
     return selectedBreed && selectedBreed.looksLike;
   }
 
