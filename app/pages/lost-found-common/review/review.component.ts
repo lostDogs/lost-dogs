@@ -62,7 +62,7 @@ export class ReviewComponent {
             }
           }
         });
-        this.pageAnswersCopy[index] = [{names: names, imgUrls: imgUrls, Indexs: originalIndexs, labels: labels.length ? labels : names}];
+        this.pageAnswersCopy[index] = [{names: names, imgUrls: imgUrls, Indexs: originalIndexs, labels: labels.length ? labels.join(', ') : names.join(', ')}];
       }
     });
     this.setFinalToLocalStorage();

@@ -14,7 +14,7 @@ import {Router} from '@angular/router';
 
 export interface ImappedData {
   gender: {name: string, imgUrl: string};
-  colors: string[];
+  colors: string;
   date: {name: string, short: string};
   size: {name: string, imgUrl: string};
   breed: string;
@@ -153,10 +153,10 @@ public setFoundDogs(): void {
   public mapData(dogData: IdogData): ImappedData {
     let mappedData: ImappedData = {
       gender: this.retrieveValue(dogData.male, this.genders),
-      colors: this.getKeysFromValues(dogData.color, this.colors),
+      colors: this.getKeysFromValues(dogData.color, this.colors).join(', '),
       date: this.getMappedDate(dogData.found_date),
       size: this.retrieveValue(dogData.size_id, this.sizes),
-      breed: (this.getArrayOfStrings(dogData.kind, this.breeds, 'name') + '').replace(/,/g, ', '),
+      breed: this.getArrayOfStrings(dogData.kind, this.breeds, 'name').join(', ').replace(/:,/g, ': '),
       accessories: this.retrieveValues(dogData.accessories_id, this.accessories)
     }
     return mappedData;
