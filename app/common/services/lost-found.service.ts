@@ -58,6 +58,7 @@ export class LostFoundService {
   public openBreedSearch: boolean;
   public btnBreedSearchDom: ElementRef;
   public patterNoColor: boolean;
+  public noBreed: any;
 
   constructor(
     public router: Router,
@@ -86,6 +87,12 @@ export class LostFoundService {
         this.globalService.openErrorModal();
         return;
       }
+    }
+    if (this.defualtSequence[this.pagePosition] === 'breed' && this.noBreed) {
+      this.globalService.clearErroMessages();
+      this.globalService.setErrorMEssage('selecciona entre una o dos razas a las cuales se puede parecer');
+      this.globalService.openErrorModal();
+      return;
     }
     const nextIndex: number =  this.pagePosition === (this.sequence.length-1) ? this.pagePosition : this.pagePosition + 1;
     const nextPage: string = '/' + this.parentPage + '/' + this.sequence[nextIndex];
@@ -163,6 +170,9 @@ export class LostFoundService {
           return value.name && !value.name.split(':')[1];
       });
     }
+   if (self.defualtSequence[self.pagePosition] === 'breed' && self.multipleImgAnswers) {
+     self.noBreed = self.multipleImgAnswers.length === 1 && self.multipleImgAnswers.some((val: any, index: number) => (+val.id === 0));
+   }
     console.log('answer', self.pageAnswers);
   }
 
