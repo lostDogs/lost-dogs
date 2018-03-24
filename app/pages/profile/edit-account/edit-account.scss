@@ -43,7 +43,7 @@ editaccount {
         transform: none;
       }      
     }
-    &.action:hover,&.action.hover {
+    &:hover,&.hover {
       div.profile-row {
         width: auto;
         height: auto;
