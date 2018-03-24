@@ -54,52 +54,6 @@
   }
 }
 
-div.select-wrapper  {
-  .invisible {
-    opacity: 0;
-  }
-  input.select-dropdown {
-    z-index: 1;
-  }
-  div.select-dropdown {
-    position: absolute;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid #9e9e9e;
-    outline: none;
-    height: 3rem;
-    line-height: 3rem;
-    width: 100%;
-    font-size: 1rem;
-    margin: 0 0 20px 0;
-    padding: 0;
-    display: block;
-    z-index: 0;
-    top: 0;
-  }
-  @media screen and (max-device-width: $screen-mobile-max) {
-    input.select-dropdown {
-      font-size: 2.5rem;
-      height: 4rem;
-    }
-    span.caret {
-      right: -20px;
-      font-size: 2rem;
-    }
-    div.select-dropdown {
-      font-size: 2.5rem;
-      height: 4rem;
-      text-align: center;      
-    }
-    ul.dropdown-content.select-dropdown {
-      li > span {
-        font-size: 2.5rem;
-      }
-    }
-  }
-}
-
 board {
   .hiddeen {
     opacity: 0;
@@ -199,6 +153,9 @@ board {
     }
     .row.options {
       margin: 20px 0;
+      @media screen and (max-device-width: $screen-mobile-max) {
+        display: block;
+      }
       h3 {
         .material-icons.circle-white {
           margin-right: 4px;
@@ -209,8 +166,10 @@ board {
           background: white;
         }
       @media screen and (max-device-width: $screen-mobile-max) {
-        padding-bottom: 65px;
-        padding-right: 90px;        
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin: 20px 0;
         .material-icons.circle-white {
           font-size: 5rem;
         }
@@ -219,14 +178,18 @@ board {
       .right-controls {
         position: absolute;
         right: 20px;
+        @media screen and (max-device-width: $screen-mobile-max) {
+          position: relative;
+          text-align: center;
+        }
         .toggle-buttons {
           display: inline-block;
           margin: 0 10px;
         @media screen and (max-device-width: $screen-mobile-max) {
-          display: block;
-          margin-left: 125px;
+          margin-left: 55px;
           .btn {
-            height: 6rem;
+            height: 8rem;
+            width: 9rem;
             i {
               vertical-align: bottom;
             }
@@ -239,8 +202,16 @@ board {
           margin: 0 10px;
           @media screen and (max-device-width: $screen-mobile-max) {
             margin-top: 20px;
-            width: 325px;
-            padding-right: 30px;            
+            width: 450px;
+            padding-right: 45px;
+            margin-left: 105px;
+            .select-wrapper.sort-dropdown .select-dropdown {
+              width: 100%;
+            }
+            .select-wrapper.sort-dropdown input {
+              padding-bottom: 0;
+              padding-top: 0;
+            }
           }
         }
       }

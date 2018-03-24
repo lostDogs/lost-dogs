@@ -3,13 +3,13 @@
     <h5 class="col l4  s4"  [ngClass]="{'push-l2 push-m2 push-s2': lostService.question2 && !lostService.question}" *ngIf="lostService.question2">{{lostService.question2}}</h5>
     <h5 class="col l4 push-l4 s12" [ngClass]="{'push-l4 s12': !(lostService.question2&&lostService.question3), 's4': (lostService.question2&&lostService.question3)}" *ngIf="lostService.question">{{lostService.question}}</h5>
     <h5 class="col l4  s4" *ngIf="lostService.question3" [ngClass]="{'push-l2 push-m2 push-s2': lostService.question3 && !lostService.question}">{{lostService.question3}}</h5>
-    <div class="input-field col l2  s4 push-s4 push-l3" [hidden]="!(lostService.inputField && lostService.inputField.type==='date')">
+    <div class="input-field col l2 s8 push-s2 push-l3 mobile-extra-top" [hidden]="!(lostService.inputField && lostService.inputField.type==='date')">
           <input type="text" name="question" id="question" [(ngModel)]="lostService.answer" (focus)="lostService.answer=undefined">
           <!-- <label for="question">{{inputField.label}}</label> -->
     </div>
     <button class="btn waves-effect info" id="date-input" (click)="setDate()" *ngIf="(lostService.inputField && lostService.inputField.type==='date')"><i class="material-icons">send</i></button>
     <form #addressSearch="ngForm" (ngSubmit)="lostService.locationAdressInput=lostService.address;lostService.matchService.rangeRadius=0.5;" [hidden]="!(lostService.inputField && lostService.inputField.type==='address')">
-      <div class="input-field col l3  s10 push-s1 push-l3">
+      <div class="input-field col l3  s10 push-s1 push-l3 mobile-extra-top">
             <input type="text" name="addresss" id="address" [(ngModel)]="lostService.address" (focus)="onFocusAddres()">
             <!-- <label for="question">{{inputField.label}}</label> -->
       </div> 

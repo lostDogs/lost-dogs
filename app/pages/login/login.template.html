@@ -9,8 +9,8 @@
         <label for="user-name-2" [ngClass]="{'active': userService.tempUserName}">Correo <b *ngIf="userService.errors.invalidUser"> incorrecto ó</b></label>
       </div>
       <div class="input-field  alt-black  col l3 push-l3 s12" [ngClass]="{'wrong-red': userService.errors.passwordReq || userService.errors.invalidUser}">
-          <input type="password" name="password" [(ngModel)]="password" (keyup)="userService.errors.passwordReq = false;userService.errors.invalidUser = false;">
-          <label for="password">Contraseña <b *ngIf="userService.errors.invalidUser"> incorrecta</b></label>
+          <input type="password" name="password-2" id="password-2" [(ngModel)]="password" (keyup)="userService.errors.passwordReq = false;userService.errors.invalidUser = false;">
+          <label for="password-2">Contraseña <b *ngIf="userService.errors.invalidUser"> incorrecta</b></label>
       </div>
     </div>
     <div class="row centered row-extraspace">

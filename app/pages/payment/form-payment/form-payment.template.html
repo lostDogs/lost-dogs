@@ -47,7 +47,7 @@
         </div>
         <div class="input-field alt-black col l12 s12 m12 mobile-left" [ngClass]="{'wrong-red': !extra.terms.valid}">
           <input type="checkbox" name="termsCond" id="terms" [(ngModel)]="extra.terms.value" (change)="extra.terms.valid = extra.terms.value ? true : false">
-          <label for="terms"> Acepto los <a [routerLink]="['/info', 'terms']">Términos y condiciones</a>.</label>
+          <label for="terms"> Acepto los <a  class="terms" [routerLink]="['/info', 'terms']">Términos y condiciones</a>.</label>
         </div>
         <div class="input-field alt-black col l12 s12 m12 mobile-left" [ngClass]="{'wrong-red': !extra.noPersonalData.valid}">
           <input type="checkbox" name="noPersonalData" id="no-personal" [(ngModel)]="extra.noPersonalData.value" (change)="extra.noPersonalData.valid = extra.noPersonalData.value ? true : false">

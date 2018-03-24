@@ -70,8 +70,8 @@ export class ReviewComponent {
 
   public ngAfterViewInit(): void {
     const breed: string = this.getName('breed');
-    this.paymentDesc = this.LostService.dogName ? 'Reportar a ' + this.LostService.dogName :   'Reportar un ' + breed;
-    this.paymentDesc += '.... ';
+    this.paymentDesc = this.LostService.dogName ? 'Reportar a ' + this.LostService.dogName :   'Reportar un ' + (breed + '').replace(':,', ',').split(',')[0];
+    this.paymentDesc += ': ';
     this.parsePatternAndFill();
     if (+this.LostService.reward < 10) {
       this.LostService.reward = '00.00';

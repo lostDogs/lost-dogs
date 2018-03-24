@@ -194,6 +194,11 @@ form-payment {
   .col.extra-padding {
     padding: 25px;
   }
+   a.terms{
+    @media screen and (max-device-width: $screen-mobile-max) {
+     font-size: 3.2rem;
+    }
+  }
   .open-pay {
     margin-top: 80px;
     color: grey;
@@ -288,7 +293,7 @@ form-payment {
   }
   @media screen and (max-device-width: $screen-mobile-max) {
     .create-account .input-field {
-      margin-top: 70px;
+      margin-top: 120px;
     }
     .mobile-centered {
       text-align: center;
