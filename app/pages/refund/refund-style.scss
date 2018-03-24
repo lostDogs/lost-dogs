@@ -13,6 +13,15 @@
   padding: 100px 0;
   button {
     margin-top: 20px;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin-top: 50px;
+      height: 110px;
+      font-size: 3rem;
+      padding: 0 55px;
+      .material-icons {
+        font-size: 3rem;
+      }      
+    }
   }
   h6 {
     margin-top: 30px;

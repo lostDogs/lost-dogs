@@ -15,6 +15,11 @@ lost, found {
   .page .form-payment {
     margin-top: 30px;
   }
+  .mobile-extra-top {
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin-top: 30px;
+    }
+  }
   div.map-block {
     position: absolute;
     top: 0;
@@ -45,14 +50,20 @@ lost, found {
     @media screen and (max-device-width: $screen-mobile-max) {
       margin: 0;
       margin-left: 44px;
-      height: 60px;
+      height: 100px;
       .material-icons {
+        padding: 0 30px;
         vertical-align: middle;
       }
     }
   }
   #date-input {
     margin-left: 40px;
+  }
+  #location-search {
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin-left: -50px;
+    }
   }
   .row.intro {
     text-align: center;
@@ -80,6 +91,7 @@ lost, found {
       button.btn {
         font-size: 3rem;
         height: 110px;
+        padding: 0 50px;
       }
       .material-icons {
         font-size: 7rem;        
@@ -238,7 +250,7 @@ lost, found {
               font-size: 5rem;
            }
           input[type] {
-            font-size: 3rem;
+            font-size: 4rem;
             text-align: center;
             font-weight: 400;            
             border-bottom: 4px solid Gainsboro;
@@ -275,8 +287,8 @@ lost, found {
         button.btn {
           width: 150px;
           @media screen and (max-device-width: $screen-mobile-max) {
-            width: 280px;
-            font-size: 2rem;
+            width: 320px;
+            font-size: 3rem;
             height: 120px;
           }
             .right {
