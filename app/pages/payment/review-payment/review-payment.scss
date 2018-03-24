@@ -80,8 +80,9 @@ review-payment {
   }
   button.btn {
     @media screen and (max-device-width: $screen-mobile-max) {
-      height: 80px;
-      font-size: 2.5rem;
+      height: 110px;
+      font-size: 3rem;
+      padding: 0 50px;
       .material-icons {
         font-size: 3rem;
       }

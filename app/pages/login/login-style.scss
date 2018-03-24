@@ -24,11 +24,14 @@
       padding: 0 60px;
     }
     @media screen and (max-device-width: $screen-mobile-max) {
+      .row-extraspace {
+        padding-top: 70px;
+      }
       .login-link {
         padding-top: 50px;
       }
       a {
-        font-size: 2.2rem;
+        font-size: 3rem;
         line-height: 5rem;
       }
     }

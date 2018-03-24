@@ -1,4 +1,70 @@
 @import './variables.scss';
+ // starts dropdowm
+div.select-wrapper  {
+  .invisible {
+    opacity: 0;
+  }
+  input.select-dropdown {
+    z-index: 1;
+  }
+  div.select-dropdown {
+    position: absolute;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
+    outline: none;
+    height: 3rem;
+    line-height: 3rem;
+    width: 100%;
+    font-size: 1rem;
+    margin: 0 0 20px 0;
+    padding: 0;
+    display: block;
+    z-index: 0;
+    top: 0;
+  }
+  @media screen and (max-device-width: $screen-mobile-max) {
+    input.select-dropdown {
+      font-size: 2.5rem;
+      height: 4rem;
+      padding-bottom: 30px;
+      padding-top: 20px;
+    }
+    span.caret {
+      right: -20px;
+      font-size: 2rem;
+    }
+    div.select-dropdown {
+      font-size: 3rem;
+      height: 4.5rem;
+      text-align: center;      
+    }
+    ul.dropdown-content.select-dropdown {
+      li {
+          line-height: 4rem;
+          padding: 10px;
+          margin: 30px;
+      }
+      li > span {
+        font-size: 3.5rem;
+
+      }
+    }
+  }
+}
+ul {
+  &.dropdown-content.select-dropdown {
+    border-radius: 7px;
+    li:first-of-type > span {
+      padding-left: 50px;
+      @media screen and (max-device-width: $screen-mobile-max) {
+        padding-left: 50px;
+      }
+    }
+  }
+}
+  //end of dropdown
 
 .input-field {
   label {
@@ -8,6 +74,9 @@
     border-bottom: 1px solid Gainsboro;
     border-radius: 5px;
     color: white;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      height: auto;
+    }
   }
   input[type]:focus:not([readonly]) {
       border-bottom: 1px solid  white;
@@ -15,14 +84,6 @@
   }
   input[type]:focus:not([readonly]) + label{
     color: white;
-  }
-  ul {
-    &.dropdown-content.select-dropdown {
-      border-radius: 7px;
-      li:first-of-type > span {
-        padding-left: 50px;
-      }
-    }
   }
 }
 
@@ -33,11 +94,17 @@
   input[type] {
     color: grey;
     border-bottom: 1px solid grey;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      border-bottom: 4px solid grey;
+    }
   }
   input[type]:focus:not([readonly])  {
-      border-bottom: 1px solid  white;
-      box-shadow: 0 1px 0 0 white;
-      color: black;
+    border-bottom: 1px solid white;
+    box-shadow: 0 1px 0 0 white;
+    color: black;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      border-bottom: 4px solid white;
+    }
   }
 
   input[type]:focus:not([readonly]) + label{
@@ -53,11 +120,17 @@
   input[type] {
     color: $redAccent;
     border-bottom: 1px solid $redAccent;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      border-bottom: 4px solid $redAccent;
+    }
   }
   input[type]:focus:not([readonly])  {
-      border-bottom: 1px solid  $redAccent;
-      box-shadow: 0 1px 0 0 $redAccent;
-      color: black;
+    border-bottom: 1px solid  $redAccent;
+    box-shadow: 0 1px 0 0 $redAccent;
+    color: black;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      border-bottom: 4px solid $redAccent;
+    }      
   }
 
   input[type]:focus:not([readonly]) + label{
@@ -107,10 +180,10 @@ button.btn, div.btn {
 
 [type="checkbox"] + label:before, [type="checkbox"]:not(.filled-in) + label:after {
   @media screen and (max-device-width: $screen-mobile-max) {
-    top: -8px;
-    left: -16px;
-    width: 36px;
-    height: 36px;
+    top: 0px;
+    left: -50px;
+    width: 70px;
+    height: 70px;
     border-width: 4px;
     border-radius: 2px;
   }
