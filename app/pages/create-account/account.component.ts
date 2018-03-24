@@ -39,6 +39,7 @@ export class accountComponent {
   public title: string = 'Crea tu cuenta';
   @Input()
   public profilePage: boolean;
+  public atCreateAccount: boolean;
   @Input()
   public orginalUser: Iuser;
   @Input()
@@ -52,6 +53,7 @@ export class accountComponent {
   constructor (public validate: ValidationService, public api: ApiService, public router: Router, public userService: UserService, public globalService: GlobalFunctionService) {
     this.countries = [{"id": "MX", "name": "Mexico"}];
     // define the user object before
+    this.atCreateAccount = /account/g.test(window.location.href);
     this.user = {
       pic: {value:'https://www.lostdog.mx/assets/img/profile-undef.png', valid: true, required: true, label: 'Imagen de perfil'},
       name: {
@@ -60,13 +62,13 @@ export class accountComponent {
         last2: {valid: true, value: undefined, required: true, label: 'Apellido materno'}
       },
       adress: {
-        adressName: {valid: true, value: undefined, required: true, label: 'Colonia'},
-        postalCode: {valid: true, value: undefined, required: true, label: 'Código Postal'},
-        city: {valid: true, value: undefined, required: true, label: 'Ciudad'},
-        numberExt: {valid: true, value: undefined, required: true, label: 'Número exterior'},
+        adressName: {valid: true, value: undefined, required: false, label: 'Colonia'},
+        postalCode: {valid: true, value: undefined, required: false, label: 'Código Postal'},
+        city: {valid: true, value: undefined, required: false, label: 'Ciudad'},
+        numberExt: {valid: true, value: undefined, required: false, label: 'Número exterior'},
         numberInt: {valid: true, value: undefined, required: false, label: 'Número interior'},
-        country: {valid: true, value: undefined, required: true, label: 'País'},
-        street: {valid: true, value: undefined, required: true, label: 'Calle'}
+        country: {valid: true, value: undefined, required: false, label: 'País'},
+        street: {valid: true, value: undefined, required: false, label: 'Calle'}
       },
       contact: {
         phone: {valid: true, value: undefined, required: true, label: 'Teléfono celular'},
@@ -82,6 +84,7 @@ export class accountComponent {
     window['expiredCaptcha'] = this.userService.expiredCaptcha.bind(this.userService);
     window['onloadCallback'] = this.userService.onloadCallback;
     this.userService.loadCaptchaScript();
+
   }
 
   public ngAfterViewInit(): void {
@@ -90,16 +93,16 @@ export class accountComponent {
    if (this.hoverRetainState)  {
      this.hoverRetainState();
    }
+    $('select').change(() => {
+      const input = $('#country');
+      this.user.adress.country.value = input.val();
+      this.user.adress.country.valid = true;
+    });   
    if (this.profilePage && this.userService.user.address.country) {
       $('#country option[value=' + this.userService.user.address.country + ']').attr('selected','selected');
       $('#country').change();
-      let countrySelected: string
-      this.countries.some((value: any) => {
-        if (value.id === this.userService.user.address.country) {
-          return countrySelected = value.name;
-        }
-      });
-      $('input[type=text].select-dropdown').val(countrySelected);
+      // executing change and the make it visaully appear on the dropbox by add the val with Jquery
+      $('input[type=text].select-dropdown').val(this.userService.user.address.country);
    }
   }
 
@@ -107,11 +110,6 @@ export class accountComponent {
     if (this.userService.isAuth && !this.profilePage) {
       this.router.navigate(['/profile']);
     }
-    $('select').change(() => {
-      const input = $('#country');
-      this.user.adress.country.value = input.val();
-      this.user.adress.country.valid = true;
-    });
     this.user.adress.country.value = undefined;
   }
 
@@ -350,15 +348,19 @@ export class accountComponent {
         }
       },
       () => {
-        if (!this.user.adress.country.value) {
-          $('.countries .select-dropdown').click();
-          setTimeout(() => {
-            $('.select-dropdown li span .bfh-flag-MX').click();
-            setTimeout(() => {$('.countries .select-dropdown').click();}, 500);
-          }, 500);
-        }
+        this.selectCountry();
       }
     );
+  }
+
+  public selectCountry(country?: string): void {
+    if (!this.user.adress.country.value) {
+      $('.countries .select-dropdown').click();
+      setTimeout(() => {
+        $('.select-dropdown li span .bfh-flag-MX').click();
+        setTimeout(() => {$('.countries .select-dropdown').click();}, 200);
+      }, 100);
+    }    
   }
 
   public ngOnDestroy(): void {

@@ -67,13 +67,17 @@ export class editAccountComponent {
   public hoverRetainState(): void {
     const jqueryObj: JQuery =  $('input[type=text],input[type=password]');
     jqueryObj.focusin((event) => {
-      const idparent: string = $('#'+event.target.id).parents().eq(2)[0].id;
-      $('#' + idparent).addClass('hover');
+      if (event.target && event.target.id) {
+        const idparent: string = $('#'+ event.target.id).parents().eq(2)[0].id;
+        $('#' + idparent).addClass('hover');
+      }
     });
 
     jqueryObj.focusout((event) => {
-      const idparent: string = $('#'+event.target.id).parents().eq(2)[0].id;
-      $('#' + idparent).removeClass('hover');
+      if (event.target && event.target.id) {
+        const idparent: string = $('#'+event.target.id).parents().eq(2)[0].id;
+        $('#' + idparent).removeClass('hover');
+      }
     });
   }
 };
