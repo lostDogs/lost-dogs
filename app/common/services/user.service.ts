@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {Subscription} from 'rxjs/Rx';
 import {GlobalFunctionService} from './global-function.service';
 import {CookieManagerService} from './cookie-manager.service';
+import { Jsonp } from '@angular/http';
 
 
 @Injectable()
@@ -26,7 +27,8 @@ export class UserService {
   public noAuthSubs: Subscription;
   public validCaptcha: boolean;
 
-  constructor (public api: ApiService, public router: Router, public globalService: GlobalFunctionService, public CookieService: CookieManagerService) {
+
+  constructor (public api: ApiService, public router: Router, public globalService: GlobalFunctionService, public CookieService: CookieManagerService, public jsonp: Jsonp) {
     this.user = {};
     this.errors = {passwordReq: false, userReq: false, invalidUser: false};
     const userCookie: any = this.CookieService.getCookie(this.userCookieName);
@@ -246,5 +248,19 @@ export class UserService {
       node.setAttribute('defer','');
       document.getElementsByTagName('head')[0].appendChild(node);
     });
-  }  
+  }
+
+  public missingAddress(): boolean {
+    // return true if there one requried prop mising in the user.
+    const requried: string [] = ['city', 'country', 'ext_number', 'neighborhood', 'street', 'zip_code'];
+    if (this.user && this.user.address) {
+      console.log('adddres', this.user.address);
+      return requried.some ((prop: string, proIndex: number) => (
+        !this.user.address[prop]
+      ));
+    } else {
+      return true;
+    }
+  }
+
 }

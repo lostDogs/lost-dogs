@@ -1,4 +1,4 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input, ElementRef, ViewChild} from '@angular/core';
 import {ValidationService} from  '../../common/services/validation.service';
 import {ApiService} from '../../common/services/api.service';
 import * as countryData from '../../common/content/countries.json';
@@ -49,6 +49,8 @@ export class accountComponent {
   public state: string;
   //only used in profile/edit
   public oldPassword: string;
+  @ViewChild('Addresss')
+  public addressDom: ElementRef;
 
   constructor (public validate: ValidationService, public api: ApiService, public router: Router, public userService: UserService, public globalService: GlobalFunctionService) {
     this.countries = [{"id": "MX", "name": "Mexico"}];
@@ -82,7 +84,7 @@ export class accountComponent {
     //Catptcha code incliding the ngOnDestroy.
     window['captchaSubmit'] = this.userService.captchaSubmit.bind(this.userService);
     window['expiredCaptcha'] = this.userService.expiredCaptcha.bind(this.userService);
-    window['onloadCallback'] = this.userService.onloadCallback;
+    window['onloadCallback'] = this.userService.onloadCallback;    
     this.userService.loadCaptchaScript();
 
   }
@@ -361,6 +363,19 @@ export class accountComponent {
         setTimeout(() => {$('.countries .select-dropdown').click();}, 200);
       }, 100);
     }    
+  }
+
+   public scrollTo(domEl: ElementRef): void {
+    if (domEl.nativeElement) {
+      console.log('scrolling to ', domEl);
+      const offset = domEl.nativeElement.offsetTop - 128;
+      console.log('scrolling to offset', offset);
+      window.scrollBy({ 
+      top: offset,
+      left: 0, 
+      behavior: 'smooth' 
+      });
+    }
   }
 
   public ngOnDestroy(): void {

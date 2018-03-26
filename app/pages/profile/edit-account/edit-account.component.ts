@@ -1,9 +1,9 @@
 import { Component} from '@angular/core';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 import {Iuser, formObj} from '../../create-account/account.component';
 import {UserService} from '../../../common/services/user.service';
 import {ApiService} from '../../../common/services/api.service';
 import {accountComponent} from '../../create-account/account.component'
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'editaccount',
@@ -14,9 +14,9 @@ export class editAccountComponent {
   public profilepage: string;
   public user: Iuser;
   public orginalUser: Iuser;
-  constructor (public userService: UserService) {
 
-  }
+  constructor (public userService: UserService, public activeRoute: ActivatedRoute) {}
+
   public ngOnInit(): void {
     $('.input-field.alt-black label').addClass('active');
     this.user = {
@@ -46,9 +46,7 @@ export class editAccountComponent {
     };
     this.orginalUser = JSON.parse(JSON.stringify(this.user));
   }
-  public ngAfterViewInit(): void {
-
-  }
+  public ngAfterViewInit(): void {}
 
   public disableButton(userBlock: any, originalUserBlock: any): boolean {
      // this function is being executed on the create-account.template.html every dom interaction.
