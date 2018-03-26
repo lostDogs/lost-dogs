@@ -86,7 +86,6 @@ export class accountComponent {
     window['expiredCaptcha'] = this.userService.expiredCaptcha.bind(this.userService);
     window['onloadCallback'] = this.userService.onloadCallback;    
     this.userService.loadCaptchaScript();
-
   }
 
   public ngAfterViewInit(): void {
@@ -382,5 +381,4 @@ export class accountComponent {
     this.userService.validCaptcha = undefined;
     $('script#captcha-script').detach();
   }
-
 };

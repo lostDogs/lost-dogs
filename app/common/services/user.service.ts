@@ -4,8 +4,6 @@ import {Router} from '@angular/router';
 import {Subscription} from 'rxjs/Rx';
 import {GlobalFunctionService} from './global-function.service';
 import {CookieManagerService} from './cookie-manager.service';
-import { Jsonp } from '@angular/http';
-
 
 @Injectable()
 export class UserService {
@@ -28,7 +26,7 @@ export class UserService {
   public validCaptcha: boolean;
 
 
-  constructor (public api: ApiService, public router: Router, public globalService: GlobalFunctionService, public CookieService: CookieManagerService, public jsonp: Jsonp) {
+  constructor (public api: ApiService, public router: Router, public globalService: GlobalFunctionService, public CookieService: CookieManagerService) {
     this.user = {};
     this.errors = {passwordReq: false, userReq: false, invalidUser: false};
     const userCookie: any = this.CookieService.getCookie(this.userCookieName);
