@@ -50,7 +50,7 @@
           </button>
         </div>
       </div>
-      <div class="account-completed account-block draw"  id="address-block" [ngClass]="{'action': user.adress.numberExt.valid && user.adress.adressName.valid && user.adress.postalCode.valid && user.adress.city.valid && user.adress.country.valid && user.adress.street.valid && user.adress.numberExt.value && user.adress.adressName.value && user.adress.postalCode.value && user.adress.city.value && user.adress.country.value && user.adress.street.value}">
+      <div class="account-completed account-block draw"  id="address-block" [hidden]="atCreateAccount" [ngClass]="{'action': user.adress.numberExt.valid && user.adress.adressName.valid && user.adress.postalCode.valid && user.adress.city.valid && user.adress.country.valid && user.adress.street.valid && user.adress.numberExt.value && user.adress.adressName.value && user.adress.postalCode.value && user.adress.city.value && user.adress.country.value && user.adress.street.value}" #Addresss>
         <div class="row">
           <h5 class="col l4 s12" >
             Domicilio
@@ -107,7 +107,7 @@
                   <div [ngClass]="{'fadeInDown': !user.adress.city.valid && !user.adress.city.value}" [hidden]="!(!user.adress.city.valid && !user.adress.city.value)">Ciudad es requerido</div>
                 </label>
           </div>
-          <div class="input-field alt-black col l3 s12 countries" [ngClass]="{'wrong-red': !user.adress.country.valid}">
+          <div class="input-field alt-black col l3 s12 countries" *ngIf="!atCreateAccount" [ngClass]="{'wrong-red': !user.adress.country.valid}">
             <select name="country"  id="country" [(ngModel)]="user.adress.country.value" (keyup)="user.adress.country.valid = validate.name(user.adress.country.value);">
               <option value="" disabled selected>Pais</option>
               <option *ngFor="let co of countries"[value]="co.name"><div class="bfh-flag-{{co.id}} flag-country"></div>{{co.name}}</option>
@@ -129,7 +129,7 @@
           </h5>
         </div>    
         <div class="row">
-          <div class="input-field alt-black col l12  s12" [ngClass]="{'wrong-red': !user.contact.email.valid}">
+          <div class="input-field alt-black col l8  s12 push-l4" [ngClass]="{'wrong-red': !user.contact.email.valid}">
                 <input type="text" name="email" id="email" [(ngModel)]="user.contact.email.value" (keyup)="user.contact.email.valid = validate.email(user.contact.email.value);"  (change)="user.contact.email.valid = validate.email(user.contact.email.value);">
                 <label for="email">
                   <div [ngClass]="{'fadeInDown': user.contact.email.valid && createAccount.controls.email && createAccount.controls.email.dirty}" [hidden]="!user.contact.email.valid">Correo electrónico</div>
@@ -139,7 +139,13 @@
           </div>
         </div>
         <div class="row">
-          <div class="input-field alt-black  col l5 s8" [ngClass]="{'wrong-red': !user.contact.phone.valid}">
+          <div class="input-field alt-black col l3 s12 countries push-l4" *ngIf="atCreateAccount" [ngClass]="{'wrong-red': !user.adress.country.valid}">
+            <select name="country"  id="country" [(ngModel)]="user.adress.country.value" (keyup)="user.adress.country.valid = validate.name(user.adress.country.value);">
+              <option value="" disabled selected>Pais</option>
+              <option *ngFor="let co of countries"[value]="co.name"><div class="bfh-flag-{{co.id}} flag-country"></div>{{co.name}}</option>
+            </select>
+          </div>          
+          <div class="input-field alt-black  col l5 s8 push-l4" [ngClass]="{'wrong-red': !user.contact.phone.valid}">
                 <input type="text" name="phone" id="phone" [(ngModel)]="user.contact.phone.value" (keyup)="user.contact.phone.valid = validate.onlyNumbers(user.contact.phone.value, 8, 10, 'phone');"  (change)="user.contact.phone.valid = validate.onlyNumbers(user.contact.phone.value, 8, 10, 'phone');">
                 <label for="phone">
                   <div [ngClass]="{'fadeInDown': user.contact.phone.valid && createAccount.controls.phone && createAccount.controls.phone.dirty}" [hidden]="!user.contact.phone.valid">Teléfono celular</div>
