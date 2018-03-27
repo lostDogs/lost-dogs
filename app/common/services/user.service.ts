@@ -127,7 +127,6 @@ export class UserService {
       console.log('prevUrl', this.previousUrl);
       this.router.navigateByUrl(this.previousUrl);
       setTimeout(() => {this.previousUrl = undefined;}, 20);
-
     }
     window.scroll(0,0);
   }

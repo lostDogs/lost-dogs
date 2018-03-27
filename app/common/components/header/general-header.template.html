@@ -67,6 +67,9 @@
         <div *ngIf="!userService.loading">Iniciar sesión<i class="material-icons right">send</i></div>
         <div *ngIf="userService.loading">Cargando ...</div>
       </button>
+      <button class="btn waves-effect col l12 info" type="button" (click)="fbService.login()">
+        <div>Facebook<i class="material-icons right">send</i></div>
+      </button>
       <div class="col l12 account-link">
         <a routerLink="account" title="" class="waves-effect"> Crea tu cuenta
          <i class="material-icons right">person_pin</i>
