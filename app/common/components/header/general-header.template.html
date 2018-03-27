@@ -68,7 +68,8 @@
         <div *ngIf="userService.loading">Cargando ...</div>
       </button>
       <button class="btn waves-effect col l12 fb" type="button" (click)="fbService.login()">
-        <div><div class="fb-text">continuar con </div><div class="fb-img"> <img src="https://www.lostdog.mx/assets/img/facebook.png"></div> </div>
+        <div [hidden]="fbService.loadingLogin"><div class="fb-text">continuar con </div><div class="fb-img"> <img src="https://www.lostdog.mx/assets/img/facebook.png"></div> </div>
+        <div [hidden]="!fbService.loadingLogin">Cargando ...</div>
       </button>
       <div class="col l12 account-link">
         <a routerLink="account" title="" class="waves-effect"> Crea tu cuenta

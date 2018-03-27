@@ -168,6 +168,18 @@ button.btn, div.btn {
     .fb-text {
       display: inline-block;
     }
+      @media screen and (max-device-width: $screen-mobile-max) {
+        .fb-img {
+          line-height: inherit;
+          img {
+            width: 60px;
+            height: 60px;
+          }
+        }
+        .fb-text {
+          line-height: 65px;
+        }
+      }    
   }
   &:hover {
     &.info {

@@ -24,6 +24,7 @@ export class UserService {
   public tempUserName: any;
   public noAuthSubs: Subscription;
   public validCaptcha: boolean;
+  public defaultAvatar: string = 'https://www.lostdog.mx/assets/img/profile-undef.png';
 
 
   constructor (public api: ApiService, public router: Router, public globalService: GlobalFunctionService, public CookieService: CookieManagerService) {
@@ -66,7 +67,6 @@ export class UserService {
       this.user.id = response.id;
       this.isAuth = true;
       this.CookieService.setCookie(this.userCookieName, this.user);
-      
     }
   }
 
@@ -117,6 +117,7 @@ export class UserService {
 
 
   public loginSucess(data: any, userName?: string): void {
+    console.log('calling login succes');
     this.tempUserName = undefined;
     this.loading = false;
     this.timesTrying = 0;

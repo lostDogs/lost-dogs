@@ -1,34 +1,39 @@
 import { Injectable } from '@angular/core';
+import {UserService} from './user.service';
 @Injectable()
 
 export class FacebookService {
   public FB: any;
+  public fbInitialized: boolean;
+  public loadingLogin: boolean;
   public userData: {
-    id?: string;
+    fbId?: string;
     username?: string;
-    givenName?: string;
-    surName?: string;
-    surname2?: string;
+    name?: string;
+    surname?: string;
+    lastname?: string;
     phoneNumber?: string;
     email?: string;
-    country?: string;
-    avatar?: string;
+    address?: {country?: string};
+    avatar_url?: string;
+    token?: string;
   }
 
-  constructor() {
-      this.userData = {};
+  constructor(public userService: UserService) {
+      this.userData = { address: {} };
       this.FB = window['FB'];
-      window['fbAsyncInit'] = this.fbAsyncInit.bind(this);
+      //window['fbAsyncInit'] = this.fbAsyncInit.bind(this);
   }
 
   public fbAsyncInit(): void {
+    this.fbInitialized = true;
     this.FB.init({
       appId      : '2098865313679573',
       cookie     : true,  // enable cookies to allow the server to access 
       xfbml      : false,  // parse social plugins on this page
       version    : 'v2.12'
     });
-    console.log('runing facebook init ...');
+    console.log('<<< runing facebook init ...');
     this.FB.getLoginStatus((response: any) => {
       this.statusChange(response);
     });
@@ -37,9 +42,13 @@ export class FacebookService {
   public login(): void {
     this.FB.getLoginStatus((response: any) => {
       this.statusChange(response);
-      if (/unknown/g.test(response.status)) {
+      if (/unknown/g.test(response.status) || /not_authorized/g.test(response.status)) {
         this.FB.login((success: any) => {
-          this.getUserData();
+        if (/connected/g.test(success.status)) {
+          this.getUserData(); 
+          } else {
+            console.error('error in conection',  success);
+          }
         },  {scope: 'public_profile,email,user_location'});
       }
     });
@@ -53,21 +62,34 @@ export class FacebookService {
   }
 
   public getUserData(): void {
-    //first_name', 'last_name', 'middle_name', 'email', user_mobile_phone
+    this.loadingLogin = true;
     this.FB.api('/me?fields=id,first_name,last_name,middle_name,email,location,picture', (success: any) => {
       console.log('me >', success);
-      this.userData.id = success.id;
-      this.userData.givenName = success.first_name;
+      if (!success || success.error) {
+        console.error('error in getting user data from FB', success);
+        this.loadingLogin = false;
+        return;
+      }
+      this.userData.fbId = success.id;
+      this.userData.name = success.first_name;
+      this.userData.email = success.email;
       if (success.last_name && success.last_name.length) {
         const lastNames: string = success.last_name.split(' ');
-        this.userData.surName = lastNames[0];
-        this.userData.surname2 = lastNames[1] || success.middle_name;
+        this.userData.surname = lastNames[0];
+        this.userData.lastname = lastNames[1] || success.middle_name;
       }
-      this.userData.avatar = success.picture && success.picture.data && !success.picture.data.is_silhouette ? success.picture.data.url : undefined;
-      success.location && success.location.id && this.FB.api('/' + success.location.id+'?fields=location' , (loSucces: any) => {
-        console.log('loSucces', loSucces);
-        this.userData.country = loSucces.location && loSucces.location.city || undefined;
-      });    
+      this.userData.avatar_url = success.picture && success.picture.data && !success.picture.data.is_silhouette ? success.picture.data.url : this.userService.defaultAvatar;
+      if (success.location && success.location.id) {
+        this.FB.api('/' + success.location.id+'?fields=location' , (loSucces: any) => {
+          console.log('loSucces', loSucces);
+          this.userData.address.country = loSucces.location && loSucces.location.city || undefined;
+          this.userService.loginSucess(this.userData);
+          this.loadingLogin = false;
+        });
+      }  else {
+        this.userService.loginSucess(this.userData);
+        this.loadingLogin = false;
+      }
     });
 
   }
