@@ -1,5 +1,16 @@
 @import '../../../common/styles/variables.scss';
 review-payment {
+  account {
+    content.page.create-account {
+      .main-create-account.row {
+        form.form-create-account {
+          margin: 0;
+          padding: 0;
+          width: 100%;
+        }
+      }
+    }
+  }
   .img-back {
     i.material-icons.large {
       @media screen and (max-device-width: $screen-mobile-max) {

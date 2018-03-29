@@ -53,7 +53,7 @@ export class UserService {
     }
   }
 
-  public setUser(response: any): void {
+  public setUser(response: any, changeAvatar?: boolean): void {
     if (response.token) {
       this.token = response.token;
       this.CookieService.setCookie('authToken', {authToken: this.token});
@@ -68,7 +68,7 @@ export class UserService {
       this.user.phoneNumber = response.phone_number;
       this.user.username = response.username;
       this.user.id = response.id;
-      this.user.fbId = response.fbId;
+      this.user.fbId = this.user.fbId || response.fbId;
       this.isAuth = true;
       this.CookieService.setCookie(this.userCookieName, this.user);
     }
@@ -270,7 +270,7 @@ export class UserService {
     const reqFields: string [] = ['name', 'lastName', 'lastName2', 'email', 'address.country', 'phoneNumber', 'username', 'avatar'];
     let missingFilds: string[];
     if (this.user && this.isAuth) {
-      missingFilds = reqFields.filter((prop: string, propIndex: number) => (!this.user[prop]));
+      missingFilds = reqFields.filter(prop => (!prop.split('.').reduce((a, b) => a[b], this.user) ? prop : undefined));
       console.log('avatar missing', missingFilds.indexOf('avatar'))
       if (!~missingFilds.indexOf('avatar') && this.user.avatar === this.defaultAvatar) {
         missingFilds.push('avatar');

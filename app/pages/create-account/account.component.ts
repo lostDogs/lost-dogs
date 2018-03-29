@@ -396,7 +396,8 @@ export class accountComponent {
 
  public ngOnChanges(changes: SimpleChanges): void {
    if (changes.creatingUser.currentValue && this.fbUser) {
-     this.user.pic.value = this.user.pic.value || this.fbUser.avatar_url;
+     const defUserPic: string = 'https://www.lostdog.mx/assets/img/profile-undef.png';
+     this.user.pic.value = this.user.pic.value && this.user.pic.value !== defUserPic ? this.user.pic.value : this.fbUser.avatar_url;
      this.user.name.first.value = this.user.name.first.value || this.fbUser.name;
      this.user.name.last1.value = this.user.name.last1.value || this.fbUser.lastName;
      this.user.name.last2.value = this.user.name.last2.value || this.fbUser.lastName2;
@@ -405,7 +406,7 @@ export class accountComponent {
      this.user.access.password.value = this.fbUser.fbId;
      this.user.access.password2.value = this.fbUser.fbId;
      const validEmail: boolean = this.validate.email(this.user.contact.email.value);
-     if (this.user.pic.value === 'https://www.lostdog.mx/assets/img/profile-undef.png') {
+     if (this.user.pic.value === defUserPic) {
        this.user.pic.valid = false;
        console.error('invalid avatar creating user');
        return;

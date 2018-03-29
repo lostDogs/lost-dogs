@@ -25,23 +25,22 @@ export class CompleteUserComponent {
   }
 
   public promiseCatcher(postUser: any): void {
-      if (postUser) {
-        console.log('getting postUser', postUser);
-        postUser().add(() => {
-          if (this.LostService.userService.user.phoneNumber) {
-            this.LostService.goTo(this.LostService.pagePosition + 1);
-          } else {
-            this.LostService.globalService.clearErroMessages();
-            this.LostService.globalService.setErrorMEssage('No se creo bien la cuenta');
-            this.LostService.globalService.openErrorModal();
-          }
-          //setTimeout(() => {this.userService.postUser}, 500);
-        });
-      } else {
-        this.LostService.globalService.clearErroMessages();
-        this.LostService.globalService.setErrorMEssage('Hubo un error al completar tus datos');
-        this.LostService.globalService.openErrorModal();
-      }    
-
+    if (postUser) {
+      console.log('getting postUser', postUser);
+      postUser().add(() => {
+        if (this.LostService.userService.user.phoneNumber) {
+          this.LostService.goTo(this.LostService.pagePosition + 1);
+        } else {
+          this.LostService.globalService.clearErroMessages();
+          this.LostService.globalService.setErrorMEssage('No se creo bien la cuenta');
+          this.LostService.globalService.openErrorModal();
+        }
+        setTimeout(() => {this.LostService.userService.postUser = undefined}, 500);
+      });
+    } else {
+      this.LostService.globalService.clearErroMessages();
+      this.LostService.globalService.setErrorMEssage('Hubo un error al completar tus datos');
+      this.LostService.globalService.openErrorModal();
+    }
   }
 }

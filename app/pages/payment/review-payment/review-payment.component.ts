@@ -27,13 +27,18 @@ export class ReviewPaymentComponent {
   public reward: string;
   public rewardSetted: boolean;
   public EstimReward: string;
+  public fixedReward: string;
   public dogSize: string = '';
   public totalDays: number;
-  public fixedReward: string;
   public errorImg: boolean;
+
   public evidenceText: JQuery;
   public evidenceNext: boolean;
 
+  public missingFields: string[];
+  public missFieldObj: Object;
+  public missFieldNext: boolean;
+  public createUser: boolean;
   constructor (
     public userService: UserService,
     public router: Router,
@@ -50,7 +55,8 @@ export class ReviewPaymentComponent {
       this.dogID = params.cID;
       this.transcationId = params.transcation;
     });
-
+    this.missingFields = this.userService.missingReqFilds();
+    this.missFieldObj = this.userService.missingFieldsToObj(this.missingFields);
   }
 
   public ngOnInit(): void {
@@ -205,6 +211,34 @@ export class ReviewPaymentComponent {
           }
       });
     });
+  }
+
+  public userCreatePromise(postUser: any): void {
+    this.missFieldNext = undefined;
+    if (postUser) {
+      console.log('getting postUser', postUser);
+      postUser().add(() => {
+        if (this.userService.user.phoneNumber) {
+          console.log('user created! ');
+          this.missFieldNext = true;
+        } else {
+          this.missFieldNext = this.createUser = false;
+          this.globalService.clearErroMessages();
+          this.globalService.setErrorMEssage('No se creo bien la cuenta');
+          this.globalService.openErrorModal();
+        }
+        setTimeout(() => {this.userService.postUser = undefined}, 500);
+      });
+    } else {
+      this.missFieldNext = this.createUser = false;
+      this.globalService.clearErroMessages();
+      this.globalService.setErrorMEssage('Hubo un error al completar tus datos');
+      this.globalService.openErrorModal();
+    }    
+  }
+
+  public disableCreateUser(): boolean {
+    return this.createUser && (typeof this.missFieldNext === 'boolean');
   }
 
 };
