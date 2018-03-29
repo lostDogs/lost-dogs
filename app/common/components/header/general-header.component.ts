@@ -115,6 +115,5 @@ export class generalHeaderComponent implements OnInit  {
     this.lostService.displayedSequence && this.lostService.displayedSequence.length && this.lostService.displayedSequence.forEach((value: any, index: number) => {
       this.lostService.pageAnswers.push(undefined);
     });
-
   }
 };

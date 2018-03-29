@@ -94,6 +94,12 @@ export class lostComponent {
     this.lostService.displayedSequence.forEach((value: any, index: number) => {
       this.lostService.pageAnswers.push(undefined);
     });
+    const missingFields: any = this.userService.missingReqFilds();
+    if (missingFields && missingFields.length) {
+      this.lostService.addUserDataPage();
+    } else {
+      this.lostService.removeUserDataPage();
+    }
   }
 
   public ngAfterViewInit(): void {

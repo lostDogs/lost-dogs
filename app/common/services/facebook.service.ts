@@ -56,7 +56,7 @@ export class FacebookService {
 
   public statusChange(response: any): void {
     console.log('status chage', response);
-    if (/connected/g.test(response.status)) {
+    if (/connected/g.test(response.status) && !this.userService.isAuth) {
       this.getUserData();
     }
   }
@@ -73,6 +73,7 @@ export class FacebookService {
       this.userData.fbId = success.id;
       this.userData.name = success.first_name;
       this.userData.email = success.email;
+      this.userData.username = success.email;
       if (success.last_name && success.last_name.length) {
         const lastNames: string = success.last_name.split(' ');
         this.userData.surname = lastNames[0];

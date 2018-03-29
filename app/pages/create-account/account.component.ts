@@ -1,8 +1,9 @@
-import { Component, Input, ElementRef, ViewChild} from '@angular/core';
+import { Component, Input, ElementRef, ViewChild, Output, SimpleChanges, EventEmitter} from '@angular/core';
+import {Router} from '@angular/router';
+import {Subscription} from 'rxjs/Rx';
+import * as countryData from '../../common/content/countries.json';
 import {ValidationService} from  '../../common/services/validation.service';
 import {ApiService} from '../../common/services/api.service';
-import * as countryData from '../../common/content/countries.json';
-import {Router} from '@angular/router';
 import {UserService} from '../../common/services/user.service';
 import {GlobalFunctionService} from '../../common/services/global-function.service';
 require('../../common/plugins/masks.js');
@@ -51,6 +52,18 @@ export class accountComponent {
   public oldPassword: string;
   @ViewChild('Addresss')
   public addressDom: ElementRef;
+  
+  @Input()
+  public checkingMissingFields: boolean;
+  @Input()
+  public missingFields: any;
+  @Input()
+  public fbUser: any;
+  //every change is the following output variablewill export the this.user  out
+  @Input()
+  public creatingUser: boolean;
+  @Output()
+  public userCreated: EventEmitter<any> = new EventEmitter<any>();
 
   constructor (public validate: ValidationService, public api: ApiService, public router: Router, public userService: UserService, public globalService: GlobalFunctionService) {
     this.countries = [{"id": "MX", "name": "Mexico"}];
@@ -82,13 +95,16 @@ export class accountComponent {
       }
     };
     //Catptcha code incliding the ngOnDestroy.
-    window['captchaSubmit'] = this.userService.captchaSubmit.bind(this.userService);
-    window['expiredCaptcha'] = this.userService.expiredCaptcha.bind(this.userService);
-    window['onloadCallback'] = this.userService.onloadCallback;    
-    this.userService.loadCaptchaScript();
+    if (!this.checkingMissingFields) {
+      window['captchaSubmit'] = this.userService.captchaSubmit.bind(this.userService);
+      window['expiredCaptcha'] = this.userService.expiredCaptcha.bind(this.userService);
+      window['onloadCallback'] = this.userService.onloadCallback;
+      this.userService.loadCaptchaScript();
+    }
   }
 
   public ngAfterViewInit(): void {
+    console.log('misssing fields',this.missingFields['address.country']);
    $('select').material_select();
    $('#phone').mask('0000000000');
    if (this.hoverRetainState)  {
@@ -108,13 +124,13 @@ export class accountComponent {
   }
 
   public ngOnInit(): void {
-    if (this.userService.isAuth && !this.profilePage) {
+    if (this.userService.isAuth && !this.profilePage &&!this.checkingMissingFields) {
       this.router.navigate(['/profile']);
     }
     this.user.adress.country.value = undefined;
   }
 
-  public createUser (form: any): void {
+  public createUser (form?: any): void {
     this.globalService.clearErroMessages();
     this.userService.isAvatarSet = undefined;
     // Check for undefined and set formvalue to false
@@ -195,8 +211,8 @@ export class accountComponent {
     this.api.put(url, this.binaryImg, {'Content-Type': 'image/jpeg', 'Content-encoding': 'base64'}).subscribe(
       data => this.sucessImgToBucket(data),
       e => this.errorImgToBucket(e),
-      ()=> this.toHomePage()
-    );
+      ()=> { this.atCreateAccount && this.toHomePage(); }
+      );
   }
 
   public sucessImgToBucket(data: any): void {
@@ -256,10 +272,11 @@ export class accountComponent {
     this.router.navigateByUrl('/info/privacy');
   }
 
-  public postUser(): void {
+  public postUser(): Subscription {
     const userPost: any = this.userBuilder(this.user);
     this.loading = true;
-    this.api.post(this.api.API_PROD + 'users', userPost).subscribe(
+    console.log('user post', userPost);
+    return this.api.post(this.api.API_PROD + 'users', userPost).subscribe(
       data => this.afterCreateData(data),
       e => this.afterCreateError(e)
       );
@@ -376,6 +393,32 @@ export class accountComponent {
       });
     }
   }
+
+ public ngOnChanges(changes: SimpleChanges): void {
+   if (changes.creatingUser.currentValue && this.fbUser) {
+     this.user.pic.value = this.user.pic.value || this.fbUser.avatar_url;
+     this.user.name.first.value = this.user.name.first.value || this.fbUser.name;
+     this.user.name.last1.value = this.user.name.last1.value || this.fbUser.lastName;
+     this.user.name.last2.value = this.user.name.last2.value || this.fbUser.lastName2;
+     this.user.contact.email.value = this.user.contact.email.value || this.fbUser.email;
+     this.user.adress.country.value = this.user.adress.country.value || this.fbUser['address.country'];
+     this.user.access.password.value = this.fbUser.fbId;
+     this.user.access.password2.value = this.fbUser.fbId;
+     const validEmail: boolean = this.validate.email(this.user.contact.email.value);
+     if (this.user.pic.value === 'https://www.lostdog.mx/assets/img/profile-undef.png') {
+       this.user.pic.valid = false;
+       console.error('invalid avatar creating user');
+       return;
+     }
+     if (!validEmail) {
+       this.user.contact.email.valid = false;
+       console.error('invalid email creating user');
+       return
+     }
+     console.log('emitting postUser user bindend >');
+     this.userCreated.emit(this.postUser.bind(this));
+   }
+ }
 
   public ngOnDestroy(): void {
     this.userService.validCaptcha = undefined;

@@ -26,6 +26,9 @@ export class UserService {
   public validCaptcha: boolean;
   public defaultAvatar: string = 'https://www.lostdog.mx/assets/img/profile-undef.png';
 
+  public createAccount: boolean;
+  public postUser: any;
+
 
   constructor (public api: ApiService, public router: Router, public globalService: GlobalFunctionService, public CookieService: CookieManagerService) {
     this.user = {};
@@ -65,6 +68,7 @@ export class UserService {
       this.user.phoneNumber = response.phone_number;
       this.user.username = response.username;
       this.user.id = response.id;
+      this.user.fbId = response.fbId;
       this.isAuth = true;
       this.CookieService.setCookie(this.userCookieName, this.user);
     }
@@ -253,7 +257,7 @@ export class UserService {
     const requried: string [] = ['city', 'country', 'ext_number', 'neighborhood', 'street', 'zip_code'];
     if (this.user && this.user.address) {
       console.log('adddres', this.user.address);
-      return requried.some ((prop: string, proIndex: number) => (
+      return requried.some ((prop: string, propIndex: number) => (
         !this.user.address[prop]
       ));
     } else {
@@ -261,4 +265,31 @@ export class UserService {
     }
   }
 
+  public missingReqFilds(): any {
+    // return undefined when no field is missing.
+    const reqFields: string [] = ['name', 'lastName', 'lastName2', 'email', 'address.country', 'phoneNumber', 'username', 'avatar'];
+    let missingFilds: string[];
+    if (this.user && this.isAuth) {
+      missingFilds = reqFields.filter((prop: string, propIndex: number) => (!this.user[prop]));
+      console.log('avatar missing', missingFilds.indexOf('avatar'))
+      if (!~missingFilds.indexOf('avatar') && this.user.avatar === this.defaultAvatar) {
+        missingFilds.push('avatar');
+      }
+    } else {
+      console.log('missing fields', missingFilds);
+      return reqFields;
+    }
+    console.log('missing fields', missingFilds);
+    return missingFilds;
+  }
+
+  public  missingFieldsToObj(array: any[]): any {
+    let obj = {};
+    if (Array.isArray(array) && array.length) {
+      array.forEach((val: any) => {
+        obj[val] = true;
+      })
+    }
+    return obj;
+  }
 }
