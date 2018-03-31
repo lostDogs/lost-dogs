@@ -22,26 +22,26 @@ export class editAccountComponent {
     this.user = {
       pic: {value: this.userService.user.avatar, valid: true, required: true, label: 'imagen de perfil'},
       name: {
-        first: {valid: true, value: this.userService.user.name, required: true},
-        last1: {valid: true, value: this.userService.user.lastName, required: true},
-        last2: {valid: true, value: this.userService.user.lastName2, required: true}
+        first: {valid: true, value: this.userService.user.name, required: true , label: 'Nombre'},
+        last1: {valid: true, value: this.userService.user.lastName, required: true , label: 'Apellido paterno'},
+        last2: {valid: true, value: this.userService.user.lastName2, required: true, label: 'Apellido materno'}
       },
       adress: {
-        adressName: {valid: true, value: this.userService.user.address.neighborhood, required: true},
-        postalCode: {valid: true, value: this.userService.user.address.zip_code, required: true},
-        city: {valid: true, value: this.userService.user.address.city, required: true},
-        numberExt: {valid: true, value: this.userService.user.address.ext_number, required: true},
-        numberInt: {valid: true, value: this.userService.user.address.int_number, required: false},
-        country: {valid: true, value: this.userService.user.address.country, required: true},
-        street: {valid: true, value: this.userService.user.address.street, required: true},
+        adressName: {valid: true, value: this.userService.user.address.neighborhood, required: false , label: 'Colonia'},
+        postalCode: {valid: true, value: this.userService.user.address.zip_code, required: false , label: 'Código Postal'},
+        city: {valid: true, value: this.userService.user.address.city, required: false , label: 'Ciudad'},
+        numberExt: {valid: true, value: this.userService.user.address.ext_number, required: false , label: 'Número exterior'},
+        numberInt: {valid: true, value: this.userService.user.address.int_number, required: false , label: 'Número interior'},
+        country: {valid: true, value: this.userService.user.address.country, required: true , label: 'País'},
+        street: {valid: true, value: this.userService.user.address.street, required: false , label: 'Calle'}
       },
       contact: {
-        phone: {valid: true, value: this.userService.user.phoneNumber.number, required: true},
-        email: {valid: true, value: this.userService.user.email, required: true}
+        phone: {valid: true, value: this.userService.user.phoneNumber.number, required: true , label: 'Teléfono celular'},
+        email: {valid: true, value: this.userService.user.email, required: true, label: 'Correo electrónico'}
       },
       access: {
-        password: {valid: true, value: undefined, required: true},
-        password2: {valid: true, value: undefined, required: true}
+        password: {valid: true, value: this.userService.user.fbId || undefined, required: true , label: 'Contraseña'},
+        password2: {valid: true, value: this.userService.user.fbId || undefined, required: true, label: 'Repetir contraseña'}
       }
     };
     this.orginalUser = JSON.parse(JSON.stringify(this.user));
@@ -52,7 +52,7 @@ export class editAccountComponent {
      // this function is being executed on the create-account.template.html every dom interaction.
     const objKeys = Object.keys(userBlock);
     return objKeys.some((userElement: string, userElementIndex: number) => {
-      if (userBlock[userElement].value) {
+      if (userBlock[userElement] && userBlock[userElement].value) {
         const userValue: string = (userElement==='password'  || userElement==='password2') ? userBlock[userElement].value: (userBlock[userElement].value + '').trim().toLowerCase();
         const originalUserValue: string = originalUserBlock[userElement].value && (userElement==='password'  || userElement==='password2') ? originalUserBlock[userElement].value : (originalUserBlock[userElement].value + '').trim().toLowerCase();
         if (userValue === originalUserValue) {

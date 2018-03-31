@@ -218,7 +218,7 @@ export class ReviewPaymentComponent {
     if (postUser) {
       console.log('getting postUser', postUser);
       postUser().add(() => {
-        if (this.userService.user.phoneNumber) {
+        if (this.userService.user.phoneNumber && this.userService.user.phoneNumber.number) {
           console.log('user created! ');
           this.missFieldNext = true;
         } else {

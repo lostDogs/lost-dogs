@@ -59,6 +59,7 @@ export class LostFoundService {
   public btnBreedSearchDom: ElementRef;
   public patterNoColor: boolean;
   public noBreed: any;
+  public disableCompleteBtn: any;
 
   constructor(
     public router: Router,

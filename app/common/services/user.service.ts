@@ -25,10 +25,10 @@ export class UserService {
   public noAuthSubs: Subscription;
   public validCaptcha: boolean;
   public defaultAvatar: string = 'https://www.lostdog.mx/assets/img/profile-undef.png';
-
+  public reqFields: string[] = ['name', 'lastName', 'lastName2', 'email', 'address.country', 'phoneNumber.number', 'avatar'];
   public createAccount: boolean;
   public postUser: any;
-
+  public userNotInDb: boolean;
 
   constructor (public api: ApiService, public router: Router, public globalService: GlobalFunctionService, public CookieService: CookieManagerService) {
     this.user = {};
@@ -51,6 +51,7 @@ export class UserService {
     if (locCookie) {
       this.location = locCookie;
     }
+    this.userNotInDb = this.user.phoneNumber && !this.user.phoneNumber.number && this.user.fbId;
   }
 
   public setUser(response: any, changeAvatar?: boolean): void {
@@ -65,7 +66,7 @@ export class UserService {
       this.user.email = response.email;
       this.user.lastName2 = response.lastname;
       this.user.address = response.address;
-      this.user.phoneNumber = response.phone_number;
+      this.user.phoneNumber = response.phone_number || {};
       this.user.username = response.username;
       this.user.id = response.id;
       this.user.fbId = this.user.fbId || response.fbId;
@@ -126,6 +127,7 @@ export class UserService {
     this.loading = false;
     this.timesTrying = 0;
     this.setUser(data);
+    this.userNotInDb = this.user.phoneNumber && !this.user.phoneNumber.number && this.user.fbId;
     this.isAvatarSet = true;
     this.errors.invalidUser = false;
     if (this.previousUrl && (data.name || data.username)) {
@@ -267,17 +269,15 @@ export class UserService {
 
   public missingReqFilds(): any {
     // return undefined when no field is missing.
-    const reqFields: string [] = ['name', 'lastName', 'lastName2', 'email', 'address.country', 'phoneNumber', 'username', 'avatar'];
     let missingFilds: string[];
     if (this.user && this.isAuth) {
-      missingFilds = reqFields.filter(prop => (!prop.split('.').reduce((a, b) => a[b], this.user) ? prop : undefined));
-      console.log('avatar missing', missingFilds.indexOf('avatar'))
+      missingFilds = this.reqFields.filter(prop => (!prop.split('.').reduce((a, b) => a[b], this.user) ? prop : undefined));
       if (!~missingFilds.indexOf('avatar') && this.user.avatar === this.defaultAvatar) {
         missingFilds.push('avatar');
       }
     } else {
       console.log('missing fields', missingFilds);
-      return reqFields;
+      return this.reqFields;
     }
     console.log('missing fields', missingFilds);
     return missingFilds;

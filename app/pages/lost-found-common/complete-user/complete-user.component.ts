@@ -28,7 +28,7 @@ export class CompleteUserComponent {
     if (postUser) {
       console.log('getting postUser', postUser);
       postUser().add(() => {
-        if (this.LostService.userService.user.phoneNumber) {
+        if (this.LostService.userService.user.phoneNumber && this.LostService.userService.user.phoneNumber.number ) {
           this.LostService.goTo(this.LostService.pagePosition + 1);
         } else {
           this.LostService.globalService.clearErroMessages();

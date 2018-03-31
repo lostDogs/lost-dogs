@@ -1,3 +1,3 @@
 <div class="complete-user">
-  <account [title]="'hidden'" [checkingMissingFields]="true"  [missingFields]="missingFieldsObj" [creatingUser]="LostService.userService.createAccount" (userCreated)="promiseCatcher($event)" [fbUser]="LostService.userService.user"></account>
+  <account [title]="'hidden'" [checkingMissingFields]="true"  [missingFields]="missingFieldsObj" [creatingUser]="LostService.userService.createAccount" (userCreated)="promiseCatcher($event)" [fbUser]="LostService.userService.user" (disableBtn)="LostService.disableCompleteBtn=!$event"></account>
 </div>

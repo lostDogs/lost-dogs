@@ -6,6 +6,7 @@ import {ValidationService} from  '../../common/services/validation.service';
 import {ApiService} from '../../common/services/api.service';
 import {UserService} from '../../common/services/user.service';
 import {GlobalFunctionService} from '../../common/services/global-function.service';
+
 require('../../common/plugins/masks.js');
 const imgCompress = require('@xkeshi/image-compressor');
 
@@ -64,6 +65,8 @@ export class accountComponent {
   public creatingUser: boolean;
   @Output()
   public userCreated: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  public disableBtn: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
   constructor (public validate: ValidationService, public api: ApiService, public router: Router, public userService: UserService, public globalService: GlobalFunctionService) {
     this.countries = [{"id": "MX", "name": "Mexico"}];
@@ -104,7 +107,6 @@ export class accountComponent {
   }
 
   public ngAfterViewInit(): void {
-    console.log('misssing fields',this.missingFields['address.country']);
    $('select').material_select();
    $('#phone').mask('0000000000');
    if (this.hoverRetainState)  {
@@ -114,6 +116,7 @@ export class accountComponent {
       const input = $('#country');
       this.user.adress.country.value = input.val();
       this.user.adress.country.valid = true;
+      this.disableIfmf();
     });   
    if (this.profilePage && this.userService.user.address.country) {
       $('#country option[value=' + this.userService.user.address.country + ']').attr('selected','selected');
@@ -165,9 +168,22 @@ export class accountComponent {
         }
       }
     });
-    if (validForm && this.userService.validCaptcha) {
-      this.postUser();
+    if (validForm && (this.userService.validCaptcha || /profile\/edit/g.test(this.router.url))) {
+      if (/profile\/edit/g.test(this.router.url)) {
+        this.postUser().add(() => {
+          // if its is allready in db
+          if (!this.userService.userNotInDb) {
+            this.globalService.clearErroMessages();
+            this.globalService.setErrorMEssage('Se han agregado tus datos');
+            this.globalService.openBlueModal();
+            this.router.navigate(['/profile/main']);
+          }
+        });
+      } else {
+        this.postUser();
+      }
     } else {
+      this.userService.isAvatarSet = this.userService.user.fbId;
       if (!this.userService.validCaptcha && validForm) {
         this.globalService.setErrorMEssage('Parece que eres un robot');
         this.globalService.setSubErrorMessage('error en re-captcha');
@@ -186,6 +202,7 @@ export class accountComponent {
             reader.onload = (event: any) => {
               this.user.pic.value = event.target.result;
               this.user.pic.valid = true;
+              this.disableIfmf();
             };
             reader.readAsDataURL(miniFile);
           });
@@ -215,7 +232,7 @@ export class accountComponent {
       );
   }
 
-  public sucessImgToBucket(data: any): void {
+  public sucessImgToBucket(data?: any): void {
     setTimeout(() => {this.userService.isAvatarSet = true;}, 4000);
   }
 
@@ -226,7 +243,12 @@ export class accountComponent {
   }
 
   public afterCreateData(data: any): void {
-    this.setImgToBucket(data.uploadAvatarUrl);
+    this.userService.userNotInDb = false;
+    if (data.uploadAvatarUrl) {
+      this.setImgToBucket(data.uploadAvatarUrl);
+    } else {
+      this.sucessImgToBucket();
+    }
     this.userService.setUser(data);
   }
 
@@ -235,6 +257,7 @@ export class accountComponent {
     this.globalService.setErrorMEssage(errorMessage);
     this.globalService.openErrorModal();
     this.loading = false;
+    this.userService.isAvatarSet = !!this.userService.user.fbId;
   }
 
   public userBuilder(user: Iuser): any {
@@ -256,11 +279,14 @@ export class accountComponent {
          'area_code': ''
       },
       'email': user.contact.email.value.toLowerCase(),
-      'username': user.contact.email.value.toLowerCase(),
+      'username': this.userService.userNotInDb && this.userService.user.email ? this.userService.user.email.toLowerCase() : user.contact.email.value.toLowerCase(),
       'confirm_password': user.access.password.value,
       'password': user.access.password2.value,
       'avatarFileType': 'image/jpeg'
     };
+    if (this.userService.user.avatar && !(new RegExp(this.userService.defaultAvatar, 'g')).test(this.userService.user.avatar)) {
+      userPost['avatar_url'] = this.userService.user.avatar;
+    }
     return userPost;
   }
 
@@ -275,7 +301,7 @@ export class accountComponent {
   public postUser(): Subscription {
     const userPost: any = this.userBuilder(this.user);
     this.loading = true;
-    console.log('user post', userPost);
+    console.log('user post >', userPost);
     return this.api.post(this.api.API_PROD + 'users', userPost).subscribe(
       data => this.afterCreateData(data),
       e => this.afterCreateError(e)
@@ -286,6 +312,12 @@ export class accountComponent {
     // this function is being executed on the create-account.template.html that is why i am passing the accountCtrl.
     this.loading = true;
     const objKeys: string[] = Object.keys(userBlock);
+    if (this.userService.userNotInDb) {
+      console.log('user not in db >>');
+      this.createUser();
+      this.loading = false;
+      return;
+    }
     const valid: boolean = !objKeys.some((userElement: string, userElIndex: number) => {
       if (!userBlock[userElement].valid) {
         return true;
@@ -313,7 +345,6 @@ export class accountComponent {
         'Content-Type': 'application/json',
         'Authorization': 'token ' + this.userService.token
       };
-      console.log('token', this.userService.token);
       this.api.put(url, userToEdit, headers).subscribe(
         data => {
           this.userService.setUser(data.json());
@@ -395,9 +426,9 @@ export class accountComponent {
   }
 
  public ngOnChanges(changes: SimpleChanges): void {
-   if (changes.creatingUser.currentValue && this.fbUser) {
-     const defUserPic: string = 'https://www.lostdog.mx/assets/img/profile-undef.png';
-     this.user.pic.value = this.user.pic.value && this.user.pic.value !== defUserPic ? this.user.pic.value : this.fbUser.avatar_url;
+   if (changes.creatingUser && changes.creatingUser.currentValue && this.fbUser) {
+     const defaultAvatar: RegExp = new RegExp(this.userService.defaultAvatar, 'g');
+     this.user.pic.value = this.user.pic.value && !defaultAvatar.test(this.user.pic.value) ? this.user.pic.value : this.fbUser.avatar_url;
      this.user.name.first.value = this.user.name.first.value || this.fbUser.name;
      this.user.name.last1.value = this.user.name.last1.value || this.fbUser.lastName;
      this.user.name.last2.value = this.user.name.last2.value || this.fbUser.lastName2;
@@ -405,24 +436,41 @@ export class accountComponent {
      this.user.adress.country.value = this.user.adress.country.value || this.fbUser['address.country'];
      this.user.access.password.value = this.fbUser.fbId;
      this.user.access.password2.value = this.fbUser.fbId;
-     const validEmail: boolean = this.validate.email(this.user.contact.email.value);
-     if (this.user.pic.value === defUserPic) {
+     console.log('user in changes', this.user);
+     if (defaultAvatar.test(this.user.pic.value)) {
        this.user.pic.valid = false;
+       this.globalService.clearErroMessages();
+       this.globalService.setErrorMEssage('imagen invalida');
+       this.globalService.openErrorModal();
        console.error('invalid avatar creating user');
        return;
      }
-     if (!validEmail) {
-       this.user.contact.email.valid = false;
-       console.error('invalid email creating user');
-       return
-     }
      console.log('emitting postUser user bindend >');
+     this.userService.isAvatarSet = false;
      this.userCreated.emit(this.postUser.bind(this));
+   }
+ }
+
+ public disableIfmf(): void {
+   if (this.checkingMissingFields && this.missingFields) {
+     const reqFields = ['name.first', 'name.last1', 'name.last2', 'contact.email', 'adress.country', 'contact.phone', 'pic'];
+     const missingkeys = Object.keys(this.missingFields);
+     const missingFrom = missingkeys.map(val => (reqFields[this.userService.reqFields.indexOf(val)] + '.value'));
+     const formMissValue = missingFrom.some(prop => (!prop.split('.').reduce((a, b) => a[b], this.user)));
+     const formInvalid = missingFrom.some(prop => (!prop.replace('value', 'valid').split('.').reduce((a, b) => a[b], this.user)));
+     if (this.missingFields.avatar && this.user.pic.value === this.userService.defaultAvatar) {
+       this.disableBtn.emit(true);
+       return;
+     }
+     this.disableBtn.emit(formMissValue || formInvalid);
    }
  }
 
   public ngOnDestroy(): void {
     this.userService.validCaptcha = undefined;
-    $('script#captcha-script').detach();
+    const captchaScript: JQuery = $('script#captcha-script');
+    if (captchaScript.length) {
+      $('script#captcha-script').detach();
+    }
   }
 };

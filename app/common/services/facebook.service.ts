@@ -82,23 +82,29 @@ export class FacebookService {
       this.userData.avatar_url = success.picture && success.picture.data && !success.picture.data.is_silhouette ? success.picture.data.url : this.userService.defaultAvatar;
       if (success.location && success.location.id) {
         this.FB.api('/' + success.location.id+'?fields=location' , (loSucces: any) => {
-          console.log('loSucces', loSucces);
           this.userData.address.country = loSucces.location && loSucces.location.city || undefined;
-          this.userService.loginSucess(this.userData);
+          this.loginApp(this.userData);
           this.loadingLogin = false;
         });
       }  else {
-        this.userService.loginSucess(this.userData);
+        this.loginApp(this.userData);
         this.loadingLogin = false;
       }
     });
+  }
 
+  public loginApp(userData: any): void {
+    this.userService.login(this.userData.email, this.userData.fbId).add(() => {
+      if (this.userService.errors.invalidUser) {
+        console.log('user not in DB going for FB loign >');
+        this.userService.loginSucess(this.userData);
+      }
+    });
   }
 
   public logOut(): void {
     this.FB.logout((response: any) => {
       // user is now logged out
-
     });
   }
 }
