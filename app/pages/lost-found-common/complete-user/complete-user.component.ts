@@ -29,7 +29,8 @@ export class CompleteUserComponent {
       console.log('getting postUser', postUser);
       postUser().add(() => {
         if (this.LostService.userService.user.phoneNumber && this.LostService.userService.user.phoneNumber.number ) {
-          this.LostService.goTo(this.LostService.pagePosition + 1);
+          this.LostService.removeUserDataPage();
+          this.LostService.goTo(this.LostService.defualtSequence.length - 1);
         } else {
           this.LostService.globalService.clearErroMessages();
           this.LostService.globalService.setErrorMEssage('No se creo bien la cuenta');

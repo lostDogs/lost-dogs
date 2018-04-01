@@ -34,9 +34,6 @@ export class FacebookService {
       version    : 'v2.12'
     });
     console.log('<<< runing facebook init ...');
-    this.FB.getLoginStatus((response: any) => {
-      this.statusChange(response);
-    });
   }
 
   public login(): void {
@@ -103,8 +100,10 @@ export class FacebookService {
   }
 
   public logOut(): void {
-    this.FB.logout((response: any) => {
-      // user is now logged out
-    });
+    if (this.userService.user.fbId) {
+      this.FB.logout((response: any) => {
+        console.log('loggin out of app');
+      });
+    }
   }
 }
