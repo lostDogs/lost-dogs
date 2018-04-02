@@ -43,7 +43,7 @@
       <li><a routerLink="/login" class="waves-effect" *ngIf="!userService.isAuth"><i class="material-icons left">vpn_key</i>Iniciar sesión</a></li>
       <li><div class="divider" *ngIf="!userService.isAuth"></div></li>
       <li><a routerLink="/account" class="waves-effect" *ngIf="!userService.isAuth"><i class="material-icons left">person_pin</i>Crear cuenta</a></li>
-      <li><a href="javascript:void(0)" class="waves-effect" *ngIf="userService.isAuth" (click)="userService.logout()"><i class="material-icons left">reply</i>Cerrar sesión</a></li>
+      <li><a href="javascript:void(0)" class="waves-effect" *ngIf="userService.isAuth" (click)="userService.logout(); fbService.logOut();"><i class="material-icons left">reply</i>Cerrar sesión</a></li>
       <li><div class="divider"></div></li>
       <li><a class="subheader" *ngIf="userService.isAuth">mas acciones</a></li>
       <li><a routerLink="board" class="waves-effect"><i class="material-icons left">style</i>Catalogo</a></li>
@@ -67,6 +67,10 @@
         <div *ngIf="!userService.loading">Iniciar sesión<i class="material-icons right">send</i></div>
         <div *ngIf="userService.loading">Cargando ...</div>
       </button>
+      <button class="btn waves-effect col l12 fb" type="button" (click)="fbService.login()" [disabled]="fbService.loadingLogin">
+        <div [hidden]="fbService.loadingLogin"><div class="fb-text">continuar con </div><div class="fb-img"> <img src="https://www.lostdog.mx/assets/img/facebook.png"></div> </div>
+        <div [hidden]="!fbService.loadingLogin">Cargando ...</div>
+      </button>
       <div class="col l12 account-link">
         <a routerLink="account" title="" class="waves-effect"> Crea tu cuenta
          <i class="material-icons right">person_pin</i>
@@ -84,7 +88,7 @@
           <a routerLink="/profile" ><i class="material-icons left">perm_identity</i>Mi cuenta</a>
         </li>
         <li class="waves-effect">
-          <a routerLink=""  (click)="userService.logout()"><i class="material-icons left">reply</i>Cerrar sesión</a>
+          <a routerLink=""  (click)="userService.logout(); fbService.logOut();"><i class="material-icons left">reply</i>Cerrar sesión</a>
         </li>
       </ul>
     </div>

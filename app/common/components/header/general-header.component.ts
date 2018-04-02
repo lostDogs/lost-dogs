@@ -5,6 +5,7 @@ import {UserService} from '../../services/user.service';
 import {LostFoundService} from '../../services/lost-found.service';
 import {CookieManagerService} from '../../services/cookie-manager.service';
 import {DogCardService} from '../../services/dog-card.service';
+import {FacebookService} from '../../services/facebook.service';
 
 @Component({
   selector: 'general-header',
@@ -35,7 +36,8 @@ export class generalHeaderComponent implements OnInit  {
     public router: Router,
     public lostService: LostFoundService,
     public cookieService: CookieManagerService,
-    public dogService: DogCardService
+    public dogService: DogCardService,
+    public fbService: FacebookService
   ) {
     this.renderer.listenGlobal('document', 'click', (event: any) => {
       const loginDom: any = this.loginDom && this.loginDom.nativeElement;
@@ -113,6 +115,5 @@ export class generalHeaderComponent implements OnInit  {
     this.lostService.displayedSequence && this.lostService.displayedSequence.length && this.lostService.displayedSequence.forEach((value: any, index: number) => {
       this.lostService.pageAnswers.push(undefined);
     });
-
   }
 };

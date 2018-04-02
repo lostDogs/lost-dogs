@@ -98,8 +98,8 @@ export class ValidationService {
 
   public password(field: string): boolean {
     const passwordRegex: RegExp = /^[\S]+$/i;
-    if (!field || !passwordRegex.test(field) || field.length < 7 || field.length > 15) {
-      this.errors.password = 'sin espacios y entre 7 y 15 caracters';
+    if (!field || !passwordRegex.test(field) || field.length < 5 || field.length > 30) {
+      this.errors.password = 'sin espacios y entre 5 y 30 caracters';
       return false;
     }
     return true;

@@ -1,12 +1,12 @@
 <content  class="page create-account">
-  <div class="main-title row">
+  <div class="main-title row" [hidden]="title==='hidden'">
     <h4>{{title}}</h4>
   </div>
   <div class="main-create-account row">
 
     <form name="create account"  #createAccount="ngForm" (ngSubmit)="createUser(createAccount)" class="col l6 s12 offset-l3 form-create-account">
-      <div class="account-completed account-block draw" id="name-block" [ngClass]="{'action': user.name.first.valid && user.name.last1.valid && user.name.last2.valid && user.name.first.value && user.name.last1.value && user.name.last2.value &&  (user.pic.value !== 'https://www.lostdog.mx/assets/img/profile-undef.png') && user.pic.valid}">
-        <div class="file-field input-field alt-black">
+      <div class="account-completed account-block draw" id="name-block" [hidden]="checkingMissingFields && !(missingFields.lastName2 || missingFields.lastName || missingFields.name || missingFields.avatar)" [ngClass]="{'action': user.name.first.valid && user.name.last1.valid && user.name.last2.valid && user.name.first.value && user.name.last1.value && user.name.last2.value &&  (user.pic.value !== 'https://www.lostdog.mx/assets/img/profile-undef.png') && user.pic.valid}">
+        <div class="file-field input-field alt-black" [hidden]="checkingMissingFields && !missingFields.avatar">
           <div class="profile-pic">
             <div  class="img-txt" *ngIf="user.pic.valid && user.pic.value ==='https://www.lostdog.mx/assets/img/profile-undef.png'">
               <span>Agrega una</span>
@@ -14,28 +14,28 @@
             </div>
             <div *ngIf="!user.pic.valid" class="wrong-red img-txt"><span><strong>No</strong> es una </span><span>imagen</span></div>
             <img [src]="user.pic.value" alt="image de perfil" class="circle width-center" id="prof-pic" [ngClass]="{'wrong-red': !user.pic.valid}">
-            <input type="file" class="circle width-center" name="userPic" (change)="!profilePage && filePicChange($event)" >
+            <input type="file" class="circle width-center" name="userPic" (change)="(!profilePage || userService.userNotInDb) && filePicChange($event)" >
           </div>
         </div>
         <div class="row row-extraspace">
-          <div class="input-field alt-black col l4 s12" [ngClass]="{'wrong-red': !user.name.first.valid}">
-                <input type="text" name="firstame" id="name"  [(ngModel)]="user.name.first.value" (keyup)="user.name.first.valid = validate.name(user.name.first.value);"  (change)="user.name.first.valid = validate.name(user.name.first.value);">
+          <div class="input-field alt-black col l4 s12" [ngClass]="{'wrong-red': !user.name.first.valid}" [hidden]="checkingMissingFields && !missingFields.name">
+                <input type="text" name="firstame" id="name"  [(ngModel)]="user.name.first.value" (keyup)="user.name.first.valid = validate.name(user.name.first.value); disableIfmf();"  (change)="user.name.first.valid = validate.name(user.name.first.value);">
                 <label for="name">
                   <div [ngClass]="{'fadeInDown': user.name.first.valid && createAccount.controls.firstame && createAccount.controls.firstame.dirty}" [hidden]="!user.name.first.valid">Nombre(s)</div>
                   <div [ngClass]="{'fadeInDown': (!user.name.first.valid && user.name.first.value)}" [hidden]="!(!user.name.first.valid && user.name.first.value)">{{validate.errors.name}}</div>
                   <div [ngClass]="{'fadeInDown': !user.name.first.valid && !user.name.first.value}" [hidden]="!(!user.name.first.valid && !user.name.first.value)">Nombre(s) es requerido</div>
                 </label>
           </div>
-          <div class="input-field alt-black col l4 s12"  [ngClass]="{'wrong-red': !user.name.last1.valid}">
-                <input type="text" name="lastName1" id="last-name-1" [(ngModel)]="user.name.last1.value" (keyup)="user.name.last1.valid = validate.name(user.name.last1.value);"  (change)="user.name.last1.valid = validate.name(user.name.last1.value);" >
+          <div class="input-field alt-black col l4 s12"  [ngClass]="{'wrong-red': !user.name.last1.valid}" [hidden]="checkingMissingFields && !missingFields.lastName">
+                <input type="text" name="lastName1" id="last-name-1" [(ngModel)]="user.name.last1.value" (keyup)="user.name.last1.valid = validate.name(user.name.last1.value); disableIfmf();"  (change)="user.name.last1.valid = validate.name(user.name.last1.value);" >
                 <label for="last-name-1">
                   <div [ngClass]="{'fadeInDown': user.name.last1.valid && createAccount.controls.lastName1 && createAccount.controls.lastName1.dirty}" [hidden]="!user.name.last1.valid">Apellido paterno</div>
                   <div [ngClass]="{'fadeInDown': (!user.name.last1.valid && user.name.last1.value)}" [hidden]="!(!user.name.last1.valid && user.name.last1.value)">{{validate.errors.name}}</div>
                   <div [ngClass]="{'fadeInDown': !user.name.last1.valid && !user.name.last1.value}" [hidden]="!(!user.name.last1.valid && !user.name.last1.value)">Apellido paterno es requerido</div>
                 </label>
           </div>
-          <div class="input-field alt-black  col l4 s12"  [ngClass]="{'wrong-red': !user.name.last2.valid}">
-                <input type="text" name="lastName2" id="last-name-2"  [(ngModel)]="user.name.last2.value" (keyup)="user.name.last2.valid = validate.name(user.name.last2.value);"  (change)="user.name.last2.valid = validate.name(user.name.last2.value);">
+          <div class="input-field alt-black  col l4 s12"  [ngClass]="{'wrong-red': !user.name.last2.valid}" [hidden]="checkingMissingFields && !missingFields.lastName2">
+                <input type="text" name="lastName2" id="last-name-2"  [(ngModel)]="user.name.last2.value" (keyup)="user.name.last2.valid = validate.name(user.name.last2.value); disableIfmf();"  (change)="user.name.last2.valid = validate.name(user.name.last2.value);">
                 <label for="last-name-2">
                   <div [ngClass]="{'fadeInDown': user.name.last2.valid && createAccount.controls.lastName2 && createAccount.controls.lastName2.dirty}" [hidden]="!user.name.last2.valid">Apellido materno</div>
                   <div [ngClass]="{'fadeInDown': (!user.name.last2.valid && user.name.last2.value)}" [hidden]="!(!user.name.last2.valid && user.name.last2.value)">{{validate.errors.name}}</div>
@@ -50,7 +50,7 @@
           </button>
         </div>
       </div>
-      <div class="account-completed account-block draw"  id="address-block" [ngClass]="{'action': user.adress.numberExt.valid && user.adress.adressName.valid && user.adress.postalCode.valid && user.adress.city.valid && user.adress.country.valid && user.adress.street.valid && user.adress.numberExt.value && user.adress.adressName.value && user.adress.postalCode.value && user.adress.city.value && user.adress.country.value && user.adress.street.value}">
+      <div class="account-completed account-block draw"  id="address-block" [hidden]="atCreateAccount || checkingMissingFields" [ngClass]="{'action': user.adress.numberExt.valid && user.adress.adressName.valid && user.adress.postalCode.valid && user.adress.city.valid && user.adress.country.valid && user.adress.street.valid && user.adress.numberExt.value && user.adress.adressName.value && user.adress.postalCode.value && user.adress.city.value && user.adress.country.value && user.adress.street.value}" #Addresss>
         <div class="row">
           <h5 class="col l4 s12" >
             Domicilio
@@ -107,7 +107,7 @@
                   <div [ngClass]="{'fadeInDown': !user.adress.city.valid && !user.adress.city.value}" [hidden]="!(!user.adress.city.valid && !user.adress.city.value)">Ciudad es requerido</div>
                 </label>
           </div>
-          <div class="input-field alt-black col l3 s12 countries" [ngClass]="{'wrong-red': !user.adress.country.valid}">
+          <div class="input-field alt-black col l3 s12 countries" *ngIf="!(atCreateAccount || checkingMissingFields)" [ngClass]="{'wrong-red': !user.adress.country.valid}">
             <select name="country"  id="country" [(ngModel)]="user.adress.country.value" (keyup)="user.adress.country.valid = validate.name(user.adress.country.value);">
               <option value="" disabled selected>Pais</option>
               <option *ngFor="let co of countries"[value]="co.name"><div class="bfh-flag-{{co.id}} flag-country"></div>{{co.name}}</option>
@@ -129,8 +129,8 @@
           </h5>
         </div>    
         <div class="row">
-          <div class="input-field alt-black col l12  s12" [ngClass]="{'wrong-red': !user.contact.email.valid}">
-                <input type="text" name="email" id="email" [(ngModel)]="user.contact.email.value" (keyup)="user.contact.email.valid = validate.email(user.contact.email.value);"  (change)="user.contact.email.valid = validate.email(user.contact.email.value);">
+          <div class="input-field alt-black col l8  s12 push-l4" [hidden]="checkingMissingFields && !missingFields.email" [ngClass]="{'wrong-red': !user.contact.email.valid}">
+                <input type="text" name="email" id="email" [(ngModel)]="user.contact.email.value" (keyup)="user.contact.email.valid = validate.email(user.contact.email.value); disableIfmf();"  (change)="user.contact.email.valid = validate.email(user.contact.email.value);">
                 <label for="email">
                   <div [ngClass]="{'fadeInDown': user.contact.email.valid && createAccount.controls.email && createAccount.controls.email.dirty}" [hidden]="!user.contact.email.valid">Correo electrónico</div>
                   <div [ngClass]="{'fadeInDown': (!user.contact.email.valid && user.contact.email.value)}" [hidden]="!(!user.contact.email.valid && user.contact.email.value)">{{validate.errors.email}}</div>
@@ -139,8 +139,14 @@
           </div>
         </div>
         <div class="row">
-          <div class="input-field alt-black  col l5 s8" [ngClass]="{'wrong-red': !user.contact.phone.valid}">
-                <input type="text" name="phone" id="phone" [(ngModel)]="user.contact.phone.value" (keyup)="user.contact.phone.valid = validate.onlyNumbers(user.contact.phone.value, 8, 10, 'phone');"  (change)="user.contact.phone.valid = validate.onlyNumbers(user.contact.phone.value, 8, 10, 'phone');">
+          <div class="input-field alt-black col l3 s12 countries push-l4" *ngIf="atCreateAccount || (checkingMissingFields && missingFields['address.country'])" [ngClass]="{'wrong-red': !user.adress.country.valid}">
+            <select name="country"  id="country" [(ngModel)]="user.adress.country.value" (keyup)="user.adress.country.valid = validate.name(user.adress.country.value);">
+              <option value="" disabled selected>Pais</option>
+              <option *ngFor="let co of countries"[value]="co.name"><div class="bfh-flag-{{co.id}} flag-country"></div>{{co.name}}</option>
+            </select>
+          </div>          
+          <div class="input-field alt-black  col l5 s8 push-l4" [hidden]="checkingMissingFields && !missingFields['phoneNumber.number']" [ngClass]="{'wrong-red': !user.contact.phone.valid}">
+                <input type="text" name="phone" id="phone" [(ngModel)]="user.contact.phone.value" (keyup)="user.contact.phone.valid = validate.onlyNumbers(user.contact.phone.value, 8, 10, 'phone'); disableIfmf();"  (change)="user.contact.phone.valid = validate.onlyNumbers(user.contact.phone.value, 8, 10, 'phone');">
                 <label for="phone">
                   <div [ngClass]="{'fadeInDown': user.contact.phone.valid && createAccount.controls.phone && createAccount.controls.phone.dirty}" [hidden]="!user.contact.phone.valid">Teléfono celular</div>
                   <div [ngClass]="{'fadeInDown': (!user.contact.phone.valid && user.contact.phone.value)}" [hidden]="!(!user.contact.phone.valid && user.contact.phone.value)">{{validate.errors.onlyNumbers.phone}}</div>
@@ -155,7 +161,7 @@
           </button>
         </div>        
       </div>
-      <div class="account-completed account-block draw" id="access-block" [ngClass]="{'action':  user.access.password.valid && user.access.password2.valid && user.access.password.value && user.access.password2.value}">
+      <div class="account-completed account-block draw" id="access-block" [hidden]="checkingMissingFields || (profilePage && userService.user.fbId)" [ngClass]="{'action':  user.access.password.valid && user.access.password2.valid && user.access.password.value && user.access.password2.value}">
         <div class="row">
           <h5 class="col l4 s12">
             Acceso
@@ -191,16 +197,16 @@
           </button>
         </div>
       </div>
-       <div class="row centered row-extraspace" [hidden]="profilePage">
+       <div class="row centered row-extraspace" [hidden]="profilePage || checkingMissingFields">
           <div id="g-captcha" class="centered captcha-mobile" data-expired-callback="expiredCaptcha"></div> 
        </div>
-      <div class="row centered row-extraspace" *ngIf="!profilePage">
+      <div class="row centered row-extraspace" *ngIf="!(profilePage || checkingMissingFields)">
         <button class="btn waves-effect col l4 s8 action" type="submit" [disabled]="loading">
         <div *ngIf="!loading">Crear cuenta <i class="material-icons right">perm_identity</i></div>
         <div *ngIf="loading">Cargando ...</div>
         </button>
       </div>    
-      <div class="row centered" [hidden]="profilePage">
+      <div class="row centered" [hidden]="profilePage || checkingMissingFields">
         <div class="privacy-policy">
           <p style="text-align: center;margin-bottom: 15px">Al crear tu cuenta estas aceptando nuestros <a (click)="toTerms()" title="Terms & conditions"> Términos y condiciones</a>.</p>
           <p>Te prometemos que no vamos a <b>compartir</b> tu información con nadie más. <span> Ve nuetras <a (click)="toPrivacy()" title="privacy policy"> Politicas de privacidad</a>.</span></p>

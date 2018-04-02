@@ -125,7 +125,7 @@ export class FormPaymentComponent {
           this.setReward(params.rW);
         });
       });
-    }else if (this.chargeCreate) {
+    } else if (this.chargeCreate) {
       this.rewardAmount = chargeCreateAmount.toFixed(2);
     }
     });

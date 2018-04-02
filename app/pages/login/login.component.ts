@@ -1,6 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {UserService} from '../../common/services/user.service';
+import {FacebookService} from '../../common/services/facebook.service';
 import {GlobalFunctionService} from '../../common/services/global-function.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class LoginComponent {
   @ViewChild('ForgotSucess')
   public forgotSucessDom: ElementRef;
 
-  constructor (public userService: UserService, public activeRoute: ActivatedRoute, public route: Router, public globalService: GlobalFunctionService) {
+  constructor (public userService: UserService, public activeRoute: ActivatedRoute, public route: Router, public globalService: GlobalFunctionService, public fbService: FacebookService) {
     this.userService.forgotSucess = false;
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.forgot = params.fG === 'true';

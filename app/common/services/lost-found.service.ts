@@ -12,7 +12,7 @@ const imgCompress = require('@xkeshi/image-compressor');
 
 @Injectable()
 export class LostFoundService {
-    public displayIntro: boolean;
+  public displayIntro: boolean;
   public locationAdressInput: string;
   public address: string;
   public latLng: {lat: number, lng: number};
@@ -59,6 +59,7 @@ export class LostFoundService {
   public btnBreedSearchDom: ElementRef;
   public patterNoColor: boolean;
   public noBreed: any;
+  public disableCompleteBtn: any;
 
   constructor(
     public router: Router,
@@ -74,6 +75,8 @@ export class LostFoundService {
   }
 
   public next(): void {
+    const nextIndex: number =  this.pagePosition === (this.sequence.length-1) ? this.pagePosition : this.pagePosition + 1;
+    const nextPage: string = '/' + this.parentPage + '/' + this.sequence[nextIndex];
     if (this.defualtSequence[this.pagePosition] === 'pattern') {
       if (this.patterNoColor) {
         this.globalService.clearErroMessages();
@@ -94,9 +97,14 @@ export class LostFoundService {
       this.globalService.openErrorModal();
       return;
     }
-    const nextIndex: number =  this.pagePosition === (this.sequence.length-1) ? this.pagePosition : this.pagePosition + 1;
-    const nextPage: string = '/' + this.parentPage + '/' + this.sequence[nextIndex];
-    this.router.navigate([nextPage]);
+    if (this.defualtSequence[this.pagePosition] === 'complete') {
+      this.userService.createAccount = true;
+    }
+    // move to the next page only if we are not in the 'complete' create account page.
+    // 'complete' page will move next 
+    if (this.defualtSequence[this.pagePosition] !== 'complete') {
+      this.router.navigate([nextPage]);
+    }
   }
 
   public goTo(index: number): void {
@@ -170,9 +178,9 @@ export class LostFoundService {
           return value.name && !value.name.split(':')[1];
       });
     }
-   if (self.defualtSequence[self.pagePosition] === 'breed' && self.multipleImgAnswers) {
-     self.noBreed = self.multipleImgAnswers.length === 1 && self.multipleImgAnswers.some((val: any, index: number) => (+val.id === 0));
-   }
+    if (self.defualtSequence[self.pagePosition] === 'breed' && self.multipleImgAnswers) {
+      self.noBreed = self.multipleImgAnswers.length === 1 && self.multipleImgAnswers.some((val: any, index: number) => (+val.id === 0));
+    }
     console.log('answer', self.pageAnswers);
   }
 
@@ -358,7 +366,7 @@ export class LostFoundService {
      this.reward = this.defaultReward;
      this.comments = undefined;
      this.defualtSequence = ['date', 'location', 'gender', 'breed', 'size', 'color', 'pattern', 'extras', 'details','review'];
-     this.defaultDisplayedSequence  = ['Fecha', 'Ubicación', 'Género', 'Raza', 'Tamaño', 'Color', 'Patron','Accesorios'];
+     this.defaultDisplayedSequence  = ['Fecha', 'Ubicación', 'Género', 'Raza', 'Tamaño', 'Color', 'Patron', 'Accesorios'];
      this.defaulApikeys = ['found_date', 'location', 'male', 'kind', 'size_id', 'color','pattern_id','accessories_id'];
      this.searchService.results = [];
      this.searchService.totalResults = 0;
@@ -416,5 +424,15 @@ export class LostFoundService {
     localStorage.removeItem('temp-anwers');
     localStorage.removeItem('temp-reward');
     localStorage.removeItem('temp-comments');
+  }
+
+  public addUserDataPage(): void {
+    const indexDetails: number = this.defualtSequence.indexOf('details');
+    ~indexDetails && this.defualtSequence.splice( indexDetails + 1, 0, 'complete');
+  }
+
+  public removeUserDataPage(): void {
+    const indexComplete: number = this.defualtSequence.indexOf('complete');
+    ~indexComplete && this.defualtSequence.splice(indexComplete, 1);
   }
 }

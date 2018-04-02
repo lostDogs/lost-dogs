@@ -29,7 +29,18 @@
         <button class="waves-effect btn action" [disabled]="!mailingService.evidence.text && !mailingService.evidence.picture" (click)="continueEvidence()">aceptar<i class="medium material-icons right">thumb_up</i></button>
       </div>      
     </div>
-    <span [hidden]="!(transcationId || evidenceNext)">
+    <div class="col push-l1 l5 m12 s12 steps-block" [hidden]="!(missingFields && missingFields.length && evidenceNext && !missFieldNext)" [ngClass]="{'push-l3 l6': transcationId}">
+      <h5  class="subtitle">Completa tu información.</h5>      
+      <div class="row">
+        <account [title]="'hidden'" [checkingMissingFields]="true"  [missingFields]="missFieldObj" [creatingUser]="createUser" (userCreated)="userCreatePromise($event)" [fbUser]="userService && userService.user" (disableBtn)="disableBtn=!$event"></account>
+        <div class="centered submit">
+          <button class="waves-effect btn action"  (click)="createUser=true;" [disabled]="disableCreateUser() || !disableBtn">
+            <span [hidden]="">Siguiente<i class="medium material-icons right">chevron_right</i></span>
+          </button>
+        </div>  
+      </div>
+    </div>
+    <span [hidden]="!((transcationId && !(missingFields && missingFields.length)) || ((missingFields && missingFields.length && missFieldNext) || (!(missingFields && missingFields.length) && evidenceNext)))">
       <div class="col push-l2 l4 m12 s12 steps-block" [hidden]="!((lost && !rewardSetted ) || (transcationId && !rewardSetted)) ">
         <h5 class="subtitle" [hidden]="!lost">Agrega una recompensa</h5>
         <h6 class="subtitle subheader" [hidden]="!lost"> ...para agradecer a la persona que lo encontró y lo cuido</h6>

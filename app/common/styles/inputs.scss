@@ -152,6 +152,35 @@ button.btn, div.btn {
   &.danger {
     background: $redAccent2;
   }
+  &.fb {
+    background-color: $fbBlueHov;
+    .fb-img {
+      display: inline-block;
+      white-space: nowrap;
+      float: right;
+      line-height: 47px;
+      margin: 0 5px;
+      img {
+        width: 22px;
+        height: 22px;
+      }
+    }
+    .fb-text {
+      display: inline-block;
+    }
+      @media screen and (max-device-width: $screen-mobile-max) {
+        .fb-img {
+          line-height: inherit;
+          img {
+            width: 60px;
+            height: 60px;
+          }
+        }
+        .fb-text {
+          line-height: 65px;
+        }
+      }    
+  }
   &:hover {
     &.info {
       background-color: $butttonInfoHover;
@@ -164,6 +193,9 @@ button.btn, div.btn {
     }
     &.danger {
       background: $redAccent;
+    }
+    &.fb {
+      background-color: $fbBlue;
     }
   }
 }

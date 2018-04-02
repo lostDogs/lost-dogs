@@ -2,10 +2,9 @@ import { Component, HostListener} from '@angular/core';
 import {ViewEncapsulation} from '@angular/core';
 import {Router, NavigationEnd, Routes} from '@angular/router';
 import {GlobalFunctionService} from './common/services/global-function.service';
-import {ApiService} from './common/services/api.service';
 import {UserService} from './common/services/user.service';
 import {CookieManagerService} from './common/services/cookie-manager.service';
-
+import {FacebookService} from './common/services/facebook.service';
 import 'jquery';
 import 'materialize-css/dist/js/materialize.js';
 import 'materialize-css/bin/materialize.css';
@@ -24,7 +23,7 @@ export class appComponent {
   public loading: boolean;
   public errors: boolean;
 
-  constructor (public routing: Router, public globalService: GlobalFunctionService, public api: ApiService, public cookieService: CookieManagerService, public userService: UserService) {
+  constructor (public routing: Router, public globalService: GlobalFunctionService, public cookieService: CookieManagerService, public userService: UserService, public facebookService: FacebookService) {
     this.routing.events.subscribe(data => {
       if (data instanceof NavigationEnd) {
         this.globalService.paymentRewardSucess = this.globalService.emailSendedReview = undefined;
@@ -41,6 +40,12 @@ export class appComponent {
 
   public ngOnInit(): void {}
 
+  public ngAfterViewInit(): void {
+    if (!this.facebookService.fbInitialized) {
+      this.facebookService.fbInitialized = true;
+      this.facebookService.fbAsyncInit();
+    }
+  }
 
   public ngOnDestroy(): void {}
 };
