@@ -5,7 +5,7 @@
   <div class="row info" [ngClass]="{'blur-filter': dogCardService.open}">
     <div class="col l6 s12 offset-l3" (click)="router.navigate(['/profile/edit']);">
       <div class="row file-field">
-        <div class="profile-pic blur-hover">
+        <div class="profile-pic blur-hover" *ngIf="userService.isAvatarSet">
           <img [src]="userService.user.avatar" alt="image de perfil" class="circle width-center" id="prof-pic">
         </div>
       </div> 

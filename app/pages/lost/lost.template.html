@@ -50,11 +50,11 @@
     <div class="buttons row" *ngIf="lostService.pagePosition !== lostService.sequence.length - 1">
       <button class="waves-effect btn warning" (click)="lostService.back()" [disabled]="lostService.searchService.timer || lostService.searchService.loading" [ngClass]="{'disappear': lostService.pagePosition === 0 || lostService.inReviewPage}">Atras <i class="material-icons left">chevron_left</i></button>
       <!-- <button class="waves-effect btn info" (click)="lostService.setAnwer()"  [disabled]="!lostService.getGeneralAnswer()">responder <i class="material-icons right">send</i></button> -->
-      <button class="waves-effect btn action" *ngIf="!lostService.inReviewPage || showReview()" (click)="lostService.next()"  [disabled]="!lostService.pageAnswers[lostService.pagePosition] && lostService.defualtSequence[lostService.pagePosition]!=='extras' || lostService.searchService.timer || lostService.searchService.loading">Siguiente <i class="material-icons right">chevron_right</i></button>
+      <button class="waves-effect btn action" *ngIf="!lostService.inReviewPage || showReview()" (click)="lostService.next()"  [disabled]="lostService.defualtSequence[lostService.pagePosition]!=='complete' && !lostService.pageAnswers[lostService.pagePosition] && lostService.defualtSequence[lostService.pagePosition]!=='extras' || lostService.searchService.timer || lostService.searchService.loading || (lostService.defualtSequence[lostService.pagePosition]==='complete' && (lostService.userService.createAccount || !lostService.disableCompleteBtn))">Siguiente <i class="material-icons right">chevron_right</i></button>
       <button class="waves-effect btn action" *ngIf="lostService.inReviewPage && !showReview()" (click)="lostService.goToReview()" [disabled]="!lostService.pageAnswers[lostService.pagePosition]  && lostService.defualtSequence[lostService.pagePosition]!=='extras' || lostService.searchService.timer || lostService.searchService.loading">A revision <i class="material-icons right">chevron_right</i></button>
     </div>
   </div>
-  <div class="promise-reponses" [ngClass]="{'blur-filter': dogCardService.open}">
+  <div class="promise-reponses" [ngClass]="{'blur-filter': dogCardService.open}" *ngIf="lostService.defualtSequence[lostService.pagePosition] !== 'complete'">
     <div class="loading-block" [hidden]="!lostService.searchService.loading">
       <img class="gif" src="https://www.lostdog.mx/assets/img/loading-grey.gif" alt="Cargando..">
     </div>
@@ -62,7 +62,7 @@
       <h4><b>No</b> hay resultados!</h4>
     </div>  
   </div>
-  <div class="row results" *ngIf="(lostService.pagePosition !== lostService.sequence.length - 1) && lostService.searchService.results && !lostService.searchService.loading">
+  <div class="row results" *ngIf="(lostService.pagePosition !== lostService.sequence.length - 1 && lostService.defualtSequence[lostService.pagePosition] !== 'complete') && lostService.searchService.results && !lostService.searchService.loading">
     <h3 class="row text-centered" [ngClass]="{'blur-filter': dogCardService.open}">Coincidencias...</h3>
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
     <dog-card *ngFor="let card of lostService.searchService.results;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt"  [data]="card" [maxCards]="lostService.searchService.results.length"></dog-card>

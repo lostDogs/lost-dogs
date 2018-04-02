@@ -18,7 +18,7 @@ export class mainProfileComponent {
   public ngOnInit(): void {
     this.searchService.resetResults();
     this.searchService.queryObj = {};
-    this.searchService.addQuery('reporter_id', this.userService.user.id);
+    this.searchService.addQuery('reporter_id', this.userService.user.id || 'NA');
     this.searchService.addQuery('pageSize', 45);
     this.searchService.search().add(() => {
       if (this.searchService.results && this.searchService.results.length) {

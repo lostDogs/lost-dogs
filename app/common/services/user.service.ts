@@ -24,7 +24,11 @@ export class UserService {
   public tempUserName: any;
   public noAuthSubs: Subscription;
   public validCaptcha: boolean;
-
+  public defaultAvatar: string = 'https://www.lostdog.mx/assets/img/profile-undef.png';
+  public reqFields: string[] = ['name', 'lastName', 'lastName2', 'email', 'address.country', 'phoneNumber.number', 'avatar'];
+  public createAccount: boolean;
+  public postUser: any;
+  public userNotInDb: boolean;
 
   constructor (public api: ApiService, public router: Router, public globalService: GlobalFunctionService, public CookieService: CookieManagerService) {
     this.user = {};
@@ -47,9 +51,10 @@ export class UserService {
     if (locCookie) {
       this.location = locCookie;
     }
+    this.userNotInDb = this.user.phoneNumber && !this.user.phoneNumber.number && this.user.fbId;
   }
 
-  public setUser(response: any): void {
+  public setUser(response: any, changeAvatar?: boolean): void {
     if (response.token) {
       this.token = response.token;
       this.CookieService.setCookie('authToken', {authToken: this.token});
@@ -61,12 +66,12 @@ export class UserService {
       this.user.email = response.email;
       this.user.lastName2 = response.lastname;
       this.user.address = response.address;
-      this.user.phoneNumber = response.phone_number;
+      this.user.phoneNumber = response.phone_number || {};
       this.user.username = response.username;
       this.user.id = response.id;
+      this.user.fbId = this.user.fbId || response.fbId;
       this.isAuth = true;
       this.CookieService.setCookie(this.userCookieName, this.user);
-      
     }
   }
 
@@ -117,17 +122,18 @@ export class UserService {
 
 
   public loginSucess(data: any, userName?: string): void {
+    console.log('calling login succes');
     this.tempUserName = undefined;
     this.loading = false;
     this.timesTrying = 0;
     this.setUser(data);
+    this.userNotInDb = this.user.phoneNumber && !this.user.phoneNumber.number && this.user.fbId;
     this.isAvatarSet = true;
     this.errors.invalidUser = false;
     if (this.previousUrl && (data.name || data.username)) {
-      console.log('prevUrl', this.previousUrl);
+      console.log('prevUrl >', this.previousUrl);
       this.router.navigateByUrl(this.previousUrl);
       setTimeout(() => {this.previousUrl = undefined;}, 20);
-
     }
     window.scroll(0,0);
   }
@@ -252,8 +258,7 @@ export class UserService {
     // return true if there one requried prop mising in the user.
     const requried: string [] = ['city', 'country', 'ext_number', 'neighborhood', 'street', 'zip_code'];
     if (this.user && this.user.address) {
-      console.log('adddres', this.user.address);
-      return requried.some ((prop: string, proIndex: number) => (
+      return requried.some ((prop: string, propIndex: number) => (
         !this.user.address[prop]
       ));
     } else {
@@ -261,4 +266,27 @@ export class UserService {
     }
   }
 
+  public missingReqFilds(): any {
+    // return undefined when no field is missing.
+    let missingFilds: string[];
+    if (this.user && this.isAuth) {
+      missingFilds = this.reqFields.filter(prop => (!prop.split('.').reduce((a, b) => a[b], this.user) ? prop : undefined));
+      if (!~missingFilds.indexOf('avatar') && this.user.avatar === this.defaultAvatar) {
+        missingFilds.push('avatar');
+      }
+    } else {
+      return this.reqFields;
+    }
+    return missingFilds;
+  }
+
+  public  missingFieldsToObj(array: any[]): any {
+    let obj = {};
+    if (Array.isArray(array) && array.length) {
+      array.forEach((val: any) => {
+        obj[val] = true;
+      })
+    }
+    return obj;
+  }
 }

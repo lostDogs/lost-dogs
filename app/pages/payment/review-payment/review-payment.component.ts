@@ -27,13 +27,18 @@ export class ReviewPaymentComponent {
   public reward: string;
   public rewardSetted: boolean;
   public EstimReward: string;
+  public fixedReward: string;
   public dogSize: string = '';
   public totalDays: number;
-  public fixedReward: string;
   public errorImg: boolean;
+
   public evidenceText: JQuery;
   public evidenceNext: boolean;
 
+  public missingFields: string[];
+  public missFieldObj: Object;
+  public missFieldNext: boolean;
+  public createUser: boolean;
   constructor (
     public userService: UserService,
     public router: Router,
@@ -50,7 +55,9 @@ export class ReviewPaymentComponent {
       this.dogID = params.cID;
       this.transcationId = params.transcation;
     });
-
+    this.missingFields = this.userService.missingReqFilds();
+    console.log('missing fields >> ', this.missingFields);
+    this.missFieldObj = this.userService.missingFieldsToObj(this.missingFields);
   }
 
   public ngOnInit(): void {
@@ -70,19 +77,26 @@ export class ReviewPaymentComponent {
         this.reward = this.calcEstimatedReward(this.dogData);
         this.backToBard();
       });
-    } else if (this.transcationId) {
-      this.mailingService.getTransaction(this.userService.token, this.transcationId).add(() => {
-        this.dogCardService.getDog(this.mailingService.transaction.dog_id).add(() => {
-          this.dogData = this.dogCardService.dogData;
-          this.rewardSetted = +this.dogData.reward > +this.calcEstimatedReward(this.dogData);
-          this.backToBard();
-          if (!this.rewardSetted) {
-            this.fixedReward = (+this.dogData.reward).toFixed(2);
-            this.reward = this.calcEstimatedReward(this.dogData);
-          }
-        });
-      });
+    } else if (this.transcationId && this.missingFields && this.missingFields.length) {
+      this.evidenceNext = true;
+      this.missFieldNext = undefined;
+    } else if (this.transcationId && !(this.missingFields && this.missingFields.length)) {
+      this.callTransaction();
     }
+  }
+
+  public callTransaction(): void {
+  this.mailingService.getTransaction(this.userService.token, this.transcationId).add(() => {
+    this.dogCardService.getDog(this.mailingService.transaction.dog_id).add(() => {
+      this.dogData = this.dogCardService.dogData;
+      this.rewardSetted = +this.dogData.reward > +this.calcEstimatedReward(this.dogData);
+      this.backToBard();
+      if (!this.rewardSetted) {
+        this.fixedReward = (+this.dogData.reward).toFixed(2);
+        this.reward = this.calcEstimatedReward(this.dogData);
+      }
+    });
+  });
   }
 
   public backToBard(): void {
@@ -205,6 +219,36 @@ export class ReviewPaymentComponent {
           }
       });
     });
+  }
+
+  public userCreatePromise(postUser: any): void {
+    this.missFieldNext = undefined;
+    if (postUser) {
+      console.log('getting postUser', postUser);
+      postUser().add(() => {
+        if (this.userService.user.phoneNumber && this.userService.user.phoneNumber.number) {
+          console.log('user created! ');
+          this.missFieldNext = true;
+          this.createUser = false;
+          this.transcationId && this.callTransaction();
+        } else {
+          this.missFieldNext = this.createUser = false;
+          this.globalService.clearErroMessages();
+          this.globalService.setErrorMEssage('No se creo bien la cuenta');
+          this.globalService.openErrorModal();
+        }
+        setTimeout(() => {this.userService.postUser = undefined}, 500);
+      });
+    } else {
+      this.missFieldNext = this.createUser = false;
+      this.globalService.clearErroMessages();
+      this.globalService.setErrorMEssage('Hubo un error al completar tus datos');
+      this.globalService.openErrorModal();
+    }    
+  }
+
+  public disableCreateUser(): boolean {
+    return this.createUser;
   }
 
 };
