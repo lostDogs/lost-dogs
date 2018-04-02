@@ -414,9 +414,7 @@ export class accountComponent {
 
    public scrollTo(domEl: ElementRef): void {
     if (domEl.nativeElement) {
-      console.log('scrolling to ', domEl);
       const offset = domEl.nativeElement.offsetTop - 128;
-      console.log('scrolling to offset', offset);
       window.scrollBy({ 
       top: offset,
       left: 0, 
@@ -436,7 +434,6 @@ export class accountComponent {
      this.user.adress.country.value = this.user.adress.country.value || this.fbUser['address.country'];
      this.user.access.password.value = this.fbUser.fbId;
      this.user.access.password2.value = this.fbUser.fbId;
-     console.log('user in changes', this.user);
      if (defaultAvatar.test(this.user.pic.value)) {
        this.user.pic.valid = false;
        this.globalService.clearErroMessages();
@@ -445,7 +442,6 @@ export class accountComponent {
        console.error('invalid avatar creating user');
        return;
      }
-     console.log('emitting postUser user bindend >');
      this.userService.isAvatarSet = false;
      this.userCreated.emit(this.postUser.bind(this));
    }

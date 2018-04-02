@@ -33,7 +33,6 @@ export class FacebookService {
       xfbml      : false,  // parse social plugins on this page
       version    : 'v2.12'
     });
-    console.log('<<< runing facebook init ...');
   }
 
   public login(): void {
@@ -52,7 +51,6 @@ export class FacebookService {
   }
 
   public statusChange(response: any): void {
-    console.log('status chage', response);
     if (/connected/g.test(response.status) && !this.userService.isAuth) {
       this.getUserData();
     }
@@ -61,7 +59,6 @@ export class FacebookService {
   public getUserData(): void {
     this.loadingLogin = true;
     this.FB.api('/me?fields=id,first_name,last_name,middle_name,email,location,picture', (success: any) => {
-      console.log('me >', success);
       if (!success || success.error) {
         console.error('error in getting user data from FB', success);
         this.loadingLogin = false;
@@ -101,9 +98,7 @@ export class FacebookService {
 
   public logOut(): void {
     if (this.userService.user.fbId) {
-      this.FB.logout((response: any) => {
-        console.log('loggin out of app');
-      });
+      this.FB.logout((response: any) => {});
     }
   }
 }

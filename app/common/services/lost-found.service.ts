@@ -429,12 +429,10 @@ export class LostFoundService {
   public addUserDataPage(): void {
     const indexDetails: number = this.defualtSequence.indexOf('details');
     ~indexDetails && this.defualtSequence.splice( indexDetails + 1, 0, 'complete');
-    console.log('adding user complete page', this.defualtSequence);
   }
 
   public removeUserDataPage(): void {
     const indexComplete: number = this.defualtSequence.indexOf('complete');
     ~indexComplete && this.defualtSequence.splice(indexComplete, 1);
-    console.log('REMOVING user complete page', this.defualtSequence);
   }
 }

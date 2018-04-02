@@ -131,7 +131,7 @@ export class UserService {
     this.isAvatarSet = true;
     this.errors.invalidUser = false;
     if (this.previousUrl && (data.name || data.username)) {
-      console.log('prevUrl', this.previousUrl);
+      console.log('prevUrl >', this.previousUrl);
       this.router.navigateByUrl(this.previousUrl);
       setTimeout(() => {this.previousUrl = undefined;}, 20);
     }
@@ -258,7 +258,6 @@ export class UserService {
     // return true if there one requried prop mising in the user.
     const requried: string [] = ['city', 'country', 'ext_number', 'neighborhood', 'street', 'zip_code'];
     if (this.user && this.user.address) {
-      console.log('adddres', this.user.address);
       return requried.some ((prop: string, propIndex: number) => (
         !this.user.address[prop]
       ));
@@ -276,10 +275,8 @@ export class UserService {
         missingFilds.push('avatar');
       }
     } else {
-      console.log('missing fields', missingFilds);
       return this.reqFields;
     }
-    console.log('missing fields', missingFilds);
     return missingFilds;
   }
 

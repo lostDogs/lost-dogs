@@ -21,12 +21,10 @@ export class CompleteUserComponent {
   
   public ngOnInit(): void {
     this.missingFieldsObj = this.LostService.userService.missingFieldsToObj(this.LostService.userService.missingReqFilds());
-    console.log('missingFieldsObj', this.missingFieldsObj);
   }
 
   public promiseCatcher(postUser: any): void {
     if (postUser) {
-      console.log('getting postUser', postUser);
       postUser().add(() => {
         if (this.LostService.userService.user.phoneNumber && this.LostService.userService.user.phoneNumber.number ) {
           this.LostService.removeUserDataPage();

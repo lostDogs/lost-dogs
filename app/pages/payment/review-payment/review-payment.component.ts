@@ -56,6 +56,7 @@ export class ReviewPaymentComponent {
       this.transcationId = params.transcation;
     });
     this.missingFields = this.userService.missingReqFilds();
+    console.log('missing fields >> ', this.missingFields);
     this.missFieldObj = this.userService.missingFieldsToObj(this.missingFields);
   }
 
@@ -76,19 +77,26 @@ export class ReviewPaymentComponent {
         this.reward = this.calcEstimatedReward(this.dogData);
         this.backToBard();
       });
-    } else if (this.transcationId) {
-      this.mailingService.getTransaction(this.userService.token, this.transcationId).add(() => {
-        this.dogCardService.getDog(this.mailingService.transaction.dog_id).add(() => {
-          this.dogData = this.dogCardService.dogData;
-          this.rewardSetted = +this.dogData.reward > +this.calcEstimatedReward(this.dogData);
-          this.backToBard();
-          if (!this.rewardSetted) {
-            this.fixedReward = (+this.dogData.reward).toFixed(2);
-            this.reward = this.calcEstimatedReward(this.dogData);
-          }
-        });
-      });
+    } else if (this.transcationId && this.missingFields && this.missingFields.length) {
+      this.evidenceNext = true;
+      this.missFieldNext = false;
+    } else if (this.transcationId && !(this.missingFields && this.missingFields.length)) {
+      this.callTransaction();
     }
+  }
+
+  public callTransaction(): void {
+  this.mailingService.getTransaction(this.userService.token, this.transcationId).add(() => {
+    this.dogCardService.getDog(this.mailingService.transaction.dog_id).add(() => {
+      this.dogData = this.dogCardService.dogData;
+      this.rewardSetted = +this.dogData.reward > +this.calcEstimatedReward(this.dogData);
+      this.backToBard();
+      if (!this.rewardSetted) {
+        this.fixedReward = (+this.dogData.reward).toFixed(2);
+        this.reward = this.calcEstimatedReward(this.dogData);
+      }
+    });
+  });
   }
 
   public backToBard(): void {
@@ -221,6 +229,7 @@ export class ReviewPaymentComponent {
         if (this.userService.user.phoneNumber && this.userService.user.phoneNumber.number) {
           console.log('user created! ');
           this.missFieldNext = true;
+          this.transcationId && this.callTransaction();
         } else {
           this.missFieldNext = this.createUser = false;
           this.globalService.clearErroMessages();

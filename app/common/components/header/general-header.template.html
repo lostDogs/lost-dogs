@@ -67,7 +67,7 @@
         <div *ngIf="!userService.loading">Iniciar sesión<i class="material-icons right">send</i></div>
         <div *ngIf="userService.loading">Cargando ...</div>
       </button>
-      <button class="btn waves-effect col l12 fb" type="button" (click)="fbService.login()">
+      <button class="btn waves-effect col l12 fb" type="button" (click)="fbService.login()" [disabled]="fbService.loadingLogin">
         <div [hidden]="fbService.loadingLogin"><div class="fb-text">continuar con </div><div class="fb-img"> <img src="https://www.lostdog.mx/assets/img/facebook.png"></div> </div>
         <div [hidden]="!fbService.loadingLogin">Cargando ...</div>
       </button>

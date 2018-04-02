@@ -11,6 +11,9 @@ review-payment {
       }
     }
   }
+  .row .col.full {
+    width: 100%;
+  }
   .img-back {
     i.material-icons.large {
       @media screen and (max-device-width: $screen-mobile-max) {
