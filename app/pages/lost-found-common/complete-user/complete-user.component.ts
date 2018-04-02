@@ -26,6 +26,7 @@ export class CompleteUserComponent {
   public promiseCatcher(postUser: any): void {
     if (postUser) {
       postUser().add(() => {
+        this.LostService.userService.createAccount = false;
         if (this.LostService.userService.user.phoneNumber && this.LostService.userService.user.phoneNumber.number ) {
           this.LostService.removeUserDataPage();
           this.LostService.goTo(this.LostService.defualtSequence.length - 1);
@@ -37,6 +38,7 @@ export class CompleteUserComponent {
         setTimeout(() => {this.LostService.userService.postUser = undefined}, 500);
       });
     } else {
+      this.LostService.userService.createAccount = false;
       this.LostService.globalService.clearErroMessages();
       this.LostService.globalService.setErrorMEssage('Hubo un error al completar tus datos');
       this.LostService.globalService.openErrorModal();

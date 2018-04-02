@@ -225,6 +225,7 @@ export class accountComponent {
  }
 
   public setImgToBucket(url: string): void {
+    console.log('setting img to bucket > ', url);
     this.api.put(url, this.binaryImg, {'Content-Type': 'image/jpeg', 'Content-encoding': 'base64'}).subscribe(
       data => this.sucessImgToBucket(data),
       e => this.errorImgToBucket(e),

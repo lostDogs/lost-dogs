@@ -79,7 +79,7 @@ export class ReviewPaymentComponent {
       });
     } else if (this.transcationId && this.missingFields && this.missingFields.length) {
       this.evidenceNext = true;
-      this.missFieldNext = false;
+      this.missFieldNext = undefined;
     } else if (this.transcationId && !(this.missingFields && this.missingFields.length)) {
       this.callTransaction();
     }
@@ -229,6 +229,7 @@ export class ReviewPaymentComponent {
         if (this.userService.user.phoneNumber && this.userService.user.phoneNumber.number) {
           console.log('user created! ');
           this.missFieldNext = true;
+          this.createUser = false;
           this.transcationId && this.callTransaction();
         } else {
           this.missFieldNext = this.createUser = false;
@@ -247,7 +248,7 @@ export class ReviewPaymentComponent {
   }
 
   public disableCreateUser(): boolean {
-    return this.createUser && (typeof this.missFieldNext === 'boolean');
+    return this.createUser;
   }
 
 };
