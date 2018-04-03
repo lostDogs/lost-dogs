@@ -23,7 +23,7 @@
         <i  id="profile-arrow" class="material-icons" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">arrow_drop_down</i>
       </a>
       <!-- <a href="javascript:void(0)" *ngIf="userService.isAuth">{{userService.user.name}}</a> -->
-     </div> 
+     </div>
   </div>
   <ul id="slide-out" class="side-nav">
       <li><div class="user-profile">
@@ -46,7 +46,7 @@
       <li><a href="javascript:void(0)" class="waves-effect" *ngIf="userService.isAuth" (click)="userService.logout(); fbService.logOut();"><i class="material-icons left">reply</i>Cerrar sesión</a></li>
       <li><div class="divider"></div></li>
       <li><a class="subheader" *ngIf="userService.isAuth">mas acciones</a></li>
-      <li><a routerLink="board" class="waves-effect"><i class="material-icons left">style</i>Catalogo</a></li>
+      <li><a routerLink="board" class="waves-effect"><i class="material-icons left">style</i>Catálogo</a></li>
       <li><a routerLink="lost" class="waves-effect"><i class="material-icons left">security</i>Perdi un perro</a></li>
       <li><a routerLink="found" class="waves-effect"><i class="material-icons left">search</i>Encontre un perro</a></li>
       <li><div class="divider"></div></li>
