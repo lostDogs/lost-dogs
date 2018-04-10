@@ -1,7 +1,7 @@
 <header class="col l12 m12" id="nav-header"  [ngClass]="{'blur-new-user': newUser, 'bottom-top-anim': !newUser || !initHeader, 'size-no-anim': newUser || initHeader}">
   <img class="hide-anim" src="https://www.lostdog.mx/assets/img/loading-step-2.gif" alt="loading..." *ngIf="(!newUser && !initHeader) && !displayNavOpts"/>
   <div  class="menu-options col l5 m1 s3"  [ngClass]="{'hidden': !displayNavOpts}">
-    <a  class="actions" #ActionBoard (click)="lostService.resetService();openBoard=!openBoard">
+    <a  class="actions" #ActionBoard (click)="openBoard=!openBoard">
       Catálogo
       <i  id="profile-arrow" class="material-icons" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': openBoard }">arrow_drop_down</i>
     </a>
@@ -61,10 +61,10 @@
   <i class="medium material-icons popover-top">arrow_drop_up</i>
   <ul class="opts">
     <li class="waves-effect">
-      <a (click)="goTo('/board', {lost: true})" ><i class="material-icons left">search</i>Ver perdidos</a>
+      <a (click)="goTo('/board', {lost: true}); lostService.resetService()" ><i class="material-icons left">search</i>Ver perdidos</a>
     </li>
     <li class="waves-effect">
-      <a (click)="goTo('/board', {lost: false})"><i class="material-icons left">pets</i>Ver encontrado</a>
+      <a (click)="goTo('/board', {lost: false}); lostService.resetService()"><i class="material-icons left">pets</i>Ver encontrado</a>
     </li>    
   </ul>
 </article>
@@ -73,10 +73,10 @@
   <i class="medium material-icons popover-top">arrow_drop_up</i>
   <ul class="opts">
     <li class="waves-effect">
-      <a (click)="goTo('/lost')" (click)="resetPage()"><i class="material-icons left">search</i>Perro perdido</a>
+      <a (click)="goTo('/lost'); resetPage()"><i class="material-icons left">search</i>Perro perdido</a>
     </li>
     <li class="waves-effect">
-      <a (click)="goTo('/found')" (click)="resetPage()"><i class="material-icons left">pets</i>Perro Encontrado</a>
+      <a (click)="goTo('/found'); resetPage()"><i class="material-icons left">pets</i>Perro Encontrado</a>
     </li>    
   </ul>
 </article>

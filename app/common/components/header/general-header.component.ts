@@ -54,16 +54,18 @@ export class generalHeaderComponent implements OnInit  {
       const userDom: any = this.userDom && this.userDom.nativeElement;
       const actionBdom: any = this.actionBoardDom && this.actionBoardDom.nativeElement;
       const actionRdom: any = this.actionreportDom && this.actionreportDom.nativeElement;
+      const boardDom: any = this.boardDom && this.boardDom.nativeElement;
+      const reportDom: any = this.reportDom && this.reportDom.nativeElement;
+
       if (this.showLoginFrom && !(this.elRef.nativeElement.lastChild.contains(event.target) || loginDom && loginDom.contains(event.target) || userDom && userDom.contains(event.target) )) {
         this.showLoginFrom = false;
       }
-      if (this.openBoard && !(this.elRef.nativeElement.lastChild.contains(event.target) || actionBdom && actionBdom.contains(event.target))) {
+      if (this.openBoard && !(this.elRef.nativeElement.lastChild.contains(event.target) || actionBdom && actionBdom.contains(event.target) || boardDom && boardDom.contains(event.target))) {
         this.openBoard = false;
       }
-      if (this.openReport && !(this.elRef.nativeElement.lastChild.contains(event.target) || actionRdom && actionRdom.contains(event.target))) {
+      if (this.openReport && !(this.elRef.nativeElement.lastChild.contains(event.target) || actionRdom && actionRdom.contains(event.target) || reportDom && reportDom.contains(event.target))) {
         this.openReport = false;
-      }      
-
+      }
       if (this.openedFirstMessage && !this.openSecondMessage) {
         this.globalService.clearErroMessages();
         this.globalService.setErrorMEssage('Esta página puede que necesite de tu ubicación o camara');
