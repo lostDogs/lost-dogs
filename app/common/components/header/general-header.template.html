@@ -30,7 +30,7 @@
       <!-- <a href="javascript:void(0)" *ngIf="userService.isAuth">{{userService.user.name}}</a> -->
      </div>
   </div>
-  <ul id="slide-out" class="side-nav">
+  <ul id="slide-out" class="side-nav collapsible">
       <li><div class="user-profile">
         <div class="user-background" *ngIf="userService.isAuth && userService.isAvatarSet">
           <a routerLink="/profile/edit" class="profile-link"><img src="{{userService.user.avatar}}" alt="profile picture" class="circle profile-mobile"></a>
@@ -44,19 +44,35 @@
         </div>
       </div></li>
       <li><div class="divider"></div></li>
-      <li><a routerLink="/profile" class="waves-effect" *ngIf="userService.isAuth"> <i class="material-icons left">perm_identity</i>Mi cuenta</a></li>
-      <li><a routerLink="/login" class="waves-effect" *ngIf="!userService.isAuth"><i class="material-icons left">vpn_key</i>Iniciar sesión</a></li>
+      <li><a routerLink="/profile" (click)="closeSideNav()" class="waves-effect" *ngIf="userService.isAuth"> <i class="material-icons left">perm_identity</i>Mi cuenta</a></li>
+      <li><a routerLink="/login" (click)="closeSideNav()" class="waves-effect" *ngIf="!userService.isAuth"><i class="material-icons left">vpn_key</i>Iniciar sesión</a></li>
       <li><div class="divider" *ngIf="!userService.isAuth"></div></li>
-      <li><a routerLink="/account" class="waves-effect" *ngIf="!userService.isAuth"><i class="material-icons left">person_pin</i>Crear cuenta</a></li>
-      <li><a href="javascript:void(0)" class="waves-effect" *ngIf="userService.isAuth" (click)="userService.logout(); fbService.logOut();"><i class="material-icons left">reply</i>Cerrar sesión</a></li>
+      <li><a routerLink="/account" (click)="closeSideNav()" class="waves-effect" *ngIf="!userService.isAuth"><i class="material-icons left">person_pin</i>Crear cuenta</a></li>
+      <li><a href="javascript:void(0)" (click)="closeSideNav()" class="waves-effect" *ngIf="userService.isAuth" (click)="userService.logout(); fbService.logOut();"><i class="material-icons left">reply</i>Cerrar sesión</a></li>
       <li><div class="divider"></div></li>
-      <li><a class="subheader" *ngIf="userService.isAuth">mas acciones</a></li>
-      <li><a routerLink="board" class="waves-effect"><i class="material-icons left">style</i>Catálogo</a></li>
-      <li><a routerLink="lost" class="waves-effect"><i class="material-icons left">security</i>Perdi un perro</a></li>
-      <li><a routerLink="found" class="waves-effect"><i class="material-icons left">search</i>Encontre un perro</a></li>
+      <li>
+        <div class="collapsible-header">
+          <a href="javascript:void(0)" class="waves-effect"> <i class="material-icons left">style</i>Catálogo</a>
+        </div>
+        <div class="collapsible-body">
+          <a href="javascript:void(0)" (click)="goTo('/board', {lost: true});" class="waves-effect"><i class="material-icons left">security</i>Ver perdidos</a>
+          <a href="javascript:void(0)" (click)="goTo('/board', {lost: false});" class="waves-effect"><i class="material-icons left">search</i>Ver Encontrados</a>
+        </div>
+      </li>
+      <li><div class="divider"></div></li>
+      <li>
+        <div class="collapsible-header">
+          <a href="javascript:void(0)" class="waves-effect"> <i class="material-icons left">edit</i>Reportar</a>
+        </div>
+        <div class="collapsible-body">
+          <a routerLink="lost" (click)="closeSideNav()" class="waves-effect"><i class="material-icons left">security</i>Perro perdido</a>
+          <a routerLink="found" (click)="closeSideNav()" class="waves-effect"><i class="material-icons left">search</i>Perro econtrado</a>
+        </div>        
+      </li>
       <li><div class="divider"></div></li>
    </ul>
 </header>
+
 <article id="popover-board" class="popover hoverable" #Board [hidden]="!openBoard" [ngStyle]="{'left': actionBoardDom.nativeElement.offsetLeft + 10 + 'px'}">
   <i class="medium material-icons popover-top">arrow_drop_up</i>
   <ul class="opts">

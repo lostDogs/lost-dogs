@@ -97,7 +97,7 @@ export class generalHeaderComponent implements OnInit  {
     setTimeout(()=>{this.displayNavOpts = true}, TimeNavOpts);
     $('.home-mobile').sideNav({
       menuWidth: 700,
-      closeOnClick: true,
+      closeOnClick: false,
       draggable: true
     });
     this.activatedRoute.queryParams.subscribe(
@@ -140,5 +140,11 @@ export class generalHeaderComponent implements OnInit  {
   public goTo(url: any, params?: any) {
     params =  params ? {queryParams: params} : undefined;
     this.router.navigate([url], params);
+    this.closeSideNav();
   }
+
+  public closeSideNav(): void {
+    $('').sideNav('hide');
+  }
+
 };
