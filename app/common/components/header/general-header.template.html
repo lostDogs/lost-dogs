@@ -1,14 +1,19 @@
 <header class="col l12 m12" id="nav-header"  [ngClass]="{'blur-new-user': newUser, 'bottom-top-anim': !newUser || !initHeader, 'size-no-anim': newUser || initHeader}">
-  <img class="hide-anim" src="https://www.lostdog.mx/assets/img/loading-step-2.gif" alt="loading..." *ngIf="(!newUser && !initHeader) && !displayNavOpts">
+  <img class="hide-anim" src="https://www.lostdog.mx/assets/img/loading-step-2.gif" alt="loading..." *ngIf="(!newUser && !initHeader) && !displayNavOpts"/>
   <div  class="menu-options col l5 m1 s3"  [ngClass]="{'hidden': !displayNavOpts}">
-    <a routerLink="board" class="actions" (click)="lostService.resetService()">Catálogo</a>
-    <a routerLink="lost" class="actions" (click)="resetPage()">Perdí</a>
-    <a routerLink="found" class="actions" (click)="resetPage()">Encontré</a>
+    <a  class="actions" #ActionBoard (click)="lostService.resetService();openBoard=!openBoard">
+      Catálogo
+      <i  id="profile-arrow" class="material-icons" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': openBoard }">arrow_drop_down</i>
+    </a>
+    <a  class="actions" #ActionReport (click)="openReport=!openReport">
+      Reportar
+      <i  id="profile-arrow" class="material-icons" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': openReport }">arrow_drop_down</i>
+    </a>
     <a href="javascript:void(0)" class="home-mobile" data-activates="slide-out"><img src="https://www.lostdog.mx/assets/img/side-menu.png" alt="side menu"></a>
   </div>
   <div class="menu-options col l4 m2" *ngIf="displayNavOpts"> 
       <a routerLink="home"  class="logo">
-        <img id="home-logo" src="https://www.lostdog.mx/assets/img/logo-med.png" alt="lost dog logo" [ngStyle]="{'opacity': router.url==='/home' ? globalService.scrollOpacity : 1}">
+        <img id="home-logo" src="https://www.lostdog.mx/assets/img/logo-med.png" alt="lost dog logo" [ngStyle]="{'opacity': router.url==='/home' ? globalService.scrollOpacity : 1}"/>
       </a> 
     </div> 
     <div class="menu-options col l3 m2" [ngClass]="{'hidden': !displayNavOpts}">
@@ -18,7 +23,7 @@
           <i  id="profile-arrow" class="material-icons" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">arrow_drop_down</i>
       </a>
       <a #UserDom href="javascript:void(0)"  *ngIf="userService.isAuth && userService.isAvatarSet" (click)="toggleLoginFrom($event)">
-        <img  src="{{userService.user.avatar}}" class="avatar" alt="profile picture">
+        <img  src="{{userService.user.avatar}}" class="avatar" alt="profile picture"/>
         <p class="profile-name">{{userService.user.name}}</p>
         <i  id="profile-arrow" class="material-icons" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">arrow_drop_down</i>
       </a>
@@ -52,8 +57,32 @@
       <li><div class="divider"></div></li>
    </ul>
 </header>
+<article id="popover-board" class="popover hoverable" #Board [hidden]="!openBoard" [ngStyle]="{'left': actionBoardDom.nativeElement.offsetLeft + 10 + 'px'}">
+  <i class="medium material-icons popover-top">arrow_drop_up</i>
+  <ul class="opts">
+    <li class="waves-effect">
+      <a (click)="goTo('/board', {lost: true})" ><i class="material-icons left">search</i>Ver perdidos</a>
+    </li>
+    <li class="waves-effect">
+      <a (click)="goTo('/board', {lost: false})"><i class="material-icons left">pets</i>Ver encontrado</a>
+    </li>    
+  </ul>
+</article>
 
-<article id="popover-login" *ngIf="showLoginFrom" class="hoverable">
+<article id="popover-report" class="popover hoverable" #Report [hidden]="!openReport" [ngStyle]="{'left': actionreportDom.nativeElement.offsetLeft + 10 + 'px'}">
+  <i class="medium material-icons popover-top">arrow_drop_up</i>
+  <ul class="opts">
+    <li class="waves-effect">
+      <a (click)="goTo('/lost')" (click)="resetPage()"><i class="material-icons left">search</i>Perro perdido</a>
+    </li>
+    <li class="waves-effect">
+      <a (click)="goTo('/found')" (click)="resetPage()"><i class="material-icons left">pets</i>Perro Encontrado</a>
+    </li>    
+  </ul>
+</article>
+
+<article id="popover-login" *ngIf="showLoginFrom" class="hoverable popover">
+  <i class="medium material-icons popover-top">arrow_drop_up</i>
   <form class="row" title="form-login" #loginForm="ngForm" (ngSubmit)="userService.login(userService.tempUserName, password)"   *ngIf="!userService.isAuth" novalidate>
       <div class="input-field main-white col l12 s12" [ngClass]="{'wrong-red': userService.errors.userReq || userService.errors.invalidUser}">
         <input type="text" name="user name" id="user-name" [(ngModel)]="userService.tempUserName" (keyup)="userService.errors.userReq = false;userService.errors.invalidUser = false;">
@@ -83,7 +112,7 @@
       </div>      
     </form>
     <div  *ngIf="userService.isAuth">
-      <ul class="logged-opts">
+      <ul class="opts">
         <li class="waves-effect">
           <a routerLink="/profile" ><i class="material-icons left">perm_identity</i>Mi cuenta</a>
         </li>

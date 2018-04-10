@@ -81,6 +81,9 @@ header {
     display: inline-block;
     opacity:  0;
     animation: initOpacity 1s forwards;
+    .actions {
+      cursor: pointer;
+    }
     .home-mobile {
       display: none;
     }
@@ -113,23 +116,18 @@ header {
     margin-bottom: 25px;
   }
 }
-
-#popover-login {
-  position: fixed;
+.popover {
   top: 80px;
-  right: 80px;
-  width: 250px;
   background: $lightBlue;
   border: 6px solid white;
   border-radius: 10px;
   z-index: 1010;
-  #forgot-pass {
-   padding: 0;
-     i.material-icons {
-       margin-left: 10px;
-       font-size: 1.5rem;
-     }
-  } 
+  position: fixed;
+  .popover-top {
+    position: absolute;
+    color: white;
+    top: -39px;    
+  }
   a {
     font-family: $primaryFont, sans-serif;
     color: white;
@@ -137,7 +135,7 @@ header {
     box-sizing: border-box;
   }
   ul {
-    &.logged-opts {
+    &.opts {
       li {
         padding: 10px 0 10px 20px;
         width:100%;
@@ -147,7 +145,25 @@ header {
       }
     }
   }
+}
 
+#popover-board, #popover-report {
+  width: 245px;
+   ul.opts  li{
+     width: auto;
+   }
+}
+
+#popover-login {
+  right: 80px;
+  width: 250px;
+  #forgot-pass {
+   padding: 0;
+     i.material-icons {
+       margin-left: 10px;
+       font-size: 1.5rem;
+     }
+  }
   form {
     padding: 10px 25px;
     button {

@@ -23,9 +23,19 @@ export class generalHeaderComponent implements OnInit  {
   public loginDom: ElementRef;
   @ViewChild('UserDom')
   public userDom: ElementRef;
+  @ViewChild('Report')
+  public reportDom: ElementRef;
+  @ViewChild('Board')
+  public boardDom: ElementRef;
+  @ViewChild('ActionBoard')
+  public actionBoardDom: ElementRef;
+  @ViewChild('ActionReport')
+  public actionreportDom: ElementRef;
   public initHeader: boolean;
   public openedFirstMessage: boolean;
   public openSecondMessage:boolean;
+  public openBoard: boolean;
+  public openReport: boolean;
 
   constructor (
     public renderer: Renderer,
@@ -42,9 +52,18 @@ export class generalHeaderComponent implements OnInit  {
     this.renderer.listenGlobal('document', 'click', (event: any) => {
       const loginDom: any = this.loginDom && this.loginDom.nativeElement;
       const userDom: any = this.userDom && this.userDom.nativeElement;
+      const actionBdom: any = this.actionBoardDom && this.actionBoardDom.nativeElement;
+      const actionRdom: any = this.actionreportDom && this.actionreportDom.nativeElement;
       if (this.showLoginFrom && !(this.elRef.nativeElement.lastChild.contains(event.target) || loginDom && loginDom.contains(event.target) || userDom && userDom.contains(event.target) )) {
         this.showLoginFrom = false;
       }
+      if (this.openBoard && !(this.elRef.nativeElement.lastChild.contains(event.target) || actionBdom && actionBdom.contains(event.target))) {
+        this.openBoard = false;
+      }
+      if (this.openReport && !(this.elRef.nativeElement.lastChild.contains(event.target) || actionRdom && actionRdom.contains(event.target))) {
+        this.openReport = false;
+      }      
+
       if (this.openedFirstMessage && !this.openSecondMessage) {
         this.globalService.clearErroMessages();
         this.globalService.setErrorMEssage('Esta página puede que necesite de tu ubicación o camara');
@@ -115,5 +134,9 @@ export class generalHeaderComponent implements OnInit  {
     this.lostService.displayedSequence && this.lostService.displayedSequence.length && this.lostService.displayedSequence.forEach((value: any, index: number) => {
       this.lostService.pageAnswers.push(undefined);
     });
+  }
+  public goTo(url: any, params?: any) {
+    params =  params ? {queryParams: params} : undefined;
+    this.router.navigate([url], params);
   }
 };
