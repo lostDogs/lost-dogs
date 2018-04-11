@@ -31,6 +31,7 @@ import {DogCardService} from './common/services/dog-card.service';
 import {MailingRewardService} from './common/services/mailing-reward.service';
 import {OpenSpayService} from './common/services/openspay.service';
 import {FacebookService} from './common/services/facebook.service';
+import {FacebookAdsComponent} from './common/components/facebook-ads/facebook-ads.component';
 /*
  * BrowserModule boostrap the whole angular app. you just imported it once!
  * for other modules that have  component declarations you need to use CommonModule
@@ -64,7 +65,8 @@ import {FacebookService} from './common/services/facebook.service';
   SideBlockDogComponent,
   DogFigureComponent,
   PatternBlockComponent,
-  GlobalError
+  GlobalError,
+  FacebookAdsComponent
   ],
   providers: [
     {provide: ValidationService, useClass: ValidationService},
