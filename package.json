@@ -7,7 +7,7 @@
     "build": "webpack --progress",
     "build:prod": "webpack -p --progress",
     "start": "node server.js",
-    "serve": "webpack-dev-server  --inline --hot  --content-base ./public  --progress --https"
+    "serve": "webpack-dev-server  --inline --hot  --content-base ./public  --progress"
   },
   "dependencies": {
     "@angular/common": "^2.3.0",
