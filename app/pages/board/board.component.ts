@@ -6,6 +6,9 @@ import {UserService} from '../../common/services/user.service';
 import {SearchService, IdogData} from '../../common/services/search.service';
 import {LostFoundService} from '../../common/services/lost-found.service';
 import {AsyncPipe} from '@angular/common';
+import {CookieManagerService} from '../../common/services/cookie-manager.service'
+import {GlobalFunctionService} from '../../common/services/global-function.service';
+
 require('../../common/plugins/masks.js');
 
 export interface Ifiltes {
@@ -74,7 +77,9 @@ export class boardComponent {
     public lostService: LostFoundService,
     public searchService: SearchService,
     public userService: UserService,
-    public activatedRoute: ActivatedRoute
+    public activatedRoute: ActivatedRoute,
+    public cookieService: CookieManagerService,
+    public globalService: GlobalFunctionService
   ) {
     this.filtersKey = [];
     this.window = window;
@@ -123,6 +128,12 @@ export class boardComponent {
   public ngOnInit(): void {
     $('#date-input').mask('0000/00/00');
     this.activatedRoute.queryParams.subscribe(data=> this.readParams(data));
+    if (!this.cookieService.getCookie('InfoBoard')) {
+      this.globalService.clearErroMessages();
+      this.globalService.setErrorMEssage('Filtra de acuerdo al criterio que necesites: raza, colores, ubicación, etc.');
+      this.globalService.openBlueModal();
+      this.cookieService.setCookie('InfoBoard', true);
+    }
   }
 
   public initialSearchCall(): void {
