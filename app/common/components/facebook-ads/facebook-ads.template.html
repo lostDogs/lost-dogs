@@ -1,96 +1,140 @@
 <div class="component">
   <ul class="collapsible popout">
-    <li class="row collapsible-header">
-      <div class="col l4 s4 m4">
-        <img  class="to-left ad-brand-logo" src="https://www.lostdog.mx/assets/img/facebook.png">
-      </div>
-      <div class="col l8 s8 m8">
-          <span class="title-main">Anuncio inteligente: </span>
-          <span class="unit money"> $ 30.00 MXN</span>
-      </div>    
-      <div class="col l4 s4 m4">
-       <input type="checkbox" id="test6" checked="checked"/>
-      </div>
-    </li>
-    <li class="row collapsible-body">
-      <div class=" col l8 s8 m8 push-l4 push-4 push-m4">
-        <div class="row">
-          <span class="title">Presupuesto: </span>
-          <span class="unit money">$30.00 MXN</span>
+    <li>
+      <div class="row collapsible-header">
+        <div class="col l2 s2 m2">
+          <svg class="to-left" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+             width="70px" height="70px" viewBox="0 0 266.893 266.895" enable-background="new 0 0 266.893 266.895"
+             xml:space="preserve">
+          <path id="Blue_1_" fill="#3C5A99" d="M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812
+            c0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225
+            H248.082z"/>
+          <path id="f" fill="#FFFFFF" d="M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935
+            l20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585
+            v99.803H182.409z"/>
+          </svg>          
         </div>
-        <div class="row">
-          <span>min</span>
-          <div id="slider-money"></div>
-          <span>max</span>
-        </div>
-      </div>
-      <div class="col l4 s4 m4">
-        <div class="circle">
-          <h3>3,000</h3>
-          <p>Personas/Dia</p>
+        <div class="col l8 s8 m8">
+          <h4 class="text-cented">
+            <span class="title-main">Anuncio inteligente: </span>
+            <span class="unit money"> $ 30.00 MXN</span>
+          </h4>
+        </div>    
+        <div class="col l2 s2 m2">
+          <div class="input-field alt-black main-check to-right">
+            <input type="checkbox" name="facebook ads" id="fb-ads-checkbox">
+              <label for="fb-ads-checkbox"> </label>
+          </div>          
         </div>
       </div>
-    </li>
-    <li class="row collapsible-body">
-      <div class=" col l8 s8 m8 push-l4 push-4 push-m4">
-        <div class="row">
-          <span class="title">Duracion: </span>
-          <span class="unit money"> 10 dias</span>
-        </div>
-        <div class="row">
-          <span>min</span>
-          <div id="slider-dys"></div>
-          <span>max</span>
-        </div>
-      </div>
-    </li>
-    <li class="row collapsible-body">
-      <ul class="collapsible popout col l8 s8 m8 push-l4 push-4 push-m4">
-        <li class="collapsible-header row">
-          <span>Pre vista: </span>
-          <span>
-              <ul id='dropdown1' class='dropdown-content'>
-                <li><a href="#!">one</a></li>
-                <li><a href="#!">two</a></li>
-              </ul>
-          </span>
-        </li>
-        <li class="collapsible-body row">
-          <span>Titulo: </span>
-          <span>
-              <ul id='dropdown2' class='dropdown-content'>
-                <li><a href="#!">one</a></li>
-                <li><a href="#!">two</a></li>
-              </ul>
-          </span>
-        </li>
-        <li class="collapsible-body row">
-          <span>Descripcion: </span>
-          <span>
-              <ul id='dropdown3' class='dropdown-content'>
-                <li><a href="#!">one</a></li>
-                <li><a href="#!">two</a></li>
-              </ul>
-          </span>            
-        </li>
-        <li class="collapsible-body row">
-          <span>Imagen: </span>
-          <span>
-            <div class="file-field input-field">
-              <div class="btn">
-                <span>Cambiar</span>
-                <input type="file">
+      <div class="row collapsible-body">
+        <div class=" col l8 s8 m8 push-l2 push-2 push-m2">
+          <div class="row">
+            <h5>
+              <span class="title">Presupuesto: </span>
+              <span class="unit money">$30.00 MXN</span>
+            </h5>
+          </div>
+          <div class="row range-width">
+            <div class="range-field">
+              <div class="limit min centered">
+                  <span>$55</span>
               </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
+               <input type="range" id="range-budget" min="55" max="200" (change)="gettingChange($event)"  [(ngModel)]="budget" />
+              <div class="limit max centered">
+                  <span>$200</span>
               </div>
-            </div>              
-          </span>
-        </li>
-        <li class="collapsible-body row">
-          <h1><. Preview here. ></h1> 
-        </li>
-      </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col l2 s2 m2 push-l2 push-2 push-m2">
+          <div class="circle centered">
+            <div class="content text-cented">
+              <p style="font-weight: bolder;">Alcance: </p>
+              <h4>3,000</h4>
+              <p>Personas / día</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row collapsible-body">
+        <div class=" col l8 s8 m8 push-l2 push-2 push-m2">
+          <div class="row">
+            <h5>
+              <span class="title">Duracion: </span>
+              <span class="unit days"> 10 dias</span>
+            </h5>
+          </div>
+          <div class="row range-width">
+            <div class="range-field">
+              <div class="limit min centered">
+                  <span>2</span>
+              </div>
+               <input type="range" id="range-duration" min="2" max="15"  [(ngModel)]="duration" />
+              <div class="limit max centered">
+                  <span>15</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row collapsible-body">
+        <ul class="collapsible popout col l7 s7 m7 push-l2 push-2 push-m2">
+          <li>
+            <div class="collapsible-header row">
+              <h5 class="col l2 m2 s2">Vista: </h5>
+              <div class="input-field col l8 m8 s8">
+                <select name="test" id="cc-test">
+                  <option disabled selected>0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </div>              
+            </div>
+            <div class="collapsible-body row">
+              <h5 class="col l2 m2 s2">Titulo: </h5>
+              <div class="input-field col l8 m8 s8">
+                <select name="test" id="cc-test">
+                  <option disabled selected>0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </div>
+            </div>
+            <div class="collapsible-body row">
+              <h5 class="col l3 m3 s3">Descripcion: </h5>
+              <div class="input-field col l7 m7 s7">
+                <select name="test" id="cc-test">
+                  <option disabled selected>0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </div>
+            </div>
+            <div class="collapsible-body row">
+              <h5>Imagen: </h5>
+              <div class="file-field input-field">
+                <div class="btn">
+                  <span>Cambiar</span>
+                  <input type="file">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path vadivdate" type="text">
+                </div>
+              </div>
+            </div>
+            <div class="collapsible-body row">
+              <h1 class="text-cented"><. Preview here. ></h1> 
+            </div>
+          </li>
+        </ul>
+        <div class="col l3 s3 m3 push-l2 push-2 push-m2"> 
+          <div class="fb-ad-preview-deprecated" data-creative-id="23842796900840762" data-ad-format="DESKTOP_FEED_STANDARD"></div>
+        </div>
+      </div>      
     </li>
   </ul>
 </div>

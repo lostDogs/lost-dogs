@@ -250,3 +250,107 @@ textarea.materialize-textarea {
     height: 150px;
   }
 }
+
+.range-field {
+  div.limit {
+    position: absolute;
+    z-index: -99;
+    background: green;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: $greenMat;
+    color: white;
+    top: -22px;
+    border-radius: 0 50% 50% 50%;
+    transform: rotate(225deg);
+    span  {
+      transform: rotate(135deg);
+    }
+    &.min {
+      left: -15px;
+    }
+    &.max {
+      right: -15px;
+    }
+  }
+  input[type="range"] { 
+    margin: auto;
+    -webkit-appearance: none;
+    position: relative;
+    overflow: hidden;
+    height: 20px;
+    cursor: pointer;
+    border-radius: 0 !important; /* iOS */
+    border: none;
+    margin-top: 35px;
+    &+ .thumb {
+        -webkit-transform: rotate(-45deg) scale(2);
+        transform: rotate(-45deg) scale(2);        
+    }
+    &::-webkit-slider-runnable-track {
+        background: #ddd;
+    }
+
+    /*
+     * 1. Set to 0 width and remove border for a slider without a thumb
+     */
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 20px;
+        width: 20px;
+        margin-top: -8px;
+        border-radius: 0 !important;
+        background: #fff;
+        box-shadow: -100vw 0 0 100vw $greenMat;
+        border: 2px solid #999; /* 1 */
+    }
+
+    &::-moz-range-track {
+        height: 20px;
+        background: #ddd;
+    }
+
+    &::-moz-range-thumb {
+        background: #fff;
+        height: 20px;
+        width: 20px;
+        border: 3px solid #999;
+        border-radius: 0 !important;
+        margin-top: -8px;
+        box-shadow: -100vw 0 0 100vw $greenMat;
+        box-sizing: border-box;
+    }
+
+    &::-ms-fill-lower { 
+        background: $greenMat;
+    }
+
+    &::-ms-thumb {
+        background: #fff;
+        border: 2px solid #999;
+        height: 20px;
+        width: 20px;
+        box-sizing: border-box;
+    }
+
+    &::-ms-ticks-after { 
+        display: none; 
+    }
+
+    &::-ms-ticks-before { 
+        display: none; 
+    }
+
+    &::-ms-track { 
+        background: #ddd;
+        color: transparent;
+        height: 20px;
+        border: none;
+    }
+
+    &::-ms-tooltip { 
+        display: none;
+    }
+  }
+}

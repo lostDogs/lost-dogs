@@ -1,14 +1,51 @@
 @import '../../../common/styles/variables.scss';
-  .no-space {
-    padding: 0;
-    margin: 0;
-  }
-  .to-left {
-  }
-  .full-width {
-    width: 100%;
-  }
-  .ad-brand-logo {
-    width: 60px;
-    height: 60px;
+  facebook-ads {
+    .component {
+      margin-top: 120px;
+    }
+    .input-field.main-check {
+      label {
+        transform: scale(3);
+      }
+    }
+    .no-space {
+      padding: 0;
+      margin: 0;
+    }
+    .margin-left-small {
+      maring-left: 5px !important;
+    }
+    .to-left {
+      float: left;
+    }
+    .to-right {
+      float: right;
+    }
+    .text-cented {
+      text-align: center;
+    }
+    .full-width {
+      width: 100%;
+    }
+    .ad-brand-logo {
+      width: 60px;
+      height: 60px;
+    }
+    .unit {
+        font-weight: bolder;
+      &.money {
+        color: $greenMat;
+      }
+      &.days {
+        color: white;
+      }
+    }
+    .range-width {
+      width: 85%;
+    }
+    .circle {
+      width: 150px;
+      height: 150px;
+      background: white;
+    }
   }
