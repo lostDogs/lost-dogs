@@ -1,69 +1,89 @@
 @import '../../../common/styles/variables.scss';
-  facebook-ads {
-    #ad-creative {
-      .input-field input.select-dropdown {
-        color: black;
-        text-align: center;
-      }
-    }
-    .collapsible.popout {
-       ul.dropdown-content.select-dropdown li:first-of-type > span {
-          padding: 14px 16px;
-       }
-       .input-field input.select-dropdown {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          width: 95%;
-       }
-    }
-    .component {
-      margin-top: 120px;
-    }
-    .input-field.main-check {
-      label {
-        transform: scale(3);
-        pointer-events: none;
-      }
-    }
-    .no-space {
-      padding: 0;
-      margin: 0;
-    }
-    .margin-left-small {
-      maring-left: 5px !important;
-    }
-    .to-left {
-      float: left;
-    }
-    .to-right {
-      float: right;
-    }
-    .text-cented {
+facebook-ads {
+  #ad-creative {
+    .input-field input.select-dropdown {
+      color: black;
       text-align: center;
     }
-    .full-width {
+  }
+  .collapsible.popout {
+     ul.dropdown-content.select-dropdown li:first-of-type > span {
+        padding: 14px 16px;
+     }
+     .input-field input.select-dropdown {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 95%;
+     }
+  }
+  .component {
+    #main-title {
+      text-align: left;
       width: 100%;
-    }
-    .ad-brand-logo {
-      width: 60px;
-      height: 60px;
-    }
-    .unit {
-        font-weight: bolder;
-      &.money {
-        color: $greenMat;
+      margin: 0;
+      vertical-align: text-top;        
+       span {
+        line-height: 3rem;
       }
-      &.days {
-        color: white;
-      }
-    }
-    .range-width {
-      width: 85%;
-    }
-    .circle {
-      width: 150px;
-      height: 150px;
-      background: white;
     }
   }
+  .input-field.main-check {
+    label {
+      transform: scale(2.5);
+      pointer-events: none;
+    }
+  }
+  .no-space {
+    padding: 0;
+    margin: 0;
+  }
+  .margin-left-small {
+    maring-left: 5px !important;
+  }
+  .to-left {
+    float: left;
+  }
+  .to-right {
+    float: right;
+  }
+  .text-cented {
+    text-align: center;
+  }
+  .full-width {
+    width: 100%;
+  }
+  .ad-brand-logo {
+    width: 60px;
+    height: 60px;
+  }
+  .unit {
+      font-weight: bolder;
+    &.money {
+      color: $greenMat;
+    }
+    &.days {
+      color: white;
+    }
+  }
+  .range-width {
+    width: 85%;
+  }
+  .circle {
+    width: 150px;
+    height: 150px;
+    background: white;
+  }
+  .raidus-50 {
+    border-radius: 50%;
+  }
+}
+.collapsible.popout {
+  &> li {
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    .collapsible-header {
+      border-radius: 30px;
+    }
+  }
+}

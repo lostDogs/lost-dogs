@@ -3,7 +3,7 @@
     <li>
       <div class="row collapsible-header main" #MainCollapse>
         <div class="col l2 s2 m2">
-          <svg class="to-left" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          <svg class="to-left raidus-50" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
              width="70px" height="70px" viewBox="0 0 266.893 266.895" enable-background="new 0 0 266.893 266.895"
              xml:space="preserve">
           <path id="Blue_1_" fill="#3C5A99" d="M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812
@@ -15,10 +15,10 @@
           </svg>          
         </div>
         <div class="col l8 s8 m8">
-          <h4 class="text-cented">
-            <span class="title-main">Anuncio inteligente: </span>
-            <span class="unit money"> $ {{budget * duration}} MXN</span>
-          </h4>
+          <h5 class="row " id="main-title">
+            <span class="title-main col l6 s6 m6">Anuncio inteligente: </span>
+            <span class="unit money col l6 s6 m6"> $ {{budget * duration}}.00 MXN</span>
+          </h5>
         </div>    
         <div class="col l2 s2 m2">
           <div class="input-field alt-black main-check to-right">
@@ -32,7 +32,7 @@
           <div class="row">
             <h5>
               <span class="title">Presupuesto por día: </span>
-              <span class="unit money">$ {{budget}} MXN</span>
+              <span class="unit days">$ {{budget}}.00 MXN</span>
             </h5>
           </div>
           <div class="row range-width">
@@ -79,7 +79,7 @@
         </div>
       </div>
       <div class="row collapsible-body">
-        <ul class="collapsible popout col l7 s7 m7 push-l2 push-2 push-m2">
+        <ul class="collapsible popout col l8 s8 m8 push-l2 push-2 push-m2">
           <li>
             <div class="collapsible-header row" id="ad-creative">
               <h5 class="col l2 m2 s2">Prevista: </h5>

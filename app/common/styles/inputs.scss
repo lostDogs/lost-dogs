@@ -254,7 +254,7 @@ textarea.materialize-textarea {
 .range-field {
   div.limit {
     position: absolute;
-    z-index: -99;
+    z-index: 1;
     background: green;
     width: 40px;
     height: 40px;
@@ -286,7 +286,8 @@ textarea.materialize-textarea {
     margin-top: 35px;
     &+ .thumb {
         -webkit-transform: rotate(-45deg) scale(2);
-        transform: rotate(-45deg) scale(2);        
+        transform: rotate(-45deg) scale(2);
+        z-index: 2;  
     }
     &::-webkit-slider-runnable-track {
         background: #ddd;

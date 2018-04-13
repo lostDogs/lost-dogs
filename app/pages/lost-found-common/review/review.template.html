@@ -46,7 +46,7 @@
   <div class="col l12 m12 s12 centered" *ngIf="LostService.savedSuccess && LostService.savedImgs">
       <dog-card  [atReviewPage]="true"  [data]="LostService.savedData"  [maxCards]="1" [cardIndex]="0"></dog-card>
   </div>
-  <div class="col l6 push-l3 s12" *ngIf="LostService.openPayment">
+  <div class="col l10 push-l1 s12" *ngIf="LostService.openPayment">
     <ul class="collection with-header" #Description>
       <li class="collection-item avatar centered" >
         <table style="width: 100%;">
@@ -68,6 +68,7 @@
           </tr>
         </table>
       </li>
-    </ul> 
+    </ul>
+    <facebook-ads></facebook-ads>
   </div>
 </div>

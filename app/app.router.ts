@@ -26,7 +26,6 @@ import {FormPaymentComponent} from './pages/payment/form-payment/form-payment.co
 import {PatternComponent} from './pages/lost-found-common/pattern/pattern.component';
 import {RefundComponent} from './pages/refund/refund.component';
 import {CompleteUserComponent} from './pages/lost-found-common/complete-user/complete-user.component';
-import {FacebookAdsComponent} from './common/components/facebook-ads/facebook-ads.component';
 // import {RewardPickerComponent} from './pages/reward-picker/reward-picker.component';
 
 const self = this;
@@ -53,7 +52,6 @@ self.pathBuild = (pathName: string): any => {
 export const router: Routes = [
   { path:'home', component: homeComponent},
   {path: 'board', component: boardComponent},
-    {path: 'fbads', component: FacebookAdsComponent},
   {path: 'account', component: accountComponent},
   self.pathBuild('lost'),
   self.pathBuild('found'),
@@ -123,5 +121,4 @@ export const routerComponents = [
   PatternComponent, 
   RefundComponent,
   CompleteUserComponent,
-  FacebookAdsComponent
 ];
