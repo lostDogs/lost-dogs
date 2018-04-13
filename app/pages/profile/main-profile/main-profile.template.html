@@ -3,7 +3,7 @@
   <h4> Mi cuenta</h4>
 </div>
   <div class="row info" [ngClass]="{'blur-filter': dogCardService.open}">
-    <div class="col l6 s12 offset-l3" (click)="router.navigate(['/profile/edit']);">
+    <div class="col l6 s10 m10 offset-l3 push-s1 push-m1" (click)="router.navigate(['/profile/edit']);">
       <div class="row file-field">
         <div class="profile-pic blur-hover" *ngIf="userService.isAvatarSet">
           <img [src]="userService.user.avatar" alt="image de perfil" class="circle width-center" id="prof-pic">
@@ -25,6 +25,7 @@
       </div>
     </div>
   </div>
+  <actions-block class="options" [bluring]="dogCardService.open"></actions-block>
   <div class="sub-title row text-centered"  [ngClass]="{'blur-filter': dogCardService.open}" *ngIf="dogCardService.lostDogs && dogCardService.lostDogs.length">
     <h3  class="col l10 s12 offset-l1"> <i class="small material-icons circle-white">search</i>Mis perdidos</h3>
   </div>

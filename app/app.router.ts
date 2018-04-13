@@ -25,7 +25,7 @@ import {ReviewPaymentComponent} from './pages/payment/review-payment/review-paym
 import {FormPaymentComponent} from './pages/payment/form-payment/form-payment.component';
 import {PatternComponent} from './pages/lost-found-common/pattern/pattern.component';
 import {RefundComponent} from './pages/refund/refund.component';
-import {CompleteUserComponent} from './pages/lost-found-common/complete-user/complete-user.component';
+import {CompleteUserComponent} from './pages/lost-found-common/complete-user/complete-user.component'
 // import {RewardPickerComponent} from './pages/reward-picker/reward-picker.component';
 
 const self = this;
@@ -120,5 +120,5 @@ export const routerComponents = [
   FormPaymentComponent,
   PatternComponent, 
   RefundComponent,
-  CompleteUserComponent
+  CompleteUserComponent,
 ];
