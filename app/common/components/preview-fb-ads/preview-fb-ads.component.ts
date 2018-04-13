@@ -1,11 +1,11 @@
 import {Component, Input} from '@angular/core';
 
 export interface IConfigAd {
-  type: string;
-  title: string;
-  body: string;
-  img: string;
-  description: string;
+  preview?: string;
+  title?: string;
+  img?: string;
+  body?: string;
+  description?: string;
 }
 
 @Component({
@@ -16,7 +16,7 @@ export interface IConfigAd {
 
 export class previewFbAdsComponent { 
 @Input()
-  public configAd: IConfigAd;
+  public previewValues: IConfigAd = {};
   constructor() {
   }
   

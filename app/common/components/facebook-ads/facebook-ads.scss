@@ -1,11 +1,29 @@
 @import '../../../common/styles/variables.scss';
   facebook-ads {
+    #ad-creative {
+      .input-field input.select-dropdown {
+        color: black;
+        text-align: center;
+      }
+    }
+    .collapsible.popout {
+       ul.dropdown-content.select-dropdown li:first-of-type > span {
+          padding: 14px 16px;
+       }
+       .input-field input.select-dropdown {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          width: 95%;
+       }
+    }
     .component {
       margin-top: 120px;
     }
     .input-field.main-check {
       label {
         transform: scale(3);
+        pointer-events: none;
       }
     }
     .no-space {

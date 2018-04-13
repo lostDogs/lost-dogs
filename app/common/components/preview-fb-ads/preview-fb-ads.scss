@@ -177,7 +177,8 @@ preview-fb-ads .component {
       h5 {
         font-size: 110%;
         font-weight: 600;
-        margin: 0;          
+        margin: 0;
+        width: 48%;
       }
       p {
         overflow: hidden;
@@ -205,6 +206,7 @@ preview-fb-ads .component {
      }
     }
   }
+  //  start for right column
   &.right-column {
     padding: 0 0 0 10px;
     width: 254px;

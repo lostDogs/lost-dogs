@@ -1,4 +1,4 @@
-<div class="component mobile">
+<div class="component" [ngClass]="previewValues.preview">
   <div class="header">
     <div class="brand-log">
       <img src="https://scontent.fgdl4-1.fna.fbcdn.net/v/t1.0-1/p480x480/15032089_321818564858187_4167348883688305652_n.png?_nc_cat=0&oh=6f11eee58e8b808f45627fc765a23c9b&oe=5B67587B"/>
@@ -21,15 +21,15 @@
     </div>
   </div>
   <div class="body row">
-    <p>body body</p>
+    <p>{{previewValues.body}}</p>
   </div>
   <div class="img-ad">
     <div class="bg-img"></div>
     <div class="description">
       <p class="mobile-url">www.lostdog.mx</p>
-      <h5>Titulo</h5>
+      <h5>{{previewValues.title}}</h5>
       <p class="mobile-right-column">www.lostdog.mx</p>
-      <p>descripcion</p>
+      <p>{{previewValues.description}}</p>
       <div class="row">
         <p class="url fb-grey">www.lostdog.mx</p>
         <button class="fb-grey">más información</button>

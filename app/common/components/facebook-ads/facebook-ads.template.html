@@ -1,7 +1,7 @@
 <div class="component">
   <ul class="collapsible popout">
     <li>
-      <div class="row collapsible-header">
+      <div class="row collapsible-header main" #MainCollapse>
         <div class="col l2 s2 m2">
           <svg class="to-left" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
              width="70px" height="70px" viewBox="0 0 266.893 266.895" enable-background="new 0 0 266.893 266.895"
@@ -17,12 +17,12 @@
         <div class="col l8 s8 m8">
           <h4 class="text-cented">
             <span class="title-main">Anuncio inteligente: </span>
-            <span class="unit money"> $ 30.00 MXN</span>
+            <span class="unit money"> $ {{budget * duration}} MXN</span>
           </h4>
         </div>    
         <div class="col l2 s2 m2">
           <div class="input-field alt-black main-check to-right">
-            <input type="checkbox" name="facebook ads" id="fb-ads-checkbox">
+            <input type="checkbox" name="facebook ads" id="fb-ads-checkbox" [(ngModel)]="checked">
               <label for="fb-ads-checkbox"> </label>
           </div>          
         </div>
@@ -31,8 +31,8 @@
         <div class=" col l8 s8 m8 push-l2 push-2 push-m2">
           <div class="row">
             <h5>
-              <span class="title">Presupuesto: </span>
-              <span class="unit money">$30.00 MXN</span>
+              <span class="title">Presupuesto por día: </span>
+              <span class="unit money">$ {{budget}} MXN</span>
             </h5>
           </div>
           <div class="row range-width">
@@ -40,7 +40,7 @@
               <div class="limit min centered">
                   <span>$55</span>
               </div>
-               <input type="range" id="range-budget" min="55" max="200" (change)="gettingChange($event)"  [(ngModel)]="budget" />
+               <input type="range" id="range-budget" min="55" max="200" [(ngModel)]="budget" (change)="getTotalFee($event)"/>
               <div class="limit max centered">
                   <span>$200</span>
               </div>
@@ -62,7 +62,7 @@
           <div class="row">
             <h5>
               <span class="title">Duracion: </span>
-              <span class="unit days"> 10 dias</span>
+              <span class="unit days"> {{duration}} días</span>
             </h5>
           </div>
           <div class="row range-width">
@@ -70,7 +70,7 @@
               <div class="limit min centered">
                   <span>2</span>
               </div>
-               <input type="range" id="range-duration" min="2" max="15"  [(ngModel)]="duration" />
+               <input type="range" id="range-duration" min="2" max="15"  [(ngModel)]="duration" (change)="getTotalFee($event)"/>
               <div class="limit max centered">
                   <span>15</span>
               </div>
@@ -81,43 +81,45 @@
       <div class="row collapsible-body">
         <ul class="collapsible popout col l7 s7 m7 push-l2 push-2 push-m2">
           <li>
-            <div class="collapsible-header row">
-              <h5 class="col l2 m2 s2">Vista: </h5>
+            <div class="collapsible-header row" id="ad-creative">
+              <h5 class="col l2 m2 s2">Prevista: </h5>
               <div class="input-field col l8 m8 s8">
-                <select name="test" id="cc-test">
-                  <option disabled selected>0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
+                <select name="test" id="preview">
+                  <option *ngFor="let view of adOpts.views" [value]="view.value">{{view.label}}</option>
                 </select>
               </div>              
             </div>
             <div class="collapsible-body row">
+              <preview-fb-ads [previewValues]="previewValues"></preview-fb-ads>
+            </div>            
+            <div class="collapsible-body row">
               <h5 class="col l2 m2 s2">Titulo: </h5>
               <div class="input-field col l8 m8 s8">
-                <select name="test" id="cc-test">
-                  <option disabled selected>0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
+                <select name="test" id="title">
+                  <option *ngFor="let title of adOpts.titles" [value]="title">{{title}}</option>
                 </select>
               </div>
             </div>
             <div class="collapsible-body row">
               <h5 class="col l3 m3 s3">Descripcion: </h5>
               <div class="input-field col l7 m7 s7">
-                <select name="test" id="cc-test">
-                  <option disabled selected>0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
+                <select name="test" id="description">
+                  <option *ngFor="let description of adOpts.descriptions" [value]="description">{{description}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="collapsible-body row">
+              <h5 class="col l3 m3 s3">Cuerpo: </h5>
+              <div class="input-field col l7 m7 s7">
+                <select name="test" id="body">
+                  <option *ngFor="let body of adOpts.bodies" [value]="body">{{body}}</option>
                 </select>
               </div>
             </div>
             <div class="collapsible-body row">
               <h5>Imagen: </h5>
               <div class="file-field input-field">
-                <div class="btn">
+                <div class="btn info">
                   <span>Cambiar</span>
                   <input type="file">
                 </div>
@@ -126,15 +128,12 @@
                 </div>
               </div>
             </div>
-            <div class="collapsible-body row">
-              <preview-fb-ads></preview-fb-ads>
-            </div>
           </li>
         </ul>
-        <div class="col l3 s3 m3 push-l2 push-2 push-m2"> 
-          <div class="fb-ad-preview-deprecated" data-creative-id="23842796900840762" data-ad-format="DESKTOP_FEED_STANDARD"></div>
-        </div>
       </div>      
+      <div class="collapsible-body row centered">
+        <button class="btn action col l4 s5 m5" (click)="addSet()">Agregar</button>
+      </div>
     </li>
   </ul>
 </div>
