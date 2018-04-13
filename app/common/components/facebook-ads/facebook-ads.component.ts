@@ -74,6 +74,11 @@ export class FacebookAdsComponent {
     this.mainCollapse.click();
     this.mainCollapse.addClass('addedSet');
     this.checked = true;
+    window.scroll({
+      top: 0, 
+      left: 0, 
+      behavior: 'smooth' 
+    });    
   }
 
   public getTotalFee(): void {}

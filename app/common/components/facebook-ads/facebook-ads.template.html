@@ -15,9 +15,9 @@
           </svg>          
         </div>
         <div class="col l8 s8 m8">
-          <h5 class="row " id="main-title">
-            <span class="title-main col l6 s6 m6">Anuncio inteligente: </span>
-            <span class="unit money col l6 s6 m6"> $ {{budget * duration}}.00 MXN</span>
+          <h5 class="row main-title">
+            <span class="title-main col l6 s6 m6">Configura tu anuncio: </span>
+            <span class="unit money col l6 s6 m6"> $ {{ checked ? budget * duration : '00' }}.00 MXN</span>
           </h5>
         </div>    
         <div class="col l2 s2 m2">

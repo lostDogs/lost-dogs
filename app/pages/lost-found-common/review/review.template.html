@@ -47,28 +47,37 @@
       <dog-card  [atReviewPage]="true"  [data]="LostService.savedData"  [maxCards]="1" [cardIndex]="0"></dog-card>
   </div>
   <div class="col l10 push-l1 s12" *ngIf="LostService.openPayment">
-    <ul class="collection with-header" #Description>
-      <li class="collection-item avatar centered" >
-        <table style="width: 100%;">
-          <tr>
-            <td style="width: 20%;"><div class="circle" style="top: 6px;" [ngStyle]="{'background-image': 'url(' + LostService.dogPicture + ')' }" ></div></td>
-            <td style="width: 70%;">
-              <span class="title title-money row">
-                <b>{{paymentDesc}}</b>
-                <span style="color:#26a69a">$ 65.00 MXN</span>
-              </span>
-              <div class="row "  style="margin-top: 20px;" [hidden]="!extraInfo">
-                <p class="row view-more"><b style="margin-right: 10px;">Tu pago incluye...</b> un anuncio de tu mascota de alta visibilidad en la página lostDog por un año</p>
-              </div>
-            </td>
-            <td class="text-end">
-              <a  class="mult-link" (click)="LostService.openPayment=false">Editar</a>
-              <a  class="mult-link" (click)="extraInfo=!extraInfo"><div [hidden]="extraInfo">más</div><div [hidden]="!extraInfo">menos</div></a>
-            </td>
-          </tr>
-        </table>
-      </li>
-    </ul>
+  <ul class="collapsible popout"  #Description>
+    <li>
+      <div class="row collapsible-header">
+        <div class="col l2 s2 m2">
+             <div class="circle" style="top: 6px;" [ngStyle]="{'background-image': 'url(' + LostService.dogPicture + ')' }" ></div>
+        </div>
+        <div class="col l8 s8 m8">
+          <h5 class="row main-title">
+            <span class="title-main col l6 s6 m6">{{paymentDesc}}</span>
+            <span class="unit money col l6 s6 m6"> $ 65.00 MXN</span>
+          </h5>
+        </div>    
+        <div class="col l2 s2 m2">
+          <div class="input-field alt-black main-check to-right">
+            <input type="checkbox" name="facebook ads" id="fb-report"  checked="checked" disabled="disabled">
+              <label for="fb-ads-checkbox"> </label>
+          </div>          
+        </div>
+      </div>
+      <div class="row collapsible-body">
+        <div class=" col l8 s8 m8 push-l2 push-2 push-m2">
+          <div class="row">
+            <p class="heavy" style="color: white;">Tu pago incluye un anuncio de tu mascota de alta visibilidad en la página lostDog por un año</p>
+          </div>
+        </div>
+        <div class="col l2 s2 m2 push-l2 push-2 push-m2">
+          <button class="waves-effect btn info" (click)="LostService.openPayment=false">Editar</button>
+        </div>
+      </div>
+    </li>
+  </ul>
     <facebook-ads></facebook-ads>
   </div>
 </div>
