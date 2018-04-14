@@ -139,13 +139,13 @@
           </div>
         </div>
         <div class="row">
-          <div class="input-field alt-black col l3 s12 countries push-l4" *ngIf="atCreateAccount || (checkingMissingFields && missingFields['address.country'])" [ngClass]="{'wrong-red': !user.adress.country.valid}">
+          <div class="input-field alt-black col l3 s11 countries push-l4" *ngIf="atCreateAccount || (checkingMissingFields && missingFields['address.country'])" [ngClass]="{'wrong-red': !user.adress.country.valid}">
             <select name="country"  id="country" [(ngModel)]="user.adress.country.value" (keyup)="user.adress.country.valid = validate.name(user.adress.country.value);">
               <option value="" disabled selected>Pais</option>
               <option *ngFor="let co of countries"[value]="co.name"><div class="bfh-flag-{{co.id}} flag-country"></div>{{co.name}}</option>
             </select>
           </div>          
-          <div class="input-field alt-black  col l5 s8 push-l4" [hidden]="checkingMissingFields && !missingFields['phoneNumber.number']" [ngClass]="{'wrong-red': !user.contact.phone.valid}">
+          <div class="input-field alt-black  col l5 s11 push-l4" [hidden]="checkingMissingFields && !missingFields['phoneNumber.number']" [ngClass]="{'wrong-red': !user.contact.phone.valid}">
                 <input type="text" name="phone" id="phone" [(ngModel)]="user.contact.phone.value" (keyup)="user.contact.phone.valid = validate.onlyNumbers(user.contact.phone.value, 8, 10, 'phone'); disableIfmf();"  (change)="user.contact.phone.valid = validate.onlyNumbers(user.contact.phone.value, 8, 10, 'phone');">
                 <label for="phone">
                   <div [ngClass]="{'fadeInDown': user.contact.phone.valid && createAccount.controls.phone && createAccount.controls.phone.dirty}" [hidden]="!user.contact.phone.valid">Teléfono celular</div>

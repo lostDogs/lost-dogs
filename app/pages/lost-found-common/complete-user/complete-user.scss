@@ -6,6 +6,12 @@
         padding-bottom: 50px;
         color: black;
         //background: $pink;
+        form.form-create-account {
+          @media screen and (max-device-width: $screen-mobile-max) {
+            transform: scale(0.8);
+            margin-bottom: 50px;
+          }
+        }
       }
     }
   }
