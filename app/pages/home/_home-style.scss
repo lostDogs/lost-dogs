@@ -119,8 +119,8 @@
   actions-block {
     .component.row {
       background-color: #7cc0f4;
-      border-top: 3px solid;
-      border-bottom: 3px solid;
+      border-top: 6px solid;
+      border-bottom: 6px solid;
       padding: 40px 0;
       @media screen and (max-device-width: $screen-mobile-max) {
         border-bottom: 15px solid white;

@@ -1,6 +1,6 @@
 <div class="component row centered" [ngClass]="{'blur-filter': bluring}">
 
-  <div class="col l3 s10 m10 push-s1 push-m1">
+  <div class="col l3 s10 m10 push-s1 push-m1" (click)="goTo('/lost')">
     <i  class="large material-icons">search</i>
     <p>Perdí mi perro y lo quiero encontrar</p>
     <div class="action">
@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <div class="col l3 s10 m10 push-s1 push-m1">
+  <div class="col l3 s10 m10 push-s1 push-m1" (click)="goTo('/board')">
     <i  class="large material-icons">style</i>
     <p>Ver la lista de los perros perdidos y econtrados por zona, fecha, genero, raza, etc.</p>
     <div class="action extra-height">
@@ -16,7 +16,7 @@
     </div>    
   </div>
 
-<div class="col l3 s10 m10 push-s1 push-m1">
+<div class="col l3 s10 m10 push-s1 push-m1" (click)="goTo('/found')">
     <i  class="large material-icons">pets</i>
     <p>Econtré un perro y lo quiero reportar</p>
     <div class="action">
