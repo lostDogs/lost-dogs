@@ -116,48 +116,19 @@
     text-align: center;
     text-shadow: 5px 2px 13px black;
   }
-  .options {
-    //margin: 0 20px 0 20px;
-    .option {
-          border-top: 6px solid white;
-          border-bottom: 6px solid white;
-          margin-bottom: 50px;
-          height: 300px;
-          padding: 0;
-          display: flex;
-          text-align: center;
-          .info {
-            margin: auto;
-            padding: 0 30px 0 30px;
-            line-height: 140%;
-          }
-          .waves-effect {
-
-          }
-          .btn {
-            margin-top: 10px;
-            background-color: $buttonInfo;
-            z-index: 1;
-            &:hover {
-              background-color: $butttonInfoHover;
-            }
-          }
-    }
-    #sad-dogo {
-      background: url(https://www.lostdog.mx/assets/img/sadDogo.png) no-repeat center;
-      background-size: cover;
-      border-left: 6px solid white;
-    }
-    #muchos-dogos {
-      background: url(https://www.lostdog.mx/assets/img/muchosDogos.png) no-repeat center;
-      background-size: cover;
-      border-left: 6px solid white;
-      border-right: 6px solid white;
-    }
-    #happy-dogos {
-      background: url(https://www.lostdog.mx/assets/img/happyDogo.png) no-repeat center;
-      background-size: cover;
-      border-right: 6px solid white;
+  actions-block {
+    .component.row {
+      background-color: #7cc0f4;
+      border-top: 6px solid;
+      border-bottom: 6px solid;
+      padding: 40px 0;
+      @media screen and (max-device-width: $screen-mobile-max) {
+        border-bottom: 15px solid white;
+        border-top: 15px solid white;        
+      }
+      .action {
+        color: #7cc0f4;
+      }
     }
   }
 

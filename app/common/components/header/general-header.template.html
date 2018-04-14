@@ -1,14 +1,19 @@
 <header class="col l12 m12" id="nav-header"  [ngClass]="{'blur-new-user': newUser, 'bottom-top-anim': !newUser || !initHeader, 'size-no-anim': newUser || initHeader}">
-  <img class="hide-anim" src="https://www.lostdog.mx/assets/img/loading-step-2.gif" alt="loading..." *ngIf="(!newUser && !initHeader) && !displayNavOpts">
+  <img class="hide-anim" src="https://www.lostdog.mx/assets/img/loading-step-2.gif" alt="loading..." *ngIf="(!newUser && !initHeader) && !displayNavOpts"/>
   <div  class="menu-options col l5 m1 s3"  [ngClass]="{'hidden': !displayNavOpts}">
-    <a routerLink="board" class="actions" (click)="lostService.resetService()">Catálogo</a>
-    <a routerLink="lost" class="actions" (click)="resetPage()">Perdí</a>
-    <a routerLink="found" class="actions" (click)="resetPage()">Encontré</a>
+    <a  class="actions" #ActionBoard (click)="openBoard=!openBoard">
+      Catálogo
+      <i  id="profile-arrow" class="material-icons" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': openBoard }">arrow_drop_down</i>
+    </a>
+    <a  class="actions" #ActionReport (click)="openReport=!openReport">
+      Reportar
+      <i  id="profile-arrow" class="material-icons" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': openReport }">arrow_drop_down</i>
+    </a>
     <a href="javascript:void(0)" class="home-mobile" data-activates="slide-out"><img src="https://www.lostdog.mx/assets/img/side-menu.png" alt="side menu"></a>
   </div>
   <div class="menu-options col l4 m2" *ngIf="displayNavOpts"> 
       <a routerLink="home"  class="logo">
-        <img id="home-logo" src="https://www.lostdog.mx/assets/img/logo-med.png" alt="lost dog logo" [ngStyle]="{'opacity': router.url==='/home' ? globalService.scrollOpacity : 1}">
+        <img id="home-logo" src="https://www.lostdog.mx/assets/img/logo-med.png" alt="lost dog logo" [ngStyle]="{'opacity': router.url==='/home' ? globalService.scrollOpacity : 1}"/>
       </a> 
     </div> 
     <div class="menu-options col l3 m2" [ngClass]="{'hidden': !displayNavOpts}">
@@ -18,14 +23,14 @@
           <i  id="profile-arrow" class="material-icons" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">arrow_drop_down</i>
       </a>
       <a #UserDom href="javascript:void(0)"  *ngIf="userService.isAuth && userService.isAvatarSet" (click)="toggleLoginFrom($event)">
-        <img  src="{{userService.user.avatar}}" class="avatar" alt="profile picture">
+        <img  src="{{userService.user.avatar}}" class="avatar" alt="profile picture"/>
         <p class="profile-name">{{userService.user.name}}</p>
         <i  id="profile-arrow" class="material-icons" alt="dropdown arrow" [ngClass]="{'profile-arrow-UpDown': showLoginFrom }">arrow_drop_down</i>
       </a>
       <!-- <a href="javascript:void(0)" *ngIf="userService.isAuth">{{userService.user.name}}</a> -->
-     </div> 
+     </div>
   </div>
-  <ul id="slide-out" class="side-nav">
+  <ul id="slide-out" class="side-nav collapsible">
       <li><div class="user-profile">
         <div class="user-background" *ngIf="userService.isAuth && userService.isAvatarSet">
           <a routerLink="/profile/edit" class="profile-link"><img src="{{userService.user.avatar}}" alt="profile picture" class="circle profile-mobile"></a>
@@ -39,21 +44,61 @@
         </div>
       </div></li>
       <li><div class="divider"></div></li>
-      <li><a routerLink="/profile" class="waves-effect" *ngIf="userService.isAuth"> <i class="material-icons left">perm_identity</i>Mi cuenta</a></li>
-      <li><a routerLink="/login" class="waves-effect" *ngIf="!userService.isAuth"><i class="material-icons left">vpn_key</i>Iniciar sesión</a></li>
+      <li><a routerLink="/profile" (click)="closeSideNav()" class="waves-effect" *ngIf="userService.isAuth"> <i class="material-icons left">perm_identity</i>Mi cuenta</a></li>
+      <li><a routerLink="/login" (click)="closeSideNav()" class="waves-effect" *ngIf="!userService.isAuth"><i class="material-icons left">vpn_key</i>Iniciar sesión</a></li>
       <li><div class="divider" *ngIf="!userService.isAuth"></div></li>
-      <li><a routerLink="/account" class="waves-effect" *ngIf="!userService.isAuth"><i class="material-icons left">person_pin</i>Crear cuenta</a></li>
-      <li><a href="javascript:void(0)" class="waves-effect" *ngIf="userService.isAuth" (click)="userService.logout(); fbService.logOut();"><i class="material-icons left">reply</i>Cerrar sesión</a></li>
+      <li><a routerLink="/account" (click)="closeSideNav()" class="waves-effect" *ngIf="!userService.isAuth"><i class="material-icons left">person_pin</i>Crear cuenta</a></li>
+      <li><a href="javascript:void(0)" (click)="closeSideNav()" class="waves-effect" *ngIf="userService.isAuth" (click)="userService.logout(); fbService.logOut();"><i class="material-icons left">reply</i>Cerrar sesión</a></li>
       <li><div class="divider"></div></li>
-      <li><a class="subheader" *ngIf="userService.isAuth">mas acciones</a></li>
-      <li><a routerLink="board" class="waves-effect"><i class="material-icons left">style</i>Catalogo</a></li>
-      <li><a routerLink="lost" class="waves-effect"><i class="material-icons left">security</i>Perdi un perro</a></li>
-      <li><a routerLink="found" class="waves-effect"><i class="material-icons left">search</i>Encontre un perro</a></li>
+      <li>
+        <div class="collapsible-header">
+          <a href="javascript:void(0)" class="waves-effect"> <i class="material-icons left">style</i>Catálogo</a>
+        </div>
+        <div class="collapsible-body">
+          <a href="javascript:void(0)" (click)="goTo('/board', {lost: true});" class="waves-effect"><i class="material-icons left">search</i>Ver perdidos</a>
+          <a href="javascript:void(0)" (click)="goTo('/board', {lost: false});" class="waves-effect"><i class="material-icons left">pets</i>Ver Encontrados</a>
+        </div>
+      </li>
+      <li><div class="divider"></div></li>
+      <li>
+        <div class="collapsible-header">
+          <a href="javascript:void(0)" class="waves-effect"> <i class="material-icons left">edit</i>Reportar</a>
+        </div>
+        <div class="collapsible-body">
+          <a routerLink="lost" (click)="closeSideNav()" class="waves-effect"><i class="material-icons left">search</i>Perro perdido</a>
+          <a routerLink="found" (click)="closeSideNav()" class="waves-effect"><i class="material-icons left">pets</i>Perro econtrado</a>
+        </div>        
+      </li>
       <li><div class="divider"></div></li>
    </ul>
 </header>
 
-<article id="popover-login" *ngIf="showLoginFrom" class="hoverable">
+<article id="popover-board" class="popover hoverable" #Board [hidden]="!openBoard" [ngStyle]="{'left': actionBoardDom.nativeElement.offsetLeft + 10 + 'px'}">
+  <i class="medium material-icons popover-top">arrow_drop_up</i>
+  <ul class="opts">
+    <li class="waves-effect">
+      <a (click)="goTo('/board', {lost: true}); lostService.resetService()" ><i class="material-icons left">search</i>Ver perdidos</a>
+    </li>
+    <li class="waves-effect">
+      <a (click)="goTo('/board', {lost: false}); lostService.resetService()"><i class="material-icons left">pets</i>Ver encontrado</a>
+    </li>    
+  </ul>
+</article>
+
+<article id="popover-report" class="popover hoverable" #Report [hidden]="!openReport" [ngStyle]="{'left': actionreportDom.nativeElement.offsetLeft + 10 + 'px'}">
+  <i class="medium material-icons popover-top">arrow_drop_up</i>
+  <ul class="opts">
+    <li class="waves-effect">
+      <a (click)="goTo('/lost'); resetPage()"><i class="material-icons left">search</i>Perro perdido</a>
+    </li>
+    <li class="waves-effect">
+      <a (click)="goTo('/found'); resetPage()"><i class="material-icons left">pets</i>Perro Encontrado</a>
+    </li>    
+  </ul>
+</article>
+
+<article id="popover-login" *ngIf="showLoginFrom" class="hoverable popover">
+  <i class="medium material-icons popover-top">arrow_drop_up</i>
   <form class="row" title="form-login" #loginForm="ngForm" (ngSubmit)="userService.login(userService.tempUserName, password)"   *ngIf="!userService.isAuth" novalidate>
       <div class="input-field main-white col l12 s12" [ngClass]="{'wrong-red': userService.errors.userReq || userService.errors.invalidUser}">
         <input type="text" name="user name" id="user-name" [(ngModel)]="userService.tempUserName" (keyup)="userService.errors.userReq = false;userService.errors.invalidUser = false;">
@@ -63,11 +108,11 @@
           <input type="password" name="password" id="user-password"  [(ngModel)]="password" (keyup)="userService.errors.passwordReq = false;userService.errors.invalidUser = false;">
           <label for="user-password">contraseña <b *ngIf="userService.errors.invalidUser"> incorrecta</b></label>
       </div>
-      <button class="btn waves-effect col l12 action" type="submit" (click)="AuthRedirect()" [disabled]="userService.loading">
+      <button class="btn waves-effect col l12 action" type="submit" (click)="AuthRedirect()" [disabled]="userService.loading || fbService.loadingLogin">
         <div *ngIf="!userService.loading">Iniciar sesión<i class="material-icons right">send</i></div>
         <div *ngIf="userService.loading">Cargando ...</div>
       </button>
-      <button class="btn waves-effect col l12 fb" type="button" (click)="fbService.login()" [disabled]="fbService.loadingLogin">
+      <button class="btn waves-effect col l12 fb" type="button" (click)="fbService.login()" [disabled]="fbService.loadingLogin || userService.loading">
         <div [hidden]="fbService.loadingLogin"><div class="fb-text">continuar con </div><div class="fb-img"> <img src="https://www.lostdog.mx/assets/img/facebook.png"></div> </div>
         <div [hidden]="!fbService.loadingLogin">Cargando ...</div>
       </button>
@@ -83,7 +128,7 @@
       </div>      
     </form>
     <div  *ngIf="userService.isAuth">
-      <ul class="logged-opts">
+      <ul class="opts">
         <li class="waves-effect">
           <a routerLink="/profile" ><i class="material-icons left">perm_identity</i>Mi cuenta</a>
         </li>

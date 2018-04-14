@@ -134,6 +134,8 @@ export class UserService {
       console.log('prevUrl >', this.previousUrl);
       this.router.navigateByUrl(this.previousUrl);
       setTimeout(() => {this.previousUrl = undefined;}, 20);
+    }else if (!this.previousUrl && (data.name || data.username)) {
+      this.router.navigateByUrl('/profile');
     }
     window.scroll(0,0);
   }
@@ -202,6 +204,7 @@ export class UserService {
     this.CookieService.deleteCookie('authToken');
     console.log('login with no values auth');
     this.noAuthSubs = this.login(undefined, undefined, true);
+    this.router.navigateByUrl('/home');
   }
 
   public captchaSubmit(data: any): void {

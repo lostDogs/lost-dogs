@@ -1,10 +1,14 @@
 import {Component, ViewChildren, QueryList, ElementRef, ViewChild, Inject, HostListener} from '@angular/core';
-import { DOCUMENT } from '@angular/platform-browser';
+import {DOCUMENT} from '@angular/platform-browser';
+import {ActivatedRoute} from '@angular/router';
 import {DogCardService} from '../../common/services/dog-card.service';
 import {UserService} from '../../common/services/user.service';
 import {SearchService, IdogData} from '../../common/services/search.service';
 import {LostFoundService} from '../../common/services/lost-found.service';
 import {AsyncPipe} from '@angular/common';
+import {CookieManagerService} from '../../common/services/cookie-manager.service'
+import {GlobalFunctionService} from '../../common/services/global-function.service';
+
 require('../../common/plugins/masks.js');
 
 export interface Ifiltes {
@@ -66,7 +70,17 @@ export class boardComponent {
   @ViewChild('ButtonBreedSearch')
   public buttonBreedSearchDom: ElementRef;
 
-  constructor(@Inject(DOCUMENT) private document:  Document, public dogCardService: DogCardService, public lostService: LostFoundService, public searchService: SearchService, public userService: UserService) {
+  constructor(
+    @Inject(DOCUMENT)
+    private document:  Document,
+    public dogCardService: DogCardService,
+    public lostService: LostFoundService,
+    public searchService: SearchService,
+    public userService: UserService,
+    public activatedRoute: ActivatedRoute,
+    public cookieService: CookieManagerService,
+    public globalService: GlobalFunctionService
+  ) {
     this.filtersKey = [];
     this.window = window;
     this.searchService.api.queryParams = undefined;
@@ -113,18 +127,18 @@ export class boardComponent {
 
   public ngOnInit(): void {
     $('#date-input').mask('0000/00/00');
-    if (!this.userService.token && this.userService.noAuthSubs) {
-      this.userService.noAuthSubs.unsubscribe();
-      this.userService.login(undefined, undefined, true).add(() => {
-       this.initialSearchCall();
-      })
-    } else  {
-      this.initialSearchCall();
+    this.activatedRoute.queryParams.subscribe(data=> this.readParams(data));
+    if (!this.cookieService.getCookie('InfoBoard')) {
+      this.globalService.clearErroMessages();
+      this.globalService.setErrorMEssage('Filtra de acuerdo al criterio que necesites: raza, colores, ubicación, etc.');
+      this.globalService.openBlueModal();
+      this.cookieService.setCookie('InfoBoard', true);
     }
   }
 
   public initialSearchCall(): void {
     this.searchService.resetResults();
+    console.log('search lost', !this.searchFound)
     this.searchService.addQuery('lost', !this.searchFound);
     this.searchService.addQuery('pageSize', this.searchService._pageSize);
     this.searchService.search();
@@ -367,14 +381,29 @@ export class boardComponent {
     this.queryAndSearch('location', this.location);    
   }
 
- public decreaseRange(): void {
+  public decreaseRange(): void {
     this.rangeDiameter = this.rangeDiameter <= 1 ? this.rangeDiameter : this.rangeDiameter / 2;
     this.searchService.maxDistance =  this.rangeDiameter * this.searchService.maxDistanceDefault;
     this.radioInMap =  this.rangeDiameter * 0.5;
     this.queryAndSearch('location', this.location);
- }
+  }
 
- public scrollTop(): void {
+  public scrollTop(): void {
    $('html, body').animate({ scrollTop: 0 }, 600);
- }
+  }
+
+  public readParams(params: any): void {
+    if (params.lost) {
+      this.searchFound = params.lost === 'true' ? false : true;
+    }
+    // making the inital call to search
+    if (!this.userService.token && this.userService.noAuthSubs) {
+      this.userService.noAuthSubs.unsubscribe();
+      this.userService.login(undefined, undefined, true).add(() => {
+       this.initialSearchCall();
+      })
+    } else  {
+      this.initialSearchCall();
+    }    
+  }
 }

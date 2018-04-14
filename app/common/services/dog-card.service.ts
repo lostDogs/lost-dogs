@@ -208,7 +208,7 @@ public setFoundDogs(): void {
     const splited: string = date.split('T')[0];
     const newDate: string[] = splited && splited.split('-');
     const shortDate: string = newDate.length && newDate[0] + ' ' + this.shortMonths[+newDate[1] - 1];
-    const fullDate: string = this.months[+newDate[1] - 1] + ' del ' + newDate[0];
+    const fullDate: string = this.months[+newDate[1] - 1] + ' ' + newDate[2] + ' del ' + newDate[0];
     return {name: fullDate, short: shortDate};
   }
 

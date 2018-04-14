@@ -3,6 +3,23 @@ main-profile {
   .page {
     color: white;
   }
+  actions-block .component.row {
+    padding: 30px;
+    .col {
+      i.material-icons {
+        color: black;
+        border-radius: 50%;
+        background: white;
+        padding: 5px;
+      }
+      p {
+        color: black;
+      }
+      .action {
+        color: $lightGrey;
+      }
+    }
+  }
   .text-centered {
     text-align: center;
   }

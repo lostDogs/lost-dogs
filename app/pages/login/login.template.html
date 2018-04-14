@@ -14,11 +14,11 @@
       </div>
     </div>
     <div class="row row-extraspace">
-      <button class="btn waves-effect col l2 s8 m8 action push-l4 push-s2 push-m2" type="submit"  [disabled]="userService.loading || forgot">
+      <button class="btn waves-effect col l2 s8 m8 action push-l4 push-s2 push-m2" type="submit"  [disabled]="userService.loading || forgot || fbService.loadingLogin">
         <div *ngIf="!userService.loading">Iniciar sesión <i class="material-icons right">send</i></div>
         <div *ngIf="userService.loading">Cargando ...</div>
       </button>
-      <button class="btn waves-effect col l2 s8 m8 fb push-l4 push-s2 push-m2" type="button" (click)="fbService.login()">
+      <button class="btn waves-effect col l2 s8 m8 fb push-l4 push-s2 push-m2" type="button" (click)="fbService.login()" [disabled]="userService.loading || forgot || fbService.loadingLogin">
         <div [hidden]="fbService.loadingLogin"><div class="fb-text">continuar con </div><div class="fb-img"> <img src="https://www.lostdog.mx/assets/img/facebook.png"></div> </div>
         <div [hidden]="!fbService.loadingLogin">Cargando ...</div>
       </button>

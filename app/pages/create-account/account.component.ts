@@ -107,17 +107,20 @@ export class accountComponent {
   }
 
   public ngAfterViewInit(): void {
-   $('select').material_select();
-   $('#phone').mask('0000000000');
-   if (this.hoverRetainState)  {
+    const input = $('#country');
+    $('select').material_select();
+    $('#phone').mask('0000000000');
+    if (this.hoverRetainState)  {
      this.hoverRetainState();
-   }
+    }
+    // init contry dropdown
+    $('.countries .select-wrapper input.select-dropdown').val('País');
+    //reading dropdowns
     $('select').change(() => {
-      const input = $('#country');
       this.user.adress.country.value = input.val();
       this.user.adress.country.valid = true;
       this.disableIfmf();
-    });   
+    });
    if (this.profilePage && this.userService.user.address.country) {
       $('#country option[value=' + this.userService.user.address.country + ']').attr('selected','selected');
       $('#country').change();
@@ -137,6 +140,7 @@ export class accountComponent {
     this.globalService.clearErroMessages();
     this.userService.isAvatarSet = undefined;
     // Check for undefined and set formvalue to false
+    console.log('Form with cpatcha', form);
     let validForm: boolean = true;
     const userFirts: any[] = Object.keys(this.user);
     userFirts.forEach((userKey: any, elementIndex: number) => {

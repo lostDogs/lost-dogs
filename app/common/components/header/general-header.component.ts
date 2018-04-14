@@ -23,9 +23,19 @@ export class generalHeaderComponent implements OnInit  {
   public loginDom: ElementRef;
   @ViewChild('UserDom')
   public userDom: ElementRef;
+  @ViewChild('Report')
+  public reportDom: ElementRef;
+  @ViewChild('Board')
+  public boardDom: ElementRef;
+  @ViewChild('ActionBoard')
+  public actionBoardDom: ElementRef;
+  @ViewChild('ActionReport')
+  public actionreportDom: ElementRef;
   public initHeader: boolean;
   public openedFirstMessage: boolean;
   public openSecondMessage:boolean;
+  public openBoard: boolean;
+  public openReport: boolean;
 
   constructor (
     public renderer: Renderer,
@@ -42,8 +52,19 @@ export class generalHeaderComponent implements OnInit  {
     this.renderer.listenGlobal('document', 'click', (event: any) => {
       const loginDom: any = this.loginDom && this.loginDom.nativeElement;
       const userDom: any = this.userDom && this.userDom.nativeElement;
+      const actionBdom: any = this.actionBoardDom && this.actionBoardDom.nativeElement;
+      const actionRdom: any = this.actionreportDom && this.actionreportDom.nativeElement;
+      const boardDom: any = this.boardDom && this.boardDom.nativeElement;
+      const reportDom: any = this.reportDom && this.reportDom.nativeElement;
+
       if (this.showLoginFrom && !(this.elRef.nativeElement.lastChild.contains(event.target) || loginDom && loginDom.contains(event.target) || userDom && userDom.contains(event.target) )) {
         this.showLoginFrom = false;
+      }
+      if (this.openBoard && !(this.elRef.nativeElement.lastChild.contains(event.target) || actionBdom && actionBdom.contains(event.target) || boardDom && boardDom.contains(event.target))) {
+        this.openBoard = false;
+      }
+      if (this.openReport && !(this.elRef.nativeElement.lastChild.contains(event.target) || actionRdom && actionRdom.contains(event.target) || reportDom && reportDom.contains(event.target))) {
+        this.openReport = false;
       }
       if (this.openedFirstMessage && !this.openSecondMessage) {
         this.globalService.clearErroMessages();
@@ -76,7 +97,7 @@ export class generalHeaderComponent implements OnInit  {
     setTimeout(()=>{this.displayNavOpts = true}, TimeNavOpts);
     $('.home-mobile').sideNav({
       menuWidth: 700,
-      closeOnClick: true,
+      closeOnClick: false,
       draggable: true
     });
     this.activatedRoute.queryParams.subscribe(
@@ -116,4 +137,15 @@ export class generalHeaderComponent implements OnInit  {
       this.lostService.pageAnswers.push(undefined);
     });
   }
+  public goTo(url: any, params?: any) {
+    params =  params ? {queryParams: params} : undefined;
+    this.openBoard = this.openReport = false;
+    this.router.navigate([url], params);
+    this.closeSideNav();
+  }
+
+  public closeSideNav(): void {
+    $('').sideNav('hide');
+  }
+
 };
