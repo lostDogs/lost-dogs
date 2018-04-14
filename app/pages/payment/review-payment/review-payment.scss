@@ -7,6 +7,9 @@ review-payment {
           margin: 0;
           padding: 0;
           width: 100%;
+          @media screen and (max-device-width: $screen-mobile-max) {
+            transform: scale(0.8);     
+          }
         }
       }
     }

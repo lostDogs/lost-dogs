@@ -52,6 +52,15 @@
     color: $aVisited;
     text-decoration: underline;
   }
+ @media screen and (max-device-width: $screen-mobile-max) {
+    padding: 50px 0;
+    h5 {
+      font-size: 5rem;
+      a {
+        font-size: 5rem;
+      }
+    }
+ } 
 }
 
 board {
