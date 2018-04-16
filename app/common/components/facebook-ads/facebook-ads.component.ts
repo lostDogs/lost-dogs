@@ -12,7 +12,8 @@ export class FacebookAdsComponent {
   public duration: number = 2;
   public checked: boolean = false;
   public adOpts: any = adConfig;
-  public replaceVals: any = {};
+  @Input()
+  public replaceVals: {img?: string, reward?: string, nameObreed?: string, breed?:any, address?: string, latLong?: any} = {};
   public previewValues: any = {};
   public mainCollapse: JQuery;
   public adCreative: JQuery;
@@ -21,11 +22,6 @@ export class FacebookAdsComponent {
   public mainCollapsDom: ElementRef;
 
   constructor() {
-    this.replaceVals = {
-      breed: 'galgo',
-      locationName: 'mirado del sol',
-      reward: '$ 50.00 MXN'
-    };
   }
 
  public ngAfterViewInit(): void {
@@ -47,7 +43,7 @@ export class FacebookAdsComponent {
       }
       this.previewValues[event.target.id] = $('#' + event.target.id).val();
     });
- }
+  }
 
   public ngOnInit(): void {
     this.rereplaceHolders();
@@ -80,6 +76,25 @@ export class FacebookAdsComponent {
       behavior: 'smooth' 
     });    
   }
+
+   public filePicChange(ev: any): void {
+    const defaultImg = this.replaceVals.img;
+    let file: File = ev.target.files[0];
+    if (ev.target && ev.target.files && file && file.type.match('image.*')) {
+      try {
+        const reader = new FileReader();
+        reader.onload = (event: any) => {
+          this.replaceVals.img = event.target.result;
+          };
+        reader.readAsDataURL(file);
+      } catch (error) {
+        this.replaceVals.img = defaultImg;
+      }
+    } else {
+      this.replaceVals.img = defaultImg;
+      console.error('not an image');
+    }
+  } 
 
   public getTotalFee(): void {}
 };

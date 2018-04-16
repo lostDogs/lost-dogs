@@ -24,7 +24,7 @@
     <p>{{previewValues.body}}</p>
   </div>
   <div class="img-ad">
-    <div class="bg-img"></div>
+    <div class="bg-img" [ngStyle]="{'background-image': 'url(' + img + ')'}"></div>
     <div class="description">
       <p class="mobile-url">www.lostdog.mx</p>
       <h5>{{previewValues.title}}</h5>

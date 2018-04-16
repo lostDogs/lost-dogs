@@ -20,6 +20,8 @@ export class ReviewComponent {
   public descriptionDom: ElementRef;
 
   public paymentDesc: string;
+  public buildedDog: any;
+  public exportAds: {img?: string, reward?: string, nameObreed?: string, breed?:any, address?: string, latLong?: any};
 
   constructor(public LostService: LostFoundService, public router: Router, public dogCardService: DogCardService, public searchService: SearchService, public globalService: GlobalFunctionService) {
     this.window = window;
@@ -30,6 +32,7 @@ export class ReviewComponent {
     this.LostService.answer = undefined;
     this.LostService.inputField = undefined;
     this.LostService.inReviewPage = true;
+    this.exportAds = {};
   }
 
 
@@ -80,6 +83,9 @@ export class ReviewComponent {
       this.globalService.setSubErrorMessage('de lo contrario sera $0.00 MX');
       this.globalService.openBlueModal();
     }    
+    this.fillExportAds();
+    console.log('>>>>>>>>>>>');
+    console.log("export ads", this.exportAds);
   }
 
   public toPaymentForm(): void {
@@ -93,8 +99,8 @@ export class ReviewComponent {
   public setFinalToLocalStorage(): void {
 
     if (Array.isArray(this.LostService.pageAnswers) && this.LostService.pageAnswers[0]) {
-      const dog: any = this.LostService.objDogBuilder();
-      localStorage.setItem('reported-dog-data', JSON.stringify(dog));
+      this.buildedDog = this.LostService.objDogBuilder();
+      localStorage.setItem('reported-dog-data', JSON.stringify(this.buildedDog));
     }
   }
 
@@ -142,4 +148,18 @@ export class ReviewComponent {
     const query: string = '.review-page .circle dog-figure #' + pattern + ' g';
     $(query).attr('style', 'fill:' + color);
   }
+
+  private fillExportAds(): void {
+    const location = this.LostService.pageAnswers[this.LostService.defualtSequence.indexOf('location')] || {};
+    const breed = this.pageAnswersCopy[this.LostService.defualtSequence.indexOf('breed')] || [{}];
+    this.exportAds = {
+      img: this.LostService.dogPicture,
+      reward: this.LostService.reward,
+      nameObreed: this.LostService.dogName ? `a ${this.LostService.dogName}`: `un ${breed[0].labels}`,
+      breed: breed[0].labels,
+      address: location.address,
+      latLong: location.latLng
+    }
+  }
+
 }

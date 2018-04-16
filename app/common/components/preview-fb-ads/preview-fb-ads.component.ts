@@ -3,7 +3,6 @@ import {Component, Input} from '@angular/core';
 export interface IConfigAd {
   preview?: string;
   title?: string;
-  img?: string;
   body?: string;
   description?: string;
 }
@@ -14,9 +13,11 @@ export interface IConfigAd {
   styles: [ require('./preview-fb-ads.scss')]
 })
 
-export class previewFbAdsComponent { 
+export class previewFbAdsComponent {
 @Input()
   public previewValues: IConfigAd = {};
+  @Input()
+  public img: string;
   constructor() {
   }
   

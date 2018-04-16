@@ -90,7 +90,7 @@
               </div>              
             </div>
             <div class="collapsible-body row">
-              <preview-fb-ads [previewValues]="previewValues"></preview-fb-ads>
+              <preview-fb-ads [previewValues]="previewValues" [img]="replaceVals.img"></preview-fb-ads>
             </div>            
             <div class="collapsible-body row">
               <h5 class="col l2 m2 s2">Titulo: </h5>
@@ -109,30 +109,33 @@
               </div>
             </div>
             <div class="collapsible-body row">
-              <h5 class="col l3 m3 s3">Cuerpo: </h5>
-              <div class="input-field col l7 m7 s7">
+              <h5 class="col l2 m2 s2">Cuerpo: </h5>
+              <div class="input-field col l8 m8 s8">
                 <select name="test" id="body">
                   <option *ngFor="let body of adOpts.bodies" [value]="body">{{body}}</option>
                 </select>
               </div>
             </div>
             <div class="collapsible-body row">
-              <h5>Imagen: </h5>
-              <div class="file-field input-field">
-                <div class="btn info">
-                  <span>Cambiar</span>
-                  <input type="file">
-                </div>
-                <div class="file-path-wrapper">
-                  <input class="file-path vadivdate" type="text">
-                </div>
+              <div class="col l3 m3 s3">
+                <h5>Imagen: </h5>
+                <div class="file-field input-field">
+                  <div class="btn info">
+                    <span>Cambiar</span>
+                    <input type="file" (change)="filePicChange($event)">
+                  </div>
+                  </div>
+              </div>
+              <div class="col l8 m8 s8">
+                <div class="img-bg-big" [ngStyle]="{'background-image': 'url(' + replaceVals.img + ')'}">
+              </div>
               </div>
             </div>
           </li>
         </ul>
       </div>      
       <div class="collapsible-body row centered">
-        <button class="btn action col l4 s5 m5" (click)="addSet()">Agregar</button>
+        <button class="btn action col l3 s5 m5" (click)="addSet()">Agregar</button>
       </div>
     </li>
   </ul>

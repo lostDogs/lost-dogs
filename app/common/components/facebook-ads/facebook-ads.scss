@@ -6,6 +6,13 @@ facebook-ads {
       text-align: center;
     }
   }
+  .file-field {
+    .btn {
+      input[type="file"] {
+        height: 45px;
+      }
+    }
+  }
   .collapsible.popout {
      ul.dropdown-content.select-dropdown li:first-of-type > span {
         padding: 14px 16px;
@@ -85,6 +92,14 @@ facebook-ads {
           pointer-events: none;
         }
       }          
+    }
+    .collapsible-body {
+      .img-bg-big {
+        width: 466px;
+        height: 248.91px;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
     }
     .unit {
         font-weight: bolder;
