@@ -1,4 +1,3 @@
-import {Location} from '@angular/common';
 import { Component, ViewChild, ElementRef} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {UserService} from '../../../common/services/user.service';
@@ -47,7 +46,6 @@ export class ReviewPaymentComponent {
     public globalService: GlobalFunctionService,
     public searchService: SearchService,
     public mailingService: MailingRewardService,
-    public location: Location
   ) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.lost = params.Lt === 'true';

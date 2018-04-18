@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
 import {UserService} from './user.service';
+import {Subscription} from 'rxjs/Rx';
+import {ApiService} from './api.service';
+import {Router} from '@angular/router';
+import {CookieManagerService} from './cookie-manager.service';
+
 @Injectable()
 
 export class FacebookService {
@@ -17,12 +22,18 @@ export class FacebookService {
     address?: {country?: string};
     avatar_url?: string;
     token?: string;
-  }
+  };
+  public usersReach: any;
+  public estimations: {maxDau?: number, curve?: any[]} = {};
+  public adSetId: number;
 
-  constructor(public userService: UserService) {
-      this.userData = { address: {} };
-      this.FB = window['FB'];
-      //window['fbAsyncInit'] = this.fbAsyncInit.bind(this);
+  constructor(public userService: UserService, public api: ApiService, public router: Router, public cookies: CookieManagerService) {
+    this.userData = { address: {} };
+    this.FB = window['FB'];
+    const cookieStim = this.cookies.getCookie('adSetId');
+    if (cookieStim) {
+      this.adSetId = cookieStim;
+    }
   }
 
   public fbAsyncInit(): void {
@@ -100,5 +111,54 @@ export class FacebookService {
     if (this.userService.user.fbId) {
       this.FB.logout((response: any) => {});
     }
+  }
+
+  public getAdReach(daily_budget: number, latLng: {lat: number, lng: number}): Subscription {
+    this.usersReach = 'Cargando';
+    const query = {
+      'dailyBudget': +daily_budget * 100,
+      'adSetId': this.adSetId,
+      'currency': 'MXN',
+      'name': this.userService.user.email + ' T: ' + (new Date()).toLocaleString(),
+      'radius': 8,
+      'latLng': JSON.stringify(latLng)
+    };
+    const headers: any = {
+      'Content-Type': 'application/json',
+      'Authorization': 'token ' + this.userService.token
+    };
+    return this.api.get(this.api.API_PROD + 'facebook/ads?', query).subscribe(
+      response => this.setEstimations(response),
+      error => {
+        console.error('getting reach error >', error);
+        this.usersReach = -1;
+      },
+    )
+  }
+
+  private setEstimations(result: any): void {
+    this.estimations.maxDau = result.data[0].estimate_dau;
+    this.estimations.curve = result.data[0].daily_outcomes_curve;
+    this.adSetId = result.adSetId;
+    this.adSetId && this.cookies.setCookie('adSetId', this.adSetId);
+  }
+
+  public calculateReach(budget: number): void {
+    budget = budget * 100 * 0.9;
+    let budgetIndex: number;
+     this.estimations.curve.some((val: any, valIndex: number) => {
+       if (budget <= val.spend) {
+         budgetIndex = valIndex;
+         return true;
+       }
+     });
+     console.log('index >', budgetIndex);
+     const top = this.estimations.curve[budgetIndex];
+     const bottom = this.estimations.curve[budgetIndex - 1] || {reach: 0, spend: 0};
+     const ofset = this.estimations.curve[budgetIndex - 2] || {reach: 0, spend: 0};
+     const y = top.reach - bottom.reach;
+     const x = top.spend - bottom.spend;
+     const estimReach = ofset.spend / 2 + budget * y / x;
+     this.usersReach = (estimReach.toFixed(0)).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
   }
 }

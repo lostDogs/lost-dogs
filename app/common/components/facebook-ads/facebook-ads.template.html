@@ -40,7 +40,7 @@
               <div class="limit min centered">
                   <span>$55</span>
               </div>
-               <input type="range" id="range-budget" min="55" max="200" [(ngModel)]="budget" (change)="getTotalFee($event)"/>
+               <input type="range" id="range-budget" min="55" max="200" [(ngModel)]="budget" (change)="getBudget($event)"/>
               <div class="limit max centered">
                   <span>$200</span>
               </div>
@@ -51,10 +51,11 @@
           <div class="circle centered">
             <div class="content text-cented">
               <p style="font-weight: bolder;">Alcance: </p>
-              <h4>3,000</h4>
+              <h4>{{fbService.usersReach}} <span class="ast">*</span></h4>
               <p>Personas / día</p>
             </div>
           </div>
+          <p class="subs">* Estimación generada por <b>Facebook</b></p>
         </div>
       </div>
       <div class="row collapsible-body">

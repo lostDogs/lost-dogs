@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Output, Input, ViewChild, ElementRef} from '@angular/core';
 import * as adConfig from '../../content/fb-ad-config.json';
+import {FacebookService} from '../../services/facebook.service';
 
 @Component({
   selector: 'facebook-ads',
@@ -21,8 +22,7 @@ export class FacebookAdsComponent {
   @ViewChild('MainCollapse')
   public mainCollapsDom: ElementRef;
 
-  constructor() {
-  }
+  constructor(public fbService: FacebookService) {}
 
  public ngAfterViewInit(): void {
    this.adCreative = $('#ad-creative');
@@ -42,6 +42,9 @@ export class FacebookAdsComponent {
         this.adCreative.click();
       }
       this.previewValues[event.target.id] = $('#' + event.target.id).val();
+    });
+    this.fbService.getAdReach(this.budget, this.replaceVals.latLong).add(() => {
+      this.fbService.calculateReach(this.budget);
     });
   }
 
@@ -96,5 +99,8 @@ export class FacebookAdsComponent {
     }
   } 
 
-  public getTotalFee(): void {}
+  public getBudget(event: any): void {
+    this.fbService.calculateReach(this.budget);
+  }
+
 };

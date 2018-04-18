@@ -51,6 +51,19 @@ facebook-ads {
     width: 150px;
     height: 150px;
     background: white;
+    h4 {
+      position: relative;
+      .ast {
+        font-size: 60%;
+        position: absolute;
+        top: -5px;
+        right: -10px;        
+      }
+    }
+  }
+  .subs {
+    color: white;
+    text-align: center;
   }
   .raidus-50 {
     border-radius: 50%;

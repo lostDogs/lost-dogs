@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {DogCardService} from '../../../common/services/dog-card.service';
 import {GlobalFunctionService} from '../../../common/services/global-function.service';
 import {SearchService} from '../../../common/services/search.service';
+import {FacebookService} from '../../../common/services/facebook.service';
 
 @Component({
   selector: 'review',
@@ -23,7 +24,14 @@ export class ReviewComponent {
   public buildedDog: any;
   public exportAds: {img?: string, reward?: string, nameObreed?: string, breed?:any, address?: string, latLong?: any};
 
-  constructor(public LostService: LostFoundService, public router: Router, public dogCardService: DogCardService, public searchService: SearchService, public globalService: GlobalFunctionService) {
+  constructor(
+    public LostService: LostFoundService,
+    public router: Router,
+    public dogCardService: DogCardService,
+    public searchService: SearchService,
+    public globalService: GlobalFunctionService,
+    public fbService: FacebookService
+  ) {
     this.window = window;
     this.LostService.question2 = undefined;
     this.LostService.question3 = undefined;
@@ -84,8 +92,6 @@ export class ReviewComponent {
       this.globalService.openBlueModal();
     }    
     this.fillExportAds();
-    console.log('>>>>>>>>>>>');
-    console.log("export ads", this.exportAds);
   }
 
   public toPaymentForm(): void {
