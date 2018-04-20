@@ -216,7 +216,7 @@ export class LostFoundService {
       return this.api.post(this.api.API_PROD + 'dogs',dogObj, headers).subscribe(data => {
         console.log('sucessss', data);
         this.savedSuccess = true;
-        this.question = 'Perro creado con exito!';
+        this.question = '¡Mascota creada con éxito!';
         this.savedData = this.trasnfromDogData(data);
         console.log("saved data >>>", this.savedData);
         localStorage.removeItem('reported-dog-data');

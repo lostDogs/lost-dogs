@@ -33,6 +33,7 @@ import {OpenSpayService} from './common/services/openspay.service';
 import {FacebookService} from './common/services/facebook.service';
 import {FacebookAdsComponent} from './common/components/facebook-ads/facebook-ads.component';
 import {previewFbAdsComponent} from './common/components/preview-fb-ads/preview-fb-ads.component';
+import {ActionsBlockComponent} from './common/components/actions-block/actions-block.component';
 /*
  * BrowserModule boostrap the whole angular app. you just imported it once!
  * for other modules that have  component declarations you need to use CommonModule
@@ -68,7 +69,8 @@ import {previewFbAdsComponent} from './common/components/preview-fb-ads/preview-
   PatternBlockComponent,
   GlobalError,
   FacebookAdsComponent,
-  previewFbAdsComponent
+  previewFbAdsComponent,
+  ActionsBlockComponent
   ],
   providers: [
     {provide: ValidationService, useClass: ValidationService},

@@ -139,6 +139,7 @@ export class generalHeaderComponent implements OnInit  {
   }
   public goTo(url: any, params?: any) {
     params =  params ? {queryParams: params} : undefined;
+    this.openBoard = this.openReport = false;
     this.router.navigate([url], params);
     this.closeSideNav();
   }

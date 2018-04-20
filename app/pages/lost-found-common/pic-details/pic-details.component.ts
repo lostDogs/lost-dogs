@@ -13,7 +13,7 @@ export class DetailsComponent {
   public hideReward: boolean;
 
   constructor(public LostService: LostFoundService) {
-    this.LostService.question2 = 'sube una foto del perro';
+    this.LostService.question2 = 'sube una foto de tu mascota';
     this.LostService.question3 = 'añade un cometario extra';
     this.LostService.question = 'ponle una recompensa';
     this.LostService.optional = false;

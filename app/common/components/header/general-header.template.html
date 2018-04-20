@@ -55,8 +55,8 @@
           <a href="javascript:void(0)" class="waves-effect"> <i class="material-icons left">style</i>Catálogo</a>
         </div>
         <div class="collapsible-body">
-          <a href="javascript:void(0)" (click)="goTo('/board', {lost: true});" class="waves-effect"><i class="material-icons left">security</i>Ver perdidos</a>
-          <a href="javascript:void(0)" (click)="goTo('/board', {lost: false});" class="waves-effect"><i class="material-icons left">search</i>Ver Encontrados</a>
+          <a href="javascript:void(0)" (click)="goTo('/board', {lost: true});" class="waves-effect"><i class="material-icons left">search</i>Ver perdidos</a>
+          <a href="javascript:void(0)" (click)="goTo('/board', {lost: false});" class="waves-effect"><i class="material-icons left">pets</i>Ver Encontrados</a>
         </div>
       </li>
       <li><div class="divider"></div></li>
@@ -65,8 +65,8 @@
           <a href="javascript:void(0)" class="waves-effect"> <i class="material-icons left">edit</i>Reportar</a>
         </div>
         <div class="collapsible-body">
-          <a routerLink="lost" (click)="closeSideNav()" class="waves-effect"><i class="material-icons left">security</i>Perro perdido</a>
-          <a routerLink="found" (click)="closeSideNav()" class="waves-effect"><i class="material-icons left">search</i>Perro econtrado</a>
+          <a routerLink="lost" (click)="closeSideNav()" class="waves-effect"><i class="material-icons left">search</i>Perro perdido</a>
+          <a routerLink="found" (click)="closeSideNav()" class="waves-effect"><i class="material-icons left">pets</i>Perro econtrado</a>
         </div>        
       </li>
       <li><div class="divider"></div></li>
@@ -108,11 +108,11 @@
           <input type="password" name="password" id="user-password"  [(ngModel)]="password" (keyup)="userService.errors.passwordReq = false;userService.errors.invalidUser = false;">
           <label for="user-password">contraseña <b *ngIf="userService.errors.invalidUser"> incorrecta</b></label>
       </div>
-      <button class="btn waves-effect col l12 action" type="submit" (click)="AuthRedirect()" [disabled]="userService.loading">
+      <button class="btn waves-effect col l12 action" type="submit" (click)="AuthRedirect()" [disabled]="userService.loading || fbService.loadingLogin">
         <div *ngIf="!userService.loading">Iniciar sesión<i class="material-icons right">send</i></div>
         <div *ngIf="userService.loading">Cargando ...</div>
       </button>
-      <button class="btn waves-effect col l12 fb" type="button" (click)="fbService.login()" [disabled]="fbService.loadingLogin">
+      <button class="btn waves-effect col l12 fb" type="button" (click)="fbService.login()" [disabled]="fbService.loadingLogin || userService.loading">
         <div [hidden]="fbService.loadingLogin"><div class="fb-text">continuar con </div><div class="fb-img"> <img src="https://www.lostdog.mx/assets/img/facebook.png"></div> </div>
         <div [hidden]="!fbService.loadingLogin">Cargando ...</div>
       </button>

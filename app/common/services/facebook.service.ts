@@ -66,6 +66,7 @@ export class FacebookService {
   }
 
   public statusChange(response: any): void {
+    console.log('status of > ', response);
     if (/connected/g.test(response.status) && !this.userService.isAuth) {
       this.getUserData();
     }
@@ -74,6 +75,7 @@ export class FacebookService {
   public getUserData(): void {
     this.loadingLogin = true;
     this.FB.api('/me?fields=id,first_name,last_name,middle_name,email,location,picture', (success: any) => {
+      console.log('me > ', success)
       if (!success || success.error) {
         console.error('error in getting user data from FB', success);
         this.loadingLogin = false;
