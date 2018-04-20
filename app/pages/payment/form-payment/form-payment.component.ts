@@ -128,7 +128,7 @@ export class FormPaymentComponent {
         });
       });
     } else if (this.chargeCreate) {
-      this.rewardAmount = this._chargeCreateAmount.toFixed(2);
+      this.setAdsTotal(this.adsTotal);
     }
     });
   }
@@ -263,14 +263,17 @@ export class FormPaymentComponent {
     this.pay();
   }
 
-public ngOnChanges(changes: SimpleChanges): void {
- if (changes.adsTotal) {
-   if (typeof changes.adsTotal.currentValue  === 'number') {
-     this.rewardAmount = (this._chargeCreateAmount + changes.adsTotal.currentValue).toFixed(2);
-   } else {
-     this.rewardAmount = this._chargeCreateAmount.toFixed(2); 
+  public ngOnChanges(changes: SimpleChanges): void {
+   if (changes.adsTotal) {
+       this.setAdsTotal(changes.adsTotal.currentValue);
    }
- }
-}  
+  }  
 
+  public setAdsTotal(adsTotal: number): void {
+    if (typeof adsTotal  === 'number') {
+      this.rewardAmount = (this._chargeCreateAmount + adsTotal).toFixed(2);
+    } else {
+      this.rewardAmount = this._chargeCreateAmount.toFixed(2); 
+    }
+  }
 };

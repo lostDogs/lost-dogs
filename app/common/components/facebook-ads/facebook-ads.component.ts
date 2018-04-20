@@ -24,6 +24,11 @@ export class FacebookAdsComponent {
 
   constructor(public fbService: FacebookService) {}
 
+  public ngOnInit(): void {
+    this.rereplaceHolders();
+    this.setInitVals();
+  }
+
  public ngAfterViewInit(): void {
    this.adCreative = $('#ad-creative');
    this.mainCollapse = $('.collapsible-header.main');
@@ -33,9 +38,7 @@ export class FacebookAdsComponent {
       if (this.checked && this.mainCollapse.hasClass('addedSet')) {
         this.mainCollapse.removeClass('addedSet');
         this.checked = false;
-        this.fbService.total = undefined;
-        console.log('setting UNDEF of map add');
-        this.fbService.mapAd(undefined, undefined, undefined);     
+        this.fbService.mapAd(undefined, undefined, Object.assign(this.previewValues, {img: this.replaceVals.img}));
         this.mainCollapse.click();
       }
     })
@@ -48,11 +51,7 @@ export class FacebookAdsComponent {
     this.fbService.getAdReach(this.budget, this.replaceVals.latLong).add(() => {
       this.fbService.calculateReach(this.budget);
     });
-  }
-
-  public ngOnInit(): void {
-    this.rereplaceHolders();
-    this.setInitVals();
+    this.fbService.mapAd(undefined, undefined, Object.assign(this.previewValues, {img: this.replaceVals.img}));
   }
 
   public rereplaceHolders(): void {
@@ -80,8 +79,6 @@ export class FacebookAdsComponent {
       left: 0, 
       behavior: 'smooth' 
     });
-    this.getTotal();
-    console.log('setting full values of map add');
     this.fbService.mapAd(this.duration, this.budget, Object.assign(this.previewValues, {img: this.replaceVals.img}));
   }
 
@@ -108,8 +105,5 @@ export class FacebookAdsComponent {
     this.fbService.calculateReach(this.budget);
   }
 
-  public getTotal(): void {
-    this.fbService.total = this.checked ? this.budget * this.duration : undefined;
-  }
 
 };

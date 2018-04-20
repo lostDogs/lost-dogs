@@ -28,6 +28,8 @@ export class FacebookService {
   public adSetId: number;
   public mappedAd: any;
   public total: number = 0;
+  private defaultTotal: number = 20;
+  private defaultDuration: number = 1;
 
   constructor(public userService: UserService, public api: ApiService, public router: Router, public cookies: CookieManagerService) {
     this.userData = { address: {} };
@@ -165,10 +167,9 @@ export class FacebookService {
   }
 
   public mapAd(days: number, dailyBudget: number, adCreativeVals: any): void {
-    if (!dailyBudget || !days || !adCreativeVals) {
-      console.log('undef >>');
-      this.mappedAd = undefined;
-      return;
+    if (!days || !dailyBudget) {
+      days = this.defaultDuration;
+      dailyBudget = this.defaultTotal;
     }
     this.mappedAd = {
       set: {
@@ -185,7 +186,6 @@ export class FacebookService {
         description: adCreativeVals.description
       }
     };
-    console.log('mappedad', this.mappedAd);
+   this.total = dailyBudget * days;
   }
-
 }
