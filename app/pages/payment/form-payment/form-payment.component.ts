@@ -46,7 +46,7 @@ export class FormPaymentComponent {
   public loadingImg: boolean;
   @Input()
   adsTotal: number;
-  public _chargeCreateAmount = 65;
+  public _chargeCreateAmount = +process.env.BASE_COST;
 
   constructor (
     public userService: UserService,
@@ -273,7 +273,7 @@ export class FormPaymentComponent {
     if (typeof adsTotal  === 'number') {
       this.rewardAmount = (this._chargeCreateAmount + adsTotal).toFixed(2);
     } else {
-      this.rewardAmount = this._chargeCreateAmount.toFixed(2); 
+      this.rewardAmount = this._chargeCreateAmount.toFixed(2);
     }
   }
 };

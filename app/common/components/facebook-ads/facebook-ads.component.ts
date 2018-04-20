@@ -104,6 +104,12 @@ export class FacebookAdsComponent {
   public getBudget(event: any): void {
     this.fbService.calculateReach(this.budget);
   }
-
+  
+/*  public ngOnDestroy(): void {
+    if (!this.fbService.adsSuccess) {
+      console.log('on destroy facebook ads > delete adset from FB');
+      // this.fbService.deteAdset(this.fbService.adSetId);
+    }
+  }*/
 
 };

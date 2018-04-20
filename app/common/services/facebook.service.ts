@@ -25,11 +25,12 @@ export class FacebookService {
   };
   public usersReach: any;
   public estimations: {maxDau?: number, curve?: any[]} = {};
-  public adSetId: number;
+  public adSetId: string;
   public mappedAd: any;
   public total: number = 0;
-  private defaultTotal: number = 20;
-  private defaultDuration: number = 1;
+  public adsSuccess: boolean;
+  private defaultBudget: number = +process.env.BASE_ADS_BUDGET;
+  private defaultDuration: number = +process.env.BASE_ADS_DURATION;
 
   constructor(public userService: UserService, public api: ApiService, public router: Router, public cookies: CookieManagerService) {
     this.userData = { address: {} };
@@ -171,7 +172,7 @@ export class FacebookService {
   public mapAd(days: number, dailyBudget: number, adCreativeVals: any): void {
     if (!days || !dailyBudget) {
       days = this.defaultDuration;
-      dailyBudget = this.defaultTotal;
+      dailyBudget = this.defaultBudget;
     }
     this.mappedAd = {
       set: {
@@ -189,5 +190,21 @@ export class FacebookService {
       }
     };
    this.total = dailyBudget * days;
+  }
+  
+  public resetService(): void {
+    this.mapAd(undefined, undefined, {img: undefined, body: undefined, title: undefined});
+    this.cookies.deleteCookie('adSetId');
+  }
+
+  public deteAdset(adSetId: string): Subscription {
+    const headers: any = {
+      'Content-Type': 'application/json',
+      'Authorization': 'token ' + this.userService.token
+    };
+    return this.api.delete(this.api.API_PROD + 'facebook/ads', adSetId, headers).subscribe(
+      data => {console.log('adset delete')},
+      error => {console.error('unable to delete adset', error)}
+    )
   }
 }

@@ -23,6 +23,7 @@ export class ReviewComponent {
   public paymentDesc: string;
   public buildedDog: any;
   public exportAds: {img?: string, reward?: string, nameObreed?: string, breed?:any, address?: string, latLong?: any};
+  public baseCost: number = (+process.env.BASE_COST) + ((+process.env.BASE_ADS_DURATION) *  (+process.env.BASE_ADS_BUDGET));
 
   constructor(
     public LostService: LostFoundService,
