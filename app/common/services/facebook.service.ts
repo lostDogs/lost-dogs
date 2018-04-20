@@ -190,6 +190,7 @@ export class FacebookService {
       }
     };
    this.total = dailyBudget * days;
+   console.log('this.mapped', this.mappedAd);
   }
   
   public resetService(): void {

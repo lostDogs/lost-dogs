@@ -252,7 +252,6 @@ export class LostFoundService {
           $('html, body').animate({ scrollTop: 0 }, 350);
           localStorage.removeItem('reported-dog-img-0');
           console.log('sucess', data);
-          this.resetService();
         },
         e => {
           this.savedImgs = false;
