@@ -195,6 +195,7 @@ export class FacebookService {
   public resetService(): void {
     this.mapAd(undefined, undefined, {img: undefined, body: undefined, title: undefined});
     this.cookies.deleteCookie('adSetId');
+    this.adSetId = undefined;
   }
 
   public deteAdset(adSetId: string): Subscription {
