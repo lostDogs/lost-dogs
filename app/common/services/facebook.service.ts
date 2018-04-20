@@ -26,6 +26,8 @@ export class FacebookService {
   public usersReach: any;
   public estimations: {maxDau?: number, curve?: any[]} = {};
   public adSetId: number;
+  public mappedAd: any;
+  public total: number = 0;
 
   constructor(public userService: UserService, public api: ApiService, public router: Router, public cookies: CookieManagerService) {
     this.userData = { address: {} };
@@ -161,4 +163,29 @@ export class FacebookService {
      const estimReach = ofset.spend / 2 + budget * y / x;
      this.usersReach = (estimReach.toFixed(0)).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
   }
+
+  public mapAd(days: number, dailyBudget: number, adCreativeVals: any): void {
+    if (!dailyBudget || !days || !adCreativeVals) {
+      console.log('undef >>');
+      this.mappedAd = undefined;
+      return;
+    }
+    this.mappedAd = {
+      set: {
+        adSetId: this.adSetId,
+        endTime: days,
+        dailyBudget: dailyBudget * 100
+      },
+      img: adCreativeVals.img,
+      creative: {
+        name: 'DogID > test1',
+        link: 'https://www.lostdog.mx',
+        body: adCreativeVals.body,
+        title: adCreativeVals.title,
+        description: adCreativeVals.description
+      }
+    };
+    console.log('mappedad', this.mappedAd);
+  }
+
 }

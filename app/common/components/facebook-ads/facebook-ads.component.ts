@@ -33,9 +33,11 @@ export class FacebookAdsComponent {
       if (this.checked && this.mainCollapse.hasClass('addedSet')) {
         this.mainCollapse.removeClass('addedSet');
         this.checked = false;
+        this.fbService.total = undefined;
+        console.log('setting UNDEF of map add');
+        this.fbService.mapAd(undefined, undefined, undefined);     
         this.mainCollapse.click();
       }
-      this.checked = !this.checked;
     })
     $('select').change((event) => {
       if (event.target.id == 'preview' && !this.adCreative.hasClass('active')) {
@@ -77,7 +79,10 @@ export class FacebookAdsComponent {
       top: 0, 
       left: 0, 
       behavior: 'smooth' 
-    });    
+    });
+    this.getTotal();
+    console.log('setting full values of map add');
+    this.fbService.mapAd(this.duration, this.budget, Object.assign(this.previewValues, {img: this.replaceVals.img}));
   }
 
    public filePicChange(ev: any): void {
@@ -101,6 +106,10 @@ export class FacebookAdsComponent {
 
   public getBudget(event: any): void {
     this.fbService.calculateReach(this.budget);
+  }
+
+  public getTotal(): void {
+    this.fbService.total = this.checked ? this.budget * this.duration : undefined;
   }
 
 };

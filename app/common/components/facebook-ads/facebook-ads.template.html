@@ -17,7 +17,7 @@
         <div class="col l8 s8 m8">
           <h5 class="row main-title">
             <span class="title-main col l6 s6 m6">Configura tu anuncio: </span>
-            <span class="unit money col l6 s6 m6"> $ {{ checked ? budget * duration : '00' }}.00 MXN</span>
+            <span class="unit money col l6 s6 m6"> $ {{ (mainCollapse && mainCollapse.hasClass('active')) || checked ? budget * duration : '00' }}.00 MXN</span>
           </h5>
         </div>    
         <div class="col l2 s2 m2">
@@ -71,7 +71,7 @@
               <div class="limit min centered">
                   <span>2</span>
               </div>
-               <input type="range" id="range-duration" min="2" max="15"  [(ngModel)]="duration" (change)="getTotalFee($event)"/>
+               <input type="range" id="range-duration" min="2" max="15"  [(ngModel)]="duration"/>
               <div class="limit max centered">
                   <span>15</span>
               </div>

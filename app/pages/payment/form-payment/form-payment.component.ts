@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Input} from '@angular/core';
+import { Component, ViewChild, ElementRef, Input, SimpleChanges} from '@angular/core';
 import {UserService} from '../../../common/services/user.service';
 import {ValidationService} from '../../../common/services/validation.service';
 import {formObj} from '../../create-account/account.component';
@@ -44,6 +44,9 @@ export class FormPaymentComponent {
   public fromLostPage: boolean;
   @Input()
   public loadingImg: boolean;
+  @Input()
+  adsTotal: number;
+  public _chargeCreateAmount = 65;
 
   constructor (
     public userService: UserService,
@@ -93,7 +96,6 @@ export class FormPaymentComponent {
     }
     const monthSelect: JQuery = $('#cc-month');
     const yearSelect: JQuery = $('#cc-year');
-    const chargeCreateAmount: number = 65;
     monthSelect.change(() => {
       this.creaditCard.expMonth.value = monthSelect.val();
       this.creaditCard.expMonth.valid = true;
@@ -126,7 +128,7 @@ export class FormPaymentComponent {
         });
       });
     } else if (this.chargeCreate) {
-      this.rewardAmount = chargeCreateAmount.toFixed(2);
+      this.rewardAmount = this._chargeCreateAmount.toFixed(2);
     }
     });
   }
@@ -260,5 +262,15 @@ export class FormPaymentComponent {
     this.extra.terms.value = true;
     this.pay();
   }
+
+public ngOnChanges(changes: SimpleChanges): void {
+ if (changes.adsTotal) {
+   if (typeof changes.adsTotal.currentValue  === 'number') {
+     this.rewardAmount = (this._chargeCreateAmount + changes.adsTotal.currentValue).toFixed(2);
+   } else {
+     this.rewardAmount = this._chargeCreateAmount.toFixed(2); 
+   }
+ }
+}  
 
 };
