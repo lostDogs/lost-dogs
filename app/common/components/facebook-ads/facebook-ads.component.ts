@@ -50,8 +50,8 @@ export class FacebookAdsComponent {
     });
     this.fbService.getAdReach(this.budget, this.replaceVals.latLong).add(() => {
       this.fbService.calculateReach(this.budget);
+      this.fbService.mapAd(undefined, undefined, Object.assign(this.previewValues, {img: this.replaceVals.img}));
     });
-    this.fbService.mapAd(undefined, undefined, Object.assign(this.previewValues, {img: this.replaceVals.img}));
   }
 
   public rereplaceHolders(): void {
@@ -104,12 +104,5 @@ export class FacebookAdsComponent {
   public getBudget(event: any): void {
     this.fbService.calculateReach(this.budget);
   }
-  
-/*  public ngOnDestroy(): void {
-    if (!this.fbService.adsSuccess) {
-      console.log('on destroy facebook ads > delete adset from FB');
-      // this.fbService.deteAdset(this.fbService.adSetId);
-    }
-  }*/
-
+ 
 };

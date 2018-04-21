@@ -35,6 +35,9 @@ export class appComponent {
   @HostListener('window:beforeunload', ['$event'])
     beforeunloadHandler(event: any) {
       this.cookieService.deleteCookie(this.userService.locCookieName);
+      if (this.facebookService.adSetId) {
+        this.facebookService.deleteAdset(this.facebookService.adSetId);
+      }
     }
 
 
@@ -47,5 +50,7 @@ export class appComponent {
     }
   }
 
-  public ngOnDestroy(): void {}
+  public ngOnDestroy(): void {
+  }
+
 };

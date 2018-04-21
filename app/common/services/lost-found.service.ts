@@ -221,7 +221,6 @@ export class LostFoundService {
         console.log("saved data >>>", this.savedData);
         localStorage.removeItem('reported-dog-data');
         this.fbService.resetService();
-        this.fbService.adsSuccess = true;
         this.deleteReviewLocalStorage();
         this.setImgToBucket(data['images'][0].uploadImageUrl);
       },

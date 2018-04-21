@@ -28,17 +28,12 @@ export class FacebookService {
   public adSetId: string;
   public mappedAd: any;
   public total: number = 0;
-  public adsSuccess: boolean;
   private defaultBudget: number = +process.env.BASE_ADS_BUDGET;
   private defaultDuration: number = +process.env.BASE_ADS_DURATION;
 
   constructor(public userService: UserService, public api: ApiService, public router: Router, public cookies: CookieManagerService) {
     this.userData = { address: {} };
-    this.FB = window['FB'];
-    const cookieStim = this.cookies.getCookie('adSetId');
-    if (cookieStim) {
-      this.adSetId = cookieStim;
-    }
+    this.FB = window['FB'];name
   }
 
   public fbAsyncInit(): void {
@@ -147,7 +142,6 @@ export class FacebookService {
     this.estimations.maxDau = result.data[0].estimate_dau;
     this.estimations.curve = result.data[0].daily_outcomes_curve;
     this.adSetId = result.adSetId;
-    this.adSetId && this.cookies.setCookie('adSetId', this.adSetId);
   }
 
   public calculateReach(budget: number): void {
@@ -195,17 +189,16 @@ export class FacebookService {
   
   public resetService(): void {
     this.mapAd(undefined, undefined, {img: undefined, body: undefined, title: undefined});
-    this.cookies.deleteCookie('adSetId');
     this.adSetId = undefined;
   }
 
-  public deteAdset(adSetId: string): Subscription {
+  public deleteAdset(adSetId: string): Subscription {
     const headers: any = {
       'Content-Type': 'application/json',
       'Authorization': 'token ' + this.userService.token
     };
     return this.api.delete(this.api.API_PROD + 'facebook/ads', adSetId, headers).subscribe(
-      data => {console.log('adset delete')},
+      data => {console.log('adset deleted')},
       error => {console.error('unable to delete adset', error)}
     )
   }
