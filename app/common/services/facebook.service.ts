@@ -28,8 +28,9 @@ export class FacebookService {
   public adSetId: string;
   public mappedAd: any;
   public total: number = 0;
-  private defaultBudget: number = +process.env.BASE_ADS_BUDGET;
-  private defaultDuration: number = +process.env.BASE_ADS_DURATION;
+  public defaultBudget: number = +process.env.BASE_ADS_BUDGET;
+  public defaultDuration: number = +process.env.BASE_ADS_DURATION;
+  public initialReach: any;
 
   constructor(public userService: UserService, public api: ApiService, public router: Router, public cookies: CookieManagerService) {
     this.userData = { address: {} };
@@ -116,7 +117,7 @@ export class FacebookService {
   }
 
   public getAdReach(daily_budget: number, latLng: {lat: number, lng: number}): Subscription {
-    this.usersReach = 'Cargando';
+    this.usersReach = this.initialReach = 'Cargando';
     const query = {
       'dailyBudget': +daily_budget * 100,
       'adSetId': this.adSetId,
@@ -133,7 +134,7 @@ export class FacebookService {
       response => this.setEstimations(response),
       error => {
         console.error('getting reach error >', error);
-        this.usersReach = -1;
+        this.usersReach = this.initialReach = -1;
       },
     )
   }
@@ -142,9 +143,10 @@ export class FacebookService {
     this.estimations.maxDau = result.data[0].estimate_dau;
     this.estimations.curve = result.data[0].daily_outcomes_curve;
     this.adSetId = result.adSetId;
+    this.initialReach = this.calculateReach(this.defaultBudget);
   }
 
-  public calculateReach(budget: number): void {
+  public calculateReach(budget: number): string {
     budget = budget * 100 * 0.9;
     let budgetIndex: number;
      this.estimations.curve && this.estimations.curve.some((val: any, valIndex: number) => {
@@ -160,7 +162,7 @@ export class FacebookService {
      const y = top.reach - bottom.reach;
      const x = top.spend - bottom.spend;
      const estimReach = ofset.spend / 2 + budget * y / x;
-     this.usersReach = (estimReach.toFixed(0)).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+     return  (estimReach.toFixed(0)).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
   }
 
   public mapAd(days: number, dailyBudget: number, adCreativeVals: any): void {

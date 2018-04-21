@@ -18,6 +18,7 @@ export class FacebookAdsComponent {
   public previewValues: any = {};
   public mainCollapse: JQuery;
   public adCreative: JQuery;
+  public finalReach: string;
 
   @ViewChild('MainCollapse')
   public mainCollapsDom: ElementRef;
@@ -49,7 +50,8 @@ export class FacebookAdsComponent {
       this.previewValues[event.target.id] = $('#' + event.target.id).val();
     });
     this.fbService.getAdReach(this.budget, this.replaceVals.latLong).add(() => {
-      this.fbService.calculateReach(this.budget);
+      this.fbService.usersReach = this.fbService.calculateReach(this.budget);
+      this.setFinalReach();
       this.fbService.mapAd(undefined, undefined, Object.assign(this.previewValues, {img: this.replaceVals.img}));
     });
   }
@@ -102,7 +104,18 @@ export class FacebookAdsComponent {
   } 
 
   public getBudget(event: any): void {
-    this.fbService.calculateReach(this.budget);
+    this.fbService.usersReach = this.fbService.calculateReach(this.budget);
+
+    this.setFinalReach();
+  }
+
+  public setFinalReach(): void {
+    if ( !/argando/g.test(this.fbService.usersReach) && this.fbService.usersReach !== -1) {
+      const preFinal: number = +this.fbService.usersReach.replace(',', '') * this.duration * 0.85;
+      this.finalReach = (preFinal.toFixed(0)).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+    } else {
+      this.finalReach = 'No Disp';
+    }
   }
  
 };

@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="col l2 s2 m2 push-l2 push-2 push-m2">
-          <div class="circle centered">
+          <div class="circle big centered">
             <div class="content text-cented">
               <p style="font-weight: bolder;">Alcance: </p>
               <h4>{{fbService.usersReach}} <span class="ast">*</span></h4>
@@ -71,12 +71,21 @@
               <div class="limit min centered">
                   <span>2</span>
               </div>
-               <input type="range" id="range-duration" min="2" max="15"  [(ngModel)]="duration"/>
+               <input type="range" id="range-duration" min="2" max="15"  [(ngModel)]="duration" (change)="setFinalReach()"/>
               <div class="limit max centered">
                   <span>15</span>
               </div>
             </div>
           </div>
+        </div>
+        <div class="col l2 s2 m2 push-l2 push-2 push-m2">
+          <div class="circle big centered">
+            <div class="content text-cented">
+              <p style="font-weight: bolder;">Alcance Final: </p>
+              <h4>{{finalReach}} <span class="ast">*</span></h4>
+              <p>Personas / {{duration}} días</p>
+            </div>
+          </div>          
         </div>
       </div>
       <div class="row collapsible-body">

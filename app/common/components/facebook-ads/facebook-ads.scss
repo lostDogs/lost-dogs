@@ -47,29 +47,37 @@ facebook-ads {
   .range-width {
     width: 85%;
   }
+  .raidus-50 {
+    border-radius: 50%;
+  }  
+}
+// out of the component
+.collapsible.popout {
   .circle {
-    width: 150px;
-    height: 150px;
-    background: white;
-    h4 {
-      position: relative;
-      .ast {
-        font-size: 60%;
-        position: absolute;
-        top: -5px;
-        right: -10px;        
-      }
+    &.small {
+      width: 70px;
+      height: 70px;
+      background: white;
     }
+    &.big {
+      width: 150px;
+      height: 150px;
+      background: white;
+      h4 {
+        position: relative;
+        .ast {
+          font-size: 60%;
+          position: absolute;
+          top: -5px;
+          right: -10px;
+        }
+      }    
+    }    
   }
   .subs {
     color: white;
     text-align: center;
-  }
-  .raidus-50 {
-    border-radius: 50%;
-  }
-}
-.collapsible.popout {
+  }  
   &> li {
     border-top-right-radius: 30px;
     border-top-left-radius: 30px;
@@ -85,8 +93,11 @@ facebook-ads {
     .to-right {
       float: right;
     }
-    p.heavy {
+    .heavy {
       font-weight: 700;
+      h5 {
+        padding: 0 5px;
+      }
     }
     .collapsible-header {
       border-radius: 30px;

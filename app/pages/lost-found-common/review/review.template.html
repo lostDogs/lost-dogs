@@ -56,7 +56,8 @@
         <div class="col l8 s8 m8">
           <h5 class="row main-title">
             <span class="title-main col l6 s6 m6">{{paymentDesc}}</span>
-            <span class="unit money col l6 s6 m6"> $ {{baseCost}}.00 MXN</span>
+            <span class="unit money col l3 s3 m3"> $ {{baseCost}}.00 MXN</span>
+            <span class="col l3 s3 m3 push-l1"><button class="waves-effect btn info" (click)="LostService.openPayment=false">Editar</button></span>
           </h5>
         </div>    
         <div class="col l2 s2 m2">
@@ -68,12 +69,27 @@
       </div>
       <div class="row collapsible-body">
         <div class=" col l8 s8 m8 push-l2 push-2 push-m2">
-          <div class="row">
-            <p class="heavy" style="color: white;">Tu pago incluye un anuncio de tu mascota de alta visibilidad (+3000 personas) en redes sociales y el sitio web en la página Lost Dog por 6 meses</p>
+          <div class="row text-centered">
+            <p class="heavy" style="color: white;">Tu pago incluye alta visibilidad (+3000 personas) en el sitio web de Lost Dog por 6 meses</p>
+          </div>
+          <div class="row centered">
+            <div class="circle centered small">
+                <h4>+</h4>
+            </div>            
+          </div>
+          <div class="row text-centered">
+            <div class="heavy" style="color: white;"> un anuncio digital durante <h5>{{fbService.defaultDuration}} día</h5> con un alcance de <h5>{{fbService.initialReach}} personas</h5></div>
           </div>
         </div>
         <div class="col l2 s2 m2 push-l2 push-2 push-m2">
-          <button class="waves-effect btn info" (click)="LostService.openPayment=false">Editar</button>
+          <div class="circle big centered">
+            <div class="content text-centered">
+              <p style="font-weight: bolder;">Alcance: </p>
+              <h4>{{fbService.initialReach}} <span class="ast">*</span></h4>
+              <p>Personas / día</p>
+            </div>
+          </div>
+          <p class="subs">* Estimación generada por <b>Facebook</b></p>          
         </div>
       </div>
     </li>
