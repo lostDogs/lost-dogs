@@ -147,7 +147,7 @@ export class FacebookService {
   public calculateReach(budget: number): void {
     budget = budget * 100 * 0.9;
     let budgetIndex: number;
-     this.estimations.curve.some((val: any, valIndex: number) => {
+     this.estimations.curve && this.estimations.curve.some((val: any, valIndex: number) => {
        if (budget <= val.spend) {
          budgetIndex = valIndex;
          return true;
@@ -176,8 +176,6 @@ export class FacebookService {
       },
       img: adCreativeVals.img,
       creative: {
-        name: 'DogID > test1',
-        link: 'https://www.lostdog.mx',
         body: adCreativeVals.body,
         title: adCreativeVals.title,
         description: adCreativeVals.description
