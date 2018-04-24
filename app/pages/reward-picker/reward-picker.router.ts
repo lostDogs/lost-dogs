@@ -1,6 +1,6 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {RewardPickerComponent} from './reward-picker.component.ts';
+import {RewardPickerComponent} from './reward-picker.component';
 
 // path defined as '' because is already name in the general app.router
 const routes: Routes = [

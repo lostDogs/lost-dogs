@@ -1,0 +1,68 @@
+<div class="page dogs" *ngIf="dogService.dogData">
+  <div class="main-title row">
+    <h4>Se ha perdido {{dogService.dogData.name}}!</h4>
+  </div>
+  <article class="main-content row">
+    <div class="row centered"><h4 class="round-white">{{mappedData.breed}}</h4></div>
+    <div class="row centered color-money"><h4>$ {{dogService.dogData.reward}} MXN</h4></div>
+    <figure class="col l4 push-l1 s10 m10 no-space" >
+      <div class="row">
+        <div class="main-image col l12 m12 s12" [ngStyle]="{'background-image': 'url(' + (dogService.dogData.images && dogService.dogData.images.length && dogService.dogData.images[0].image_url) + ')'}">
+        <div class="dog-properties col l3 m3 s3" [hidden]="mobile">
+          <div class="dog-gender property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.gender.imgUrl + ')'}"  data-position="right" [attr.data-tooltip]="mappedData.gender.name" [ngClass]="{'opened-side': mobile}"></div>
+          <div class="dog-color property bg-img tooltipped" data-position="right" [attr.data-tooltip]="+mappedData.colors" [ngClass]="{'opened-side': mobile}">
+            <dog-figure [display]="dogService.dogData.pattern_id"></dog-figure>
+          </div>
+          <div class="dog-date text-centered property tooltipped " data-position="right" [attr.data-tooltip]="mappedData.date.name" [ngClass]="{'opened-side': mobile}">
+            <h3 class="truncate no-space bold">{{mappedData.date.short.split(' ')[0]}} </h3>
+            <h4 class="truncate no-space">{{mappedData.date.short.split(' ')[1]}}</h4>
+          </div>
+          <div class="dog-size property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.size.imgUrl + ')'}" data-position="right" [attr.data-tooltip]="mappedData.size.name" [ngClass]="{'opened-side': mobile}"></div>
+        </div>
+      </div>
+      </div>
+    </figure> 
+    <div class="col push-l2 l4 extras">
+      <div class="accessories">
+        <div class="title round-white text-centered">
+          <h5>Accesorios</h5>
+        </div>
+        <div class="accessory tooltipped" data-position="top" [attr.data-tooltip]="access.name" *ngFor="let access of mappedData.accessories;let i= index" [ngStyle]="{'background-image': 'url(' + access.imgUrl + ')'}"> </div>
+        <div class="comment-block text-centered" [hidden]="mappedData.accessories.length"><p>Sin Accesorios</p></div>
+        <div class="title round-white text-centered">
+          <h5>Comentarios</h5>
+        </div>
+        <div class="comment-block">
+          <p>{{dogService.dogData.description}}</p>
+          <p class="text-centered" [hidden]="dogService.dogData.description"> Sin comentarios</p>
+        </div>
+      </div>
+    </div>
+<!--     <div class="dog-properties-mobile" [ngStyle]="{'display': !mobile ? 'none' : 'flex'}">
+      <div class="dog-gender property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.gender.imgUrl + ')'}"  data-position="left" [attr.data-tooltip]="mappedData.gender.name"></div>
+      <div class="dog-color property bg-img tooltipped"  data-position="left" [attr.data-tooltip]="+mappedData.colors">
+        <dog-figure [display]="dogService.dogData.pattern_id"></dog-figure>
+      </div>
+      <div class="dog-date property tooltipped " data-position="left" [attr.data-tooltip]="mappedData.date.name">
+        <p class="truncate">{{mappedData.date.short.split(' ')[0]}} </p>
+        <p class="truncate">{{mappedData.date.short.split(' ')[1]}}</p>
+      </div>
+      <div class="dog-size property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.size.imgUrl + ')'}" data-position="left" [attr.data-tooltip]="mappedData.size.name" ></div>
+    </div> -->
+  </article>
+  <div class="row ">
+    <div class="col l10  s12 m12 no-space border-white">
+      <map  [location]="location" [dogPage]="true"></map>
+    </div>
+  </div>
+  <div class="row">Login</div>
+  <div class="row">REVIEW& payment</div>
+  <div>ACCOUNT</div>
+  <div class="row">CTAs MOBILE</div>
+</div>
+<div class="ctas-container border-white">
+    <h5 class="title">Acciones</h5>
+    <button class="btn action">Lo encontre! <i class="material-icons Small right">send</i></button>
+    <button class="btn info">Lo he visto! <i class="material-icons Small right">add_location</i></button>
+    <button class="btn info">Subscribir<i class="material-icons Small right">feedback</i></button>
+</div>
