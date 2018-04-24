@@ -130,11 +130,11 @@ export class UserService {
     this.userNotInDb = this.user.phoneNumber && !this.user.phoneNumber.number && this.user.fbId;
     this.isAvatarSet = true;
     this.errors.invalidUser = false;
-    if (this.previousUrl && (data.name && data.username)) {
+    if ((this.previousUrl && data.name && data.username)) {
       console.log('prevUrl >', this.previousUrl);
       this.router.navigateByUrl(this.previousUrl);
       setTimeout(() => {this.previousUrl = undefined;}, 20);
-    }else if (!this.previousUrl && (data.name && data.username)) {
+    }else if (!this.previousUrl && data.name && data.username) {
       this.router.navigateByUrl('/profile');
     }
     window.scroll(0,0);

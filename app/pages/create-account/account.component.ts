@@ -5,6 +5,7 @@ import * as countryData from '../../common/content/countries.json';
 import {ValidationService} from  '../../common/services/validation.service';
 import {ApiService} from '../../common/services/api.service';
 import {UserService} from '../../common/services/user.service';
+import {CookieManagerService} from '../../common/services/cookie-manager.service';
 import {GlobalFunctionService} from '../../common/services/global-function.service';
 
 require('../../common/plugins/masks.js');
@@ -68,7 +69,7 @@ export class accountComponent {
   @Output()
   public disableBtn: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
-  constructor (public validate: ValidationService, public api: ApiService, public router: Router, public userService: UserService, public globalService: GlobalFunctionService) {
+  constructor (public validate: ValidationService, public api: ApiService, public router: Router, public userService: UserService, public globalService: GlobalFunctionService, public cookieService: CookieManagerService) {
     this.countries = [{"id": "MX", "name": "Mexico"}];
     // define the user object before
     this.atCreateAccount = /account/g.test(window.location.href);
@@ -243,6 +244,10 @@ export class accountComponent {
 
   public toHomePage(): void {
     this.loading = false;
+    const dogPageId = this.cookieService.getCookie('dog-page-id');
+    if (dogPageId) {
+      this.router.navigate(['/dog/'], {queryParams:{id: dogPageId}});
+    }
     this.router.navigate(['/home'], {queryParams:{nU: true}});
     window.scroll(0,0);
   }
