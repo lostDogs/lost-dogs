@@ -244,9 +244,10 @@ export class accountComponent {
 
   public toHomePage(): void {
     this.loading = false;
-    const dogPageId = this.cookieService.getCookie('dog-page-id');
+    const dogPageId = this.cookieService.getCookie('dog-page-url');
     if (dogPageId) {
-      this.router.navigate(['/dog/'], {queryParams:{id: dogPageId}});
+      this.router.navigateByUrl(dogPageId);
+      return;
     }
     this.router.navigate(['/home'], {queryParams:{nU: true}});
     window.scroll(0,0);

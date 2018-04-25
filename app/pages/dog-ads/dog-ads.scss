@@ -3,6 +3,21 @@ div.page.dogs {
   .extras {
     padding: 10px 60px;
   }
+  .bottom-top {
+    margin: 55px 0;
+  }
+  .bottom-top-pad {
+    padding: 55px 0;
+  }
+  .row.reivew {
+   .extra-height {
+      height: 200px;
+    }
+  }
+  div.bottom-no-round {
+    border-bottom-left-radius: unset;
+    border-bottom-right-radius: unset;    
+  }
   .comment-block {
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
@@ -60,8 +75,14 @@ div.page.dogs {
   .text-centered {
     text-align: center;
   }
+  .text-left {
+    text-align: left;
+  }
   .color-money {
     color: $greenMat;
+  }
+  .color-grey {
+    color: $lightGrey;  
   }
   background-color: $lightGrey;
   .main-image {
@@ -77,13 +98,15 @@ div.page.dogs {
     padding: 0;
     margin: 0;
   }
+  .no-margin {
+    margin: 0;
+  }
   .dog-properties {
     position: absolute;
     right: -111px;
     .property {
       width: 120px;
       height: 121px;
-      background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
@@ -134,4 +157,82 @@ div.page.dogs {
 
 .border-white {
   border: 4px solid white;
+}
+
+
+
+//fireworks.
+
+span.svg {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  z-index: 999999;  
+  top: 45%;
+  transform: scale(2);
+  svg {
+    width: 200px;
+    height: 200px;
+    max-width: 200px;
+    margin: auto;
+  }
+  .title {
+    position: absolute;
+    top: calc(50% - 15px);
+    color: #fff;
+    margin: 0;
+    line-height: 1;    
+  }
+}
+@keyframes fireworkone {
+  0%   { opacity: 0;}
+  25%  { opacity: .15;}
+  50%  { opacity: .3;}
+  75%  { opacity: .15;}
+  100% { opacity: 0;} 
+}
+@keyframes fireworktwo {
+  0%   { opacity: 0;}
+  25%  { opacity: .45;}
+  50%  { opacity: .8;}
+  75%  { opacity: .45;}
+  100% { opacity: 0;} 
+}
+@keyframes fireworthree {
+  0%   { opacity: 0;}
+  25%  { opacity: .55;}
+  50%  { opacity: 1;}
+  75%  { opacity: .55;}
+  100% { opacity: 0;} 
+}
+
+.firework-icon .cls-1, .firework-icon .cls-2, .firework-icon .cls-3 {
+  opacity: 0;
+  animation-duration: 1s;
+  animation-iteration-count: infinite; }
+
+.firework-icon .cls-3 {
+  animation-name: fireworthree;
+  animation-delay: .11s; }
+
+.firework-icon .cls-2 {
+  animation-name: fireworktwo;
+  animation-delay: .41s; }
+
+.firework-icon .cls-1 {
+  animation-name: fireworkone;
+  animation-delay: .71s;}
+
+@keyframes elastic-pulse {
+  0%   { transform: scale(0.2);}
+  100% { transform: scale(1);} 
+}
+
+.img-firework {
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-name: elastic-pulse;
+  animation-delay: 0s;
 }

@@ -54,7 +54,6 @@ export class ReviewPaymentComponent {
       this.transcationId = params.transcation;
     });
     this.missingFields = this.userService.missingReqFilds();
-    console.log('missing fields >> ', this.missingFields);
     this.missFieldObj = this.userService.missingFieldsToObj(this.missingFields);
   }
 

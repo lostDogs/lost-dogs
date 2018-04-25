@@ -1,4 +1,4 @@
-<div class="page dogs" *ngIf="dogService.dogData">
+<div class="page dogs" *ngIf="dogService.dogData && mappedData" [ngClass]="{'blur-filter': congrats}">
   <div class="main-title row">
     <h4>Se ha perdido {{dogService.dogData.name}}!</h4>
   </div>
@@ -38,31 +38,131 @@
         </div>
       </div>
     </div>
-<!--     <div class="dog-properties-mobile" [ngStyle]="{'display': !mobile ? 'none' : 'flex'}">
-      <div class="dog-gender property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.gender.imgUrl + ')'}"  data-position="left" [attr.data-tooltip]="mappedData.gender.name"></div>
-      <div class="dog-color property bg-img tooltipped"  data-position="left" [attr.data-tooltip]="+mappedData.colors">
-        <dog-figure [display]="dogService.dogData.pattern_id"></dog-figure>
-      </div>
-      <div class="dog-date property tooltipped " data-position="left" [attr.data-tooltip]="mappedData.date.name">
-        <p class="truncate">{{mappedData.date.short.split(' ')[0]}} </p>
-        <p class="truncate">{{mappedData.date.short.split(' ')[1]}}</p>
-      </div>
-      <div class="dog-size property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.size.imgUrl + ')'}" data-position="left" [attr.data-tooltip]="mappedData.size.name" ></div>
-    </div> -->
   </article>
-  <div class="row ">
+  <div class="row bottom-top-pad no-margin ">
     <div class="col l10  s12 m12 no-space border-white">
       <map  [location]="location" [dogPage]="true"></map>
     </div>
   </div>
-  <div class="row">Login</div>
-  <div class="row">REVIEW& payment</div>
-  <div>ACCOUNT</div>
-  <div class="row">CTAs MOBILE</div>
+  <div class="account-location" #Complete></div>
+  <div class="row text-centered" *ngIf="userService.missingFields.length && userService.isAuth" >
+    <h4>Completa tu información</h4>
+    <account [title]="'hidden'" [checkingMissingFields]="true"  [missingFields]="userService.missingFieldsToObj(userService.missingFields)" [creatingUser]="createUser" (userCreated)="userCreatePromise($event)" [fbUser]="userService && userService.user" (disableBtn)="disableBtn=!$event"></account>
+    <div class="row centered bottom-top">
+      <button class="waves-effect btn action"  (click)="createUser=true;" [disabled]="createUser || !disableBtn">
+        <span [hidden]="">Siguiente<i class="medium material-icons right">chevron_right</i></span>
+      </button>
+    </div>      
+  </div>
+  <div class="review-location" #FoundBlock></div>
+  <div class="row reivew no-space" [hidden]="!foundMode || userService.missingFields.length">
+    <div class="col l12 m12 s12 steps-block text-centered" [hidden]="evidenceNext">
+      <h4>Agrega una evidencia de que tienes la mascota.</h4>
+      <div class="row no-space titles">
+        <div class="col l4 m5 s5 push-l1 push-m1 push-s1 title round-white text-centered bottom-no-round color-grey">
+          <h5 >Puede ser escrita</h5>
+        </div>
+        <div class="col l4 m5 s5 push-l2 push-m1 push-s1 title round-white text-centered bottom-no-round color-grey">
+          <h5 >o un imagen</h5>
+        </div>        
+      </div>   
+      <div class="row">
+        <div class="alt-black col l4 m5 s5 push-l1 push-m1 push-s1 draw account-completed action">
+          <textarea type="text" name="refund reason" class="materialize-textarea extra-height no-space" id="evidence-text" (keyup)="resize()"></textarea>
+        </div>
+        <div class="file-field col l4 m5 s5 push-l2 push-m1 push-s1 draw account-completed action">
+          <div class="img-back">
+            <div alt="imagen de evidencia" class="centered extra-height" id="evidence-pic" [ngStyle]="{'background-image': 'url(' + mailingService.evidence.picture + ')' }">
+              <div  class="description" [ngStyle]="{'opacity': mailingService.evidence.picture ? 0 : 1}" [ngClass]="{'wrong-icon': errorImg}">
+                <i class="large material-icons">camera_alt</i>
+              </div>
+            </div>
+            <input type="file"  name="image del perro" (change)="filePicChange($event)" >
+          </div>          
+        </div>
+      </div>
+      <div class="centered submit bottom-top">
+        <button class="waves-effect btn action" [disabled]="!mailingService.evidence.text && !mailingService.evidence.picture" (click)="continueEvidence();evidenceNext=true;">aceptar<i class="medium material-icons right">thumb_up</i></button>
+      </div>
+    </div>
+    <div class="row text-centered bottom-top" [hidden]="!evidenceNext">
+      <h4>¿Qué sigue?</h4>
+      <div class="row">
+        <div class="col l7 push-l2 m12 s12 text-left">
+          <h5><b>1.</b> Le mandaremos tu datos al dueño, si es su perro, El se podra en contanto contigo.</h5>
+          <h5><b>2.</b> Agenda una hora y lugar donde entregaras el perro.</h5>
+          <h5><b>3.</b> Una vez de lo entregues, recuerda escanear el codigo QR se le envió al dueño.</h5>
+          <h5><b>4.</b> Subelo en la liga que te llegará por correo, para recibir tu recompensa.</h5>
+        </div>
+      </div>
+      <div class="centered submit bottom-top">
+        <button class="waves-effect btn action">
+          <span>aceptar<i class="medium material-icons right">thumb_up</i></span>
+          <span>Cargando...</span>
+        </button>
+      </div>
+    </div>
+    <div class="row text-centered bottom-top" [hidden]="!ShowSendEmail">
+      <h5>Te hemos enviado un correo con los datos del reporte.</h5>
+      <h5>Pronto el dueño se pondra en contacto contigo.</h5>
+        <div [hidden]="mailingService.uploadImgSucess">
+          <img class="gif" src="https://www.lostdog.mx/assets/img/loading-grey.gif" alt="Cargando..">
+        </div>
+        <i class="material-icons medium">done_all</i>
+        <div [hidden]="!mailingService.uploadImgSucess">
+            <h6>La evindecia se agregado satisfactoriamente.</h6>
+        </div>
+    </div>
+  </div>
 </div>
+
 <div class="ctas-container border-white">
     <h5 class="title">Acciones</h5>
-    <button class="btn action">Lo encontre! <i class="material-icons Small right">send</i></button>
-    <button class="btn info">Lo he visto! <i class="material-icons Small right">add_location</i></button>
-    <button class="btn info">Subscribir<i class="material-icons Small right">feedback</i></button>
+    <button class="btn action" (click)="Found()" [disabled]="foundMode">Lo encontre! <i class="material-icons Small right">send</i></button>
+    <button class="btn info" [disabled]="foundMode">Lo he visto! <i class="material-icons Small right">add_location</i></button>
+    <button class="btn info" [disabled]="foundMode">Subscribir<i class="material-icons Small right">feedback</i></button>
 </div>
+
+<span class="svg" [hidden]="!congrats"><svg id="firework-slide2" class="firework-icon injected-svg img-firework inject-svg" viewBox="0 0 157 156">
+  <defs>
+    <style>
+      .cls-1,.cls-2,.cls-3{
+        fill:#e41656;
+        opacity:0;
+      }
+    </style>
+  </defs>
+  <title>icon_firework_1</title>
+  <path class="cls-3" d="M80.52,106.92a0.65,0.65,0,0,1-.65-0.65v-10a0.65,0.65,0,0,1,1.3,0v10A0.65,0.65,0,0,1,80.52,106.92Z"></path>
+  <path class="cls-3" d="M97.72,100.91a0.65,0.65,0,0,1-.52-0.26l-6-8a0.65,0.65,0,0,1,1-.78l6,8A0.65,0.65,0,0,1,97.72,100.91Z"></path>
+  <path class="cls-3" d="M108.32,85.95a0.61,0.61,0,0,1-.19,0l-9.55-3A0.65,0.65,0,1,1,99,81.69l9.55,3A0.65,0.65,0,0,1,108.32,85.95Z"></path>
+  <path class="cls-3" d="M98.77,71a0.65,0.65,0,0,1-.2-1.27l9.55-3a0.65,0.65,0,1,1,.39,1.24L99,71A0.66,0.66,0,0,1,98.77,71Z"></path>
+  <path class="cls-3" d="M91.7,61a0.65,0.65,0,0,1-.52-1l6-8a0.65,0.65,0,0,1,1,.78l-6,8A0.65,0.65,0,0,1,91.7,61Z"></path>
+  <path class="cls-3" d="M80.52,57a0.65,0.65,0,0,1-.65-0.65v-10a0.65,0.65,0,0,1,1.3,0v10A0.65,0.65,0,0,1,80.52,57Z"></path>
+  <path class="cls-3" d="M67.64,61a0.65,0.65,0,0,1-.52-0.26l-6-8a0.65,0.65,0,0,1,1-.78l6,8A0.65,0.65,0,0,1,67.64,61Z"></path>
+  <path class="cls-3" d="M60.57,71a0.66,0.66,0,0,1-.2,0l-9.55-3a0.65,0.65,0,1,1,.39-1.24l9.55,3A0.65,0.65,0,0,1,60.57,71Z"></path>
+  <path class="cls-3" d="M51,85.95a0.65,0.65,0,0,1-.19-1.27l9.55-3a0.65,0.65,0,1,1,.39,1.24l-9.55,3A0.61,0.61,0,0,1,51,85.95Z"></path>
+  <path class="cls-3" d="M61.62,100.91a0.65,0.65,0,0,1-.52-1l6-8a0.65,0.65,0,0,1,1,.78l-6,8A0.65,0.65,0,0,1,61.62,100.91Z"></path>
+
+  <path class="cls-2" d="M80.52,126.88a0.65,0.65,0,0,1-.65-0.65v-10a0.65,0.65,0,0,1,1.3,0v10A0.65,0.65,0,0,1,80.52,126.88Z"></path>
+  <path class="cls-2" d="M109.74,116.86a0.65,0.65,0,0,1-.52-0.26l-6-8a0.65,0.65,0,0,1,1-.78l6,8A0.65,0.65,0,0,1,109.74,116.86Z"></path>
+  <path class="cls-2" d="M127.42,91.92a0.61,0.61,0,0,1-.19,0l-9.55-3a0.65,0.65,0,1,1,.39-1.24l9.55,3A0.65,0.65,0,0,1,127.42,91.92Z"></path>
+  <path class="cls-2" d="M117.86,65a0.65,0.65,0,0,1-.2-1.27l9.55-3a0.65,0.65,0,1,1,.39,1.24l-9.55,3A0.66,0.66,0,0,1,117.86,65Z"></path>
+  <path class="cls-2" d="M103.73,45.08a0.65,0.65,0,0,1-.52-1l6-8a0.65,0.65,0,0,1,1,.78l-6,8A0.65,0.65,0,0,1,103.73,45.08Z"></path>
+  <path class="cls-2" d="M80.52,37.07a0.65,0.65,0,0,1-.65-0.65v-10a0.65,0.65,0,0,1,1.3,0v10A0.65,0.65,0,0,1,80.52,37.07Z"></path>
+  <path class="cls-2" d="M55.61,45.08a0.65,0.65,0,0,1-.52-0.26l-6-8a0.65,0.65,0,0,1,1-.78l6,8A0.65,0.65,0,0,1,55.61,45.08Z"></path>
+  <path class="cls-2" d="M41.47,65a0.62,0.62,0,0,1-.2,0l-9.55-3a0.65,0.65,0,1,1,.39-1.24l9.55,3A0.65,0.65,0,0,1,41.47,65Z"></path>
+  <path class="cls-2" d="M31.92,91.93a0.65,0.65,0,0,1-.19-1.27l9.55-3a0.65,0.65,0,1,1,.39,1.24l-9.55,3A0.61,0.61,0,0,1,31.92,91.93Z"></path>
+  <path class="cls-2" d="M49.59,116.86a0.65,0.65,0,0,1-.52-1l6-8a0.65,0.65,0,0,1,1,.78l-6,8A0.65,0.65,0,0,1,49.59,116.86Z"></path>
+
+  <path class="cls-1" d="M80.52,146.83a0.65,0.65,0,0,1-.65-0.65v-10a0.65,0.65,0,0,1,1.3,0v10A0.65,0.65,0,0,1,80.52,146.83Z"></path>
+  <path class="cls-1" d="M121.77,132.82a0.65,0.65,0,0,1-.52-0.26l-6-8a0.65,0.65,0,0,1,1-.78l6,8A0.65,0.65,0,0,1,121.77,132.82Z"></path>
+  <path class="cls-1" d="M146.52,97.9a0.61,0.61,0,0,1-.19,0l-9.55-3a0.65,0.65,0,1,1,.39-1.24l9.55,3A0.65,0.65,0,0,1,146.52,97.9Z"></path>
+  <path class="cls-1" d="M137,59a0.65,0.65,0,0,1-.2-1.27l9.55-3A0.65,0.65,0,1,1,146.7,56l-9.55,3A0.66,0.66,0,0,1,137,59Z"></path>
+  <path class="cls-1" d="M115.76,29.12a0.65,0.65,0,0,1-.52-1l6-8a0.65,0.65,0,0,1,1,.78l-6,8A0.65,0.65,0,0,1,115.76,29.12Z"></path>
+  <path class="cls-1" d="M80.52,17.11a0.65,0.65,0,0,1-.65-0.65v-10a0.65,0.65,0,0,1,1.3,0v10A0.65,0.65,0,0,1,80.52,17.11Z"></path>
+  <path class="cls-1" d="M22.37,59a0.62,0.62,0,0,1-.2,0l-9.55-3A0.65,0.65,0,1,1,13,54.77l9.55,3A0.65,0.65,0,0,1,22.37,59Z"></path>
+  <path class="cls-1" d="M12.82,97.9a0.65,0.65,0,0,1-.19-1.27l9.55-3a0.65,0.65,0,1,1,.39,1.24l-9.55,3A0.61,0.61,0,0,1,12.82,97.9Z"></path>
+  <path class="cls-1" d="M43.58,29.12a0.65,0.65,0,0,1-.52-0.26l-6-8a0.65,0.65,0,0,1,1-.78l6,8A0.65,0.65,0,0,1,43.58,29.12Z"></path>
+  <path class="cls-1" d="M37.56,132.82a0.65,0.65,0,0,1-.52-1l6-8a0.65,0.65,0,0,1,.91-0.13,0.65,0.65,0,0,1,.13.91l-6,8A0.65,0.65,0,0,1,37.56,132.82Z"></path>
+</svg><h4 class="title">¡Felicidades!</h4></span>
