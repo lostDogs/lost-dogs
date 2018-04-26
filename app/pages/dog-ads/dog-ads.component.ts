@@ -47,11 +47,22 @@ export class DogAdsComponent {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.dogId = params.id;
       this.foundMode = params.found === 'true';
-      this.dogService.getDog(this.dogId).add(()=> {
-        this.mappedData = this.dogService.mapData(this.dogService.dogData);
-        this.location = {lat: this.dogService.dogData.location.coordinates[1], lng: this.dogService.dogData.location.coordinates[0]};
-        $('.tooltipped').tooltip({delay: 100});
-      });
+      if (!this.userService.token && this.userService.noAuthSubs) {
+        this.userService.noAuthSubs.unsubscribe();
+        this.userService.login(undefined, undefined, true).add(() => {
+          this.initalCall();
+        });
+      } else  {
+        this.initalCall();
+      }
+    });
+  }
+
+  public initalCall(): void {
+    this.dogService.getDog(this.dogId).add(()=> {
+      this.mappedData = this.dogService.mapData(this.dogService.dogData);
+      this.location = {lat: this.dogService.dogData.location.coordinates[1], lng: this.dogService.dogData.location.coordinates[0]};
+      $('.tooltipped').tooltip({delay: 100});
     });
   }
 
@@ -59,16 +70,13 @@ export class DogAdsComponent {
     this.cookieService.deleteCookie('dog-page-url');
     this.userService.missingReqFilds();
     this.missFieldObj = this.userService.missingFieldsToObj(this.userService.missingFields);
-    console.log('missingFields', this.userService.missingFields);
   }
 
   public ngAfterViewInit(): void {
     $('.tooltipped').tooltip({delay: 100});
     if (!this.userService.missingFields.length && this.foundMode) {
-      console.log('scrolling to found mode');
       this.scrollTo(this.FOUND_QUERY);
     } else if (this.userService.missingFields.length && this.userService.isAuth) {
-      console.log('scrolling to completed account');
      this.scrollTo(this.ACCOUNT_QUERY);
     }
   }
@@ -99,7 +107,6 @@ export class DogAdsComponent {
   // for evidence block
   public continueEvidence(): void {
     this.evidenceNext = true;
-    console.log('clicked', this.evidenceNext)
     if (this.mailingService.evidence.text) {
       localStorage.setItem('evidence-text-0', this.mailingService.evidence.text);
     }
@@ -135,7 +142,7 @@ export class DogAdsComponent {
  //when FB login
   public userCreatePromise(postUser: any): void {
     if (postUser) {
-      console.log('getting postUser', postUser);
+      console.log('getting postUser >', postUser);
       postUser().add(() => {
         if (this.userService.user.phoneNumber && this.userService.user.phoneNumber.number) {
           console.log('user created! ');
@@ -158,10 +165,8 @@ export class DogAdsComponent {
   }
 
    public scrollTo(Query: string): void {
-     console.log('scrolling to>>>');
      setTimeout(()=> {
        const JqObj = $(Query);
-       console.log('query',JqObj)
        if (JqObj && JqObj.offset()) {
          const offset =  JqObj.offset().top - 120;
          window.scrollBy({ 
