@@ -35,6 +35,9 @@ div.page.dogs {
     }
   }
   #evidence-pic {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;    
     i.large.material-icons {
       @media screen and (max-device-width: $screen-mobile-max) {
         font-size: 10rem;

@@ -53,7 +53,7 @@
   <div class="row bottom-top-pad margin-spec">
     <div class="col l10  s12 m12 no-space border-white border-rounded bottom-no-round">
       <h4 class="title round-white text-centered bottom-no-round color-grey no-margin extra-small-padding">Se perdio por </h4> 
-      <h5 class="extra-small-padding ellipsis-trim"> {{ dogService.dogData.address}}</h5>
+      <h5 class="extra-small-padding ellipsis-trim text-centered"> {{ dogService.dogData.address}}</h5>
       <map  [location]="location" [dogPage]="true"></map>
     </div>
   </div>
@@ -86,7 +86,7 @@
         <div class="file-field col l4 m5 s5 push-l2 push-m1 push-s1 draw account-completed action margin-mobile-left">
           <div class="img-back">
             <div alt="imagen de evidencia" class="centered extra-height" id="evidence-pic" [ngStyle]="{'background-image': 'url(' + mailingService.evidence.picture + ')' }">
-              <div  class="description" [ngStyle]="{'opacity': mailingService.evidence.picture ? 0 : 1}" [ngClass]="{'wrong-icon': errorImg}">
+              <div  class="description" [ngStyle]="{'opacity': mailingService.evidence.picture ? 0 : 1}">
                 <i class="large material-icons">camera_alt</i>
               </div>
             </div>
@@ -98,7 +98,7 @@
         <button class="waves-effect btn action" [disabled]="!mailingService.evidence.text && !mailingService.evidence.picture" (click)="continueEvidence();evidenceNext=true;">aceptar<i class="medium material-icons right">thumb_up</i></button>
       </div>
     </div>
-    <div class="row text-centered bottom-top" [hidden]="!evidenceNext">
+    <div class="row text-centered bottom-top" [hidden]="!evidenceNext || ShowSendEmail">
       <h4 class="bottom-top">¿Qué sigue?</h4>
       <div class="row">
         <div class="col l7 push-l2 m12 s12 text-left">
@@ -109,19 +109,19 @@
         </div>
       </div>
       <div class="centered submit bottom-top create-account">
-        <button class="waves-effect btn action">
-          <span>aceptar<i class="medium material-icons right">thumb_up</i></span>
-          <span>Cargando...</span>
+        <button class="waves-effect btn action" (click)="sendEmail()" [disabled]="sendingEmail">
+          <span [hidden]="sendingEmail">aceptar<i class="medium material-icons right">thumb_up</i></span>
+          <span  [hidden]="!sendingEmail || dogService.dogData.reporter_id === userService.user.id">Cargando...</span>
         </button>
       </div>
     </div>
     <div class="row text-centered bottom-top" [hidden]="!ShowSendEmail">
-      <h5>Te hemos enviado un correo con los datos del reporte.</h5>
+      <h5>Se han enviado correctamente los datos del reporte.</h5>
       <h5>Pronto el dueño se pondra en contacto contigo.</h5>
         <div [hidden]="mailingService.uploadImgSucess">
           <img class="gif" src="https://www.lostdog.mx/assets/img/loading-grey.gif" alt="Cargando..">
         </div>
-        <i class="material-icons medium">done_all</i>
+        <i  [hidden]="!mailingService.uploadImgSucess" class="material-icons medium color-money">done_all</i>
         <div [hidden]="!mailingService.uploadImgSucess">
             <h6>La evindecia se agregado satisfactoriamente.</h6>
         </div>
@@ -182,5 +182,5 @@
       <path class="cls-1" d="M37.56,132.82a0.65,0.65,0,0,1-.52-1l6-8a0.65,0.65,0,0,1,.91-0.13,0.65,0.65,0,0,1,.13.91l-6,8A0.65,0.65,0,0,1,37.56,132.82Z"></path>
     </svg>
   </span>
-<h4 class="title">¡Felicidades!</h4>
+<h4 class="title" style="color: black">¡Felicidades!</h4>
 </span>

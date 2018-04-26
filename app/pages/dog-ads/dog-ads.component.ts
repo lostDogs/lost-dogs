@@ -27,12 +27,13 @@ export class DogAdsComponent {
   private FOUND_QUERY: string ='.review-location';
   private ACCOUNT_QUERY: string = '.account-location';
   // asking for evidence
-  public errorImg: boolean;
   public evidenceNext: boolean;
   //when fb login
   public missFieldObj: Object;
   public createUser: boolean;
-
+  //email service
+  public sendingEmail: boolean;
+  public ShowSendEmail: boolean;
 
   constructor (
     public dogService: DogCardService,
@@ -128,14 +129,15 @@ export class DogAdsComponent {
         const reader = new FileReader();
         reader.onload = (event: any) => {
           this.mailingService.evidence.picture = event.target.result;
-          this.errorImg = undefined;
         };
         reader.readAsDataURL(file);
       }catch (error) {
-        // do nothing
+      //do nothing        
       }
     } else {
-      this.errorImg = true;
+      this.globalService.clearErroMessages();
+      this.globalService.setErrorMEssage('No es una imagen');
+      this.globalService.openErrorModal();
       console.error('not an image');
     }    
   }
@@ -176,5 +178,19 @@ export class DogAdsComponent {
          });
        }
      }, 200);
+  }
+
+  public sendEmail(): void {
+    this.sendingEmail = true;
+    if (this.dogService.dogData.reporter_id === this.userService.user.id) {
+      this.globalService.clearErroMessages();
+      this.globalService.setErrorMEssage('No puedes reclamar una mascota que tu reportaste');
+      this.globalService.openErrorModal();
+      return;
+    }
+    this.mailingService.sendEmailsToUsers(true, this.userService.token, this.dogId).add(() => {
+      this.sendingEmail = false;
+      this.ShowSendEmail = true;
+    }) 
   }
 }
