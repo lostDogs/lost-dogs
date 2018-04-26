@@ -141,7 +141,7 @@ facebook-ads {
       @media screen and (max-device-width: $screen-mobile-max) {
         .input-field.main-check {
           margin-top: 50px;
-          label[for=fb-ads-checkbox] {
+          label.small-scale {
             transform: scale(1.5);
           }
         }

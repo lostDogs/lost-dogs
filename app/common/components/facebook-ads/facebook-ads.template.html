@@ -21,9 +21,9 @@
           </h5>
         </div>    
         <div class="col l2 s1 m1">
-          <div class="input-field alt-black main-check to-right no-space">
+          <div class="input-field alt-black main-check to-right" [ngClass]="{'no-space': mobile}">
             <input type="checkbox" name="facebook ads" id="fb-ads-checkbox" [(ngModel)]="checked">
-              <label for="fb-ads-checkbox"> </label>
+              <label for="fb-ads-checkbox"  [ngClass]="{'small-scale': mobile && !checked}"> </label>
           </div>          
         </div>
       </div>
