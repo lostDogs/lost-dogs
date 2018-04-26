@@ -5,24 +5,35 @@
   <article class="main-content row">
     <div class="row centered"><h4 class="round-white">{{mappedData.breed}}</h4></div>
     <div class="row centered color-money"><h4>$ {{dogService.dogData.reward}} MXN</h4></div>
-    <figure class="col l4 push-l1 s10 m10 no-space" >
+    <figure class="col l4 push-l1 s12 m12 no-space" >
       <div class="row">
-        <div class="main-image col l12 m12 s12" [ngStyle]="{'background-image': 'url(' + (dogService.dogData.images && dogService.dogData.images.length && dogService.dogData.images[0].image_url) + ')'}">
-        <div class="dog-properties col l3 m3 s3" [hidden]="mobile">
-          <div class="dog-gender property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.gender.imgUrl + ')'}"  data-position="right" [attr.data-tooltip]="mappedData.gender.name" [ngClass]="{'opened-side': mobile}"></div>
-          <div class="dog-color property bg-img tooltipped" data-position="right" [attr.data-tooltip]="+mappedData.colors" [ngClass]="{'opened-side': mobile}">
+        <div class="main-image" [ngStyle]="{'background-image': 'url(' + (dogService.dogData.images && dogService.dogData.images.length && dogService.dogData.images[0].image_url) + ')'}">
+        <div class="dog-properties desktop-dogpage col l3 m3 s3">
+          <div class="dog-gender property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.gender.imgUrl + ')'}"  data-position="right" [attr.data-tooltip]="mappedData.gender.name" ></div>
+          <div class="dog-color property bg-img tooltipped" data-position="right" [attr.data-tooltip]="+mappedData.colors">
             <dog-figure [display]="dogService.dogData.pattern_id"></dog-figure>
           </div>
-          <div class="dog-date text-centered property tooltipped " data-position="right" [attr.data-tooltip]="mappedData.date.name" [ngClass]="{'opened-side': mobile}">
+          <div class="dog-date text-centered property tooltipped " data-position="right" [attr.data-tooltip]="mappedData.date.name" >
             <h3 class="truncate no-space bold">{{mappedData.date.short.split(' ')[0]}} </h3>
             <h4 class="truncate no-space">{{mappedData.date.short.split(' ')[1]}}</h4>
           </div>
-          <div class="dog-size property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.size.imgUrl + ')'}" data-position="right" [attr.data-tooltip]="mappedData.size.name" [ngClass]="{'opened-side': mobile}"></div>
-        </div>
+          <div class="dog-size property bg-img tooltipped" [ngStyle]="{'background-image': 'url(' + mappedData.size.imgUrl + ')'}" data-position="right" [attr.data-tooltip]="mappedData.size.name"></div>
+        </div>    
       </div>
       </div>
+        <div class="dog-properties mobile-dogpage row">
+          <div class="dog-gender property bg-img tooltipped col" [ngStyle]="{'background-image': 'url(' + mappedData.gender.imgUrl + ')'}"  data-position="bottom" [attr.data-tooltip]="mappedData.gender.name" ></div>
+          <div class="dog-color property bg-img tooltipped col" data-position="bottom" [attr.data-tooltip]="+mappedData.colors">
+            <dog-figure [display]="dogService.dogData.pattern_id"></dog-figure>
+          </div>
+          <div class="dog-date text-centered property tooltipped col" data-position="bottom" [attr.data-tooltip]="mappedData.date.name" >
+            <h3 class="truncate no-space bold ">{{mappedData.date.short.split(' ')[0]}} </h3>
+            <h4 class="truncate no-space">{{mappedData.date.short.split(' ')[1]}}</h4>
+          </div>
+          <div class="dog-size property bg-img tooltipped col" [ngStyle]="{'background-image': 'url(' + mappedData.size.imgUrl + ')'}" data-position="bottom" [attr.data-tooltip]="mappedData.size.name"></div>
+        </div>         
     </figure> 
-    <div class="col push-l2 l4 extras">
+    <div class="col push-l2 l4 extras m12 s12">
       <div class="accessories">
         <div class="title round-white text-centered">
           <h5>Accesorios</h5>
@@ -48,7 +59,7 @@
   <div class="row text-centered" *ngIf="userService.missingFields.length && userService.isAuth" >
     <h4>Completa tu información</h4>
     <account [title]="'hidden'" [checkingMissingFields]="true"  [missingFields]="userService.missingFieldsToObj(userService.missingFields)" [creatingUser]="createUser" (userCreated)="userCreatePromise($event)" [fbUser]="userService && userService.user" (disableBtn)="disableBtn=!$event"></account>
-    <div class="row centered bottom-top">
+    <div class="row centered bottom-top create-account">
       <button class="waves-effect btn action"  (click)="createUser=true;" [disabled]="createUser || !disableBtn">
         <span [hidden]="">Siguiente<i class="medium material-icons right">chevron_right</i></span>
       </button>
@@ -59,18 +70,18 @@
     <div class="col l12 m12 s12 steps-block text-centered" [hidden]="evidenceNext">
       <h4>Agrega una evidencia de que tienes la mascota.</h4>
       <div class="row no-space titles">
-        <div class="col l4 m5 s5 push-l1 push-m1 push-s1 title round-white text-centered bottom-no-round color-grey">
-          <h5 >Puede ser escrita</h5>
+        <div class="col l4 m5 s5 push-l1 push-m1 push-s1 title round-white text-centered bottom-no-round color-grey margin-mobile-left">
+          <h5 >Escrita</h5>
         </div>
-        <div class="col l4 m5 s5 push-l2 push-m1 push-s1 title round-white text-centered bottom-no-round color-grey">
+        <div class="col l4 m5 s5 push-l2 push-m1 push-s1 title round-white text-centered bottom-no-round color-grey margin-mobile-left">
           <h5 >o un imagen</h5>
         </div>        
       </div>   
       <div class="row">
-        <div class="alt-black col l4 m5 s5 push-l1 push-m1 push-s1 draw account-completed action">
+        <div class="alt-black col l4 m5 s5 push-l1 push-m1 push-s1 draw account-completed action margin-mobile-left">
           <textarea type="text" name="refund reason" class="materialize-textarea extra-height no-space" id="evidence-text" (keyup)="resize()"></textarea>
         </div>
-        <div class="file-field col l4 m5 s5 push-l2 push-m1 push-s1 draw account-completed action">
+        <div class="file-field col l4 m5 s5 push-l2 push-m1 push-s1 draw account-completed action margin-mobile-left">
           <div class="img-back">
             <div alt="imagen de evidencia" class="centered extra-height" id="evidence-pic" [ngStyle]="{'background-image': 'url(' + mailingService.evidence.picture + ')' }">
               <div  class="description" [ngStyle]="{'opacity': mailingService.evidence.picture ? 0 : 1}" [ngClass]="{'wrong-icon': errorImg}">
@@ -81,12 +92,12 @@
           </div>          
         </div>
       </div>
-      <div class="centered submit bottom-top">
+      <div class="centered submit bottom-top create-account">
         <button class="waves-effect btn action" [disabled]="!mailingService.evidence.text && !mailingService.evidence.picture" (click)="continueEvidence();evidenceNext=true;">aceptar<i class="medium material-icons right">thumb_up</i></button>
       </div>
     </div>
     <div class="row text-centered bottom-top" [hidden]="!evidenceNext">
-      <h4>¿Qué sigue?</h4>
+      <h4 class="bottom-top">¿Qué sigue?</h4>
       <div class="row">
         <div class="col l7 push-l2 m12 s12 text-left">
           <h5><b>1.</b> Le mandaremos tu datos al dueño, si es su perro, El se podra en contanto contigo.</h5>
@@ -95,7 +106,7 @@
           <h5><b>4.</b> Subelo en la liga que te llegará por correo, para recibir tu recompensa.</h5>
         </div>
       </div>
-      <div class="centered submit bottom-top">
+      <div class="centered submit bottom-top create-account">
         <button class="waves-effect btn action">
           <span>aceptar<i class="medium material-icons right">thumb_up</i></span>
           <span>Cargando...</span>
@@ -116,9 +127,9 @@
   </div>
 </div>
 
-<div class="ctas-container border-white">
-    <h5 class="title">Acciones</h5>
-    <button class="btn action" (click)="Found()" [disabled]="foundMode">Lo encontre! <i class="material-icons Small right">send</i></button>
+<div class="ctas-container border-white create-account" [ngClass]="{'hover': showActions}" (mouseenter)="showActions=true" (mouseleave)="showActions=false">
+    <h5 class="title desktop-dogpage">Acciones</h5>
+    <button class="btn action" (click)="Found();showActions=false;" [disabled]="foundMode">Lo encontre! <i class="material-icons Small right">send</i></button>
     <button class="btn info" [disabled]="foundMode">Lo he visto! <i class="material-icons Small right">add_location</i></button>
     <button class="btn info" [disabled]="foundMode">Subscribir<i class="material-icons Small right">feedback</i></button>
 </div>
