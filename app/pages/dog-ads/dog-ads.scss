@@ -13,6 +13,22 @@
 }
 
 div.page.dogs {
+  textarea {
+    padding: 15px;
+  }
+  .border-rounded {
+    border-radius: 25px;
+  }
+  h5.extra-small-padding, h4.extra-small-padding, div.extra-small-padding {
+    padding: 10px;
+  }
+  .ellipsis-trim {
+    text-decoration: none; 
+    text-overflow: ellipsis; 
+    display: block; 
+    overflow: hidden; 
+    white-space: nowrap;    
+  }
   @media screen and (max-device-width: $screen-mobile-max) {
     div.material-tooltip span{
       font-size: 3rem;
@@ -47,9 +63,9 @@ div.page.dogs {
       }
     }
   }
-  div.bottom-no-round {
+  div.bottom-no-round, h4.bottom-no-round {
     border-bottom-left-radius: unset;
-    border-bottom-right-radius: unset;    
+    border-bottom-right-radius: unset;
   }
   .comment-block {
     border-bottom-left-radius: 15px;
@@ -106,9 +122,6 @@ div.page.dogs {
     padding: 5px 20px;
     border-radius: 10px;
   }
-  .row .col.push-l4 {
-    left: 30%;
-  }
   .text-centered {
     text-align: center;
   }
@@ -147,6 +160,12 @@ div.page.dogs {
   }
   .no-margin {
     margin: 0;
+  }
+  .margin-spec {
+    margin: 0;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin: 0 25px;
+    }
   }
   .dog-properties {
     position: absolute;
@@ -229,6 +248,10 @@ div.page.dogs {
     border-bottom: none;
     z-index: 10;
     bottom: -400px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: unset;
+    border-bottom-right-radius: unset;
     .btn,.title {
       display: block;
       width: 95%;      
@@ -259,11 +282,21 @@ span.svg {
   z-index: 999999;  
   top: 45%;
   transform: scale(2);
+  .svg2 {
+    @media screen and (max-device-width: $screen-mobile-max) {
+      transform: scale(8);
+    }
+  }
   svg {
     width: 200px;
     height: 200px;
     max-width: 200px;
     margin: auto;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      width: 400px;
+      height: 400px;
+      font-weight: bolder;
+    }    
   }
   .title {
     position: absolute;

@@ -84,7 +84,7 @@ export class DogAdsComponent {
       this.sessionLogin('found');
       this.foundMode = true;
       this.scrollTo(this.FOUND_QUERY);
-    }, 700);
+    }, 1000);
   }
   // check for session and if not ask the user to login or create account.
   public sessionLogin(param: string): void {
