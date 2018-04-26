@@ -19,11 +19,14 @@ export class FacebookAdsComponent {
   public mainCollapse: JQuery;
   public adCreative: JQuery;
   public finalReach: string;
+  public mobile: boolean;
 
   @ViewChild('MainCollapse')
   public mainCollapsDom: ElementRef;
 
-  constructor(public fbService: FacebookService) {}
+  constructor(public fbService: FacebookService) {
+    this.mobile = window.screen.width <= 767;    
+  }
 
   public ngOnInit(): void {
     this.rereplaceHolders();

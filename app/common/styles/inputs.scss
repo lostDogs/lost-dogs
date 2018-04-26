@@ -48,7 +48,7 @@ div.select-wrapper  {
       }
       li > span {
         font-size: 3.5rem;
-
+        line-height: 3.5rem;
       }
     }
   }
@@ -273,8 +273,20 @@ textarea.materialize-textarea {
     &.max {
       right: -15px;
     }
+    @media screen and (max-device-width: $screen-mobile-max) {
+      width: 80px;
+      height: 80px;
+      font-size: 2rem;
+      top: -95px;
+      &.min {
+        left: -32px;
+      }
+      &.max {
+        right: -32px;
+      }      
+    }
   }
-  input[type="range"] { 
+  input[type="range"] {
     margin: auto;
     -webkit-appearance: none;
     position: relative;
@@ -352,6 +364,31 @@ textarea.materialize-textarea {
 
     &::-ms-tooltip { 
         display: none;
+    }
+    @media screen and (max-device-width: $screen-mobile-max) {
+      height: 40px;
+      margin-top: 55px;
+      &+ .thumb {
+          -webkit-transform: rotate(-45deg) scale(4);
+          transform: rotate(-45deg) scale(4);
+          top: -65px !important;
+      }
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 40px;
+        width: 40px;
+        margin-top: -16px;
+      }
+      &::-moz-range-track {
+          height: 40px;
+      }
+      &::-ms-thumb {
+        height: 40px;
+        width: 40px;
+      }
+      &::-ms-track { 
+        height: 40px;        
+      }      
     }
   }
 }

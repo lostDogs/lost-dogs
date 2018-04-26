@@ -27,8 +27,8 @@ facebook-ads {
   .component {
   }
   .no-space {
-    padding: 0;
-    margin: 0;
+    padding: 0 !important;
+    margin: 0 !important;
   }
   .margin-left-small {
     maring-left: 5px !important;
@@ -46,6 +46,9 @@ facebook-ads {
   }
   .range-width {
     width: 85%;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin-top: 100px;
+    }
   }
   .raidus-50 {
     border-radius: 50%;
@@ -53,6 +56,17 @@ facebook-ads {
 }
 // out of the component
 .collapsible.popout {
+  .all-inline {
+    margin-top: 20px;
+    * {
+      display: inline-block;
+      padding: 0;
+      margin: 0;
+    }
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin-top: 40px;
+    }
+  }
   .circle {
     &.small {
       width: 70px;
@@ -71,7 +85,14 @@ facebook-ads {
           top: -5px;
           right: -10px;
         }
-      }    
+      }
+      @media screen and (max-device-width: $screen-mobile-max) {
+        width: 260px;
+        height: 260px;
+        &.big.circle-midle {
+          margin-left: calc(50% - 130px);
+        }        
+      }
     }    
   }
   .subs {
@@ -115,7 +136,18 @@ facebook-ads {
           transform: scale(2.5);
           pointer-events: none;
         }
-      }          
+
+      }
+      @media screen and (max-device-width: $screen-mobile-max) {
+        .input-field.main-check {
+          margin-top: 50px;
+          label[for=fb-ads-checkbox] {
+            transform: scale(1.5);
+          }
+        }
+        margin-top: 50px;
+        padding: 30px 20px;        
+      }
     }
     .collapsible-body {
       .img-bg-big {
@@ -123,6 +155,9 @@ facebook-ads {
         height: 248.91px;
         background-repeat: no-repeat;
         background-size: cover;
+        @media screen and (max-device-width: $screen-mobile-max) {
+          margin-top: 50px;
+        }
       }
     }
     .unit {

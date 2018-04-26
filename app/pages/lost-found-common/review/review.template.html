@@ -50,25 +50,25 @@
   <ul class="collapsible popout"  #Description>
     <li>
       <div class="row collapsible-header">
-        <div class="col l2 s2 m2">
+        <div class="col l2 s3 m3">
              <div class="circle" style="top: 6px;" [ngStyle]="{'background-image': 'url(' + LostService.dogPicture + ')' }" ></div>
         </div>
         <div class="col l8 s8 m8">
           <h5 class="row main-title">
-            <span class="title-main col l6 s6 m6">{{paymentDesc}}</span>
-            <span class="unit money col l3 s3 m3"> $ {{baseCost}}.00 MXN</span>
-            <span class="col l3 s3 m3 push-l1"><button class="waves-effect btn info" (click)="LostService.openPayment=false">Editar</button></span>
+            <span class="title-main col l6" [ngClass]="{'row': mobile}">{{paymentDesc}}</span>
+            <span class="unit money col l3" [ngClass]="{'row full-width': mobile}"> $ {{baseCost}}.00 MXN</span>
+            <span class="col l3 push-l1 create-account" [ngClass]="{'row full-width': mobile}"><button class="waves-effect btn info" (click)="LostService.openPayment=false">Editar</button></span>
           </h5>
         </div>    
-        <div class="col l2 s2 m2">
+        <div class="col l2 s1 m1">
           <div class="input-field alt-black main-check to-right">
-            <input type="checkbox" name="facebook ads" id="fb-report"  checked="checked" disabled="disabled">
-              <label for="fb-ads-checkbox"> </label>
+            <input type="checkbox" name="facebook ads" id="fb-report"  checked="checked">
+              <label for="fb-report"> </label>
           </div>          
         </div>
       </div>
       <div class="row collapsible-body">
-        <div class=" col l8 s8 m8 push-l2 push-2 push-m2">
+        <div class=" col l8 push-l2" [ngClass]="{'row full-width': mobile}">
           <div class="row text-centered">
             <p class="heavy" style="color: white;">Tu pago incluye alta visibilidad (+3000 personas) en el sitio web de Lost Dog por 6 meses</p>
           </div>
@@ -78,10 +78,10 @@
             </div>            
           </div>
           <div class="row text-centered">
-            <div class="heavy" style="color: white;"> un anuncio digital durante <h5>{{fbService.defaultDuration}} día</h5> con un alcance de <h5>{{fbService.initialReach}} personas</h5></div>
+            <div class="heavy all-inline" style="color: white;"><p>un anuncio digital durante </p> <h5>{{fbService.defaultDuration}} día</h5> <p> con un alcance de </p> <h5> {{fbService.initialReach}} personas</h5></div>
           </div>
         </div>
-        <div class="col l2 s2 m2 push-l2 push-2 push-m2">
+        <div class="col l2 push-l2" [ngClass]="{'row full-width centered': mobile}">
           <div class="circle big centered">
             <div class="content text-centered">
               <p style="font-weight: bolder;">Alcance: </p>

@@ -19,6 +19,7 @@ export class ReviewComponent {
   public openPayment: boolean;
   @ViewChild('Description')
   public descriptionDom: ElementRef;
+  public mobile: boolean;
 
   public paymentDesc: string;
   public buildedDog: any;
@@ -33,6 +34,7 @@ export class ReviewComponent {
     public globalService: GlobalFunctionService,
     public fbService: FacebookService
   ) {
+    this.mobile = window.screen.width <= 767;
     this.window = window;
     this.LostService.question2 = undefined;
     this.LostService.question3 = undefined;
