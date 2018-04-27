@@ -202,7 +202,7 @@ export class OpenSpayService {
     let subErorrMEssage1: string = 'Porfavor intenta con otra tarjeta.';
     let errorMessage2: string  = 'La tarjeta no tiene fondos suficientes.';
     let errorMessage3: string = 'La tarjeta ha sido identificada como robada.';
-    let defualt: '¡Ops! tuvimos un problema con tu tarjeta.';    
+    let defualt: string = '¡Ops! tuvimos un problema con tu tarjeta.';
 
     if (errorCode && errorCode.code) {
       const code: string = errorCode.code;
