@@ -42,7 +42,7 @@ export class FacebookAdsComponent {
       if (this.checked && this.mainCollapse.hasClass('addedSet')) {
         this.mainCollapse.removeClass('addedSet');
         this.checked = false;
-        this.fbService.mapAd(undefined, undefined, Object.assign(this.previewValues, {img: this.replaceVals.img}));
+        this.fbService.mapAd(undefined, undefined, Object.assign(this.previewValues, {img: this.replaceVals.img}), this.replaceVals.latLong);
         this.mainCollapse.click();
       }
     })
@@ -55,7 +55,7 @@ export class FacebookAdsComponent {
     this.fbService.getAdReach(this.budget, this.replaceVals.latLong).add(() => {
       this.fbService.usersReach = this.fbService.calculateReach(this.budget);
       this.setFinalReach();
-      this.fbService.mapAd(undefined, undefined, Object.assign(this.previewValues, {img: this.replaceVals.img}));
+      this.fbService.mapAd(undefined, undefined, Object.assign(this.previewValues, {img: this.replaceVals.img}), this.replaceVals.latLong);
     });
   }
 
@@ -84,7 +84,7 @@ export class FacebookAdsComponent {
       left: 0, 
       behavior: 'smooth' 
     });
-    this.fbService.mapAd(this.duration, this.budget, Object.assign(this.previewValues, {img: this.replaceVals.img}));
+    this.fbService.mapAd(this.duration, this.budget, Object.assign(this.previewValues, {img: this.replaceVals.img}), this.replaceVals.latLong);
   }
 
    public filePicChange(ev: any): void {

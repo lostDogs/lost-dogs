@@ -165,26 +165,27 @@ export class FacebookService {
      return  (estimReach.toFixed(0)).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
   }
 
-  public mapAd(days: number, dailyBudget: number, adCreativeVals: any): void {
+  public mapAd(days: number, dailyBudget: number, adCreativeVals: any, latLng?: {lat: number, lng: number}): void {
     if (!days || !dailyBudget) {
       days = this.defaultDuration;
       dailyBudget = this.defaultBudget;
     }
     this.mappedAd = {
-      set: {
-        adSetId: this.adSetId,
-        endTime: days,
-        dailyBudget: dailyBudget * 100
+      'set': {
+        'adSetId': this.adSetId,
+        'endTime': days,
+        'dailyBudget': dailyBudget * 100,
+        'radius': 8,
+        'latLng': JSON.stringify(latLng)
       },
-      img: adCreativeVals.img,
-      creative: {
-        body: adCreativeVals.body,
-        title: adCreativeVals.title,
-        description: adCreativeVals.description
+      'img': adCreativeVals.img,
+      'creative': {
+        'body': adCreativeVals.body,
+        'title': adCreativeVals.title,
+        'description': adCreativeVals.description
       }
     };
    this.total = dailyBudget * days;
-   console.log('this.mapped', this.mappedAd);
   }
   
   public resetService(): void {
