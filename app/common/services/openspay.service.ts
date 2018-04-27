@@ -196,5 +196,31 @@ export class OpenSpayService {
   public validateExpiry(month: string, year: string): boolean {
     return this.openPay.card.validateExpiry(month, year);
   }
+
+  public errorHandler(errorCode: any): {main: string, sub: string} {
+    let errorMessage1: string = 'por el momento no pudimos aceptar esta tarjeta.';
+    let subErorrMEssage1: string = 'Porfavor intenta con otra tarjeta.';
+    let errorMessage2: string  = 'La tarjeta no tiene fondos suficientes.';
+    let errorMessage3: string = 'La tarjeta ha sido identificada como robada.';
+    let defualt: '¡Ops! tuvimos un problema con tu tarjeta.';    
+
+    if (errorCode && errorCode.code) {
+      const code: string = errorCode.code;
+      if (/declined/g.test(code)) {
+        return {main: errorMessage1, sub: subErorrMEssage1};
+      }
+      if (/expired/g.test(code)) {
+        return {main: errorMessage1, sub: subErorrMEssage1}; 
+      }
+      if (/sufficient funds/g.test(code)) {
+        return {main: errorMessage2, sub: subErorrMEssage1}; 
+      }
+      if (/stolen/g.test(code)) {
+        return {main: errorMessage3, sub: subErorrMEssage1}; 
+      }
+      return {main: defualt, sub: subErorrMEssage1};
+    }
+    return undefined;
+  }
   
 }
