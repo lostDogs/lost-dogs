@@ -151,15 +151,21 @@ public setFoundDogs(): void {
 }
 
   public mapData(dogData: IdogData): ImappedData {
-    let mappedData: ImappedData = {
-      gender: this.retrieveValue(dogData.male, this.genders),
-      colors: this.getKeysFromValues(dogData.color, this.colors).join(', '),
-      date: this.getMappedDate(dogData.found_date),
-      size: this.retrieveValue(dogData.size_id, this.sizes),
-      breed: this.getArrayOfStrings(dogData.kind, this.breeds, 'name').join(', ').replace(/:,/g, ': '),
-      accessories: this.retrieveValues(dogData.accessories_id, this.accessories)
+    if (dogData && typeof dogData.male === 'boolean') {
+      let mappedData: ImappedData = {
+        gender: this.retrieveValue(dogData.male, this.genders),
+        colors: this.getKeysFromValues(dogData.color, this.colors).join(', '),
+        date: this.getMappedDate(dogData.found_date),
+        size: this.retrieveValue(dogData.size_id, this.sizes),
+        breed: this.getArrayOfStrings(dogData.kind, this.breeds, 'name').join(', ').replace(/:,/g, ': '),
+        accessories: this.retrieveValues(dogData.accessories_id, this.accessories)
+      }
+      return mappedData;
     }
-    return mappedData;
+    this.globalService.clearErroMessages();
+    this.globalService.setErrorMEssage('Error al cargar datos');
+    this.globalService.openErrorModal();
+    return undefined;
   }
 
   public retrieveValue(id: any, content: any): any {

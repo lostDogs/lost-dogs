@@ -1,0 +1,153 @@
+<div class="component">
+  <ul class="collapsible popout">
+    <li>
+      <div class="row collapsible-header main" #MainCollapse>
+        <div class="col l2 s3 m3">
+          <svg class="to-left circle" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+             width="70px" height="70px" viewBox="0 0 266.893 266.895" enable-background="new 0 0 266.893 266.895"
+             xml:space="preserve">
+          <path id="Blue_1_" fill="#3C5A99" d="M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812
+            c0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225
+            H248.082z"/>
+          <path id="f" fill="#FFFFFF" d="M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935
+            l20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585
+            v99.803H182.409z"/>
+          </svg>          
+        </div>
+        <div class="col l8 s8 m8">
+          <h5 class="row main-title">
+            <span class="title-main col l6" [ngClass]="{'row full-width': mobile}">Configura tu anuncio: </span>
+            <span class="unit money col l6" [ngClass]="{'row full-width': mobile}"> $ {{ (mainCollapse && mainCollapse.hasClass('active')) || checked ? budget * duration : '00' }}.00 MXN</span>
+          </h5>
+        </div>    
+        <div class="col l2 s1 m1">
+          <div class="input-field alt-black main-check to-right" [ngClass]="{'no-space': mobile}">
+            <input type="checkbox" name="facebook ads" id="fb-ads-checkbox" [(ngModel)]="checked">
+              <label for="fb-ads-checkbox"  [ngClass]="{'small-scale': mobile && !checked}"> </label>
+          </div>          
+        </div>
+      </div>
+      <div class="row collapsible-body">
+        <div class=" col l8 push-l2" [ngClass]="{'row full-width': mobile}">
+          <div class="row">
+            <h5>
+              <span class="title">Presupuesto por día: </span>
+              <span class="unit days">$ {{budget}}.00 MXN</span>
+            </h5>
+          </div>
+          <div class="row range-width">
+            <div class="range-field">
+              <div class="limit min centered">
+                  <span>$55</span>
+              </div>
+               <input type="range" id="range-budget" min="55" max="200" [(ngModel)]="budget" (change)="getBudget($event)"/>
+              <div class="limit max centered">
+                  <span>$200</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col l2 push-l2" [ngClass]="{'row full-width': mobile}">
+          <div class="circle big centered circle-midle">
+            <div class="content text-cented">
+              <p style="font-weight: bolder;">Alcance: </p>
+              <h4>{{fbService.usersReach}} <span class="ast">*</span></h4>
+              <p>Personas / día</p>
+            </div>
+          </div>
+          <p class="subs">* Estimación generada por <b>Facebook</b></p>
+        </div>
+      </div>
+      <div class="row collapsible-body">
+        <div class=" col l8 push-l2" [ngClass]="{'row full-width': mobile}">
+          <div class="row">
+            <h5>
+              <span class="title">Duracion: </span>
+              <span class="unit days"> {{duration}} días</span>
+            </h5>
+          </div>
+          <div class="row range-width">
+            <div class="range-field">
+              <div class="limit min centered">
+                  <span>2</span>
+              </div>
+               <input type="range" id="range-duration" min="2" max="15"  [(ngModel)]="duration" (change)="setFinalReach()"/>
+              <div class="limit max centered">
+                  <span>15</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col l2 push-l2" [ngClass]="{'row full-width': mobile}">
+          <div class="circle big centered circle-midle">
+            <div class="content text-cented">
+              <p style="font-weight: bolder;">Alcance Final: </p>
+              <h4>{{finalReach}} <span class="ast">*</span></h4>
+              <p>Personas / {{duration}} días</p>
+            </div>
+          </div>          
+          <p class="subs">* Estimación generada por <b>Lost Dog</b></p>
+        </div>
+      </div>
+      <div class="row collapsible-body">
+        <ul class="collapsible popout col l8 m12 s12 push-l2">
+          <li>
+            <div class="collapsible-header row" id="ad-creative">
+              <h5 class="col l2 m12 s12">Prevista: </h5>
+              <div class="input-field col l8 s11 s11">
+                <select name="test" id="preview">
+                  <option *ngFor="let view of adOpts.views" [value]="view.value">{{view.label}}</option>
+                </select>
+              </div>              
+            </div>
+            <div class="collapsible-body row">
+              <preview-fb-ads [previewValues]="previewValues" [img]="replaceVals.img"></preview-fb-ads>
+            </div>            
+            <div class="collapsible-body row">
+              <h5 class="col l2 m12 s12">Titulo: </h5>
+              <div class="input-field col l8 m12 s12">
+                <select name="test" id="title">
+                  <option *ngFor="let title of adOpts.titles" [value]="title">{{title}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="collapsible-body row">
+              <h5 class="col l3 m12 s12 ">Descripcion: </h5>
+              <div class="input-field col l7 m12 s12">
+                <select name="test" id="description">
+                  <option *ngFor="let description of adOpts.descriptions" [value]="description">{{description}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="collapsible-body row">
+              <h5 class="col l2 m12 s12">Cuerpo: </h5>
+              <div class="input-field col l8 m12 s12">
+                <select name="test" id="body">
+                  <option *ngFor="let body of adOpts.bodies" [value]="body">{{body}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="collapsible-body row">
+              <div class="col l3 m12 s12">
+                <h5>Imagen: </h5>
+                <div class="file-field input-field create-account centered">
+                  <button class="btn info">
+                    <span>Cambiar</span>
+                    <input type="file" (change)="filePicChange($event)">
+                  </button>
+                  </div>
+              </div>
+              <div class="col l8 m12 s12 centered">
+                <div class="img-bg-big" [ngStyle]="{'background-image': 'url(' + replaceVals.img + ')'}">
+              </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>      
+      <div class="collapsible-body row centered create-account">
+        <button class="btn action col l3 s5 m5" (click)="addSet()">Agregar</button>
+      </div>
+    </li>
+  </ul>
+</div>

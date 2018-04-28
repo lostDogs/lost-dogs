@@ -57,6 +57,14 @@ export class LoginComponent {
     this.userService.forgot(this.userService.tempUserName).add(() => {
       if (this.userService.forgotSucess) {
         this.scrollTo(this.forgotSucessDom);
+        setTimeout(() => {
+          this.forgot = undefined;
+          window.scrollBy({ 
+          top: 0,
+          left: 0,
+          behavior: 'smooth'
+          });          
+        }, 5000);
       }
     });
   }

@@ -26,6 +26,7 @@ import {FormPaymentComponent} from './pages/payment/form-payment/form-payment.co
 import {PatternComponent} from './pages/lost-found-common/pattern/pattern.component';
 import {RefundComponent} from './pages/refund/refund.component';
 import {CompleteUserComponent} from './pages/lost-found-common/complete-user/complete-user.component'
+import {DogAdsComponent} from './pages/dog-ads/dog-ads.component';
 // import {RewardPickerComponent} from './pages/reward-picker/reward-picker.component';
 
 const self = this;
@@ -74,11 +75,12 @@ export const router: Routes = [
     ]
   },
   {path: 'reward', loadChildren: () => new Promise(resolve => {
-      (require as any).ensure([], require => {
+      (require as any).ensure([], (require: any) => {
           resolve(require('./pages/reward-picker/reward-picker.module').rewardPickerModule);
       })
     })
   },
+  {path: 'dog/:param', component: DogAdsComponent},
   {path: 'info/:param', component: InformationComponent},
   {path: 'refund/:param', component: RefundComponent},
   { path: '', redirectTo: 'home' , pathMatch: 'full'},
@@ -121,4 +123,5 @@ export const routerComponents = [
   PatternComponent, 
   RefundComponent,
   CompleteUserComponent,
+  DogAdsComponent,
 ];

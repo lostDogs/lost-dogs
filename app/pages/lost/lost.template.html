@@ -75,7 +75,7 @@
           </h5>
       </div>
     </div>
-  </section>  
+  </section>
   <div class="row intro" [hidden]="!(lostService.displayIntro && !lostService.inReviewPage)">
     <div class="lost col l12 s12 m12" [hidden]="!(lostService.parentPage==='lost')">
       <h3>No te preocupes, ¡lo vamos a encontrar!<i class="medium material-icons">sentiment_very_satisfied</i></h3>
@@ -90,6 +90,6 @@
     <button class="waves-effect btn info" (click)="start()">comenzar!<i class="medium material-icons left">thumb_up</i></button>
   </div>
   <div class="row payment" *ngIf="lostService.openPayment">
-    <form-payment [fromLostPage]="true" [loadingImg]="lostService.loadingSave"></form-payment>
+    <form-payment [fromLostPage]="true" [loadingImg]="lostService.loadingSave" [adsTotal]="lostService.fbService.total"></form-payment>
   </div> 
 </section>

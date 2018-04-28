@@ -1,0 +1,43 @@
+<div class="component" [ngClass]="previewValues.preview">
+  <div class="header">
+    <div class="brand-log">
+      <img src="https://scontent.fgdl4-1.fna.fbcdn.net/v/t1.0-1/p480x480/15032089_321818564858187_4167348883688305652_n.png?_nc_cat=0&oh=6f11eee58e8b808f45627fc765a23c9b&oe=5B67587B"/>
+    </div>
+    <div class="brand-name">
+      <a class="name">Lost Dog</a>
+      <p class="sponsored fb-grey">
+        Publicidad
+        <span role="presentation"> · </span>
+        <i class="earth icon"></i>
+      </p>
+    </div>
+    <div class="brand-like">
+      <i  class="like icon mobile"></i>
+      <i  class="mobile-more icon"></i>
+      <button class="fb-grey">
+        <i class="like icon"></i>
+        me gusta esta página
+      </button>
+    </div>
+  </div>
+  <div class="body row">
+    <p>{{previewValues.body}}</p>
+  </div>
+  <div class="img-ad">
+    <div class="bg-img" [ngStyle]="{'background-image': 'url(' + img + ')'}"></div>
+    <div class="description">
+      <p class="mobile-url">www.lostdog.mx</p>
+      <h5>{{previewValues.title}}</h5>
+      <p class="mobile-right-column">www.lostdog.mx</p>
+      <p>{{previewValues.description}}</p>
+      <div class="row">
+        <p class="url fb-grey">www.lostdog.mx</p>
+        <button class="fb-grey">más información</button>
+      </div>
+    </div>
+  </div>
+  <div class="fotter">
+    <img class="desktop" src="https://www.lostdog.mx/assets/img/fb-ad-footer.png">
+    <img class="mobile" src="https://www.lostdog.mx/assets/img/fb-ad-footer-mobile.png">
+  </div>
+</div>

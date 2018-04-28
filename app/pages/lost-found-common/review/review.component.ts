@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {DogCardService} from '../../../common/services/dog-card.service';
 import {GlobalFunctionService} from '../../../common/services/global-function.service';
 import {SearchService} from '../../../common/services/search.service';
+import {FacebookService} from '../../../common/services/facebook.service';
 
 @Component({
   selector: 'review',
@@ -18,10 +19,22 @@ export class ReviewComponent {
   public openPayment: boolean;
   @ViewChild('Description')
   public descriptionDom: ElementRef;
+  public mobile: boolean;
 
   public paymentDesc: string;
+  public buildedDog: any;
+  public exportAds: {img?: string, reward?: string, nameObreed?: string, breed?:any, address?: string, latLong?: any};
+  public baseCost: number = (+process.env.BASE_COST) + ((+process.env.BASE_ADS_DURATION) *  (+process.env.BASE_ADS_BUDGET));
 
-  constructor(public LostService: LostFoundService, public router: Router, public dogCardService: DogCardService, public searchService: SearchService, public globalService: GlobalFunctionService) {
+  constructor(
+    public LostService: LostFoundService,
+    public router: Router,
+    public dogCardService: DogCardService,
+    public searchService: SearchService,
+    public globalService: GlobalFunctionService,
+    public fbService: FacebookService
+  ) {
+    this.mobile = window.screen.width <= 767;
     this.window = window;
     this.LostService.question2 = undefined;
     this.LostService.question3 = undefined;
@@ -30,6 +43,7 @@ export class ReviewComponent {
     this.LostService.answer = undefined;
     this.LostService.inputField = undefined;
     this.LostService.inReviewPage = true;
+    this.exportAds = {};
   }
 
 
@@ -80,6 +94,7 @@ export class ReviewComponent {
       this.globalService.setSubErrorMessage('de lo contrario sera $0.00 MX');
       this.globalService.openBlueModal();
     }    
+    this.fillExportAds();
   }
 
   public toPaymentForm(): void {
@@ -93,8 +108,8 @@ export class ReviewComponent {
   public setFinalToLocalStorage(): void {
 
     if (Array.isArray(this.LostService.pageAnswers) && this.LostService.pageAnswers[0]) {
-      const dog: any = this.LostService.objDogBuilder();
-      localStorage.setItem('reported-dog-data', JSON.stringify(dog));
+      this.buildedDog = this.LostService.objDogBuilder();
+      localStorage.setItem('reported-dog-data', JSON.stringify(this.buildedDog));
     }
   }
 
@@ -142,4 +157,18 @@ export class ReviewComponent {
     const query: string = '.review-page .circle dog-figure #' + pattern + ' g';
     $(query).attr('style', 'fill:' + color);
   }
+
+  private fillExportAds(): void {
+    const location = this.LostService.pageAnswers[this.LostService.defualtSequence.indexOf('location')] || {};
+    const breed = this.pageAnswersCopy[this.LostService.defualtSequence.indexOf('breed')] || [{}];
+    this.exportAds = {
+      img: this.LostService.dogPicture,
+      reward: this.LostService.reward,
+      nameObreed: this.LostService.dogName ? `a ${this.LostService.dogName}`: `un ${breed[0].labels}`,
+      breed: breed[0].labels,
+      address: location.address,
+      latLong: location.latLng
+    }
+  }
+
 }

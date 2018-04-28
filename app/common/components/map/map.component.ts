@@ -23,6 +23,8 @@ public custom: CustomMarker;
  public locationAdressEmiter: EventEmitter<string> = new EventEmitter<string>();
  @Input()
  public rangeRadius: number;
+ @Input()
+ public dogPage: boolean;
 
   constructor(public el: ElementRef, public userService: UserService) {}
 
@@ -30,12 +32,15 @@ public custom: CustomMarker;
   }
 
   public ngAfterViewInit(): void {
-    this.userService.getUserLocation().then(
-      (sucess) => {this.initMap(sucess)},
-      (error) => {
-        this.initMap(error);
-        this.mapDef.setZoom(13);
-      });
+    console.log('this location', this.location);
+    if (!this.dogPage) {
+      this.userService.getUserLocation().then(
+        (sucess) => {this.initMap(sucess)},
+        (error) => {
+          this.initMap(error);
+          this.mapDef.setZoom(13);
+        });
+    }
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -50,6 +55,8 @@ public custom: CustomMarker;
         const zoom: number = this.getZoomFromRange(range);
         this.mapDef.panTo(this.location);
         this.mapDef.setZoom(zoom);
+    }else if (changes.location && changes.location.currentValue && this.dogPage) {
+      this.initMap(changes.location.currentValue);
     }
   }
 

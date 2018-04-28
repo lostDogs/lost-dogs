@@ -31,6 +31,8 @@ import {DogCardService} from './common/services/dog-card.service';
 import {MailingRewardService} from './common/services/mailing-reward.service';
 import {OpenSpayService} from './common/services/openspay.service';
 import {FacebookService} from './common/services/facebook.service';
+import {FacebookAdsComponent} from './common/components/facebook-ads/facebook-ads.component';
+import {previewFbAdsComponent} from './common/components/preview-fb-ads/preview-fb-ads.component';
 import {ActionsBlockComponent} from './common/components/actions-block/actions-block.component';
 /*
  * BrowserModule boostrap the whole angular app. you just imported it once!
@@ -66,6 +68,8 @@ import {ActionsBlockComponent} from './common/components/actions-block/actions-b
   DogFigureComponent,
   PatternBlockComponent,
   GlobalError,
+  FacebookAdsComponent,
+  previewFbAdsComponent,
   ActionsBlockComponent
   ],
   providers: [

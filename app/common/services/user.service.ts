@@ -26,6 +26,7 @@ export class UserService {
   public validCaptcha: boolean;
   public defaultAvatar: string = 'https://www.lostdog.mx/assets/img/profile-undef.png';
   public reqFields: string[] = ['name', 'lastName', 'lastName2', 'email', 'address.country', 'phoneNumber.number', 'avatar'];
+  public missingFields: string[] = [];
   public createAccount: boolean;
   public postUser: any;
   public userNotInDb: boolean;
@@ -127,14 +128,15 @@ export class UserService {
     this.loading = false;
     this.timesTrying = 0;
     this.setUser(data);
+    this.missingReqFilds();
     this.userNotInDb = this.user.phoneNumber && !this.user.phoneNumber.number && this.user.fbId;
     this.isAvatarSet = true;
     this.errors.invalidUser = false;
-    if (this.previousUrl && (data.name || data.username)) {
+    if ((this.previousUrl && data.name && data.username)) {
       console.log('prevUrl >', this.previousUrl);
       this.router.navigateByUrl(this.previousUrl);
       setTimeout(() => {this.previousUrl = undefined;}, 20);
-    }else if (!this.previousUrl && (data.name || data.username)) {
+    }else if (!this.previousUrl && data.name && data.username && !/dog\/\?id=/g.test(this.router.url)) {
       this.router.navigateByUrl('/profile');
     }
     window.scroll(0,0);
@@ -278,9 +280,9 @@ export class UserService {
         missingFilds.push('avatar');
       }
     } else {
-      return this.reqFields;
+      return this.missingFields = this.reqFields;
     }
-    return missingFilds;
+    return this.missingFields = missingFilds;
   }
 
   public  missingFieldsToObj(array: any[]): any {

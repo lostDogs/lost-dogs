@@ -8,6 +8,7 @@ import {UserService} from '../services/user.service';
 import {SearchService, IdogData} from '../services/search.service';
 import {MatchMakerService} from '../services/match-maker.service';
 import {GlobalFunctionService} from  '../services/global-function.service';
+import {FacebookService} from '../services/facebook.service';
 import {OpenSpayService} from '../services/openspay.service';
 const imgCompress = require('@xkeshi/image-compressor');
 
@@ -69,7 +70,9 @@ export class LostFoundService {
     public searchService: SearchService, 
     public matchService: MatchMakerService,
     public globalService: GlobalFunctionService,
+    public fbService: FacebookService,
     public  openPayService: OpenSpayService,
+    
   ) {
     this.reward = this.defaultReward;
     this.dogPicture = this.defaultDogPic;
@@ -210,6 +213,9 @@ export class LostFoundService {
       if (PaymentFromObj) {
         Object.assign(dogObj, PaymentFromObj);
       }
+      if (this.fbService.mappedAd && this.fbService.mappedAd.set) {
+       Object.assign(dogObj, {ad: this.fbService.mappedAd});
+      }
       this.loadingSave = true;
       return this.api.post(this.api.API_PROD + 'dogs',dogObj, headers).subscribe(data => {
         console.log('sucessss', data);
@@ -218,6 +224,7 @@ export class LostFoundService {
         this.savedData = this.trasnfromDogData(data);
         console.log("saved data >>>", this.savedData);
         localStorage.removeItem('reported-dog-data');
+        this.fbService.resetService();
         this.deleteReviewLocalStorage();
         this.setImgToBucket(data['images'][0].uploadImageUrl);
       },
@@ -254,7 +261,6 @@ export class LostFoundService {
           $('html, body').animate({ scrollTop: 0 }, 350);
           localStorage.removeItem('reported-dog-img-0');
           console.log('sucess', data);
-
         },
         e => {
           this.savedImgs = false;

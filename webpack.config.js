@@ -8,7 +8,7 @@ module.exports = {
         app: ['./app/main.ts']
   },
   output: { 
-    path: 'public',
+    path: '/public',
     chunkFilename: 'module-chunk.js',
     filename: 'app.bundle.js',
     publicPath: '/'
@@ -93,10 +93,13 @@ module.exports = {
     }),
     new webpack.ContextReplacementPlugin(/protobufjs/, /^$/),
         new webpack.DefinePlugin({'process.env': {
-          'ENV': JSON.stringify('tst'),
+          'ENV': JSON.stringify('dev'),
           'MERCHANT_ID': JSON.stringify('mrvo5dylz7xeq7pnyoqx'),
           'PUBLIC_KEY': JSON.stringify('pk_85e195c76956425d973944d88521d47e'),
-          'API_URL': JSON.stringify('https://dev-lostdog-api.herokuapp.com/api/')
+          'API_URL': JSON.stringify('http://localhost:3000/api/'),
+          'BASE_COST': JSON.stringify('65'),
+          'BASE_ADS_DURATION': JSON.stringify('1'),
+          'BASE_ADS_BUDGET': JSON.stringify('20'),
           }
         })
   ],

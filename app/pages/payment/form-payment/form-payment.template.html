@@ -73,7 +73,7 @@
         </div>
         <!-- card on mobile ends -->
         <div class="col push-l3 submit mobile-centered">
-          <button type="submit" class="waves-effect btn action" [disabled]="loading || loadingImg">
+          <button type="submit" class="waves-effect btn action" [disabled]="loading || loadingImg || lostService.fbService.usersReach === 'Cargando'">
             <div [hidden]="loading">aceptar<i class="medium material-icons right">send</i></div>
             <div [hidden]="!loading">cargando ...</div>
           </button>

@@ -1,12 +1,13 @@
 @import '../../../common/styles/variables.scss';
-
-
 review {
   .text-centered {
     text-align: center;
   }
   .text-end {
     text-align: end;
+  }
+  .full-width {
+    width: 100%;
   }
   .review-page.row {
     color: black;
@@ -106,7 +107,7 @@ review {
       color: #039be5;
       cursor: pointer;
     }
-    .collection .avatar .circle {
+    .collection .avatar .circle, .collapsible .collapsible-header .circle {
       width: 80px;
       height: 80px;
       top: 2px;
@@ -146,6 +147,14 @@ review {
     .collection .collection-item p.view-more {
       line-height: 3rem;
     }
+    .collection .collection-item, .collection-header, .collapsible .collapsible-header  {
+      .circle {
+        left: 5px;
+        top: 5px;
+        width: 170px;
+        height: 170px;
+      }
+    }
     .collection .collection-item, .collection-header  {
       min-height: 180px;
       border-radius: 80px;
@@ -165,12 +174,6 @@ review {
       }
       .secondary-content {
         right: 30px;
-      }
-      .circle {
-        left: 5px;
-        top: 5px;
-        width: 170px;
-        height: 170px;
       }
       .circle.material-icons {
         left: 10px;

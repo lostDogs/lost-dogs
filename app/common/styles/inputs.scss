@@ -48,7 +48,7 @@ div.select-wrapper  {
       }
       li > span {
         font-size: 3.5rem;
-
+        line-height: 3.5rem;
       }
     }
   }
@@ -220,6 +220,18 @@ button.btn, div.btn {
     border-radius: 2px;
   }
 }
+[type="checkbox"]:checked + label:before {
+  @media screen and (max-device-width: $screen-mobile-max) {
+      top: -9px;
+      left: -25px;
+      width: 25px;
+      height: 50px;
+      border-top: 5px solid transparent;
+      border-left: 5px solid transparent;
+      border-right: 5px solid #26a69a;
+      border-bottom: 5px solid #26a69a;      
+  }
+}
 
 [hidden], template {
       display: none !important;
@@ -248,5 +260,147 @@ textarea.materialize-textarea {
   @media screen and (max-device-width: $screen-mobile-max) {
     font-size: 2rem;
     height: 150px;
+  }
+}
+
+.range-field {
+  div.limit {
+    position: absolute;
+    z-index: 1;
+    background: green;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: $greenMat;
+    color: white;
+    top: -22px;
+    border-radius: 0 50% 50% 50%;
+    transform: rotate(225deg);
+    span  {
+      transform: rotate(135deg);
+    }
+    &.min {
+      left: -15px;
+    }
+    &.max {
+      right: -15px;
+    }
+    @media screen and (max-device-width: $screen-mobile-max) {
+      width: 80px;
+      height: 80px;
+      font-size: 2rem;
+      top: -95px;
+      &.min {
+        left: -32px;
+      }
+      &.max {
+        right: -32px;
+      }      
+    }
+  }
+  input[type="range"] {
+    margin: auto;
+    -webkit-appearance: none;
+    position: relative;
+    overflow: hidden;
+    height: 20px;
+    cursor: pointer;
+    border-radius: 0 !important; /* iOS */
+    border: none;
+    margin-top: 35px;
+    &+ .thumb {
+        -webkit-transform: rotate(-45deg) scale(2);
+        transform: rotate(-45deg) scale(2);
+        z-index: 2;  
+    }
+    &::-webkit-slider-runnable-track {
+        background: #ddd;
+    }
+
+    /*
+     * 1. Set to 0 width and remove border for a slider without a thumb
+     */
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 20px;
+        width: 20px;
+        margin-top: -8px;
+        border-radius: 0 !important;
+        background: #fff;
+        box-shadow: -100vw 0 0 100vw $greenMat;
+        border: 2px solid #999; /* 1 */
+    }
+
+    &::-moz-range-track {
+        height: 20px;
+        background: #ddd;
+    }
+
+    &::-moz-range-thumb {
+        background: #fff;
+        height: 20px;
+        width: 20px;
+        border: 3px solid #999;
+        border-radius: 0 !important;
+        margin-top: -8px;
+        box-shadow: -100vw 0 0 100vw $greenMat;
+        box-sizing: border-box;
+    }
+
+    &::-ms-fill-lower { 
+        background: $greenMat;
+    }
+
+    &::-ms-thumb {
+        background: #fff;
+        border: 2px solid #999;
+        height: 20px;
+        width: 20px;
+        box-sizing: border-box;
+    }
+
+    &::-ms-ticks-after { 
+        display: none; 
+    }
+
+    &::-ms-ticks-before { 
+        display: none; 
+    }
+
+    &::-ms-track { 
+        background: #ddd;
+        color: transparent;
+        height: 20px;
+        border: none;
+    }
+
+    &::-ms-tooltip { 
+        display: none;
+    }
+    @media screen and (max-device-width: $screen-mobile-max) {
+      height: 40px;
+      margin-top: 55px;
+      &+ .thumb {
+          -webkit-transform: rotate(-45deg) scale(4);
+          transform: rotate(-45deg) scale(4);
+          top: -65px !important;
+      }
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 40px;
+        width: 40px;
+        margin-top: -16px;
+      }
+      &::-moz-range-track {
+          height: 40px;
+      }
+      &::-ms-thumb {
+        height: 40px;
+        width: 40px;
+      }
+      &::-ms-track { 
+        height: 40px;        
+      }      
+    }
   }
 }

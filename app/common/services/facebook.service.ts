@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
 import {UserService} from './user.service';
+import {Subscription} from 'rxjs/Rx';
+import {ApiService} from './api.service';
+import {Router} from '@angular/router';
+import {CookieManagerService} from './cookie-manager.service';
+
 @Injectable()
 
 export class FacebookService {
@@ -17,12 +22,19 @@ export class FacebookService {
     address?: {country?: string};
     avatar_url?: string;
     token?: string;
-  }
+  };
+  public usersReach: any;
+  public estimations: {maxDau?: number, curve?: any[]} = {};
+  public adSetId: string;
+  public mappedAd: any;
+  public total: number = 0;
+  public defaultBudget: number = +process.env.BASE_ADS_BUDGET;
+  public defaultDuration: number = +process.env.BASE_ADS_DURATION;
+  public initialReach: any;
 
-  constructor(public userService: UserService) {
-      this.userData = { address: {} };
-      this.FB = window['FB'];
-      //window['fbAsyncInit'] = this.fbAsyncInit.bind(this);
+  constructor(public userService: UserService, public api: ApiService, public router: Router, public cookies: CookieManagerService) {
+    this.userData = { address: {} };
+    this.FB = window['FB'];name
   }
 
   public fbAsyncInit(): void {
@@ -102,5 +114,93 @@ export class FacebookService {
     if (this.userService.user.fbId) {
       this.FB.logout((response: any) => {});
     }
+  }
+
+  public getAdReach(daily_budget: number, latLng: {lat: number, lng: number}): Subscription {
+    this.usersReach = this.initialReach = 'Cargando';
+    const query = {
+      'dailyBudget': +daily_budget * 100,
+      'adSetId': this.adSetId,
+      'currency': 'MXN',
+      'name': this.userService.user.email + ' T: ' + (new Date()).toLocaleString(),
+      'radius': 8,
+      'latLng': JSON.stringify(latLng)
+    };
+    const headers: any = {
+      'Content-Type': 'application/json',
+      'Authorization': 'token ' + this.userService.token
+    };
+    return this.api.get(this.api.API_PROD + 'facebook/ads?', query).subscribe(
+      response => this.setEstimations(response),
+      error => {
+        console.error('getting reach error >', error);
+        this.usersReach = this.initialReach = -1;
+      },
+    )
+  }
+
+  private setEstimations(result: any): void {
+    this.estimations.maxDau = result.data[0].estimate_dau;
+    this.estimations.curve = result.data[0].daily_outcomes_curve;
+    this.adSetId = result.adSetId;
+    this.initialReach = this.calculateReach(this.defaultBudget);
+  }
+
+  public calculateReach(budget: number): string {
+    budget = budget * 100 * 0.9;
+    let budgetIndex: number;
+     this.estimations.curve && this.estimations.curve.some((val: any, valIndex: number) => {
+       if (budget <= val.spend) {
+         budgetIndex = valIndex;
+         return true;
+       }
+     });
+     console.log('index >', budgetIndex);
+     const top = this.estimations.curve[budgetIndex];
+     const bottom = this.estimations.curve[budgetIndex - 1] || {reach: 0, spend: 0};
+     const ofset = this.estimations.curve[budgetIndex - 2] || {reach: 0, spend: 0};
+     const y = top.reach - bottom.reach;
+     const x = top.spend - bottom.spend;
+     const estimReach = ofset.spend / 2 + budget * y / x;
+     return  (estimReach.toFixed(0)).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+  }
+
+  public mapAd(days: number, dailyBudget: number, adCreativeVals: any, latLng?: {lat: number, lng: number}): void {
+    if (!days || !dailyBudget) {
+      days = this.defaultDuration;
+      dailyBudget = this.defaultBudget;
+    }
+    this.mappedAd = {
+      'set': {
+        'adSetId': this.adSetId,
+        'endTime': days,
+        'dailyBudget': dailyBudget * 100,
+        'radius': 8,
+        'latLng': JSON.stringify(latLng)
+      },
+      'img': adCreativeVals.img,
+      'creative': {
+        'body': adCreativeVals.body,
+        'title': adCreativeVals.title,
+        'description': adCreativeVals.description
+      }
+    };
+   this.total = dailyBudget * days;
+  }
+  
+  public resetService(): void {
+    this.mapAd(undefined, undefined, {img: undefined, body: undefined, title: undefined});
+    this.adSetId = undefined;
+  }
+
+  public deleteAdset(adSetId: string): Subscription {
+    const headers: any = {
+      'Content-Type': 'application/json',
+      'Authorization': 'token ' + this.userService.token
+    };
+    return this.api.delete(this.api.API_PROD + 'facebook/ads', adSetId, headers).subscribe(
+      data => {console.log('adset deleted')},
+      error => {console.error('unable to delete adset', error)}
+    )
   }
 }
