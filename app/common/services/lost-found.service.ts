@@ -9,6 +9,7 @@ import {SearchService, IdogData} from '../services/search.service';
 import {MatchMakerService} from '../services/match-maker.service';
 import {GlobalFunctionService} from  '../services/global-function.service';
 import {FacebookService} from '../services/facebook.service';
+import {OpenSpayService} from '../services/openspay.service';
 const imgCompress = require('@xkeshi/image-compressor');
 
 @Injectable()
@@ -69,7 +70,9 @@ export class LostFoundService {
     public searchService: SearchService, 
     public matchService: MatchMakerService,
     public globalService: GlobalFunctionService,
-    public fbService: FacebookService
+    public fbService: FacebookService,
+    public  openPayService: OpenSpayService,
+    
   ) {
     this.reward = this.defaultReward;
     this.dogPicture = this.defaultDogPic;
@@ -200,6 +203,7 @@ export class LostFoundService {
 
   public saveToApi(PaymentFromObj?: any): Subscription {
     const dog: string = localStorage.getItem('reported-dog-data');
+    let errorMessage = {main: 'la aplicación esta teniendo problemas técnicos', sub: 'por favor contactanos en soporte@lostdog.mx'};
     if (dog) {
       const dogObj: Object = JSON.parse(dog);
       const headers: any = {
@@ -226,14 +230,20 @@ export class LostFoundService {
       },
       e => {
         this.loadingSave = false;
-         this.globalService.clearErroMessages();
-         this.globalService.setErrorMEssage('Ops! tuvimos un problema y no se pudo guardar');
-         this.globalService.setSubErrorMessage('intenta mas tarde!');
-         this.globalService.openErrorModal();      
+        let openPayError: any;
+        if (e._body && e.statusText === 'Payment Required') {
+          openPayError = this.openPayService.errorHandler(JSON.parse(e._body));
+        }
+        errorMessage = openPayError || errorMessage;
+        this.globalService.clearErroMessages();
+        this.globalService.setErrorMEssage(errorMessage.main);
+        this.globalService.setSubErrorMessage(errorMessage.sub);
+        this.globalService.openErrorModal();
       });
     } else {
       this.globalService.clearErroMessages();
-      this.globalService.setErrorMEssage('no hay objeto guardado en local');
+      this.globalService.setErrorMEssage(errorMessage.main);
+      this.globalService.setErrorMEssage(errorMessage.sub);
       this.globalService.openErrorModal();
     }
   }
