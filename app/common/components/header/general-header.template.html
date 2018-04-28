@@ -65,8 +65,8 @@
           <a href="javascript:void(0)" class="waves-effect"> <i class="material-icons left">edit</i>Reportar</a>
         </div>
         <div class="collapsible-body">
-          <a routerLink="lost" (click)="closeSideNav()" class="waves-effect"><i class="material-icons left">search</i>Perro perdido</a>
-          <a routerLink="found" (click)="closeSideNav()" class="waves-effect"><i class="material-icons left">pets</i>Perro econtrado</a>
+          <a routerLink="lost" (click)="closeSideNav();resetPage()" class="waves-effect"><i class="material-icons left">search</i>Perro perdido</a>
+          <a routerLink="found" (click)="closeSideNav();resetPage()" class="waves-effect"><i class="material-icons left">pets</i>Perro econtrado</a>
         </div>        
       </li>
       <li><div class="divider"></div></li>

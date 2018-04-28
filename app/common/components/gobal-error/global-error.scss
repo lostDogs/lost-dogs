@@ -28,10 +28,15 @@ global-error {
           color: white;
           p.sub-error {
             padding-left: 30px;
+            font-size: 1.2rem;
           }
           @media screen and (max-device-width: $screen-mobile-max) {
             h4 {
               font-size: 2.28rem;
+            }
+            p.sub-error {
+              padding-left: 50px;
+              font-size: 1.8rem;              
             }
           }
         }
