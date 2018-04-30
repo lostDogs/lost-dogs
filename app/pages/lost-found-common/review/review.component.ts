@@ -23,7 +23,7 @@ export class ReviewComponent {
 
   public paymentDesc: string;
   public buildedDog: any;
-  public exportAds: {img?: string, reward?: string, nameObreed?: string, breed?:any, address?: string, latLong?: any};
+  public exportAds: {img?: string, reward?: string, nameObreed?: string, breed?:any, address?: string, latLong?: any, gender?: string, lostDate?: string, comments?: string, name?: string, femaleA?: string, maleO?: string};
   public baseCost: number = (+process.env.BASE_COST) + ((+process.env.BASE_ADS_DURATION) *  (+process.env.BASE_ADS_BUDGET));
 
   constructor(
@@ -161,14 +161,22 @@ export class ReviewComponent {
   private fillExportAds(): void {
     const location = this.LostService.pageAnswers[this.LostService.defualtSequence.indexOf('location')] || {};
     const breed = this.pageAnswersCopy[this.LostService.defualtSequence.indexOf('breed')] || [{}];
+    const gender = this.LostService.pageAnswers[this.LostService.defualtSequence.indexOf('gender')].name || '';
+    const lostDate = this.LostService.pageAnswers[this.LostService.defualtSequence.indexOf('date')];
     this.exportAds = {
       img: this.LostService.dogPicture,
       reward: this.LostService.reward,
-      nameObreed: this.LostService.dogName ? `a ${this.LostService.dogName}`: `un ${breed[0].labels}`,
+      name: this.LostService.dogName || '',
+      nameObreed: this.LostService.dogName ?  `Me llamo ${this.LostService.dogName}` :  `Soy un ${breed[0].labels}`,
+      gender: gender,
+      femaleA: gender === 'hembra'  ? 'a' : '', 
+      maleO: gender !== 'hembra' ? 'o': 'a',
+      lostDate: lostDate,
+      comments: this.LostService.comments || '<no comentarios>',
       breed: breed[0].labels,
       address: location.address,
       latLong: location.latLng
-    }
+    };
   }
 
 }
