@@ -2,8 +2,8 @@
   "views": [{"value": "desktop", "label": "como noticia en la computadora"}, {"value": "mobile", "label": "como noticia en el movil"}, {"value": "right-column", "label": "en la columna derecha"}],
   "titles": ["¡Estoy perdid{maleO}!", "¡Alerta de búsqueda!", "¡Se busca!"],
   "bodies": [
-    "Hola, soy {name} un{femaleA} {breed} ({gender}), y me perdí en {address} el dia {lostDate}.",
-    "Solicitamos el apoyo para encontrar a {name} un{femaleA} {breed}, Perdid{maleO} en {address} el dia {lostDate}." ,
+    "Hola, soy {name} {firstBreed} (Soy {gender}), y me perdí en {address} el día {lostDate}.",
+    "Solicitamos el apoyo para encontrar a {name}  {breed}. Perdid{maleO} en {address} el día {lostDate}." ,
     "¿Me ayudas a regresar con mis dueños? \n {nameObreed}, soy {gender} y estoy extraviad{maleO}. Me perdí en {address} y podría estar en las cercanías."
    ],
   "descriptions": [

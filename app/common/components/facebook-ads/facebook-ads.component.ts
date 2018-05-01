@@ -14,7 +14,7 @@ export class FacebookAdsComponent {
   public checked: boolean = false;
   public adOpts: any;
   @Input()
-  public replaceVals: {img?: string, reward?: string, nameObreed?: string, breed?:any, address?: string, latLong?: any, gender?: string, lostDate?: string, comments?: string, name?: string, femaleA?: string, maleO?:string} = {};
+  public replaceVals: {img?: string, reward?: string, nameObreed?: string, breed?:any, address?: string, latLong?: any, gender?: string, lostDate?: string, comments?: string, name?: string, [label: string]: any} = {};
   public previewValues: any = {};
   public mainCollapse: JQuery;
   public adCreative: JQuery;
