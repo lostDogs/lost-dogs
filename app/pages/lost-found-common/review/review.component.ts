@@ -23,7 +23,7 @@ export class ReviewComponent {
 
   public paymentDesc: string;
   public buildedDog: any;
-  public exportAds: {img?: string, reward?: string, nameObreed?: string, breed?:any, address?: string, latLong?: any};
+  public exportAds: {img?: string, reward?: string, nameObreed?: string, breed?:any, address?: string, latLong?: any, gender?: string, lostDate?: string, comments?: string, name?: string, [label: string]: any};
   public baseCost: number = (+process.env.BASE_COST) + ((+process.env.BASE_ADS_DURATION) *  (+process.env.BASE_ADS_BUDGET));
 
   constructor(
@@ -161,14 +161,28 @@ export class ReviewComponent {
   private fillExportAds(): void {
     const location = this.LostService.pageAnswers[this.LostService.defualtSequence.indexOf('location')] || {};
     const breed = this.pageAnswersCopy[this.LostService.defualtSequence.indexOf('breed')] || [{}];
+    const gender = this.LostService.pageAnswers[this.LostService.defualtSequence.indexOf('gender')].name || '';
+    const lostDate = this.LostService.pageAnswers[this.LostService.defualtSequence.indexOf('date')];
+    const maleO = gender !== 'hembra' ? 'o': 'a';
+    const femaleA = gender === 'hembra'  ? 'a' : '';
+    const firstBreed = new RegExp(this.dogCardService.breeds[0].label).test(breed[0].labels) ? 
+        breed[0].labels.replace(this.dogCardService.breeds[0].label + ', ', `parecid${maleO} a un${femaleA} `).replace(/, /g, ` y un${femaleA} `) : `un${femaleA} ` + breed[0].labels;
+    const thirdBreed = new RegExp(this.dogCardService.breeds[0].label).test(breed[0].labels) ? `un${femaleA} perrit${maleO} ` +  firstBreed : firstBreed;
     this.exportAds = {
       img: this.LostService.dogPicture,
       reward: this.LostService.reward,
-      nameObreed: this.LostService.dogName ? `a ${this.LostService.dogName}`: `un ${breed[0].labels}`,
-      breed: breed[0].labels,
+      name: this.LostService.dogName || '',
+      nameObreed: this.LostService.dogName ?  `Me llamo ${this.LostService.dogName}` :  `Soy ${firstBreed}`,
+      gender: gender,
+      femaleA,
+      maleO,
+      firstBreed,
+      lostDate: lostDate,
+      comments: this.LostService.comments || '<no comentarios>',
+      breed: thirdBreed,
       address: location.address,
       latLong: location.latLng
-    }
+    };
   }
 
 }

@@ -1,6 +1,14 @@
 {
   "views": [{"value": "desktop", "label": "como noticia en la computadora"}, {"value": "mobile", "label": "como noticia en el movil"}, {"value": "right-column", "label": "en la columna derecha"}],
-  "titles": ["Se ha perdido en tu zona!", "Se buscar a {nameObreed}, Recompensa!", "Lo has visto?"],
-  "bodies": ["ayudame a econtrar a mi mascota es un {breed}...", "si estas viendo este anuncio es porque se ha perdido por {address}", "tiene una Recompensa de $ {reward} MXN, encuentralo y sera tuya!"],
-  "descriptions": ["en la pagina te puedes subscribir si lo vas a buscar", "ves mas acciones en su pagina", "si lo has visto tambien nos puedes ayudar"]
+  "titles": ["¡Estoy perdid{maleO}!", "¡Alerta de búsqueda!", "¡Se busca!"],
+  "bodies": [
+    "Hola, soy {name} {firstBreed} (Soy {gender}), y me perdí en {address} el día {lostDate}.",
+    "Solicitamos el apoyo para encontrar a {name}  {breed}. Perdid{maleO} en {address} el día {lostDate}." ,
+    "¿Me ayudas a regresar con mis dueños? \n {nameObreed}, soy {gender} y estoy extraviad{maleO}. Me perdí en {address} y podría estar en las cercanías."
+   ],
+  "descriptions": [
+    "Por favor ayúdame a regresar a casa.",
+    "Se ofrece una Recompensa de $ {reward} MXN  por su rescate.",
+    "{comments}"
+  ]
 }

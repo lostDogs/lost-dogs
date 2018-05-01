@@ -112,18 +112,18 @@
               </div>
             </div>
             <div class="collapsible-body row">
-              <h5 class="col l3 m12 s12 ">Descripcion: </h5>
-              <div class="input-field col l7 m12 s12">
-                <select name="test" id="description">
-                  <option *ngFor="let description of adOpts.descriptions" [value]="description">{{description}}</option>
-                </select>
-              </div>
-            </div>
-            <div class="collapsible-body row">
               <h5 class="col l2 m12 s12">Cuerpo: </h5>
               <div class="input-field col l8 m12 s12">
                 <select name="test" id="body">
                   <option *ngFor="let body of adOpts.bodies" [value]="body">{{body}}</option>
+                </select>
+              </div>
+            </div>            
+            <div class="collapsible-body row">
+              <h5 class="col l3 m12 s12 ">Descripcion: </h5>
+              <div class="input-field col l7 m12 s12">
+                <select name="test" id="description">
+                  <option *ngFor="let description of adOpts.descriptions" [value]="description" [disabled]="description==='<no comentarios>'">{{description}}</option>
                 </select>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, Input, ViewChild, ElementRef} from '@angular/core';
+import {Component, EventEmitter, Output, Input, ViewChild, ElementRef, SimpleChanges} from '@angular/core';
 import * as adConfig from '../../content/fb-ad-config.json';
 import {FacebookService} from '../../services/facebook.service';
 
@@ -12,9 +12,9 @@ export class FacebookAdsComponent {
   public budget: number = 55;
   public duration: number = 2;
   public checked: boolean = false;
-  public adOpts: any = adConfig;
+  public adOpts: any;
   @Input()
-  public replaceVals: {img?: string, reward?: string, nameObreed?: string, breed?:any, address?: string, latLong?: any} = {};
+  public replaceVals: {img?: string, reward?: string, nameObreed?: string, breed?:any, address?: string, latLong?: any, gender?: string, lostDate?: string, comments?: string, name?: string, [label: string]: any} = {};
   public previewValues: any = {};
   public mainCollapse: JQuery;
   public adCreative: JQuery;
@@ -25,7 +25,8 @@ export class FacebookAdsComponent {
   public mainCollapsDom: ElementRef;
 
   constructor(public fbService: FacebookService) {
-    this.mobile = window.screen.width <= 767;    
+    this.mobile = window.screen.width <= 767;
+    this.adOpts = JSON.parse(JSON.stringify(adConfig));
   }
 
   public ngOnInit(): void {
@@ -60,10 +61,12 @@ export class FacebookAdsComponent {
   }
 
   public rereplaceHolders(): void {
+    const adOptsKeys = Object.keys(this.adOpts);
     Object.values(this.adOpts).forEach((vals: any[], valsIndex: number) => {
       Array.isArray(vals) && vals.forEach((val: any, valIndex: number) => {
-        typeof val === 'string' && /{(.*?)}/g.test(val) &&  val.match(/{(.*?)}/g).map(placeholder => placeholder.replace(/{+|}+/g, '')).forEach((placeholder) => {
-          vals[valIndex] = val.replace(`{${placeholder}}`, this.replaceVals[placeholder] || '');
+        typeof val === 'string' && /{(.*?)}/g.test(val) && val.match(/{(.*?)}/g).map(placeholder => placeholder.replace(/{+|}+/g, '')).forEach((placeholder) => {
+          const replacedVal = this.adOpts[adOptsKeys[valsIndex]][valIndex].replace(`{${placeholder}}`, this.replaceVals[placeholder] || '');
+          this.adOpts[adOptsKeys[valsIndex]][valIndex] = replacedVal;
         });
       });
     });
@@ -120,5 +123,9 @@ export class FacebookAdsComponent {
       this.finalReach = 'No Disp';
     }
   }
+
+  public ngOnDestroy(): void {}
+
+ public ngOnChanges(changes: SimpleChanges): void {}
  
 };
