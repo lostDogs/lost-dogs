@@ -30,11 +30,7 @@ export class LoginComponent {
   }
 
   public loginRedirect(user: string, password: string): void {
-    this.userService.login(user, password).add(() => {
-     if (this.userService.isAuth && !this.userService.previousUrl) {
-       this.route.navigate(['/home']);
-     }
-    });
+    this.userService.login(user, password);
   }
 
   public scrollTo(domEl: ElementRef): void {
