@@ -63,9 +63,11 @@ export class DogAdsComponent {
   public initalCall(): void {
     this.dogService.getDog(this.dogId).add(()=> {
       this.mappedData = this.dogService.mapData(this.dogService.dogData);
-      this.location = {lat: this.dogService.dogData.location.coordinates[1], lng: this.dogService.dogData.location.coordinates[0]};
       if (!this.dogService.dogData || !this.mappedData || !this.dogService.dogData.lost) {
         this.disableActions = true;
+      } 
+      if (this.dogService.dogData  && this.dogService.dogData.location && this.dogService.dogData.location.coordinates) {
+        this.location = {lat: this.dogService.dogData.location.coordinates[1], lng: this.dogService.dogData.location.coordinates[0]};
       }
       setTimeout(() => { $('.tooltipped').tooltip({delay: 100}); }, 450);
     });
