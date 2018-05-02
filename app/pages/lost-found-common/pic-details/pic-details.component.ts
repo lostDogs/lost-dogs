@@ -22,7 +22,14 @@ export class DetailsComponent {
   }
   
   public ngOnInit(): void {
+    this.LostService.globalService.setErrorMEssage('Agrega la mejor imagen de tu mascota para avanzar');
+    this.LostService.globalService.setSubErrorMessage('procura que sea  clara y sin letras sobre ella');
+    this.LostService.globalService.openBlueModal();
   }
+
+ public ngOnDestroy(): void {
+   this.LostService.globalService.closeErrorModal();
+ }
  
   public ngAfterViewInit(): void {
     $('#money-input').mask('000,000.00', {reverse: true});
