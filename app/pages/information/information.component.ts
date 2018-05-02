@@ -30,7 +30,7 @@ export class InformationComponent {
     })
   }
   public ngOnInit(): void {
-    this.baseCost = +process.env.BASE_ADS_BUDGET * +process.env.BASE_ADS_DURATION + +process.env.BASE_COST
+    this.baseCost = +process.env.BASE_ADS_BUDGET * +process.env.BASE_ADS_DURATION + +process.env.BASE_COST;
   }
 
   public ngDoCheck(): void {
