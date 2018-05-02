@@ -219,6 +219,9 @@ export class LostFoundService {
       this.loadingSave = true;
       return this.api.post(this.api.API_PROD + 'dogs',dogObj, headers).subscribe(data => {
         console.log('sucessss', data);
+        this.globalService.clearErroMessages();
+        this.globalService.setErrorMEssage('Tu anuncio arrancará en unos minutos');
+        this.globalService.openBlueModal();
         this.savedSuccess = true;
         this.question = '¡Mascota creada con éxito!';
         this.savedData = this.trasnfromDogData(data);
