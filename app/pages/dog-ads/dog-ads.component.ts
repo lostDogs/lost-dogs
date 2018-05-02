@@ -34,6 +34,7 @@ export class DogAdsComponent {
   //email service
   public sendingEmail: boolean;
   public ShowSendEmail: boolean;
+  public disableActions: boolean;
 
   constructor (
     public dogService: DogCardService,
@@ -63,7 +64,10 @@ export class DogAdsComponent {
     this.dogService.getDog(this.dogId).add(()=> {
       this.mappedData = this.dogService.mapData(this.dogService.dogData);
       this.location = {lat: this.dogService.dogData.location.coordinates[1], lng: this.dogService.dogData.location.coordinates[0]};
-      $('.tooltipped').tooltip({delay: 100});
+      if (!this.dogService.dogData || !this.mappedData || !this.dogService.dogData.lost) {
+        this.disableActions = true;
+      }
+      setTimeout(() => { $('.tooltipped').tooltip({delay: 100}); }, 450);
     });
   }
 
@@ -74,7 +78,6 @@ export class DogAdsComponent {
   }
 
   public ngAfterViewInit(): void {
-    $('.tooltipped').tooltip({delay: 100});
     if (!this.userService.missingFields.length && this.foundMode) {
       this.scrollTo(this.FOUND_QUERY);
     } else if (this.userService.missingFields.length && this.userService.isAuth) {
