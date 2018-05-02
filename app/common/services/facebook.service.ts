@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs/Rx';
 import {ApiService} from './api.service';
 import {Router} from '@angular/router';
 import {CookieManagerService} from './cookie-manager.service';
+import { GlobalFunctionService } from './global-function.service';
 
 @Injectable()
 
@@ -32,7 +33,7 @@ export class FacebookService {
   public defaultDuration: number = +process.env.BASE_ADS_DURATION;
   public initialReach: any;
 
-  constructor(public userService: UserService, public api: ApiService, public router: Router, public cookies: CookieManagerService) {
+  constructor(public userService: UserService, public api: ApiService, public router: Router, public cookies: CookieManagerService, public globalService: GlobalFunctionService ) {
     this.userData = { address: {} };
     this.FB = window['FB'];name
   }
@@ -135,6 +136,7 @@ export class FacebookService {
       error => {
         console.error('getting reach error >', error);
         this.usersReach = this.initialReach = -1;
+        this.errorHandling();
       },
     )
   }
@@ -143,7 +145,19 @@ export class FacebookService {
     this.estimations.maxDau = result.data[0].estimate_dau;
     this.estimations.curve = result.data[0].daily_outcomes_curve;
     this.adSetId = result.adSetId;
-    this.initialReach = this.calculateReach(this.defaultBudget);
+    if (this.estimations.maxDau && this.estimations.curve && this.estimations.curve.length) {
+      this.initialReach = this.calculateReach(this.defaultBudget);
+    } else {
+      this.errorHandling();
+    }
+  }
+
+  public errorHandling(): void {
+    this.usersReach = this.initialReach = -1;
+    this.globalService.clearErroMessages();
+    this.globalService.setErrorMEssage('Error al obtener la información de facebook');
+    this.globalService.setSubErrorMessage('Refresca la pagina y si el error persiste contactanos');
+    this.globalService.openErrorModal();    
   }
 
   public calculateReach(budget: number): string {
@@ -155,7 +169,6 @@ export class FacebookService {
          return true;
        }
      });
-     console.log('index >', budgetIndex);
      const top = this.estimations.curve[budgetIndex];
      const bottom = this.estimations.curve[budgetIndex - 1] || {reach: 0, spend: 0};
      const ofset = this.estimations.curve[budgetIndex - 2] || {reach: 0, spend: 0};
