@@ -161,7 +161,7 @@ export class FacebookService {
   }
 
   public calculateReach(budget: number): string {
-    budget = budget * 100 * 0.9;
+    budget = budget * 100 * 0.87;
     let budgetIndex: number;
      this.estimations.curve && this.estimations.curve.some((val: any, valIndex: number) => {
        if (budget <= val.spend) {

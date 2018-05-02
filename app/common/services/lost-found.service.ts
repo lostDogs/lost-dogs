@@ -62,6 +62,7 @@ export class LostFoundService {
   public patterNoColor: boolean;
   public noBreed: any;
   public disableCompleteBtn: any;
+  public baseCost: string;
 
   constructor(
     public router: Router,
@@ -77,6 +78,7 @@ export class LostFoundService {
     this.reward = this.defaultReward;
     this.dogPicture = this.defaultDogPic;
     this.pageAnswers = [];
+    this.baseCost = (+process.env.BASE_ADS_BUDGET * +process.env.BASE_ADS_DURATION + +process.env.BASE_COST).toFixed(2);
   }
 
   public next(): void {

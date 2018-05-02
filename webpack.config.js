@@ -99,7 +99,7 @@ module.exports = {
           'API_URL': JSON.stringify('http://localhost:3000/api/'),
           'BASE_COST': JSON.stringify('65'),
           'BASE_ADS_DURATION': JSON.stringify('1'),
-          'BASE_ADS_BUDGET': JSON.stringify('20'),
+          'BASE_ADS_BUDGET': JSON.stringify('23'),
           }
         })
   ],

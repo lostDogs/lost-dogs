@@ -80,7 +80,7 @@
     <div class="lost col l12 s12 m12" [hidden]="!(lostService.parentPage==='lost')">
       <h3>No te preocupes, ¡lo vamos a encontrar!<i class="medium material-icons">sentiment_very_satisfied</i></h3>
       <h5>solo responde las siguientes {{lostService.displayedSequence.length}} preguntas</h5>
-      <h6>Recuerda que este servicio de exposición masiva tiene un costo de $65.00 MXN</h6>
+      <h6>Recuerda que este servicio de exposición masiva tiene un costo base de ${{lostService.baseCost}} MXN</h6>
     </div>
     <div class="found col l12 s12 m12" [hidden]="!(lostService.parentPage==='found')">
       <h3>Gracias por ayudar a rescatar una mascota en peligro<i class="medium material-icons">sentiment_very_satisfied</i></h3>
