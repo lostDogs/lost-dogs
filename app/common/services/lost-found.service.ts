@@ -206,6 +206,7 @@ export class LostFoundService {
   public saveToApi(PaymentFromObj?: any): Subscription {
     const dog: string = localStorage.getItem('reported-dog-data');
     let errorMessage = {main: 'la aplicación esta teniendo problemas técnicos', sub: 'por favor contactanos en soporte@lostdog.mx'};
+    let timeout: any;
     if (dog) {
       const dogObj: Object = JSON.parse(dog);
       const headers: any = {
@@ -214,6 +215,12 @@ export class LostFoundService {
       };
       if (PaymentFromObj) {
         Object.assign(dogObj, PaymentFromObj);
+        timeout = setTimeout(()=> {
+          this.globalService.clearErroMessages();
+          this.globalService.setErrorMEssage('esto puede tomar un poco de tiempo');
+          this.globalService.openBlueModal();
+          timeout = undefined;
+        }, 300);
       }
       if (this.fbService.mappedAd && this.fbService.mappedAd.set) {
        Object.assign(dogObj, {ad: this.fbService.mappedAd});
@@ -228,10 +235,19 @@ export class LostFoundService {
         localStorage.removeItem('reported-dog-data');
         this.fbService.resetService();
         this.deleteReviewLocalStorage();
-        if (PaymentFromObj) {
-          this.globalService.clearErroMessages();
-          this.globalService.setErrorMEssage('Tu anuncio arrancará en unos minutos');
-          this.globalService.openBlueModal();          
+
+        if (PaymentFromObj ) {
+          let timmer = 20;
+          if (timeout) {
+           clearTimeout(timeout);
+           timmer = 300;
+           this.globalService.closeErrorModal();
+          }
+          setTimeout(() => {
+            this.globalService.clearErroMessages();
+            this.globalService.setErrorMEssage('Tu anuncio arrancará en unos minutos');
+            this.globalService.openBlueModal();
+          }, timmer);
         }
         this.setImgToBucket(data['images'][0].uploadImageUrl);
       },
