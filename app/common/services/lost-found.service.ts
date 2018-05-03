@@ -258,12 +258,14 @@ export class LostFoundService {
           openPayError = this.openPayService.errorHandler(JSON.parse(e._body));
         }
         errorMessage = openPayError || errorMessage;
+        this.globalService.closeErrorModal();
         this.globalService.clearErroMessages();
         this.globalService.setErrorMEssage(errorMessage.main);
         this.globalService.setSubErrorMessage(errorMessage.sub);
         this.globalService.openErrorModal();
       });
     } else {
+      this.globalService.closeErrorModal();
       this.globalService.clearErroMessages();
       this.globalService.setErrorMEssage(errorMessage.main);
       this.globalService.setErrorMEssage(errorMessage.sub);
