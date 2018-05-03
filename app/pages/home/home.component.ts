@@ -16,6 +16,8 @@ export class homeComponent {
   public newUser: boolean;
   public scrolldownDisplay: boolean = true;
   public scrollMax: number;
+  public basePrice: number = (+process.env.BASE_COST) + ((+process.env.BASE_ADS_DURATION) *  (+process.env.BASE_ADS_BUDGET));;
+
   @ViewChild('Description')
   public descriptionDom: ElementRef;
 

@@ -9,9 +9,11 @@ import {FacebookService} from '../../services/facebook.service';
 })
 
 export class FacebookAdsComponent { 
-  public budget: number = 55;
-  public duration: number = 2;
+  public budget: number = 60;
+  public duration: number = 3;
   public checked: boolean = false;
+@Output()
+  public added: EventEmitter<boolean> = new EventEmitter<boolean>();
   public adOpts: any;
   @Input()
   public replaceVals: {img?: string, reward?: string, nameObreed?: string, breed?:any, address?: string, latLong?: any, gender?: string, lostDate?: string, comments?: string, name?: string, [label: string]: any} = {};
@@ -43,6 +45,7 @@ export class FacebookAdsComponent {
       if (this.checked && this.mainCollapse.hasClass('addedSet')) {
         this.mainCollapse.removeClass('addedSet');
         this.checked = false;
+        this.added.emit(this.checked);
         this.fbService.mapAd(undefined, undefined, Object.assign(this.previewValues, {img: this.replaceVals.img}), this.replaceVals.latLong);
         this.mainCollapse.click();
       }
@@ -82,6 +85,7 @@ export class FacebookAdsComponent {
     this.mainCollapse.click();
     this.mainCollapse.addClass('addedSet');
     this.checked = true;
+    this.added.emit(this.checked);
     window.scroll({
       top: 0, 
       left: 0, 
@@ -117,7 +121,7 @@ export class FacebookAdsComponent {
 
   public setFinalReach(): void {
     if ( !/argando/g.test(this.fbService.usersReach) && this.fbService.usersReach !== -1) {
-      const preFinal: number = +this.fbService.usersReach.replace(',', '') * this.duration * 0.85;
+      const preFinal: number = +this.fbService.usersReach.replace(',', '') * this.duration * 0.90;
       this.finalReach = (preFinal.toFixed(0)).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
     } else {
       this.finalReach = 'No Disp';
