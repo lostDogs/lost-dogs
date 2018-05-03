@@ -22,6 +22,7 @@ export class DetailsComponent {
   }
   
   public ngOnInit(): void {
+    this.LostService.globalService.clearErroMessages();
     this.LostService.globalService.setErrorMEssage('Agrega la mejor imagen de tu mascota para avanzar');
     this.LostService.globalService.openBlueModal();
   }
