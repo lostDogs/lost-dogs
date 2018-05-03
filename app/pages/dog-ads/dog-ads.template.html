@@ -131,9 +131,9 @@
 
 <div class="ctas-container border-white create-account" [ngClass]="{'hover': showActions}" (mouseenter)="showActions=true" (mouseleave)="showActions=false">
     <h5 class="title desktop-dogpage">Acciones</h5>
-    <button class="btn action" (click)="Found();showActions=false;" [disabled]="foundMode">Lo encontre! <i class="material-icons Small right">send</i></button>
-    <button class="btn info tooltipped"  data-position="top" [attr.data-tooltip]="'Proximamente'" [disabled]="foundMode">Lo he visto! <i class="material-icons Small right">add_location</i></button>
-    <button class="btn info tooltipped" data-position="top" [attr.data-tooltip]="'Proximamente'" [disabled]="foundMode">Subscribir<i class="material-icons Small right">feedback</i></button>
+    <button class="btn action" (click)="Found();showActions=false;" [disabled]="foundMode || disableActions">Lo encontre! <i class="material-icons Small right">send</i></button>
+    <button class="btn info tooltipped"  data-position="top" [attr.data-tooltip]="'Proximamente'" [disabled]="foundMode || disableActions">Lo he visto! <i class="material-icons Small right">add_location</i></button>
+    <button class="btn info tooltipped" data-position="top" [attr.data-tooltip]="'Proximamente'" [disabled]="foundMode || disableActions">Subscribir<i class="material-icons Small right">feedback</i></button>
 </div>
 
 <span class="svg" [hidden]="!congrats">

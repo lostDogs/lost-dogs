@@ -17,6 +17,7 @@ export class InformationComponent {
   public title: string;
   @ViewChild('TermsOpenPay')
   public termsOpenPayDom: ElementRef;
+  public baseCost: number;
 
   constructor (public domSan: DomSanitizer, public router: Router) {
     this.data = info;
@@ -29,6 +30,7 @@ export class InformationComponent {
     })
   }
   public ngOnInit(): void {
+    this.baseCost = +process.env.BASE_ADS_BUDGET * +process.env.BASE_ADS_DURATION + +process.env.BASE_COST;
   }
 
   public ngDoCheck(): void {
@@ -53,7 +55,7 @@ export class InformationComponent {
       this.infohtml = this.domSan.bypassSecurityTrustHtml(this.data[this.urlsConst.terms].join(''));
     }else if (this.urlsConst.pricing === this.urlOn) {
       this.title = 'Costos y recompensas';
-      this.infohtml = this.domSan.bypassSecurityTrustHtml(this.data[this.urlsConst.pricing].join(''));
+      this.infohtml = this.domSan.bypassSecurityTrustHtml(this.data[this.urlsConst.pricing].join('').replace('{{baseCost}}', this.baseCost.toFixed(2)));
     }else if (this.urlsConst.faqs === this.urlOn) {
       this.title = 'Preguntas frecuentes';
       this.infohtml = this.domSan.bypassSecurityTrustHtml(this.data[this.urlsConst.faqs].join(''));
