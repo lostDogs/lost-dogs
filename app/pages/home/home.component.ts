@@ -4,6 +4,7 @@ import {GlobalFunctionService} from '../../common/services/global-function.servi
 import {ActivatedRoute, Router} from '@angular/router';
 import { Location} from '@angular/common';
 import {UserService} from '../../common/services/user.service';
+import * as adConfig from '../../common/content/fb-ad-config.json';
 
 @Component({
   selector: 'home',
@@ -20,9 +21,20 @@ export class homeComponent {
 
   @ViewChild('Description')
   public descriptionDom: ElementRef;
+  public previewValues: any;
+  public adOpts: any;
+  public duration: number = 7;
+  public reach: string;
 
   constructor (@Inject(DOCUMENT) private document:  Document, public globalService : GlobalFunctionService, public activatedRoute: ActivatedRoute, public location: Location, public userService: UserService, public router: Router) {
     this.scrollMax = (window.innerHeight - (window.innerHeight / 8)) / 2;
+    this.adOpts = adConfig;
+    this.previewValues = {
+      title: '¡Estoy perdida!' ,
+      body: 'Hola, soy Bodoca, una perrita de raza Afgano, y me perdí en Lopez Mateos #321, lomas del valle, guadalajara, Jalisco  el día ' + (new Date()).toLocaleString().split(',')[0] + '.',
+      description: 'Por favor ayúdame a regresar a casa.'
+    };
+    this.changeEstim();
   }
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(event: any) {
@@ -56,6 +68,10 @@ export class homeComponent {
     $('.scroll-botttom').click(function(){
         $('html, body').animate({ scrollTop: scrollTo }, 600);
     });
+    $('select').material_select();
+    $('select').change((event) => {
+      this.previewValues[event.target.id] = $('#' + event.target.id).val();
+    });
   }
 
   public goTo(url: string): void {
@@ -65,4 +81,21 @@ export class homeComponent {
   public getWindowHeight(): string {
     return window.innerHeight +'px';
   }
+
+  public changeEstim(): void {
+    const init = 1200;
+    const base = 2400;
+    let slope;
+    if (this.duration > 0 && this.duration < 4) {
+      slope = 1.2;
+    }
+    if (this.duration >= 4 && this.duration < 10) {
+      slope = 0.8;
+    }
+    if (this.duration >= 10) {
+      slope = 0.6;
+    }
+    this.reach = (init + this.duration * slope * base).toFixed(2);
+  }
+
 };
