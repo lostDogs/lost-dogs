@@ -70,13 +70,13 @@
       text-align: center;
     }
   }
-  .mobile {
+  .mobile-home {
     display: none;
     @media screen and (max-device-width: $screen-mobile-max) {
       display: block
     }
   }
-  .desktop {
+  .desktop-home {
     display: block;
     @media screen and (max-device-width: $screen-mobile-max) {
       display: none;
