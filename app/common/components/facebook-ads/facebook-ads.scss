@@ -44,18 +44,12 @@ facebook-ads {
     width: 60px;
     height: 60px;
   }
-  .range-width {
-    width: 85%;
-    @media screen and (max-device-width: $screen-mobile-max) {
-      margin-top: 100px;
-    }
-  }
   .raidus-50 {
     border-radius: 50%;
   }  
 }
 // out of the component
-.collapsible.popout {
+.collapsible.popout,.home-config {
   .all-inline {
     margin-top: 20px;
     * {
@@ -67,6 +61,12 @@ facebook-ads {
       margin-top: 40px;
     }
   }
+  .range-width {
+    width: 85%;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin-top: 100px;
+    }
+  }  
   .circle {
     &.small {
       width: 70px;
@@ -87,8 +87,8 @@ facebook-ads {
         }
       }
       @media screen and (max-device-width: $screen-mobile-max) {
-        width: 260px;
-        height: 260px;
+        width: 360px;
+        height: 360px;
         &.big.circle-midle {
           margin-left: calc(50% - 130px);
         }        

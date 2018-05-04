@@ -29,7 +29,7 @@
       <div class="circular">
         <img  class="motivation-icon" src="https://www.lostdog.mx/assets/img/moneyMotivation.png" alt="motiva con dinero">
       </div>
-      <p>Publicar una mascota encontrada es totalmente GRATIS! Sin embargo para publicar una mascota perdida la aportación es de <b> $65 MXN</b>. Para más información sobre costos y beneficios da click <b><a style="color: white; text-decoration: underline;" [routerLink]="['/info', 'pricing']">aquí</a></b>.</p>
+      <p>Publicar una mascota encontrada es totalmente GRATIS! Sin embargo para publicar una mascota perdida la aportación es de <b> ${{basePrice}}.00 MXN</b>. Para más información sobre costos y beneficios da click <b><a style="color: white; text-decoration: underline;" [routerLink]="['/info', 'pricing']">aquí</a></b>.</p>
     </article>
     <article class="col l4 m12 s12">
       <h4>¡Gana Dinero!</h4>
@@ -46,6 +46,64 @@
       <p>Está comprobado que existe un <b> 80% </b> de mayor probabilidad de que tu mascota regrese a casa si ofreces una recompensa económica por ella. Recuerda que la recompensa <b>NUNCA</b> es obligatoria.</p>
     </article>
   </div> 
+  <article class="row">
+    <h3 class="col l12 m12 s12 home-second-title" >¡Crea tu anuncio digital!</h3>
+  </article>
+
+  <div class="row actions-block">
+    <div class="component row">
+      <div class="col l6 s12 m12">
+        <preview-fb-ads class="desktop" [previewValues]="previewValues" [img]="'https://www.lostdog.mx/assets/img/dogs/141.jpg'"></preview-fb-ads>
+      </div>      
+      <div class="col l6 s12 s12">
+        <div class="row">
+          <h4 class="mobile-centered extra-margin-mobile">
+            Visualizalo!
+          </h4>
+          <div class="inxput-field col l8 push-m1 push-s1 m10 s10">
+            <select name="preview" id="preview">
+              <option *ngFor="let view of adOpts.views" [value]="view.value">{{view.label}}</option>
+            </select>
+          </div>
+        </div>
+          <div class="row">
+            <preview-fb-ads class="mobile" [previewValues]="previewValues" [img]="'https://www.lostdog.mx/assets/img/dogs/141.jpg'"></preview-fb-ads>
+          </div>        
+        <div class="row extra-margin-top mobile-centered extra-margin-mobile">
+          <h4 class="">Incrementa el alcance</h4>
+        </div>
+        <div class="row home-config estim-reach">
+          <div class="circle big centered circle-midle" style="color: black;">
+            <div class="content text-centered">
+              <p style="font-weight: bolder;">Alcance: </p>
+              <h4>{{reach}}<span class="ast">*</span></h4>
+              <p>Personas / {{duration}} días</p>
+            </div>
+          </div>
+        </div>
+        <div class="row home-config">
+          <div class="row extra-margin-mobile mobile-centered">
+            <h5>
+              <span class="title">Duración: </span>
+              <span class="unit days"><b>{{duration}}</b> días</span>
+            </h5>
+          </div>
+          <div class="col l8 push-m1 push-s1 m10 s10 range-width">
+            <div class="range-field">
+              <div class="limit min centered">
+                  <span>1</span>
+              </div>
+               <input type="range" id="range-duration" min="1" max="15" [(ngModel)]="duration" (change)="changeEstim()"/>
+              <div class="limit max centered">
+                  <span>15</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="subs row extra-margin-mobile">* Una estimación real se muestra al final de reporta tu mascota perdida.</p>
+      </div>
+    </div>
+  </div>
   <article class="row" style="margin:0">
     <h3 class="col l12 m12 s12 home-second-title" ></h3>
   </article>

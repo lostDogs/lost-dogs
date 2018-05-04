@@ -43,8 +43,13 @@
     </button>
     <div class="row" style="color: white; text-align: center;padding-top: 30px" [hidden]="LostService.reward === LostService.defaultReward"><p>*Si tu perro es econtrado recuerda que el <b>20%</b> de la recompensa es para Lost Dog</p></div>
   </div>
-  <div class="col l12 m12 s12 centered" *ngIf="LostService.savedSuccess && LostService.savedImgs">
+  <div class="col l12 m12 s12 " *ngIf="LostService.savedSuccess && LostService.savedImgs">
+    <div class="row text-centered">
+      <a [hidden]="!LostService.savedData.lost" (click)="router.navigateByUrl('/dog/?id=' + LostService.savedData._id);">Ver página generada <i class="material-icons" style="vertical-align: bottom;cursor: pointer;">chevron_right</i></a>
+    </div>
+    <div class="row centered">
       <dog-card  [atReviewPage]="true"  [data]="LostService.savedData"  [maxCards]="1" [cardIndex]="0"></dog-card>
+    </div>
   </div>
   <div class="col l10 push-l1 s12" *ngIf="LostService.openPayment">
   <ul class="collapsible popout"  #Description>
@@ -78,7 +83,10 @@
             </div>            
           </div>
           <div class="row text-centered">
-            <div class="heavy all-inline" style="color: white;"><p>un anuncio digital durante </p> <h5>{{fbService.defaultDuration}} día</h5> <p> con un alcance de </p> <h5> {{fbService.initialReach}} personas</h5></div>
+            <div class="heavy all-inline" style="color: white;">
+              <p>Un anuncio digital durante </p> <h5>{{fbService.defaultDuration}} día</h5> <p> con un alcance de </p> <h5> {{fbService.initialReach}} personas.</h5>
+            </div>
+            <p style="color: white;">Puedes incrementar la duración y el alcance al <b>configurar</b> tu anuncio digital.</p>
           </div>
         </div>
         <div class="col l2 push-l2" [ngClass]="{'row full-width centered': mobile}">
@@ -94,6 +102,6 @@
       </div>
     </li>
   </ul>
-    <facebook-ads [replaceVals]="exportAds"></facebook-ads>
+    <facebook-ads [replaceVals]="exportAds" (added)="setOnlyBase($event)"></facebook-ads>
   </div>
 </div>

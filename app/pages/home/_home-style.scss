@@ -62,6 +62,43 @@
   background: url(https://www.lostdog.mx/assets/img/dogsBlur1.png) repeat fixed center;
   background-position: 0px 98px;
   color: white;
+  .text-centered {
+    text-align: center;
+  }
+  .mobile-centered {
+    @media screen and (max-device-width: $screen-mobile-max) {
+      text-align: center;
+    }
+  }
+  .mobile {
+    display: none;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      display: block
+    }
+  }
+  .desktop {
+    display: block;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      display: none;
+    }
+  }
+  .home-config.estim-reach {
+    margin-left: 25%;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin-left: auto;
+    }
+  }
+  .extra-margin-bottom {
+    margin-bottom: 40px;
+  }
+  .extra-margin-top {
+    margin-top: 40px;
+  }
+  .extra-margin-mobile {
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin: 80px 0;
+    }
+  }
   .logo-huge {
     display: flex;
     //height: 700px;
@@ -116,15 +153,44 @@
     text-align: center;
     text-shadow: 5px 2px 13px black;
   }
-  actions-block {
+  actions-block, .actions-block {
     .component.row {
       background-color: #7cc0f4;
       border-top: 6px solid;
       border-bottom: 6px solid;
       padding: 40px 0;
+      preview-fb-ads .component {
+        color: black;
+        .body p {
+          padding: 0 6px;
+        }
+      }
+      ul.dropdown-content.select-dropdown li:first-of-type > span {
+        padding-left: 20px;
+      }
       @media screen and (max-device-width: $screen-mobile-max) {
         border-bottom: 15px solid white;
-        border-top: 15px solid white;        
+        border-top: 15px solid white;
+        preview-fb-ads .component { 
+          p.sponsored {
+            font-size: 1.2rem;
+          }
+          .body p {
+            font-size: 1.8rem;
+            padding: 0 10px;
+          }
+          .description { 
+            h5 {
+              font-size: 2.3rem;
+            }
+            p {
+              font-size: 1.5rem;
+            }
+          }
+        }
+        preview-fb-ads .component.mobile .body p {
+          font-size: 1.4rem;
+        }        
       }
       .action {
         color: #7cc0f4;

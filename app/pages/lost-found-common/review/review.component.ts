@@ -185,4 +185,10 @@ export class ReviewComponent {
     };
   }
 
+  public setOnlyBase(fbCustomAdded: boolean): void {
+    const baseAdCost = (+process.env.BASE_ADS_DURATION) *  (+process.env.BASE_ADS_BUDGET);
+    const basePrice =  +process.env.BASE_COST;
+    this.baseCost = fbCustomAdded ?   basePrice :  basePrice + baseAdCost;
+  }
+
 }
