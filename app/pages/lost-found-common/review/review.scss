@@ -1,5 +1,10 @@
 @import '../../../common/styles/variables.scss';
 review {
+  .size-increase-mobile {
+    @media screen and (max-device-width: $screen-mobile-max) {
+      font-size: 3.5rem;
+    }
+  }
   .text-centered {
     text-align: center;
   }
@@ -29,7 +34,7 @@ review {
         display: none;
       }
       .main-image {
-        margin: 20px 0;        
+        margin: 20px 0;
       }
     }
     dog-figure {

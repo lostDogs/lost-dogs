@@ -5,6 +5,7 @@ import {DogCardService} from '../../common/services/dog-card.service';
 import {CookieManagerService} from '../../common/services/cookie-manager.service';
 import {MailingRewardService} from '../../common/services/mailing-reward.service';
 import {GlobalFunctionService} from '../../common/services/global-function.service';
+import {LostFoundService} from '../../common/services/lost-found.service';
 
 @Component({
   selector: 'dog-ads',
@@ -48,7 +49,8 @@ export class DogAdsComponent {
     public mailingService: MailingRewardService,
     public globalService: GlobalFunctionService,
     public renderer: Renderer,
-    public domRef: ElementRef
+    public domRef: ElementRef,
+    public lostService: LostFoundService
   ) {
     this.mobile = window.screen.width <= 767;
     const actionsDom = this.actionsDom && this.actionsDom.nativeElement;
@@ -65,7 +67,6 @@ export class DogAdsComponent {
       }
     });
     this.renderer.listenGlobal('document', 'click', (event: any) => {
-      console.log('clicked', this.actionsDom);
       if (this.showActions && !(this.domRef.nativeElement.lastChild.contains(event.target) || actionsDom && actionsDom.contains(event.target) || actionsDom && actionsDom.contains(event.target) ))  {
         this.showActions = false;
       }
@@ -73,16 +74,26 @@ export class DogAdsComponent {
   }
 
   public initalCall(): void {
-    this.dogService.getDog(this.dogId).add(()=> {
-      this.mappedData = this.dogService.mapData(this.dogService.dogData);
-      if (!this.dogService.dogData || !this.mappedData || !this.dogService.dogData.lost) {
-        this.disableActions = true;
-      } 
-      if (this.dogService.dogData  && this.dogService.dogData.location && this.dogService.dogData.location.coordinates) {
-        this.location = {lat: this.dogService.dogData.location.coordinates[1], lng: this.dogService.dogData.location.coordinates[0]};
-      }
-      setTimeout(() => { $('.tooltipped').tooltip({delay: 100}); }, 450);
-    });
+    if (this.lostService.savedData && this.lostService.savedData._id === this.dogId) {
+      console.log('saved data', this.lostService.savedData);
+      this.dogService.dogData = this.lostService.savedData;
+      this.afterDataCall();
+    } else  {
+      this.dogService.getDog(this.dogId).add(()=> {
+        this.afterDataCall();
+      });
+    }
+  }
+
+  public afterDataCall(): void {
+    this.mappedData = this.dogService.mapData(this.dogService.dogData);
+    if (!this.dogService.dogData || !this.mappedData || !this.dogService.dogData.lost) {
+      this.disableActions = true;
+    } 
+    if (this.dogService.dogData  && this.dogService.dogData.location && this.dogService.dogData.location.coordinates) {
+      this.location = {lat: this.dogService.dogData.location.coordinates[1], lng: this.dogService.dogData.location.coordinates[0]};
+    }
+    setTimeout(() => { $('.tooltipped').tooltip({delay: 100}); }, 450);    
   }
 
   public ngOnInit(): void {

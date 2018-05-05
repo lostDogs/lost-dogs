@@ -45,7 +45,7 @@
   </div>
   <div class="col l12 m12 s12 " *ngIf="LostService.savedSuccess && LostService.savedImgs">
     <div class="row text-centered">
-      <a [hidden]="!LostService.savedData.lost" (click)="router.navigateByUrl('/dog/?id=' + LostService.savedData._id);">Ver página generada <i class="material-icons" style="vertical-align: bottom;cursor: pointer;">chevron_right</i></a>
+      <a  class="size-increase-mobile" [hidden]="!LostService.savedData.lost" (click)="router.navigateByUrl('/dog/?id=' + LostService.savedData._id);">Ver página generada <i class="material-icons" style="vertical-align: bottom;cursor: pointer;">chevron_right</i></a>
     </div>
     <div class="row centered">
       <dog-card  [atReviewPage]="true"  [data]="LostService.savedData"  [maxCards]="1" [cardIndex]="0"></dog-card>
