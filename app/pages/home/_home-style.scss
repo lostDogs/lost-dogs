@@ -70,6 +70,15 @@
       text-align: center;
     }
   }
+  .padding-sides {
+    padding: 0 250px;
+    @media screen and (max-device-width: $screen-mobile-max) {
+      padding: 0 50px;
+      h5 {
+        line-height: 145%;
+      }
+    }
+  }
   .mobile-home {
     display: none;
     @media screen and (max-device-width: $screen-mobile-max) {

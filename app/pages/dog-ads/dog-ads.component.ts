@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef} from '@angular/core';
+import {Component, ViewChild, ElementRef, Renderer} from '@angular/core';
 import {ActivatedRoute, Router,  Params} from '@angular/router';
 import {UserService} from '../../common/services/user.service';
 import {DogCardService} from '../../common/services/dog-card.service';
@@ -35,6 +35,9 @@ export class DogAdsComponent {
   public sendingEmail: boolean;
   public ShowSendEmail: boolean;
   public disableActions: boolean;
+  @ViewChild('Actions')
+  public actionsDom: ElementRef;
+  public showActions: boolean;
 
   constructor (
     public dogService: DogCardService,
@@ -44,8 +47,11 @@ export class DogAdsComponent {
     public cookieService: CookieManagerService,
     public mailingService: MailingRewardService,
     public globalService: GlobalFunctionService,
+    public renderer: Renderer,
+    public domRef: ElementRef
   ) {
     this.mobile = window.screen.width <= 767;
+    const actionsDom = this.actionsDom && this.actionsDom.nativeElement;
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.dogId = params.id;
       this.foundMode = params.found === 'true';
@@ -56,6 +62,12 @@ export class DogAdsComponent {
         });
       } else  {
         this.initalCall();
+      }
+    });
+    this.renderer.listenGlobal('document', 'click', (event: any) => {
+      console.log('clicked', this.actionsDom);
+      if (this.showActions && !(this.domRef.nativeElement.lastChild.contains(event.target) || actionsDom && actionsDom.contains(event.target) || actionsDom && actionsDom.contains(event.target) ))  {
+        this.showActions = false;
       }
     });
   }
@@ -197,5 +209,11 @@ export class DogAdsComponent {
       this.sendingEmail = false;
       this.ShowSendEmail = true;
     }) 
+  }
+
+  public displayActions(): void {
+    setTimeout(() => {
+      this.showActions = true;
+    }, 10)
   }
 }
