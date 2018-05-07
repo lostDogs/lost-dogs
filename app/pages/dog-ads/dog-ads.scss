@@ -255,7 +255,7 @@ div.page.dogs {
     border-top-right-radius: 30px;
     border-bottom-left-radius: unset;
     border-bottom-right-radius: unset;
-    transition: 1s;
+    transition: 0.5s;
 
     .btn,.title {
       display: block;
@@ -265,7 +265,7 @@ div.page.dogs {
       transform: translateY(-400px);
     }
     &.hidden {
-     transform: translateY(0px); 
+     transform: translateY(10px); 
     }
   }
 }
