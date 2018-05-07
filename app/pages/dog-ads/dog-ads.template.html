@@ -1,3 +1,19 @@
+<div class="loading-page-dogs" [hidden]="!dogDataloading">
+  <div class="main-title row">
+    <h4>Cargando información...</h4>
+  </div>
+  <div class="centered background-full-grey" style="height: 70vh">
+    <img class="gif" src="https://www.lostdog.mx/assets/img/loading-grey.gif" alt="Cargando..">
+  </div> 
+</div>
+<div class="loading-page-dogs" [hidden]="!(!dogDataloading && !dogService.dogData)">
+  <div class="main-title row">
+    <h4>Cargando información...</h4>
+  </div>
+  <div class="centered background-full-grey" style="height: 70vh">
+    <h4>Contenido no disponible por el momento</h4>
+  </div> 
+</div>
 <div class="page dogs" *ngIf="dogService.dogData && mappedData" [ngClass]="{'blur-filter': congrats}">
   <div class="main-title row">
     <h4 [hidden]="!dogService.dogData.lost">¡Se ha perdido {{dogService.dogData.name}}!</h4>

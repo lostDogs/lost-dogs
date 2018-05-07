@@ -36,10 +36,9 @@ export class DogAdsComponent {
   public sendingEmail: boolean;
   public ShowSendEmail: boolean;
   public disableActions: boolean;
-  @ViewChild('Actions')
-  public actionsDom: ElementRef;
   public showActions: boolean;
   public dragPosition: any;
+  public dogDataloading: boolean;
 
   constructor (
     public dogService: DogCardService,
@@ -54,7 +53,6 @@ export class DogAdsComponent {
     public lostService: LostFoundService
   ) {
     this.mobile = window.screen.width <= 767;
-    const actionsDom = this.actionsDom && this.actionsDom.nativeElement;
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.dogId = params.id;
       this.foundMode = params.found === 'true';
@@ -74,9 +72,14 @@ export class DogAdsComponent {
       console.log('saved data', this.lostService.savedData);
       this.dogService.dogData = this.lostService.savedData;
       this.afterDataCall();
-    } else  {
+    } else if (this.dogService.dogData === this.dogId) {
+      console.log('aready saved');
+      this.afterDataCall();
+    } else {
+      this.dogDataloading = true;
       this.dogService.getDog(this.dogId).add(()=> {
         this.afterDataCall();
+        this.dogDataloading = false;
       });
     }
   }
@@ -89,7 +92,10 @@ export class DogAdsComponent {
     if (this.dogService.dogData  && this.dogService.dogData.location && this.dogService.dogData.location.coordinates) {
       this.location = {lat: this.dogService.dogData.location.coordinates[1], lng: this.dogService.dogData.location.coordinates[0]};
     }
-    setTimeout(() => { $('.tooltipped').tooltip({delay: 100}); }, 450);    
+    setTimeout(() => {
+      $('.tooltipped').tooltip({delay: 100});
+      this.initInto();
+    }, 450);    
   }
 
   public ngOnInit(): void {
@@ -99,12 +105,15 @@ export class DogAdsComponent {
   }
 
   public ngAfterViewInit(): void {
+    this.dragInit();
+  }
+
+  public initInto(): void {
     if (!this.userService.missingFields.length && this.foundMode) {
       this.scrollTo(this.FOUND_QUERY);
     } else if (this.userService.missingFields.length && this.userService.isAuth) {
      this.scrollTo(this.ACCOUNT_QUERY);
     }
-    this.dragInit();
   }
 
   public ngOnDestroy(): void {
