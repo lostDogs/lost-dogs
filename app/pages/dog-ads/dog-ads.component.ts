@@ -39,6 +39,7 @@ export class DogAdsComponent {
   @ViewChild('Actions')
   public actionsDom: ElementRef;
   public showActions: boolean;
+  public dragPosition: any;
 
   constructor (
     public dogService: DogCardService,
@@ -64,11 +65,6 @@ export class DogAdsComponent {
         });
       } else  {
         this.initalCall();
-      }
-    });
-    this.renderer.listenGlobal('document', 'click', (event: any) => {
-      if (this.showActions && !(this.domRef.nativeElement.lastChild.contains(event.target) || actionsDom && actionsDom.contains(event.target) || actionsDom && actionsDom.contains(event.target) ))  {
-        this.showActions = false;
       }
     });
   }
@@ -108,6 +104,7 @@ export class DogAdsComponent {
     } else if (this.userService.missingFields.length && this.userService.isAuth) {
      this.scrollTo(this.ACCOUNT_QUERY);
     }
+    this.dragInit();
   }
 
   public ngOnDestroy(): void {
@@ -222,9 +219,25 @@ export class DogAdsComponent {
     }) 
   }
 
-  public displayActions(): void {
-    setTimeout(() => {
-      this.showActions = true;
-    }, 10)
+  public dragInit(): void {
+      this.dragPosition = {lastPosY: 0, isDragging: false};
+      const actions = document.getElementById('dog-page-actions');
+      const  actionsHam = new Hammer(actions);
+      actionsHam.add( new Hammer.Pan({ direction: Hammer.DIRECTION_VERTICAL, threshold: 0 }) );
+      actionsHam.on('pan', this.handleDrag.bind(this));
+  }
+
+  public handleDrag(ev: any): void {
+    const elem = ev.target;
+    if ( !this.dragPosition.isDragging) {
+      this.dragPosition.isDragging = true;
+      this.dragPosition.lastPosY = elem.offsetTop;
+    }
+    this.showActions = ev.deltaY > 20 ? false : ev.deltaY < -20 ? true : this.showActions;
+    let posY = ev.deltaY + this.dragPosition.lastPosY;
+    posY = posY <= 1344 ? posY : 1344;
+    posY = posY >= -160 ? posY : 155;
+    elem.style.top = posY + 'px';
+    this.dragPosition.isDragging = !ev.isFinal;
   }
 }
