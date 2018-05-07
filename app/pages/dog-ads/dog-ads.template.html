@@ -130,7 +130,7 @@
   </div>
 </div>
 
-<div class="ctas-container border-white create-account" [ngClass]="{'hover': showActions}" (click)="displayActions();" #Actions>
+<div id="dog-page-actions" class="ctas-container border-white create-account" [ngClass]="{'show': showActions,'hidden': !showActions}">
     <h5 class="title desktop-dogpage">Acciones</h5>
     <button class="btn action" (click)="Found();showActions=false;" [disabled]="foundMode || disableActions">Lo encontre! <i class="material-icons Small right">send</i></button>
     <button class="btn info tooltipped"  data-position="top" [attr.data-tooltip]="'Proximamente'" [disabled]="foundMode || disableActions">Lo he visto! <i class="material-icons Small right">add_location</i></button>
