@@ -234,10 +234,6 @@ export class DogAdsComponent {
       this.dragPosition.lastPosY = elem.offsetTop;
     }
     this.showActions = ev.deltaY > 20 ? false : ev.deltaY < -20 ? true : this.showActions;
-    let posY = ev.deltaY + this.dragPosition.lastPosY;
-    posY = posY <= 1344 ? posY : 1344;
-    posY = posY >= -160 ? posY : 155;
-    elem.style.top = posY + 'px';
     this.dragPosition.isDragging = !ev.isFinal;
   }
 }
