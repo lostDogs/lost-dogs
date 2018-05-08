@@ -1,4 +1,4 @@
-import {Injectable, ElementRef} from '@angular/core';
+import {Injectable, ElementRef, ApplicationRef} from '@angular/core';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs/Rx';
 import {Ielement} from '../components/side-block/side-block.component';
@@ -73,7 +73,7 @@ export class LostFoundService {
     public globalService: GlobalFunctionService,
     public fbService: FacebookService,
     public  openPayService: OpenSpayService,
-    
+    public appRef: ApplicationRef, 
   ) {
     this.reward = this.defaultReward;
     this.dogPicture = this.defaultDogPic;
@@ -148,6 +148,7 @@ export class LostFoundService {
       self.matchService.rangeRadius = self.matchService.rangeRadius * 8;
       self.searchService.search().add(() => {
         self.searchService.resetResults();
+        self.appRef.tick();
       });
     } else if (!stopCall) {
       self.prevResState = {
