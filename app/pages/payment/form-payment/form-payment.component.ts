@@ -140,6 +140,9 @@ export class FormPaymentComponent {
     if (this.userService.isAuth) {
       this.creaditCard.ownerName.value = this.userService.user.name + ' ' + this.userService.user.lastName + ' ' + this.userService.user.lastName2;
     }
+    if (/review/g.test(this.router.url)){
+      this.extra.noPersonalData.value = true;
+    }
   }
 
   public setReward(param: string): void  {
