@@ -106,7 +106,7 @@ export class UserService {
                 }
                 this.openErrorModal(errorMessage);
                 reject(this.location);
-              }, {timeout: 15000, maximumAge: 60000});
+              }, {timeout: 10000, maximumAge: 60000});
           } else {
               errorMessage = 'Geolocalización no es compatible con este navegador.';
               this.openErrorModal(errorMessage);

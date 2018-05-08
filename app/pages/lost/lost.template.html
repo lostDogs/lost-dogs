@@ -62,7 +62,7 @@
       <h4><b>No</b> hay resultados!</h4>
     </div>  
   </div>
-  <div class="row results" *ngIf="(lostService.pagePosition !== lostService.sequence.length - 1 && lostService.defualtSequence[lostService.pagePosition] !== 'complete') && lostService.searchService.results && !lostService.searchService.loading">
+  <div class="row results" *ngIf="(lostService.pagePosition !== lostService.sequence.length - 1 && lostService.defualtSequence[lostService.pagePosition] !== 'complete') && lostService.searchService.results && !lostService.searchService.loading && lostService.searchService.results.length ">
     <h3 class="row text-centered" [ngClass]="{'blur-filter': dogCardService.open}">Coincidencias...</h3>
     <div *ngIf="dogCardService.open" class="block-back col l12"></div>
     <dog-card *ngFor="let card of lostService.searchService.results;let i= index" (click)="userAt=i;" [cardIndex]="i" [userAt]="userAt"  [data]="card" [maxCards]="lostService.searchService.results.length"></dog-card>
