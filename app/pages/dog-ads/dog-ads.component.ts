@@ -86,6 +86,7 @@ export class DogAdsComponent {
 
   public afterDataCall(): void {
     this.mappedData = this.dogService.mapData(this.dogService.dogData);
+    console.log('mapped data', this.mappedData);
     if (!this.dogService.dogData || !this.mappedData || !this.dogService.dogData.lost) {
       this.disableActions = true;
     } 
@@ -95,6 +96,7 @@ export class DogAdsComponent {
     setTimeout(() => {
       $('.tooltipped').tooltip({delay: 100});
       this.initInto();
+      this.colorFigures();
     }, 450);    
   }
 
@@ -245,4 +247,27 @@ export class DogAdsComponent {
     this.showActions = ev.deltaY > 20 ? false : ev.deltaY < -20 ? true : this.showActions;
     this.dragPosition.isDragging = !ev.isFinal;
   }
+
+    public colorFigures() {
+    if(this.dogService.dogData.color.length > 1 && this.dogService.dogData.patternColors) {
+      const elNames: string[] = Object.keys(this.dogService.dogData.patternColors);
+      const colors: string[] = Object.values(this.dogService.dogData.patternColors);
+      elNames.forEach((elName: string, elIndex: number) => {
+        colors[elIndex] && this.fillColor(elName, colors[elIndex]);
+      });
+    } else if (this.dogService.dogData.color.length === 1) {
+      this.fillColor('back-color', this.dogService.dogData.color[0].trim());
+    }
+  }
+
+   public fillColor(elName: string, color: string): void {
+    const NotMobileQuery: string = '.dog-properties.desktop-dogpage dog-figure #' + elName + ' g';
+    const mobileDogQuery: string = '.dog-properties.mobile-dogpage dog-figure #' + elName + ' g';
+    let queryString: string = mobileDogQuery + ', ' + NotMobileQuery;
+    const thisCardDom: HTMLElement = $(queryString)[0];
+    const cardDomMobile: HTMLElement = $(queryString)[1];
+    $(thisCardDom).attr('style', 'fill:' + color);
+    $(cardDomMobile).attr('style', 'fill:' + color);
+  } 
+
 }
