@@ -141,9 +141,14 @@ export class LostFoundService {
     self.searchFilter();
     if (self.defualtSequence[self.pagePosition] === 'location') {
       // location has its own search logic see location.component
-      self.searchService.resetResults();
-      //extends range call search
-      self.matchService.extendRange();
+      self.searchService.maxDistance = self.searchService.maxDistanceDefault * 8;
+      const maxditance: number = self.searchService.queryObj.maxDistance;
+      self.searchService.queryObj.maxDistance = maxditance * 8;
+      self.searchService.maxDistance = maxditance * 8;
+      self.matchService.rangeRadius = self.matchService.rangeRadius * 8;
+      self.searchService.search().add(() => {
+        self.searchService.resetResults();
+      });
     } else if (!stopCall) {
       self.prevResState = {
         data: self.searchService.results,
