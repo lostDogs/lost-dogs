@@ -14,6 +14,9 @@
 lost, found {
   .page .form-payment {
     margin-top: 30px;
+    .no-personal {
+      display: none;
+    }
   }
   .mobile-extra-top {
     @media screen and (max-device-width: $screen-mobile-max) {
