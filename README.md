@@ -1,24 +1,36 @@
-Project structure
-
-  run:
-  npm install typings -g --save-dev
-  typings install dt~node --save --global
+# Lost Dog 
+This is the frontend code for lost dog
 
 
-run: heroku local web, to see the local app
-run: node webpack --progress, to build the app
-run: node serve, to enter in dev mode
-run: npm run serve to run locally
+## Getting Started
 
-remove file: materialize-css/node-modules/jquery
-$ rm -rf node_modules/@types/core-js for all
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-at instascan add .es6.js on camera and scanner
-add the index.d.ts and algo in de package.json
+### Prerequisites
 
-add  on typings/globals/node/index.d.ts
-declare module "*.json" {
-    const value: any;
-    export default value;
-}
+  * run: npm install typings -g --save-dev
+  *  run: typings install dt~node --save --global
 
+
+## Running the tests
+
+WIP
+
+
+## Deployment
+
+* run: heroku local web, to see the local app
+* run: node webpack --progress, to build the app
+* run: node serve, to enter in dev mode
+* run: npm run serve to run locally
+* Ask to deploy to prod
+
+## Built With
+
+* [Angular](https://angular.io/docs) - The web framework
+* [webpack](https://webpack.js.org/concepts/) -  Module bundler
+* [materlizecss](https://materializecss.com/getting-started.html) - Modern responsive front-end framework
+
+## Authors
+
+* **Chris Zepeda ** - *Initial work*
