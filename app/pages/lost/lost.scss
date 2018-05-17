@@ -12,6 +12,11 @@
 
 
 lost, found {
+  .extra-margin-bottom {
+    @media screen and (max-device-width: $screen-mobile-max) {
+      margin-bottom: 170px;
+    }
+  }
   .page .form-payment {
     margin-top: 30px;
     .no-personal {
@@ -118,10 +123,14 @@ lost, found {
     height: 100%;
     background: $lightGrey;
     .pattern-selected {
-        transform: scale(0.3);
-        top: -115px;
-        position: absolute;
-        right: 300px;
+      transform: scale(0.3);
+      top: -115px;
+      position: absolute;
+      right: 300px;
+      @media screen and (max-device-width: $screen-mobile-max) {
+        transform: scale(0.6);
+        top: 45px;        
+      }  
     }
     .img-output {
       border-bottom: 2px solid gainsboro;

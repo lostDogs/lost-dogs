@@ -59,7 +59,7 @@ export class LostFoundService {
   public openPayment: boolean;
   public openBreedSearch: boolean;
   public btnBreedSearchDom: ElementRef;
-  public patterNoColor: boolean;
+  public patterNoColor: string;
   public noBreed: any;
   public disableCompleteBtn: any;
   public baseCost: string;
@@ -87,7 +87,7 @@ export class LostFoundService {
     if (this.defualtSequence[this.pagePosition] === 'pattern') {
       if (this.patterNoColor) {
         this.globalService.clearErroMessages();
-        this.globalService.setErrorMEssage('todos los patrones debe tener color');
+        this.globalService.setErrorMEssage('a ' + this.patterNoColor + ' le falta agregar color');
         this.globalService.openErrorModal();
         return;
       }
@@ -187,8 +187,12 @@ export class LostFoundService {
       self.multipleImgAnswers && self.changePatternSequence(self.multipleImgAnswers.filter((value: any, index: number)=>{return value.disabled}));
     }
     if (self.defualtSequence[self.pagePosition] === 'pattern') {
-      self.patterNoColor = self.multipleImgAnswers.length && self.multipleImgAnswers.some((value: Ielement, index: number) => {
-          return value.name && !value.name.split(':')[1];
+      self.patterNoColor = undefined;
+      self.multipleImgAnswers.length && self.multipleImgAnswers.some((value: Ielement, index: number) => {
+          if (value.name && !value.name.split(':')[1]) {
+            self.patterNoColor = value['label'] || value.name;
+            return true;
+          }
       });
     }
     if (self.defualtSequence[self.pagePosition] === 'breed' && self.multipleImgAnswers) {

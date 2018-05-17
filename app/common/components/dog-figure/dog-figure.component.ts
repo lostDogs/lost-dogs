@@ -15,6 +15,8 @@ export class DogFigureComponent {
  public indexed: number;
  @Output()
  public dogClicked: EventEmitter<any> = new EventEmitter<any>();
+ @Input()
+ public clearParts: boolean;
   constructor(public dogCard: DogCardService)  {
     this.partLabels = {
       'back-color': {label: 'Plano', visible: true},
@@ -42,6 +44,12 @@ export class DogFigureComponent {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.display && changes.display.currentValue) {
+      if (this.clearParts) {
+        const partKeys = Object.keys(this.partLabels);
+        partKeys.forEach((val: string, index: number) => {
+          this.partLabels[val].visible = false;
+        });
+      }
       const partsDisplay: string[] = Array.isArray(changes.display.currentValue) ? changes.display.currentValue : changes.display.currentValue.split(' ');
       if (partsDisplay.length > 1) {
         partsDisplay.forEach((value: string, valueIndex: number) => {

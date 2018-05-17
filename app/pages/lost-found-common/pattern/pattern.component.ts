@@ -61,6 +61,7 @@ export class PatternComponent {
       tempArrNames.push(val.name.split(':')[0]);
     });
     this.LostService.multipleImgAnswers['pattList'] = tempArrNames.join(' ');
+    console.log('pattern list', this.LostService.multipleImgAnswers['pattList']);
   }
 
 }
