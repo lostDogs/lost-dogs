@@ -4,7 +4,7 @@
   </div>
   <div class="scroll-section" (scroll)="onScroll($event)" #ScollSection>
     <div class="row" id="rowSide" *ngFor="let rowSide of arrayOfArrays;let i= index" [ngStyle]="{'width': rowWidth}">
-        <div  *ngFor="let element of rowSide;let j= index" class="tooltipped element"  data-position="top"  [attr.data-tooltip]="element.label || element.name" id="{{element.key}}" #block (click)="!patternType && blockSelected(i,j)"  [ngClass]="{'disabled-img': element.disabled && !patternType, 'disabled-pattern': element.disabled && patternType}">
+        <div  *ngFor="let element of rowSide;let j= index" class="tooltipped element"  data-position="top"  [attr.data-tooltip]="element.label || element.name" id="{{element.key}}" #block (click)="!patternType && blockSelected(i,j)"  [ngClass]="{'disabled-img': element.disabled && !patternType, 'disabled-pattern': element.disabled && patternType, 'action draw account-completed': element.disabled && patternType && isColorSelected(element.name) }">
         <div class="img-bg" [ngStyle]="{'background-image': 'url(' + element.imgUrl + ')', 'background-color': element.bgColor }" *ngIf="!patternType">
           <div class="img-bg cover-disable" [hidden]="!element.disabled"></div>
         </div>

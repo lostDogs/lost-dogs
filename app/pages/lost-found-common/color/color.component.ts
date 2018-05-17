@@ -29,7 +29,15 @@ export class ColorComponent {
   }
 
   public changeElement(event: any): void {
-    this.LostService.multipleImgAnswers = event.filter((value: any, index: number)=>{return value.disabled});
+    this.LostService.multipleImgAnswers = event.filter((value: any, index: number) => ( value.disabled ));
     this.LostService.setAnwer();
+    this.clearPatternAns();
+  }
+
+  public clearPatternAns(): void {
+    const patIndex = this.LostService.defualtSequence.indexOf('pattern');
+    if (~patIndex) {
+      this.LostService.pageAnswers[patIndex] = undefined;
+    }
   }
 }

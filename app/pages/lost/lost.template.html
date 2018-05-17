@@ -1,7 +1,7 @@
 <section class="page">
   <div class="row title-question"  [ngClass]="{'blur-filter': dogCardService.open}">
     <h5 class="col l4  s4"  [ngClass]="{'push-l2 push-m2 push-s2': lostService.question2 && !lostService.question}" *ngIf="lostService.question2">{{lostService.question2}}</h5>
-    <h5 class="col l4 push-l4 s12" [ngClass]="{'push-l4 s12': !(lostService.question2&&lostService.question3), 's4': (lostService.question2&&lostService.question3)}" *ngIf="lostService.question">{{lostService.question}}</h5>
+    <h5 class="col l4 push-l4 s12" [ngClass]="{'push-l4 s12': !(lostService.question2&&lostService.question3), 's4': (lostService.question2&&lostService.question3), 'extra-margin-bottom': lostService.inputField && lostService.inputField.type==='pattern'}" *ngIf="lostService.question">{{lostService.question}}</h5>
     <h5 class="col l4  s4" *ngIf="lostService.question3" [ngClass]="{'push-l2 push-m2 push-s2': lostService.question3 && !lostService.question}">{{lostService.question3}}</h5>
     <div class="input-field col l2 s8 push-s2 push-l3 mobile-extra-top" [hidden]="!(lostService.inputField && lostService.inputField.type==='date')">
           <input type="text" name="question" id="question" [(ngModel)]="lostService.answer" (focus)="lostService.answer=undefined">
@@ -24,6 +24,9 @@
           <p>{{lostService.imgAnswer.name}}</p>
         </div>
     </div>
+    <div class="input-field  pattern-selected" *ngIf="lostService.inputField && lostService.inputField.type==='pattern'">
+      <dog-figure  *ngIf="lostService.multipleImgAnswers && lostService.multipleImgAnswers.pattList" [display]="lostService.multipleImgAnswers.pattList" [clearParts]="true"></dog-figure>
+    </div>    
     <div class="input-field col l3  s10 push-s1 push-l3 img-output mult" *ngIf="lostService.inputField && lostService.inputField.type==='multiple'">
       <div style="height: 45px;"></div>
       <div *ngFor="let block of lostService.multipleImgAnswers;let i= index" class="multiple"  title="caracteristicas selecionadas">

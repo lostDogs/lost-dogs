@@ -8,6 +8,7 @@ import {LostFoundService} from '../../../common/services/lost-found.service';
 
 export class PatternComponent {
   public colorsSelected: string[];
+
   constructor(public LostService: LostFoundService) {
     this.LostService.question2 = undefined;
     this.LostService.question3 = undefined;
@@ -18,7 +19,7 @@ export class PatternComponent {
   
   public ngOnInit(): void {
     this.LostService.imgAnswer = undefined;
-    this.LostService.inputField = {type: 'multiple', label: 'Patron'};
+    this.LostService.inputField = {type: 'pattern', label: 'Patron'};
     this.LostService.retrieveData = undefined;
     this.LostService.question = '¿Cuál es su patrón?';
     const colorIndex: number = this.LostService.defualtSequence.indexOf('color');
@@ -49,7 +50,18 @@ export class PatternComponent {
   }
 
   public changeElement(event: any): void {
-    this.LostService.multipleImgAnswers = event.filter((value: any, index: number)=>{return value.disabled});
+    this.LostService.multipleImgAnswers = event.filter((value: any, index: number)=>( value.disabled));
+    event && event.length && this.colorAnswer();
     this.LostService.searchService.callByTimer(this.LostService.setAnwer, this.LostService);
   }
+
+  public colorAnswer(): void {
+    let tempArrNames: string[] = [];
+    this.LostService.multipleImgAnswers.forEach((val: any, index: number) => {
+      tempArrNames.push(val.name.split(':')[0]);
+    });
+    this.LostService.multipleImgAnswers['pattList'] = tempArrNames.join(' ');
+    console.log('pattern list', this.LostService.multipleImgAnswers['pattList']);
+  }
+
 }
