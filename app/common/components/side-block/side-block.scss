@@ -19,6 +19,7 @@ side-block, side-block-dog {
       position: absolute;
       transition: 0.5s;
       color: white;
+      z-index: 105;
       // should match with padding on section
       top: 30px;
       &.left {
@@ -46,8 +47,16 @@ side-block, side-block-dog {
           display: inline-block;
           border-radius: 5px;
           box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+          .pattern.img-bg {
+            transition: padding 0.5s;
+            padding-top: 45px;
+            
+          }
          &.disabled-img, &.disabled-pattern {
             box-shadow: none;
+            .pattern.img-bg {
+             padding-top: 0;
+          }
          }
 
           .img-bg {
@@ -85,9 +94,10 @@ side-block, side-block-dog {
             }
           }
           .colors {
-            filter: grayscale(100%);
+            opacity: 0;
+            transition: opacity 0.5s;
             &.enable-colors {
-              filter:none;
+              opacity: 1;
               .color {
                 box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
                 cursor: pointer;
@@ -96,7 +106,7 @@ side-block, side-block-dog {
                 &.disabled-color {
                   box-shadow: none;
                   cursor: default;
-                  filter: grayscale(100%);
+                  filter: grayscale(100%) blur(2px);
                 }
               }
             }

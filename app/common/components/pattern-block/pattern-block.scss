@@ -1,4 +1,11 @@
 @import '../../../common/styles/variables.scss';
 pattern-block {
-  
+  side-block {
+    .disabled-pattern.draw.action::before {
+      z-index: 99;
+    }
+    .disabled-pattern.draw.action::after {
+      z-index: 99;
+    }
+  }
 }

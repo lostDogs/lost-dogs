@@ -202,11 +202,12 @@ public splicedAnswer: boolean;
       const elName: string = this.elements[indexed].name.split(':')[0];
       const queryString: string = '.sideblock ' + '#' + this.elements[indexed].key + ' dog-figure #' + elName + ' g';
       const queryAllBlocks: string = '.sideblock dog-figure #' + elName + ' g';
+      const queryAnswer: string =  '.pattern-selected dog-figure #' + elName + ' g';
       let queryColorChange: JQuery;
       if (elName === 'back-color') {
-        queryColorChange = $(queryAllBlocks);
+        queryColorChange = $(queryAllBlocks +', ' + queryAnswer);
       } else {
-        queryColorChange = $(queryString);
+        queryColorChange = $(queryString +', ' + queryAnswer);
       }
       this.colors.forEach((color: string, colorIndex: number) => {
         this.colorOptions[indexed][colorIndex].disabled = false;
@@ -327,5 +328,12 @@ public splicedAnswer: boolean;
       }
     });
     this.selectedEmitter.emit(this.multipleElements);
-  }  
+  }
+
+  public isColorSelected(elementName: string): boolean {
+    if ( typeof elementName === 'string') {
+    return !!(elementName.split(': ')[1] && /^#/g.test(elementName.split(': ')[1]));
+    }
+    return false;
+  }
 }

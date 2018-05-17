@@ -24,6 +24,9 @@
           <p>{{lostService.imgAnswer.name}}</p>
         </div>
     </div>
+    <div class="input-field  pattern-selected" *ngIf="lostService.inputField && lostService.inputField.type==='pattern'">
+      <dog-figure  *ngIf="lostService.multipleImgAnswers && lostService.multipleImgAnswers.pattList" [display]="lostService.multipleImgAnswers.pattList"></dog-figure>
+    </div>    
     <div class="input-field col l3  s10 push-s1 push-l3 img-output mult" *ngIf="lostService.inputField && lostService.inputField.type==='multiple'">
       <div style="height: 45px;"></div>
       <div *ngFor="let block of lostService.multipleImgAnswers;let i= index" class="multiple"  title="caracteristicas selecionadas">
