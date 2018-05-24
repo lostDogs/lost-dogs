@@ -61,6 +61,10 @@ export class FacebookAdsComponent {
       this.setFinalReach();
       this.fbService.mapAd(undefined, undefined, Object.assign(this.previewValues, {img: this.replaceVals.img}), this.replaceVals.latLong);
     });
+    setTimeout(() => {
+      this.mainCollapse.click();
+      this.adCreative.click();
+    }, 600);
   }
 
   public rereplaceHolders(): void {
@@ -82,7 +86,13 @@ export class FacebookAdsComponent {
   }
 
   public addSet(): void {
+    const extraInfo = $('#extra-info .row.collapsible-header');
     this.mainCollapse.click();
+    setTimeout(() => {
+      if (extraInfo.hasClass('active')) {
+        extraInfo.click();
+      }
+    }, 600);
     this.mainCollapse.addClass('addedSet');
     this.checked = true;
     this.added.emit(this.checked);
