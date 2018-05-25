@@ -18,6 +18,7 @@ export class DogAdsComponent {
   public dogId: string;
   // dog converted values.
   public mappedData: any;
+  public rewardtoShow: string;
   public mobile: boolean;
   // converting location array to location google's obj
   public location: {lat: number, lng: number};
@@ -93,6 +94,9 @@ export class DogAdsComponent {
     if (this.dogService.dogData  && this.dogService.dogData.location && this.dogService.dogData.location.coordinates) {
       this.location = {lat: this.dogService.dogData.location.coordinates[1], lng: this.dogService.dogData.location.coordinates[0]};
     }
+    if (this.dogService.dogData && this.dogService.dogData.reward) {
+      this.rewardtoShow = (+this.dogService.dogData.reward * 0.8).toFixed(2) + '';
+    }    
     setTimeout(() => {
       $('.tooltipped').tooltip({delay: 100});
       this.initInto();
@@ -235,7 +239,13 @@ export class DogAdsComponent {
       const actions = document.getElementById('dog-page-actions');
       const  actionsHam = new Hammer(actions);
       actionsHam.add( new Hammer.Pan({ direction: Hammer.DIRECTION_VERTICAL, threshold: 0 }) );
+      actionsHam.add( new Hammer.Tap({event: 'singletap'}) );
       actionsHam.on('pan', this.handleDrag.bind(this));
+      actionsHam.on('singletap', this.handleTap.bind(this));
+  }
+
+  public handleTap(ev: any): void {
+    this.showActions = !this.showActions;
   }
 
   public handleDrag(ev: any): void {
