@@ -101,6 +101,9 @@ export class ReviewComponent {
     this.LostService.openPayment = true;
     setTimeout(() => {
       const scrollTo: number = this.descriptionDom.nativeElement.offsetTop + 120;
+      setTimeout(() => {
+        $('#extra-info .row.collapsible-header').click();
+      }, 800);
         $('html, body').animate({ scrollTop: scrollTo }, 600);
     }, 5);
   }

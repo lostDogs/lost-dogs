@@ -21,7 +21,7 @@
   </div>
   <article class="main-content row">
     <div class="row centered"><h4 class="round-white">{{mappedData.breed}}</h4></div>
-    <div class="row centered color-money"><h4 [hidden]="!dogService.dogData.reward">$ {{dogService.dogData.reward}} MXN</h4></div>
+    <div class="row centered color-money"><h4 [hidden]="!dogService.dogData.reward">$ {{rewardtoShow}} MXN</h4></div>
     <figure class="col l4 push-l1 s12 m12 no-space" >
       <div class="row">
         <div class="main-image" [ngStyle]="{'background-image': 'url(' + (dogService.dogData.images && dogService.dogData.images.length && dogService.dogData.images[0].image_url) + ')'}">
