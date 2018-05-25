@@ -239,13 +239,7 @@ export class DogAdsComponent {
       const actions = document.getElementById('dog-page-actions');
       const  actionsHam = new Hammer(actions);
       actionsHam.add( new Hammer.Pan({ direction: Hammer.DIRECTION_VERTICAL, threshold: 0 }) );
-      actionsHam.add( new Hammer.Tap({event: 'singletap'}) );
       actionsHam.on('pan', this.handleDrag.bind(this));
-      actionsHam.on('singletap', this.handleTap.bind(this));
-  }
-
-  public handleTap(ev: any): void {
-    this.showActions = !this.showActions;
   }
 
   public handleDrag(ev: any): void {
