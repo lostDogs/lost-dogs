@@ -135,6 +135,14 @@ export class DogAdsComponent {
       this.scrollTo(this.FOUND_QUERY);
     }, 1000);
   }
+
+  public seen(): void {
+    this.showActions = false;
+    setTimeout(()=>{ 
+      this.scrollTo(this.FOUND_QUERY);
+    }, 1000);
+  }  
+
   // check for session and if not ask the user to login or create account.
   public sessionLogin(param: string): void {
     if (!this.userService.isAuth) {
