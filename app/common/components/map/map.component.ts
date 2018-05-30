@@ -1,5 +1,6 @@
 import {Component, Output, Input, EventEmitter, ElementRef, ViewChild, SimpleChanges} from '@angular/core';
 import {UserService} from '../../services/user.service';
+const seenSvg = require('../../svg/seenloc.svg');
 
 @Component({
   selector: 'map',
@@ -10,7 +11,7 @@ import {UserService} from '../../services/user.service';
 export class MapComponent {
  @ViewChild('map') mapDiv: ElementRef;
  public mapDef: google.maps.Map;
- public marker: google.maps.Marker;
+ public seenMarker: google.maps.Marker;
  public geocoder: google.maps.Geocoder;
 public custom: CustomMarker;
  @Input()
@@ -25,6 +26,8 @@ public custom: CustomMarker;
  public rangeRadius: number;
  @Input()
  public dogPage: boolean;
+ @Input()
+ public seenMap: boolean;
 
   constructor(public el: ElementRef, public userService: UserService) {}
 
@@ -121,8 +124,11 @@ public custom: CustomMarker;
     ctrl.locationAdressEmiter.emit(ctrl.locationAdress);
     ctrl.geocoder.geocode({location: location}, (results: any, status: any) => {
       if (status === 'OK') {
-        if (results[1]) {
+        if (results[1] && !ctrl.seenMap) {
           ctrl.locationAdress = results[1].formatted_address;
+          ctrl.locationAdressEmiter.emit(ctrl.locationAdress);
+        } else if (results[0] && ctrl.seenMap) {
+          ctrl.locationAdress = results[0].formatted_address;
           ctrl.locationAdressEmiter.emit(ctrl.locationAdress);
         }
       }else {
@@ -149,25 +155,27 @@ public custom: CustomMarker;
   public addMarker(location: any, map: google.maps.Map, ctrl: any, markerOpts?: Object): void {
     let markerConf: any = {
       position: location,
-      map: map
+      map: map,
+      icon: seenSvg
     };
     // merge both configurations
     if (markerOpts) {
       Object.assign(markerConf, markerOpts);
     }
     //erease previous marker so that we can only have one.
-    if (ctrl.marker) {
-      ctrl.marker.setMap(null);
+    if (ctrl.custom && !ctrl.seenMap) {
       ctrl.custom.remove();
+    }
+    if (ctrl.seenMarker) {
+     ctrl.seenMarker.setMap(null);
     }
      if (typeof location.lat === 'function') {
       location = {lat: location.lat(), lng: location.lng()};
     }
-    ctrl.marker = new google.maps.Marker(markerConf);
-    if (ctrl.rangeRadius) {
-      ctrl.custom = new CustomMarker(location, map, ctrl.rangeRadius);
-    } else {
-      ctrl.custom = new CustomMarker(location, map);
+    if (!ctrl.seenMap) {
+      ctrl.custom = new CustomMarker(location, map, ctrl.rangeRadius || undefined);
+    }else {
+      ctrl.seenMarker = new CustomMarker(location, map, 0.05, '#3AA7DA', {icon: seenSvg})
     }
   }
 }
@@ -181,13 +189,21 @@ export class CustomMarker extends google.maps.OverlayView {
   // distance in km wich is radius
   public distance: number = 0.5;
   public earthRadius: number = 6371;
+  public defaultMarker: any;
+  public color: string;
 
-  constructor(latlng: {lat: any, lng: any}, map: google.maps.Map, range?: number) {
+  constructor(latlng: {lat: any, lng: any}, map: google.maps.Map, range?: number, color?: string, configOpt?: Object) {
     super();
+    this.color = color || '#ff1744';
     this.distance = range || this.distance;
+
     if (typeof latlng.lat === 'function') {
       latlng = {lat: latlng.lat(), lng: latlng.lng()};
     }
+    const markerConf = {position: latlng, map: map};
+    if (configOpt) {
+      Object.assign(markerConf, configOpt);
+    }    
     // Formulas from http://janmatuschek.de/LatitudeLongitudeBoundingCoordinates#SphereRadiusc
     const r = this.distance / this.earthRadius;
     const latmin = this.radToDeg(this.degToRad(latlng.lat) - r);
@@ -199,6 +215,7 @@ export class CustomMarker extends google.maps.OverlayView {
     this.latlngMin =  new google.maps.LatLng(latmin, lngmin);
     this.latlngMax = new google.maps.LatLng(latmax, lngmax);
     this.setMap(map);
+    this.defaultMarker = new google.maps.Marker(markerConf);
   }
 
   public draw() {
@@ -209,7 +226,7 @@ export class CustomMarker extends google.maps.OverlayView {
     const pointMax = this.getProjection().fromLatLngToDivPixel(this.latlngMax);
     if (!div) {
       div = this.div = document.createElement('div');
-      div.style.color = '#ff1744';
+      div.style.color = this.color;
       div.className = 'range sonar sonar-infinite sonar-stroke';
       google.maps.event.addDomListener(div, 'click', (event: any) => {
       google.maps.event.trigger(me, 'click');
@@ -231,6 +248,7 @@ export class CustomMarker extends google.maps.OverlayView {
 
   public remove() {
     if (this.div) {
+      this.defaultMarker.setMap(null);
       this.div.parentNode.removeChild(this.div);
     }
   }

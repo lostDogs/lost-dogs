@@ -23,6 +23,7 @@ export class DogAdsComponent {
   // converting location array to location google's obj
   public location: {lat: number, lng: number};
   public foundMode: boolean;
+  public seenMode: boolean;
   // fireworks animation.
   public congrats: boolean;
   // needed to scroll to the found mode block in the dom.
@@ -40,6 +41,8 @@ export class DogAdsComponent {
   public showActions: boolean;
   public dragPosition: any;
   public dogDataloading: boolean;
+  public seenAddress: string;
+  public seenLatLong: any;
 
   constructor (
     public dogService: DogCardService,
@@ -128,7 +131,7 @@ export class DogAdsComponent {
 
   public Found(): void {
     this.congrats = true;
-    setTimeout(()=>{ 
+    setTimeout(() => { 
       this.congrats = false;
       this.sessionLogin('found');
       this.foundMode = true;
@@ -137,9 +140,10 @@ export class DogAdsComponent {
   }
 
   public seen(): void {
-    this.showActions = false;
-    setTimeout(()=>{ 
-      this.scrollTo(this.FOUND_QUERY);
+    this.seenMode = true;
+    this.disableActions = true;
+    setTimeout(() => { 
+      this.scrollTo('#map-location');
     }, 1000);
   }  
 

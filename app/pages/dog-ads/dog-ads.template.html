@@ -67,11 +67,12 @@
       </div>
     </div>
   </article>
-  <div class="row bottom-top-pad margin-spec">
-    <div class="col l10  s12 m12 no-space border-white border-rounded bottom-no-round">
-      <h4 class="title round-white text-centered bottom-no-round color-grey no-margin extra-small-padding">Se perdio por </h4> 
-      <h5 class="extra-small-padding ellipsis-trim text-centered"> {{ dogService.dogData.address}}</h5>
-      <map  [location]="location" [dogPage]="true"></map>
+  <div class="row bottom-top-pad margin-spec" id="map-location">
+    <div class="col l10  s12 m12 no-space border-white border-rounded bottom-no-round create-account">
+      <h4 class="title round-white text-centered bottom-no-round color-grey no-margin extra-small-padding">{{!seenMode  ? 'Se perdio por' : '¿Dónde lo viste?'}}</h4> 
+      <h5 class="extra-small-padding text-centered"> {{ !seenMode ? dogService.dogData.address : (seenAddress || 'Has click en el mapa')}}</h5>
+      <div class="row text-centered" [hidden]="!seenMode" (click)="nextSeen=true;scrollTo('.seen-review')"><button class="waves-effect btn action" [disabled]="!seenLatLong">Agregar<i class="medium material-icons right">chevron_right</i></button></div>
+      <map [location]="location" [dogPage]="true" [seenMap]="seenMode" (locationAdressEmiter)="seenAddress = seenMode ? $event : undefined" (locationEmiter)="seenLatLong = seenMode ? $event : undefined"></map>
     </div>
   </div>
   <div class="account-location" #Complete></div>
@@ -84,7 +85,26 @@
       </button>
     </div>      
   </div>
-  <div class="review-location" #FoundBlock></div>
+  <div class="row no-space seen-review create-account" [hidden]="!(nextSeen && seenMode)">
+    <form name="review seen location"  #seenReview="ngForm" (ngSubmit)="seenReviewSubmit" class="form-create-account">
+      <div class="col l10 m10 s10 push-m1 push-s1">
+        <h5><b>Lo viste en: </b> {{seenAddress}}</h5>
+        <h6 class="text-centered" style="color: #9e9e9e" [hidden]="userService.isAuth">Agrega tu correo para completar la acción</h6>
+        <h6 class="text-centered" style="color: #9e9e9e" [hidden]="!userService.isAuth">Revisa si la información es correcta.</h6>
+      </div>
+      <div class="row" [hidden]="userService.isAuth">
+        <div class="col l4 m10 s10 push-m1 push-s1 input-field alt-black push-l3">
+          <input type="email" name="seen-email" id="seen-email"  [(ngModel)]="userEmail">
+          <label for="seen-email">
+            <div>correo</div>
+          </label>
+        </div>
+      </div>
+      <div class="row text-centered">
+        <button class="waves-effect btn action">Aceptar</button>
+      </div>
+    </form>    
+  </div>
   <div class="row reivew no-space" [hidden]="!foundMode || userService.missingFields.length">
     <div class="col l12 m12 s12 steps-block text-centered" [hidden]="evidenceNext">
       <h4>Agrega una evidencia de que tienes la mascota.</h4>
@@ -149,7 +169,7 @@
 <div id="dog-page-actions" class="ctas-container border-white create-account" [ngClass]="{'show': showActions,'hidden': !showActions}" (click)="showActions=!showActions">
     <h5 class="title desktop-dogpage">Acciones</h5>
     <button class="btn action" (click)="Found();showActions=false;" [disabled]="foundMode || disableActions">Lo encontre! <i class="material-icons Small right">send</i></button>
-    <button class="btn info tooltipped"  data-position="top" [attr.data-tooltip]="'Proximamente'" [disabled]="foundMode || disableActions">Lo he visto! <i class="material-icons Small right">add_location</i></button>
+    <button class="btn info"  (click)="seen();showActions=false;"  [disabled]="foundMode || disableActions">Lo he visto! <i class="material-icons Small right">add_location</i></button>
     <button class="btn info tooltipped" data-position="top" [attr.data-tooltip]="'Proximamente'" [disabled]="foundMode || disableActions">Subscribir<i class="material-icons Small right">feedback</i></button>
 </div>
 
