@@ -155,7 +155,7 @@ public setFoundDogs(): void {
       let mappedData: ImappedData = {
         gender: this.retrieveValue(dogData.male, this.genders),
         colors: this.getKeysFromValues(dogData.color, this.colors).join(', '),
-        date: this.getMappedDate(dogData.found_date),
+        date: dogData.found_date ? this.getMappedDate(dogData.found_date) : {name: 'mayo 4 2016', short: '20/12012/2'},
         size: this.retrieveValue(dogData.size_id, this.sizes),
         breed: this.getArrayOfStrings(dogData.kind, this.breeds, 'name').join(', ').replace(/:,/g, ': '),
         accessories: this.retrieveValues(dogData.accessories_id, this.accessories)
