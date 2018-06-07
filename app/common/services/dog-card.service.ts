@@ -42,6 +42,8 @@ export class DogCardService {
   public editData: any;
   public dogenpoint: string;
   public editImgSucess: boolean;
+  public subscribeSucess: boolean;
+  public seenBySuccess: boolean;
 
   constructor(public api: ApiService, public userService: UserService, public globalService: GlobalFunctionService, private searchService: SearchService, public router: Router) {
     this.dogenpoint = this.api.API_PROD + 'dogs'
@@ -218,4 +220,51 @@ public setFoundDogs(): void {
     return {name: fullDate, short: shortDate};
   }
 
+  public subscribe(dogId: string): Subscription {
+    const headers: any = {
+      'Content-Type': 'application/json',
+      'Authorization': 'token ' + this.userService.token
+    };
+    this.subscribeSucess = false;
+    const url: string = this.dogenpoint + '/' + dogId + '/subscribe' ;    
+    return this.api.put(url, {'subscriber': this.userService.user.id}, headers).subscribe(
+      data => {
+        this.subscribeSucess = true;
+      },
+      error => {
+        this.subscribeSucess = false;
+        this.globalService.clearErroMessages();
+        this.globalService.setErrorMEssage('Por el momento no es posible subscribirse');
+        this.globalService.openErrorModal();
+      }      
+    );
+  }
+
+  public seen(seenAddress: string, seenLatLong: any, dateSeen: Date, dogId: string): Subscription {
+    const headers: any = {
+      'Content-Type': 'application/json',
+      'Authorization': 'token ' + this.userService.token
+    };
+    const url: string = this.dogenpoint + '/' + dogId + '/seen' ;
+    const objs = {
+      'seenBy': {
+        'userId': this.userService.user.id,
+        'coordinates': [seenLatLong.lng, seenLatLong.lat],
+        'address': seenAddress,
+        'date': new Date()
+      }
+    }
+    this.seenBySuccess = false;
+    return this.api.put(url, objs, headers).subscribe(
+      data => {
+        this.seenBySuccess = true;
+      },
+      error => {
+        this.seenBySuccess = false;
+        this.globalService.clearErroMessages();
+        this.globalService.setErrorMEssage('Por el momento no es posible agregar la ubicación');
+        this.globalService.openErrorModal();
+      }      
+    );
+  }  
 }

@@ -86,12 +86,24 @@
     </div>      
   </div>
   <div class="row no-space seen-review create-account" [hidden]="!(nextSeen && seenMode)">
-    <form name="review seen location"  #seenReview="ngForm" (ngSubmit)="seenReviewSubmit" class="form-create-account">
+    <form name="review seen location"  #seenReview="ngForm" (ngSubmit)="putApi()" class="form-create-account">
       <div class="col l10 m10 s10 push-m1 push-s1">
-        <h5><b>Lo viste en: </b> {{seenAddress}}</h5>
+        <h5 class="text-centered"><b>Lo viste en </b></h5>
+        <h5 class="text-centered">{{seenAddress}}</h5>
+        <h5 class="text-centered"><b>El día </b></h5>
+        <div class="row">
+          <div class="input-field alt-black col l4 s12  push-l4"  [ngClass]="{'wrong-red': !seenDate}">
+            <input type="text" name="seen date" id="seen-date" class="text-centered"  [(ngModel)]="seenDate"/>
+          </div>
+        </div>
+        <date-picker  [seletedDate]="seenDate"  (seletedDateEmitter)="seenDate=$event"></date-picker>
         <h6 class="text-centered" style="color: #9e9e9e">Revisa si la información es correcta.</h6>
         <div class="row text-centered">
-          <button class="waves-effect btn action">Aceptar</button>
+          <button class="waves-effect btn action" type="submit" [disabled]="loadingPutApi || dogService.seenBySuccess || !seenDate">Aceptar</button>
+        </div>
+        <div class="row text-centered"  [hidden]="!dogService.seenBySuccess">
+          <h5>Se ha mando la ubicación!</h5>
+          <i class="material-icons large">check_circle</i>
         </div>
       </div>
     </form>
@@ -106,7 +118,11 @@
         <li><h5>Alguien la  haya <b>encontrado</b>.</h5></li>
       </ul>
       <div class="row text-centered">
-        <button class="waves-effect btn action">Aceptar</button>
+        <button class="waves-effect btn action" (click)="putApi()" [disabled]="loadingPutApi || dogService.subscribeSucess">Aceptar</button>
+      </div>
+      <div class="row text-centered"  [hidden]="!dogService.subscribeSucess">
+        <h5>Te has subscrito!</h5>
+        <i class="material-icons large">check_circle</i>
       </div>
     </div>
   </div>  

@@ -44,6 +44,8 @@ export class DogAdsComponent {
   public dogDataloading: boolean;
   public seenAddress: string;
   public seenLatLong: any;
+  public loadingPutApi: boolean;
+  public seenDate: string;
 
   constructor (
     public dogService: DogCardService,
@@ -145,25 +147,28 @@ export class DogAdsComponent {
       this.scrollTo(this.FOUND_QUERY);
       this.sessionLogin('found');
       this.foundMode = true;
+      this.seenMode = this.subscribeMode = false;
     }, 1000);
   }
 
   public seen(): void {
     this.seenMode = true;
     this.disableActions = true;
+    this.foundMode = this.subscribeMode = false;
     this.sessionLogin('seen');
     setTimeout(() => { 
       this.scrollTo('#map-location');
-    }, 1000);
+    }, 700);
   }
 
   public subscribe(): void {
     this.subscribeMode = true;
-    this.disableActions = false;
+    this.disableActions = true;
+    this.foundMode = this.seenMode = false;
     this.sessionLogin('subscribe');
     setTimeout(() => { 
       this.scrollTo('.subscription-review');
-    }, 1000);
+    }, 700);
   }
 
   public cancelAction(): void {
@@ -311,6 +316,28 @@ export class DogAdsComponent {
     const cardDomMobile: HTMLElement = $(queryString)[1];
     $(thisCardDom).attr('style', 'fill:' + color);
     $(cardDomMobile).attr('style', 'fill:' + color);
-  } 
+  }
+
+  public putApi(): void {
+    this.loadingPutApi = true;
+    if(this.seenMode) {
+      const date = new Date(this.seenDate);
+      if (!date.getTime()) {
+        this.globalService.clearErroMessages();
+        this.globalService.setErrorMEssage('Fecha invalida');
+        this.globalService.openErrorModal();
+        this.seenDate = undefined;
+        this.loadingPutApi = false;
+        return;
+      }
+      this.dogService.seen(this.seenAddress, this.seenLatLong, date, this.dogId).add(() => {
+         this.loadingPutApi = false;
+      });
+    } else {
+      this.dogService.subscribe(this.dogId).add(() => {
+        this.loadingPutApi = false;
+      });
+    }
+  }
 
 }
