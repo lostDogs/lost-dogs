@@ -24,6 +24,7 @@ export class DogAdsComponent {
   public location: {lat: number, lng: number};
   public foundMode: boolean;
   public seenMode: boolean;
+  public subscribeMode: boolean;
   // fireworks animation.
   public congrats: boolean;
   // needed to scroll to the found mode block in the dom.
@@ -60,6 +61,8 @@ export class DogAdsComponent {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.dogId = params.id;
       this.foundMode = params.found === 'true';
+      this.seenMode = params.seen === 'true';
+      this.subscribeMode = params.subscribe === 'true';
       if (!this.userService.token && this.userService.noAuthSubs) {
         this.userService.noAuthSubs.unsubscribe();
         this.userService.login(undefined, undefined, true).add(() => {
@@ -73,11 +76,9 @@ export class DogAdsComponent {
 
   public initalCall(): void {
     if (this.lostService.savedData && this.lostService.savedData._id === this.dogId) {
-      console.log('saved data', this.lostService.savedData);
       this.dogService.dogData = this.lostService.savedData;
       this.afterDataCall();
     } else if (this.dogService.dogData === this.dogId) {
-      console.log('aready saved');
       this.afterDataCall();
     } else {
       this.dogDataloading = true;
@@ -90,7 +91,6 @@ export class DogAdsComponent {
 
   public afterDataCall(): void {
     this.mappedData = this.dogService.mapData(this.dogService.dogData);
-    console.log('mapped data', this.mappedData);
     if (!this.dogService.dogData || !this.mappedData || !this.dogService.dogData.lost) {
       this.disableActions = true;
     } 
@@ -118,10 +118,19 @@ export class DogAdsComponent {
   }
 
   public initInto(): void {
+    console.log('subscribeMode', this.subscribeMode);
+    console.log('this.userService.missingFields.length', this.userService.missingFields.length);
     if (!this.userService.missingFields.length && this.foundMode) {
       this.scrollTo(this.FOUND_QUERY);
     } else if (this.userService.missingFields.length && this.userService.isAuth) {
      this.scrollTo(this.ACCOUNT_QUERY);
+    } else if (!this.userService.missingFields.length && this.seenMode) {
+      this.disableActions = true;
+      this.scrollTo('#map-location');
+    }else if (!this.userService.missingFields.length && this.subscribeMode) {
+      console.log('yes');
+      this.disableActions = true;
+      this.scrollTo('#subscription-review');
     }
   }
 
@@ -133,24 +142,42 @@ export class DogAdsComponent {
     this.congrats = true;
     setTimeout(() => { 
       this.congrats = false;
+      this.scrollTo(this.FOUND_QUERY);
       this.sessionLogin('found');
       this.foundMode = true;
-      this.scrollTo(this.FOUND_QUERY);
     }, 1000);
   }
 
   public seen(): void {
     this.seenMode = true;
     this.disableActions = true;
+    this.sessionLogin('seen');
     setTimeout(() => { 
       this.scrollTo('#map-location');
     }, 1000);
-  }  
+  }
+
+  public subscribe(): void {
+    this.subscribeMode = true;
+    this.disableActions = false;
+    this.sessionLogin('subscribe');
+    setTimeout(() => { 
+      this.scrollTo('.subscription-review');
+    }, 1000);
+  }
+
+  public cancelAction(): void {
+    this.seenMode = this.foundMode = this.subscribeMode = false;
+    this.disableActions = false;
+    window.scroll(0,0);
+  }
+
 
   // check for session and if not ask the user to login or create account.
   public sessionLogin(param: string): void {
     if (!this.userService.isAuth) {
-      const url = `${this.router.url}&${param}=true`;
+      const trimmedUrl = this.router.url.split('&')[0];
+       const url = `${trimmedUrl}&${param}=true`;
       this.userService.previousUrl = url;
       this.cookieService.setCookie('dog-page-url', url);
       this.router.navigateByUrl('/login');

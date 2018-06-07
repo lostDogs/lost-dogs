@@ -89,22 +89,28 @@
     <form name="review seen location"  #seenReview="ngForm" (ngSubmit)="seenReviewSubmit" class="form-create-account">
       <div class="col l10 m10 s10 push-m1 push-s1">
         <h5><b>Lo viste en: </b> {{seenAddress}}</h5>
-        <h6 class="text-centered" style="color: #9e9e9e" [hidden]="userService.isAuth">Agrega tu correo para completar la acción</h6>
-        <h6 class="text-centered" style="color: #9e9e9e" [hidden]="!userService.isAuth">Revisa si la información es correcta.</h6>
-      </div>
-      <div class="row" [hidden]="userService.isAuth">
-        <div class="col l4 m10 s10 push-m1 push-s1 input-field alt-black push-l3">
-          <input type="email" name="seen-email" id="seen-email"  [(ngModel)]="userEmail">
-          <label for="seen-email">
-            <div>correo</div>
-          </label>
+        <h6 class="text-centered" style="color: #9e9e9e">Revisa si la información es correcta.</h6>
+        <div class="row text-centered">
+          <button class="waves-effect btn action">Aceptar</button>
         </div>
       </div>
+    </form>
+  </div>
+  <div id="subscription-review"></div>
+  <div class="row no-space subscription-review create-account" [hidden]="!(subscribeMode && userService.isAuth)">
+    <div class="col l10 m10 s10 push-m1 push-s1 text-centered">
+      <h5><b>Al subscribirte ...</b></h5>
+      <p>Te llegará información de esta mascota cuando: </p>
+      <ul>
+        <li><h5>Alguien la haya <b>visto</b>.</h5></li>
+        <li><h5>Alguien la  haya <b>encontrado</b>.</h5></li>
+      </ul>
       <div class="row text-centered">
         <button class="waves-effect btn action">Aceptar</button>
       </div>
-    </form>    
-  </div>
+    </div>
+  </div>  
+    <div class="review-location"></div>
   <div class="row reivew no-space" [hidden]="!foundMode || userService.missingFields.length">
     <div class="col l12 m12 s12 steps-block text-centered" [hidden]="evidenceNext">
       <h4>Agrega una evidencia de que tienes la mascota.</h4>
@@ -170,7 +176,10 @@
     <h5 class="title desktop-dogpage">Acciones</h5>
     <button class="btn action" (click)="Found();showActions=false;" [disabled]="foundMode || disableActions">Lo encontre! <i class="material-icons Small right">send</i></button>
     <button class="btn info"  (click)="seen();showActions=false;"  [disabled]="foundMode || disableActions">Lo he visto! <i class="material-icons Small right">add_location</i></button>
-    <button class="btn info tooltipped" data-position="top" [attr.data-tooltip]="'Proximamente'" [disabled]="foundMode || disableActions">Subscribir<i class="material-icons Small right">feedback</i></button>
+    <button class="btn info" (click)="subscribe();showActions=false;" [disabled]="foundMode || disableActions">Subscribir<i class="material-icons Small right">feedback</i></button>
+    <div class="row cancel-block">
+      <a (click)="cancelAction();" [hidden]="!(foundMode || disableActions)">Cancelar</a>
+    </div>
 </div>
 
 <span class="svg" [hidden]="!congrats">
