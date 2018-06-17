@@ -111,7 +111,7 @@
   <div id="subscription-review"></div>
   <div class="row no-space subscription-review create-account" [hidden]="!(subscribeMode && userService.isAuth)">
     <div class="col l10 m10 s10 push-m1 push-s1 text-centered">
-      <h5><b>Al subscribirte ...</b></h5>
+      <h5><b>Al suscribirte ...</b></h5>
       <p>Te llegará información de esta mascota cuando: </p>
       <ul>
         <li><h5>Alguien la haya <b>visto</b>.</h5></li>
@@ -121,7 +121,7 @@
         <button class="waves-effect btn action" (click)="putApi()" [disabled]="loadingPutApi || dogService.subscribeSucess">Aceptar</button>
       </div>
       <div class="row text-centered"  [hidden]="!dogService.subscribeSucess">
-        <h5>Te has subscrito!</h5>
+        <h5>Te has suscrito!</h5>
         <i class="material-icons large">check_circle</i>
       </div>
     </div>
@@ -192,7 +192,7 @@
     <h5 class="title desktop-dogpage">Acciones</h5>
     <button class="btn action" (click)="Found();showActions=false;" [disabled]="foundMode || disableActions">Lo encontre! <i class="material-icons Small right">send</i></button>
     <button class="btn info"  (click)="seen();showActions=false;"  [disabled]="foundMode || disableActions">Lo he visto! <i class="material-icons Small right">add_location</i></button>
-    <button class="btn info" (click)="subscribe();showActions=false;" [disabled]="foundMode || disableActions">Subscribir<i class="material-icons Small right">feedback</i></button>
+    <button class="btn info" (click)="subscribe();showActions=false;" [disabled]="foundMode || disableActions">Suscribir<i class="material-icons Small right">feedback</i></button>
     <div class="row cancel-block">
       <a (click)="cancelAction();" [hidden]="!(foundMode || disableActions)">Cancelar</a>
     </div>

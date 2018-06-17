@@ -120,8 +120,6 @@ export class DogAdsComponent {
   }
 
   public initInto(): void {
-    console.log('subscribeMode', this.subscribeMode);
-    console.log('this.userService.missingFields.length', this.userService.missingFields.length);
     if (!this.userService.missingFields.length && this.foundMode) {
       this.scrollTo(this.FOUND_QUERY);
     } else if (this.userService.missingFields.length && this.userService.isAuth) {
@@ -130,7 +128,6 @@ export class DogAdsComponent {
       this.disableActions = true;
       this.scrollTo('#map-location');
     }else if (!this.userService.missingFields.length && this.subscribeMode) {
-      console.log('yes');
       this.disableActions = true;
       this.scrollTo('#subscription-review');
     }
@@ -228,10 +225,8 @@ export class DogAdsComponent {
  //when FB login
   public userCreatePromise(postUser: any): void {
     if (postUser) {
-      console.log('getting postUser >', postUser);
       postUser().add(() => {
         if (this.userService.user.phoneNumber && this.userService.user.phoneNumber.number) {
-          console.log('user created! ');
           this.createUser = false;
           this.userService.missingFields = [];
         } else {
