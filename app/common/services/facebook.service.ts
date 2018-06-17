@@ -35,7 +35,7 @@ export class FacebookService {
 
   constructor(public userService: UserService, public api: ApiService, public router: Router, public cookies: CookieManagerService, public globalService: GlobalFunctionService ) {
     this.userData = { address: {} };
-    this.FB = window['FB'];name
+    this.FB = window['FB'];
   }
 
   public fbAsyncInit(): void {
