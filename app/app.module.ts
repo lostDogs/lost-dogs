@@ -25,6 +25,9 @@ import {FacebookService} from './common/services/facebook.service';
 import {FacebookAdsComponent} from './common/components/facebook-ads/facebook-ads.component';
 import {previewFbAdsComponent} from './common/components/preview-fb-ads/preview-fb-ads.component';
 import {ActionsBlockComponent} from './common/components/actions-block/actions-block.component';
+import {LostFoundService} from './common/services/lost-found.service';
+import {MatchMakerService} from './common/services/match-maker.service';
+import {SearchService} from './common/services/search.service';
 /*
  * BrowserModule boostrap the whole angular app. you just imported it once!
  * for other modules that have  component declarations you need to use CommonModule

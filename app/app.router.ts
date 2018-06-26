@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import {ModuleWithProviders} from '@angular/core';
 import {Routes, RouterModule, Router} from '@angular/router';
 import {homeComponent} from './pages/home/home.component';
-import {boardComponent} from './pages/board/board.component';
 import {accountComponent} from './pages/create-account/account.component';
-import {lostComponent} from './pages/lost/lost.component';
 import {profileComponent} from './pages/profile/profile.component';
 import {editAccountComponent} from './pages/profile/edit-account/edit-account.component';
 import {mainProfileComponent} from './pages/profile/main-profile/main-profile.component';
@@ -74,9 +72,7 @@ export class AppRouterModule{}
 
 export const routerComponents = [
   homeComponent,
-  boardComponent,
   accountComponent,
-  lostComponent,
   profileComponent,
   selectionComponent,
   LoginComponent,
