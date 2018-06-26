@@ -10,26 +10,26 @@ import {ExtrasBlockComponent} from '../../common/components/extras-block/extras-
 import {PatternBlockComponent} from '../../common/components/pattern-block/pattern-block.component';
 import {MatchMakerService} from '../../common/services/match-maker.service';
 import {SearchService} from '../../common/services/search.service';
+import {routerComps, routing} from './lost-found.router';
 import { SideBlockComponent } from '../../common/components/side-block/side-block.component';
-import {boardComponent} from './board.component'
-import {routing} from './board.router';
 
 @NgModule({
+  exports: [],
   imports: [AppCommonModule, routing, CommonModule],
   declarations: [
-    boardComponent,
-    BreedBlockComponent,
-    SizeBlockComponent,
-    ColorBlockComponent,
-    GenderBlockComponent,
-    ExtrasBlockComponent,
-    PatternBlockComponent,
-    SideBlockComponent
+  BreedBlockComponent,
+  SizeBlockComponent,
+  ColorBlockComponent,
+  GenderBlockComponent,
+  ExtrasBlockComponent,
+  PatternBlockComponent,
+  SideBlockComponent,
+  routerComps,
   ],
   providers: [
-     LostFoundService,
-     MatchMakerService,
-    SearchService
+  LostFoundService,
+  MatchMakerService,
+  SearchService
   ]
 })
-export class BoardModule {}
+export class LostFoundModule {}
