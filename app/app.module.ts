@@ -11,9 +11,7 @@ import {DogCardComponent} from './common/components/dog-card/dog-card.component'
 import {TextScrollComponent} from './common/components/text-scroll/text-scroll.component';
 import {DatePickerComponent} from './common/components/date-picker/date-picker.component';
 import {MapComponent} from './common/components/map/map.component';
-import {SideBlockComponent} from './common/components/side-block/side-block.component';
 import {SideBlockDogComponent} from './common/components/side-block-dog/side-block-dog.component'
-import {DogFigureComponent} from './common/components/dog-figure/dog-figure.component';
 import {GlobalError} from './common/components/gobal-error/global-error.component';
 import {GlobalFunctionService} from './common/services/global-function.service';
 import {ApiService} from './common/services/api.service';
@@ -52,15 +50,14 @@ import {SearchService} from './common/services/search.service';
   TextScrollComponent,
   DatePickerComponent,
   MapComponent,
-  SideBlockComponent,
   SideBlockDogComponent,
-  DogFigureComponent,
   GlobalError,
   FacebookAdsComponent,
   previewFbAdsComponent,
   ActionsBlockComponent
   ],
   providers: [
+    SearchService,
     {provide: ValidationService, useClass: ValidationService},
     {provide: CookieManagerService, useClass: CookieManagerService},
     {provide: GlobalFunctionService, useClass: GlobalFunctionService},

@@ -11,7 +11,7 @@ import {ExtrasComponent} from './extras/extras.component';
 import {DetailsComponent} from './pic-details/pic-details.component';
 import {ReviewComponent} from './review/review.component';
 import {PatternComponent} from './pattern/pattern.component';
-import {CompleteUserComponent} from './complete-user/complete-user.component'
+import {CompleteUserComponent} from './complete-user/complete-user.component';
 
 const children = [
       { path:'date', component: DateComponent},
@@ -37,6 +37,7 @@ const routes: Routes = [
 export const routing: ModuleWithProviders = RouterModule.forChild(routes);
 
 export const routerComps = [
+  lostComponent,
   DateComponent,
   LocationComponent,
   BreedComponent,

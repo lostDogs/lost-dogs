@@ -242,8 +242,6 @@ export class FormPaymentComponent {
         } else if (this.chargeCreate) {
           this.lostService.saveToApi(chargeObj).add(() => {
             this.loading = false;
-            if (this.lostService.savedData) {
-            }
           });
         }        
       }

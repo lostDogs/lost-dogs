@@ -17,7 +17,7 @@ const imgCompress = require('@xkeshi/image-compressor');
 export class ReviewPaymentComponent {
   @ViewChild('DogCard')
   public dogCardDom: any;
-  public lost:boolean;
+  public lost: boolean;
   public dogIndex: string;
   public ShowSendEmail: boolean;
   public dogData: IdogData;

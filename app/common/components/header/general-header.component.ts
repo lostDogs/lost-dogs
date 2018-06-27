@@ -2,7 +2,6 @@ import {ElementRef, Renderer, Component, OnInit, ViewChild} from '@angular/core'
 import {GlobalFunctionService} from '../../services/global-function.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../services/user.service';
-import {LostFoundService} from '../../services/lost-found.service';
 import {CookieManagerService} from '../../services/cookie-manager.service';
 import {DogCardService} from '../../services/dog-card.service';
 import {FacebookService} from '../../services/facebook.service';
@@ -44,7 +43,6 @@ export class generalHeaderComponent implements OnInit  {
     public activatedRoute: ActivatedRoute,
     public userService: UserService,
     public router: Router,
-    public lostService: LostFoundService,
     public cookieService: CookieManagerService,
     public dogService: DogCardService,
     public fbService: FacebookService
@@ -126,18 +124,9 @@ export class generalHeaderComponent implements OnInit  {
   }
 
   public resetPage(): void {
-    this.lostService.resetService();
-    this.lostService.displayIntro = true;
-    this.dogService.open = true;
-    this.lostService.parentPage = this.router.url.split('/')[1];
-    this.lostService.searchService.queryObj = {};
-    this.lostService.searchService.addQuery('lost', this.lostService.parentPage !== 'lost');
-    this.lostService.searchService.addQuery('pageSize', this.lostService.searchService._pageSize);
-    this.lostService.displayedSequence && this.lostService.displayedSequence.length && this.lostService.displayedSequence.forEach((value: any, index: number) => {
-      this.lostService.pageAnswers.push(undefined);
-    });
+    // nothing
   }
-  
+
   public goTo(url: any, params?: any) {
     params =  params ? {queryParams: params} : undefined;
     this.openBoard = this.openReport = false;

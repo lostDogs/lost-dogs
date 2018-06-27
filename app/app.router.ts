@@ -41,13 +41,11 @@ export const router: Routes = [
   },
   {path: 'selection', component: selectionComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'payment', component: PaymentComponent,
-    children: [
-      {path: 'review', component: ReviewPaymentComponent},
-      {path: 'form', component: FormPaymentComponent},
-      { path: '', redirectTo: 'review' , pathMatch: 'full'},
-      {path: '**', redirectTo: 'review'}
-    ]
+  {path: 'payment',  loadChildren: () => new Promise(resolve => {
+      (require as any).ensure([], (require: any) => {
+          resolve(require('./pages/payment/payment.module').PaymentModule);
+      })
+    })
   },
   {path: 'reward', loadChildren: () => new Promise(resolve => {
       (require as any).ensure([], (require: any) => {

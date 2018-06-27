@@ -5,7 +5,6 @@ import {DogCardService} from '../../common/services/dog-card.service';
 import {CookieManagerService} from '../../common/services/cookie-manager.service';
 import {MailingRewardService} from '../../common/services/mailing-reward.service';
 import {GlobalFunctionService} from '../../common/services/global-function.service';
-import {LostFoundService} from '../../common/services/lost-found.service';
 
 @Component({
   selector: 'dog-ads',
@@ -56,8 +55,7 @@ export class DogAdsComponent {
     public mailingService: MailingRewardService,
     public globalService: GlobalFunctionService,
     public renderer: Renderer,
-    public domRef: ElementRef,
-    public lostService: LostFoundService
+    public domRef: ElementRef
   ) {
     this.mobile = window.screen.width <= 767;
     this.activeRoute.queryParams.subscribe((params: Params) => {
@@ -77,10 +75,7 @@ export class DogAdsComponent {
   }
 
   public initalCall(): void {
-    if (this.lostService.savedData && this.lostService.savedData._id === this.dogId) {
-      this.dogService.dogData = this.lostService.savedData;
-      this.afterDataCall();
-    } else if (this.dogService.dogData === this.dogId) {
+    if (this.dogService.dogData === this.dogId) {
       this.afterDataCall();
     } else {
       this.dogDataloading = true;
