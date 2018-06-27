@@ -12,7 +12,6 @@ import {MatchMakerService} from '../../common/services/match-maker.service';
 import {SearchService} from '../../common/services/search.service';
 import {routerComps, routing} from './lost-found.router';
 import { SideBlockComponent } from '../../common/components/side-block/side-block.component';
-import {DogFigureComponent} from '../../common/components/dog-figure/dog-figure.component';
 
 @NgModule({
   exports: [],
@@ -25,7 +24,6 @@ import {DogFigureComponent} from '../../common/components/dog-figure/dog-figure.
   ExtrasBlockComponent,
   PatternBlockComponent,
   SideBlockComponent,
-  DogFigureComponent,
   routerComps,
   ],
   providers: [

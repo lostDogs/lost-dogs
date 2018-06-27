@@ -11,7 +11,7 @@ import {PatternBlockComponent} from '../../common/components/pattern-block/patte
 import {MatchMakerService} from '../../common/services/match-maker.service';
 import {SearchService} from '../../common/services/search.service';
 import { SideBlockComponent } from '../../common/components/side-block/side-block.component';
-import {boardComponent} from './board.component'
+import {boardComponent} from './board.component';
 import {routing} from './board.router';
 
 @NgModule({

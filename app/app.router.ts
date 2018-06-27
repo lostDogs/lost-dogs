@@ -9,9 +9,6 @@ import {mainProfileComponent} from './pages/profile/main-profile/main-profile.co
 import {selectionComponent} from './pages/selection/selection.component';
 import {LoginComponent} from './pages/login/login.component';
 import {InformationComponent} from './pages/information/information.component';
-import {PaymentComponent} from './pages/payment/payment.component';
-import {ReviewPaymentComponent} from './pages/payment/review-payment/review-payment.component';
-import {FormPaymentComponent} from './pages/payment/form-payment/form-payment.component';
 import {RefundComponent} from './pages/refund/refund.component';
 import {DogAdsComponent} from './pages/dog-ads/dog-ads.component';
 
@@ -70,16 +67,12 @@ export class AppRouterModule{}
 
 export const routerComponents = [
   homeComponent,
-  accountComponent,
   profileComponent,
   selectionComponent,
   LoginComponent,
   editAccountComponent,
   mainProfileComponent,
   InformationComponent,
-  PaymentComponent,
-  ReviewPaymentComponent,
-  FormPaymentComponent,
   RefundComponent,
   DogAdsComponent
 ];

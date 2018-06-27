@@ -18,6 +18,5 @@ export const routing: ModuleWithProviders = RouterModule.forChild(routes);
 
 export const payComponents: any[] = [
   ReviewPaymentComponent,
-  FormPaymentComponent,
   PaymentComponent
 ]
