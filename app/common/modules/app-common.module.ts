@@ -13,6 +13,15 @@ import {accountComponent} from '../../pages/create-account/account.component';
 import {FormPaymentComponent} from '../../pages/payment/form-payment/form-payment.component';
 import {GlobalError} from '../components/gobal-error/global-error.component';
 
+import { SideBlockComponent } from '../components/side-block/side-block.component';
+import {BreedBlockComponent} from '../components/breed-block/breed-block.component';
+import {SizeBlockComponent} from '../components/size-block/size-block.component';
+import {ColorBlockComponent} from '../components/color-block/color-block.component';
+import {GenderBlockComponent} from '../components/gender-block/gender-block.component';
+import {ExtrasBlockComponent} from '../components/extras-block/extras-block.component';
+import {PatternBlockComponent} from '../components/pattern-block/pattern-block.component';
+
+
 import {FacebookAdsComponent} from '../components/facebook-ads/facebook-ads.component';
 import {previewFbAdsComponent} from '../components/preview-fb-ads/preview-fb-ads.component';
 import {ActionsBlockComponent} from '../components/actions-block/actions-block.component';
@@ -33,7 +42,14 @@ import {ActionsBlockComponent} from '../components/actions-block/actions-block.c
     ActionsBlockComponent,
     GlobalError,
     FormPaymentComponent,
-    accountComponent
+    accountComponent,
+    SideBlockComponent,
+    BreedBlockComponent,
+    SizeBlockComponent,
+    ColorBlockComponent,
+    GenderBlockComponent,
+    ExtrasBlockComponent,
+    PatternBlockComponent,
   ], 
   declarations: [
     DogFigureComponent,
@@ -47,7 +63,14 @@ import {ActionsBlockComponent} from '../components/actions-block/actions-block.c
     ActionsBlockComponent,
     GlobalError,
     FormPaymentComponent,
-    accountComponent
+    accountComponent,
+    SideBlockComponent,
+    BreedBlockComponent,
+    SizeBlockComponent,
+    ColorBlockComponent,
+    GenderBlockComponent,
+    ExtrasBlockComponent,
+    PatternBlockComponent,
   ]
 })
 export class AppCommonModule {}

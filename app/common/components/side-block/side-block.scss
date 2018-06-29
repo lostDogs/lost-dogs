@@ -154,12 +154,3 @@ side-block, side-block-dog {
   }
 
 }
-
-.disabled-img {
-  filter: grayscale(100%) blur(1px);
-}
-.disabled-pattern {
-  .pattern {
-    filter: blur(1px);
-  }
-}

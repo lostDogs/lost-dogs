@@ -1,15 +1,4 @@
 @import '../../common/styles/variables.scss';
-.left-centered {
-  left: 50%;
-  transform: translate(-50%, 0);
-}
-.blur-filter,.blur-section section{
-  filter: blur(5px);
-  @media screen and (max-device-width: $screen-mobile-max) {
-    filter: blur(10px);
-  }
-}
-
 
 lost, found {
   .extra-margin-bottom {

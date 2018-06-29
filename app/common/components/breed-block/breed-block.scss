@@ -1,21 +1,4 @@
 @import '../../../common/styles/variables.scss';
-button.btn.info.breed-search {
-  padding: 0 1rem;
-  vertical-align: baseline;
-  margin-left: 5px;
-  border-radius: 5px;
-  @media screen and (max-device-width: $screen-mobile-max) {
-    padding: 20px 50px;
-    padding-bottom: 55px;
-    border-radius: 10px;
-  }
-}
-board .page breed-block .breed-searcher-container {
-  margin-top: 200px;
-  @media screen and (max-device-width: $screen-desktop-min) {
-    margin-top: 350px;
-  }
-}
 
 board,lost {
  .page {

@@ -1,41 +1,4 @@
 @import '../../../common/styles/variables.scss';
-.money-reward {
-  width: 100%;
-  @media screen and (max-device-width: $screen-mobile-max) {
-    text-align: center;
-    h2 {
-      font-size: 3.5rem;
-    }
-  }
-  * {
-    vertical-align: middle;
-    display: inline-block;
-  }
-  input#money-input {
-    width: 60%;
-    margin-bottom: 0px;
-    border: none; 
-    font-size: 3.5rem;
-    height: 4rem;
-    text-align: right;
-  }
-  input[type]:focus:not([readonly])  {
-    border: none;
-    box-shadow: none;
-  }
-}
-
-@media screen 
-and (min-device-width : $screen-tablet-min) 
-and (max-device-width : $screen-ipadpro-min) {
-  #money-input {
-    width: 85%;
-  }
-  .currency {
-    width: 100%;
-    text-align: center;
-  }    
-}
 
 pic-details {
   .col {
