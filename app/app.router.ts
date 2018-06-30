@@ -30,12 +30,18 @@ export const router: Routes = [
       {path: '**', redirectTo: 'main'}
     ]
   },
-{path: 'lost', loadChildren: () => new Promise(resolve => {
+  {path: 'lost', loadChildren: () => new Promise(resolve => {
       (require as any).ensure([], (require: any) => {
           resolve(require('./pages/lost-found-common/lost-found.module').LostFoundModule);
       })
     })
   },
+  {path: 'found', loadChildren: () => new Promise(resolve => {
+      (require as any).ensure([], (require: any) => {
+          resolve(require('./pages/lost-found-common/lost-found.module').LostFoundModule);
+      })
+    })
+  },  
   {path: 'selection', component: selectionComponent},
   {path: 'login', component: LoginComponent},
   {path: 'payment',  loadChildren: () => new Promise(resolve => {
